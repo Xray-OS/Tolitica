@@ -1,0 +1,9 @@
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/Tolitica.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/install.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/install/local.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/Tolitica_autogen_timestamp_deps.dir
+/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/Tolitica_autogen.dir

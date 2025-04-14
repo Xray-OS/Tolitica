@@ -1,0 +1,28 @@
+{
+	"BUILD_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen",
+	"CMAKE_BINARY_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica",
+	"CMAKE_SOURCE_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/angel/Documents/Development/_APPS/Tolitica/Icons/tolitica-icon.png",
+		"/home/angel/Documents/Development/_APPS/Tolitica/Logos/ada-logo-with-white.png",
+		"/home/angel/Documents/Development/_APPS/Tolitica/Logos/panda.svg",
+		"/home/angel/Documents/Development/_APPS/Tolitica/Logos/ada-logo-white-small.png"
+	],
+	"LOCK_FILE" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/Tolitica_autogen.dir/AutoRcc_res_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "res" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_res.cpp",
+	"RCC_EXECUTABLE" : "/usr/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles/Tolitica_autogen.dir/AutoRcc_res_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/angel/Documents/Development/_APPS/Tolitica/res.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}
