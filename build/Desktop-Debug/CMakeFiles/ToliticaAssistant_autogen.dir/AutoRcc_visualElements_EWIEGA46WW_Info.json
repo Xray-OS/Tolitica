@@ -1,0 +1,25 @@
+{
+	"BUILD_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/ToliticaAssistant_autogen",
+	"CMAKE_BINARY_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant",
+	"CMAKE_SOURCE_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Unix Makefiles",
+	"INCLUDE_DIR" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/ToliticaAssistant_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/angel/Documents/Development/_APPS/ToliticaAssistant/resources/icons/tolitica-icon.png"
+	],
+	"LOCK_FILE" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/CMakeFiles/ToliticaAssistant_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "visualElements" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_visualElements.cpp",
+	"RCC_EXECUTABLE" : "/usr/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/CMakeFiles/ToliticaAssistant_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/angel/Documents/Development/_APPS/ToliticaAssistant/visualElements.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

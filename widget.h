@@ -3,8 +3,7 @@
 
 #include <QWidget>
 #include <QIcon>
-#include <QPixmap>
-#include <QVBoxLayout>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,6 +18,12 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+
+private slots:
+    void cleanOrphans(); // Function to clean orphans and other useful stuff to fix Arch
+    void cleanPkgCache();
+    void systemUpdate();
+    void removeDBLock();
 
 private:
     Ui::Widget *ui;

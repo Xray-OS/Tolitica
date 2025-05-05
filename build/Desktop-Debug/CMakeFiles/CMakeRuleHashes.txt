@@ -1,4 +1,4 @@
 # Hashes of file build rules.
-d71c86c3a4133197861557f03337faab CMakeFiles/Tolitica_autogen
-4711ee5cabcebe4418651073359e2711 Tolitica_autogen/EWIEGA46WW/qrc_res.cpp
-08d435c9330877d5dae67a1989bd5e8c Tolitica_autogen/timestamp
+e898e6d2b2f28b656650c83ea79094b7 CMakeFiles/ToliticaAssistant_autogen
+2a2e9b021ef5dd12f2b55f59199e82ee ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp
+41ac840d6ce603375be2652f882ebb03 ToliticaAssistant_autogen/timestamp
