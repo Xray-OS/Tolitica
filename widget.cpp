@@ -10,7 +10,6 @@
 #include <QDebug>
 #include <QProgressDialog>
 #include <QTimer>
-
 #include <QFile>
 #include <QTextStream>
 
@@ -189,16 +188,45 @@ void Widget::systemUpdate() {
 }
 
 ///////////////////////////////////////////////////
-/// SYSTEM UPDATE FUNCTION
+/// REMOVE db.lck FUNCTION
 //////////////////////////////////////////////////
 void Widget::removeDBLock() {
-    bool psAux = false;
+    QProcess checkPacman;
+    checkPacman.start("pgrep pacman", QStringList() << "pacman", QIODevice::ReadWrite); // Check if pacman is running
+    checkPacman.waitForFinished();
 
-    QProcess checkPacmanInUse;
-    checkPacmanInUse->start("bash", QStringList() << "-c" << "ps aux | grep pacman");
+    QString output = QString::fromUtf8(checkPacman.readAllStandardOutput()).trimmed();
 
+    QString dblckFilePath = { "/var/lib/pacman/db.lck" };
 
+    bool dblckExists = false;
+
+    // Check if db.lck exists
+    QFile dblckFile(dblckFilePath);
+
+    if (!dblckFile.exists()) {
+        QMessageBox::information(this, "No db.lck Found", "Pacman is not currently locked, no actions needs to be taken.");
+        return;
+    }
+
+    // Ensure pacman isn't running
+    if (!output.isEmpty()) {
+        QMessageBox::warning(this, "Pacman is Running", "Pacman is currently in use. Please wait for it to finish before removing the lock");
+        return;
+    }
+
+    QProcess unlockPacman;
+    unlockPacman.start("pkexec", QStringList() << "rm " << "-f" << "/var/lib/pacman/db.lck", QIODevice::ReadWrite); // Remove lock safely
+    unlockPacman.waitForFinished();
+
+    QMessageBox::information(this, "Lock Removed", "Pacman database lock has been successfully removed.");
 }
+
+// == I LOVE CPP ==================================
+///////////////////////////////////////////////////
+/// MAIN FUNCTION
+//////////////////////////////////////////////////
+// == I LOVE C++ ==================================
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -216,51 +244,77 @@ Widget::Widget(QWidget *parent)
     QWidget *mainPage = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
 
+    /* === Navigation Buttons === */
+    QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific Layout for Buttons
     QPushButton *tweaksButton = new QPushButton("Configuration", this);
-    mainLayout->addWidget(tweaksButton);
+    QPushButton *AddonsButton = new QPushButton("Addons", this);
+
+    buttonsLayout->addWidget(tweaksButton);
+    buttonsLayout->addWidget(AddonsButton);
+    mainLayout->addLayout(buttonsLayout);
+    mainPage->setLayout(mainLayout);
 
     // ==== Tweaks Page =====
     QWidget *tweaksPage = new QWidget();
-    QVBoxLayout *tweaksLayout = new QVBoxLayout(tweaksPage);
-
+    QGridLayout *tweaksLayout = new QGridLayout(tweaksPage);
     QPushButton *backButton = new QPushButton("Back", this);
     tweaksLayout->addWidget(backButton);
 
-    // Clean orphan button
+    // Functional Buttons
     QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
-    tweaksLayout->addWidget(cleanOrphansButton);
-    // Clean Pkg Cache button
     QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
-    tweaksLayout->addWidget(cleanPkgCacheButton);
-    // Update system button
     QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
-    tweaksLayout->addWidget(updateSystemButton);
-    // Remove DB Lock Button
     QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
-    tweaksLayout->addWidget(removeDBLockButton);
+
+    /* === Positioning Buttons === */
+    tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
+    tweaksLayout->addWidget(cleanPkgCacheButton, 1, 0, Qt::AlignRight);
+    tweaksLayout->addWidget(updateSystemButton, 2, 0, Qt::AlignCenter);
+    tweaksLayout->addWidget(removeDBLockButton, 2, 0, Qt::AlignLeft);
+
+    // Push Back-button to bottom dynamically
+    tweaksLayout->setRowStretch(4, 1);
+    tweaksLayout->addWidget(backButton, 5, 0, Qt::AlignLeft);
+    tweaksPage->setLayout(tweaksLayout);
+
+    // ==== Addons Page === //
+    QWidget *addonsPage = new QWidget();
+    QGridLayout *addonsLayout = new QGridLayout(addonsPage);
+    addonsPage->setLayout(addonsLayout);
+
+    /* === Connections === */
+    setupConnections(stackedWidget, tweaksButton, AddonsButton, backButton, cleanOrphansButton,
+                     cleanPkgCacheButton, updateSystemButton, removeDBLockButton);
 
     // Add pages to stacked widget
     stackedWidget->addWidget(mainPage);
     stackedWidget->addWidget(tweaksPage);
+    stackedWidget->addWidget(addonsPage);
 
     // Set the initial layout
     QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
     mainWidgetLayout->addWidget(stackedWidget);
     setLayout(mainWidgetLayout);
+}
 
-    // ==== Connect Buttons =====
-    connect(tweaksButton, &QPushButton::clicked, [stackedWidget]() {
-        stackedWidget->setCurrentIndex(1); // Switch to tweaks page
+void Widget::setupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *addonsButton,
+                              QPushButton *backButton, QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
+                              QPushButton *updateSystemButton, QPushButton *removeDBLockButton){
+    // Navigation connections
+    connect(tweaksButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(1); // Switch to Tweaks page
     });
-
-    connect(backButton, &QPushButton::clicked, [stackedWidget]() {
-        stackedWidget->setCurrentIndex(0); // Switch back to main page
+    connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(2); // Switch to Addons page
+    });
+    connect(backButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(0); // Switch back to Main page
     });
 
     connect(cleanOrphansButton, &QPushButton::clicked, this, &Widget::cleanOrphans);
     connect(cleanPkgCacheButton, &QPushButton::clicked, this, &Widget::cleanPkgCache);
     connect(updateSystemButton, &QPushButton::clicked, this, &Widget::systemUpdate);
-    connect(removeDBLockButton, &QPushButton::clicked, this, &Widget::removeDbLock);
+    connect(removeDBLockButton, &QPushButton::clicked, this, &Widget::removeDBLock);
 }
 
 Widget::~Widget()

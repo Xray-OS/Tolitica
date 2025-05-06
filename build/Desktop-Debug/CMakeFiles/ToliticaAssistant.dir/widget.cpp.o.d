@@ -251,6 +251,9 @@ CMakeFiles/ToliticaAssistant.dir/widget.cpp.o: \
  /usr/include/qt/QtWidgets/qpushbutton.h \
  /usr/include/qt/QtWidgets/qabstractbutton.h \
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtWidgets/QStackedWidget \
+ /usr/include/qt/QtWidgets/qstackedwidget.h \
+ /usr/include/qt/QtWidgets/qframe.h \
  /home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/ToliticaAssistant_autogen/include/./ui_widget.h \
  /usr/include/qt/QtCore/QVariant /usr/include/qt/QtCore/qvariant.h \
  /usr/include/qt/QtCore/qmap.h /usr/include/c++/15.1.1/variant \
@@ -262,9 +265,7 @@ CMakeFiles/ToliticaAssistant.dir/widget.cpp.o: \
  /usr/include/qt/QtGui/qguiapplication.h \
  /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtCore/qlocale.h \
  /usr/include/qt/QtCore/qvariant.h /usr/include/qt/QtWidgets/QWidget \
- /usr/include/qt/QtWidgets/QStackedWidget \
- /usr/include/qt/QtWidgets/qstackedwidget.h \
- /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QGroupBox \
+ /usr/include/qt/QtWidgets/QGroupBox \
  /usr/include/qt/QtWidgets/qgroupbox.h \
  /usr/include/qt/QtWidgets/QVBoxLayout \
  /usr/include/qt/QtWidgets/qboxlayout.h \

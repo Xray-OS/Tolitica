@@ -251,4 +251,7 @@ CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/mocs_compilation.cpp.
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/QPushButton \
  /usr/include/qt/QtWidgets/qpushbutton.h \
  /usr/include/qt/QtWidgets/qabstractbutton.h \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h
+ /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtWidgets/QStackedWidget \
+ /usr/include/qt/QtWidgets/qstackedwidget.h \
+ /usr/include/qt/QtWidgets/qframe.h

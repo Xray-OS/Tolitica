@@ -251,6 +251,9 @@ CMakeFiles/ToliticaAssistant.dir/main.cpp.o: \
  /usr/include/qt/QtWidgets/qpushbutton.h \
  /usr/include/qt/QtWidgets/qabstractbutton.h \
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtWidgets/QStackedWidget \
+ /usr/include/qt/QtWidgets/qstackedwidget.h \
+ /usr/include/qt/QtWidgets/qframe.h \
  /usr/include/qt/QtWidgets/QApplication \
  /usr/include/qt/QtWidgets/qapplication.h \
  /usr/include/qt/QtCore/qcoreapplication.h \

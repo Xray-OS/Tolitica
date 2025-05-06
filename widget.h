@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QPushButton>
+#include <QStackedWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +25,9 @@ private slots:
     void cleanPkgCache();
     void systemUpdate();
     void removeDBLock();
+    void setupConnections(QStackedWidget *QStackedWidget, QPushButton *tweaksButton, QPushButton *addonsButton,
+                          QPushButton *backButton, QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
+                          QPushButton *updateSystemButton, QPushButton *removeDBLockButton);
 
 private:
     Ui::Widget *ui;

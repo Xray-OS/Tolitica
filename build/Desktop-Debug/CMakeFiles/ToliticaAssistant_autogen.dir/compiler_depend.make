@@ -337,10 +337,13 @@ ToliticaAssistant_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tol
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QPushButton \
+  /usr/include/qt/QtWidgets/QStackedWidget \
   /usr/include/qt/QtWidgets/QWidget \
   /usr/include/qt/QtWidgets/qabstractbutton.h \
+  /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
+  /usr/include/qt/QtWidgets/qstackedwidget.h \
   /usr/include/qt/QtWidgets/qtwidgets-config.h \
   /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
   /usr/include/qt/QtWidgets/qwidget.h \
@@ -545,6 +548,8 @@ ToliticaAssistant_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tol
 
 /usr/include/qt/QtGui/qpixelformat.h:
 
+/usr/include/qt/QtWidgets/qframe.h:
+
 /usr/include/qt/QtGui/qmatrix.h:
 
 /usr/include/qt/QtGui/qkeysequence.h:
@@ -646,6 +651,8 @@ ToliticaAssistant_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tol
 /usr/include/qt/QtCore/qarraydata.h:
 
 /usr/include/c++/15.1.1/bits/move.h:
+
+/usr/include/qt/QtWidgets/qstackedwidget.h:
 
 ToliticaAssistant_autogen/moc_predefs.h:
 
@@ -1052,6 +1059,8 @@ CMakeFiles/4.0.1-dirty/CMakeSystem.cmake:
 /usr/include/c++/15.1.1/new:
 
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QWaylandXCompositeGlxPlatformIntegrationPlugin.cmake:
+
+/usr/include/qt/QtWidgets/QStackedWidget:
 
 /usr/include/c++/15.1.1/bits/out_ptr.h:
 
