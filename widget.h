@@ -21,13 +21,19 @@ public:
     ~Widget();
 
 private slots:
+    // TWEAKS
     void cleanOrphans(); // Function to clean orphans and other useful stuff to fix Arch
     void cleanPkgCache();
     void systemUpdate();
     void removeDBLock();
-    void setupConnections(QStackedWidget *QStackedWidget, QPushButton *tweaksButton, QPushButton *addonsButton,
-                          QPushButton *backButton, QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
-                          QPushButton *updateSystemButton, QPushButton *removeDBLockButton);
+    void tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
+                                QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
+                                QPushButton *updateSystemButton, QPushButton *removeDBLockButton);
+    // ADDONS
+    void adaGamingMeta();
+    void removeAdaGamingMeta();
+    void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
+                                QPushButton *adaGamingMetaButton);
 
 private:
     Ui::Widget *ui;

@@ -7,11 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/angel/Documents/Development/_APPS/ToliticaAssistant/CMakeLists.txt"
+  "/home/angel/Documents/Development/_APPS/Tolitica/CMakeLists.txt"
   ".qtc/package-manager/auto-setup.cmake"
   "CMakeFiles/4.0.1-dirty/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.0.1-dirty/CMakeSystem.cmake"
-  "/home/angel/Documents/Development/_APPS/ToliticaAssistant/visualElements.qrc"
+  "/home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc"
   "/usr/lib/cmake/Qt5/Qt5Config.cmake"
   "/usr/lib/cmake/Qt5/Qt5ConfigVersion.cmake"
   "/usr/lib/cmake/Qt5/Qt5ModuleLocation.cmake"
@@ -94,14 +94,14 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "CMakeFiles/ToliticaAssistant_autogen.dir/AutogenInfo.json"
-  "CMakeFiles/ToliticaAssistant_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Info.json"
+  "CMakeFiles/Tolitica_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/Tolitica_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Info.json"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/ToliticaAssistant.dir/DependInfo.cmake"
-  "CMakeFiles/ToliticaAssistant_autogen_timestamp_deps.dir/DependInfo.cmake"
-  "CMakeFiles/ToliticaAssistant_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/Tolitica.dir/DependInfo.cmake"
+  "CMakeFiles/Tolitica_autogen_timestamp_deps.dir/DependInfo.cmake"
+  "CMakeFiles/Tolitica_autogen.dir/DependInfo.cmake"
   )

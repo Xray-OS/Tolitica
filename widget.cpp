@@ -14,7 +14,7 @@
 #include <QTextStream>
 
 ///////////////////////////////////////////////////
-/// CLEAN ORPHANS FUCNTION
+/// TWEAKS::CLEAN ORPHANS FUCNTION
 //////////////////////////////////////////////////
 void Widget::cleanOrphans() {
     // Check if there are orphans to clean
@@ -61,7 +61,7 @@ void Widget::cleanOrphans() {
 }
 
 ///////////////////////////////////////////////////
-/// CLEAN PACKAGE CACHE FUNCTION
+/// TWEAKS::CLEAN PACKAGE CACHE FUNCTION
 //////////////////////////////////////////////////
 
 void Widget::cleanPkgCache() {
@@ -114,7 +114,7 @@ void Widget::cleanPkgCache() {
 }
 
 ///////////////////////////////////////////////////
-/// SYSTEM UPDATE FUNCTION
+/// TWEAKS::SYSTEM UPDATE FUNCTION
 //////////////////////////////////////////////////
 void Widget::systemUpdate() {
     QProcess *sysUp = new QProcess(this);
@@ -162,9 +162,9 @@ void Widget::systemUpdate() {
         }
     });
 
-   // Detect when process finishes
+    // Detect when process finishes
     connect(sysUp, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=] (int exitCode,
-        QProcess::ExitStatus status) {
+                                                                                            QProcess::ExitStatus status) {
         QString output = QString::fromUtf8(sysUp->readAllStandardOutput());
 
         if (output.contains("Nothing to do") && output.contains("there is nothing to do")) {
@@ -188,7 +188,7 @@ void Widget::systemUpdate() {
 }
 
 ///////////////////////////////////////////////////
-/// REMOVE db.lck FUNCTION
+/// TWEAKS::REMOVE db.lck FUNCTION
 //////////////////////////////////////////////////
 void Widget::removeDBLock() {
     QProcess checkPacman;
@@ -222,9 +222,136 @@ void Widget::removeDBLock() {
     QMessageBox::information(this, "Lock Removed", "Pacman database lock has been successfully removed.");
 }
 
+///////////////////////////////////////////////////
+/// ADDONS::INSTALL ADA-GAMING-META FUNCTION
+//////////////////////////////////////////////////
+void Widget::adaGamingMeta() {
+    QProcess *installAGM = new QProcess(this);
+    QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
+
+    // Create the progress bar dynamically
+    QProgressDialog *progress = new QProgressDialog("Installing Ada Gaming Meta...", nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    // **Fix: Real-time progress update using process output**
+    connect(installAGM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+
+        // Adjust progress dynamically based on output
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+
+        QCoreApplication::processEvents(); // Ensure UI refresh
+    });
+
+    // **Fix: Reliable package detection using `exitCode()`**
+    connect(installAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]
+            (int exitCode, QProcess::ExitStatus status){
+
+                // Check if the package is already installed
+                QProcess checkInstalled;
+                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
+                checkInstalled.waitForFinished();  // Ensure process completes before reading output
+
+                if (checkInstalled.exitCode() == 0) {
+                    // Package is already installed
+                    progress->setValue(100);
+                    QMessageBox::information(nullptr, "Ada Gaming Meta Already Installed",
+                                             "Ada Gaming Meta packages are already installed on your system.");
+                } else {
+                    // Package was just installed
+                    progress->setValue(100);
+                    QMessageBox::information(nullptr, "Ada Gaming Meta Has Been Installed",
+                                             "Ada Gaming Meta packages were installed successfully!");
+                }
+
+                // Cleanup Memory
+                progress->deleteLater();
+                installAGM->deleteLater();
+                monitorTimer->deleteLater(); // Stop aggressive monitoring
+            });
+
+    // Start installing process
+    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-gaming-meta --noconfirm");
+
+    // Start aggressive monitoring
+    monitorTimer->start(250); // Updates every 250ms
+}
+///////////////////////////////////////////////////
+/// ADDONS::REMOVE ADA-GAMING-META FUNCTION
+//////////////////////////////////////////////////
+void Widget::removeAdaGamingMeta() {
+    QProcess *removeAGM = new QProcess(this);
+    QTimer *monitorTimer = new QTimer(this);
+
+    QProgressDialog *progress = new QProgressDialog("Removing Ada Gaming Meta...", nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    // Ensure yay detection
+    QProcess checkYay;
+    checkYay.start("bash", QStringList() << "-c" << "pacman -Q yay");
+    checkYay.waitForFinished();
+    bool yayInstalled = (checkYay.exitCode() == 0);
+
+    QStringList removeCommands = {
+        "pacman -R ada-gaming-meta --noconfirm",
+        "pacman -R steam-native-runtime --noconfirm",
+        "pacman -R steam lutris bottles dosbox goverlay heroic-games-launcher-bin portproton protonplus protonup-qt vkbasalt gamemode lib32-gamemode q4wine-git wine-gecko wine-mono wine-nine protontricks --noconfirm",
+        "pacman -R winetricks wine-staging --noconfirm",
+        "pacman -R gamescope mangohud vkd3d proton-ge-custom-bin --noconfirm",
+        "pacman -R lib32-vkd3d vkbasalt-cli reshade-shaders-git --noconfirm"
+    };
+
+    if (yayInstalled) {
+        removeCommands.append("yay -Yc --noconfirm");
+    } else {
+        removeCommands.append("pacman -Rns $(pacman -Qtdq) --noconfirm");
+    }
+
+    qDebug() << "Package removal list:";
+    for (const auto &cmd : removeCommands) {
+        qDebug() << cmd;
+    }
+
+    int currentStep = 0;
+
+    // **Loop Execution: Process Commands Sequentially**
+    connect(removeAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]() mutable {
+        if (currentStep < removeCommands.size()) {
+            qDebug() << "Executing command:" << removeCommands[currentStep];
+
+            removeAGM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[currentStep]);
+
+            progressValue += (100 / removeCommands.size()); // Update progress dynamically
+            progress->setValue(qMin(progressValue, 95));
+            QCoreApplication::processEvents();
+
+            currentStep++; // Move to next command in sequence
+        } else {
+            qDebug() << "All packages removed successfully!";
+            progress->setValue(100);
+            QMessageBox::information(nullptr, "Ada Gaming Meta Removed",
+                                     "Ada Gaming Meta packages have been successfully removed.");
+            progress->deleteLater();
+            removeAGM->deleteLater();
+            monitorTimer->deleteLater();
+        }
+    });
+
+    removeAGM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[currentStep]); // Start first command
+    monitorTimer->start(250);
+}
+
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
-/// MAIN FUNCTION
+/// START MAIN FUNCTION
 //////////////////////////////////////////////////
 // == I LOVE C++ ==================================
 
@@ -247,20 +374,21 @@ Widget::Widget(QWidget *parent)
     /* === Navigation Buttons === */
     QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific Layout for Buttons
     QPushButton *tweaksButton = new QPushButton("Configuration", this);
-    QPushButton *AddonsButton = new QPushButton("Addons", this);
+    QPushButton *addonsButton = new QPushButton("Addons", this);
 
     buttonsLayout->addWidget(tweaksButton);
-    buttonsLayout->addWidget(AddonsButton);
+    buttonsLayout->addWidget(addonsButton);
     mainLayout->addLayout(buttonsLayout);
     mainPage->setLayout(mainLayout);
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Tweaks Page =====
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     QWidget *tweaksPage = new QWidget();
     QGridLayout *tweaksLayout = new QGridLayout(tweaksPage);
     QPushButton *backButton = new QPushButton("Back", this);
-    tweaksLayout->addWidget(backButton);
 
-    // Functional Buttons
+    // Functional Buttons Tweaks Layout
     QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
     QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
     QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
@@ -277,15 +405,42 @@ Widget::Widget(QWidget *parent)
     tweaksLayout->addWidget(backButton, 5, 0, Qt::AlignLeft);
     tweaksPage->setLayout(tweaksLayout);
 
-    // ==== Addons Page === //
+    tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
+                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // ==== Addons Page =====
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     QWidget *addonsPage = new QWidget();
     QGridLayout *addonsLayout = new QGridLayout(addonsPage);
+    QPushButton *addonsBackButton = new QPushButton("Back", this);
+
+    // Functional Buttons Addons Layout
+    QPushButton *adaGamingMetaButton = new QPushButton(this);
+    QProcess checkAGMinstalled;
+    checkAGMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
+    checkAGMinstalled.waitForFinished();
+
+    if (checkAGMinstalled.exitCode() == 0) {
+        adaGamingMetaButton->setText("Remove Ada Gaming Meta");
+    } else {
+        adaGamingMetaButton->setText("Install Ada Gaming Meta");
+    }
+
+    /* === Positioning Buttons === */
+    addonsLayout->addWidget(adaGamingMetaButton);
+
+    // Push Back-button to bottom dynamically
+    addonsLayout->setRowStretch(4, 1);
+    addonsLayout->addWidget(addonsBackButton, 5, 0, Qt::AlignLeft);
     addonsPage->setLayout(addonsLayout);
 
     /* === Connections === */
-    setupConnections(stackedWidget, tweaksButton, AddonsButton, backButton, cleanOrphansButton,
-                     cleanPkgCacheButton, updateSystemButton, removeDBLockButton);
+    addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton);
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // ==== End Pages =====
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // Add pages to stacked widget
     stackedWidget->addWidget(mainPage);
     stackedWidget->addWidget(tweaksPage);
@@ -296,16 +451,18 @@ Widget::Widget(QWidget *parent)
     mainWidgetLayout->addWidget(stackedWidget);
     setLayout(mainWidgetLayout);
 }
+// == I LOVE CPP ==================================
+///////////////////////////////////////////////////
+/// END MAIN FUNCTION
+//////////////////////////////////////////////////
+// == I LOVE C++ ==================================
 
-void Widget::setupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *addonsButton,
-                              QPushButton *backButton, QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
-                              QPushButton *updateSystemButton, QPushButton *removeDBLockButton){
+void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
+                                    QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
+                                    QPushButton *updateSystemButton, QPushButton *removeDBLockButton){
     // Navigation connections
     connect(tweaksButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(1); // Switch to Tweaks page
-    });
-    connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
-        stackedWidget->setCurrentIndex(2); // Switch to Addons page
     });
     connect(backButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(0); // Switch back to Main page
@@ -315,6 +472,27 @@ void Widget::setupConnections(QStackedWidget *stackedWidget, QPushButton *tweaks
     connect(cleanPkgCacheButton, &QPushButton::clicked, this, &Widget::cleanPkgCache);
     connect(updateSystemButton, &QPushButton::clicked, this, &Widget::systemUpdate);
     connect(removeDBLockButton, &QPushButton::clicked, this, &Widget::removeDBLock);
+}
+
+void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
+                                    QPushButton *adaGamingMetaButton) {
+    // Navigation connections
+    connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(2); // Switch to Addons page
+    });
+    connect(addonsBackButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(0); // Switch back to Main page
+    });
+
+    connect(adaGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
+        if(adaGamingMetaButton->text() == "Install Ada Gaming Meta") {
+            adaGamingMetaButton->setText("Remove Ada Gaming Meta");
+            adaGamingMeta();
+        } else {
+            adaGamingMetaButton->setText("Install Ada Gaming Meta");
+            removeAdaGamingMeta();
+        }
+    });
 }
 
 Widget::~Widget()

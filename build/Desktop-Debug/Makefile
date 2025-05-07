@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/angel/Documents/Development/_APPS/ToliticaAssistant
+CMAKE_SOURCE_DIR = /home/angel/Documents/Development/_APPS/Tolitica
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug
+CMAKE_BINARY_DIR = /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/CMakeFiles /home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/angel/Documents/Development/_APPS/ToliticaAssistant/build/Desktop-Debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -162,98 +162,98 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ToliticaAssistant
+# Target rules for targets named Tolitica
 
 # Build rule for target.
-ToliticaAssistant: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ToliticaAssistant
-.PHONY : ToliticaAssistant
+Tolitica: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Tolitica
+.PHONY : Tolitica
 
 # fast build rule for target.
-ToliticaAssistant/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/build
-.PHONY : ToliticaAssistant/fast
+Tolitica/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/build
+.PHONY : Tolitica/fast
 
 #=============================================================================
-# Target rules for targets named ToliticaAssistant_autogen_timestamp_deps
+# Target rules for targets named Tolitica_autogen_timestamp_deps
 
 # Build rule for target.
-ToliticaAssistant_autogen_timestamp_deps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ToliticaAssistant_autogen_timestamp_deps
-.PHONY : ToliticaAssistant_autogen_timestamp_deps
+Tolitica_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Tolitica_autogen_timestamp_deps
+.PHONY : Tolitica_autogen_timestamp_deps
 
 # fast build rule for target.
-ToliticaAssistant_autogen_timestamp_deps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant_autogen_timestamp_deps.dir/build.make CMakeFiles/ToliticaAssistant_autogen_timestamp_deps.dir/build
-.PHONY : ToliticaAssistant_autogen_timestamp_deps/fast
+Tolitica_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica_autogen_timestamp_deps.dir/build.make CMakeFiles/Tolitica_autogen_timestamp_deps.dir/build
+.PHONY : Tolitica_autogen_timestamp_deps/fast
 
 #=============================================================================
-# Target rules for targets named ToliticaAssistant_autogen
+# Target rules for targets named Tolitica_autogen
 
 # Build rule for target.
-ToliticaAssistant_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ToliticaAssistant_autogen
-.PHONY : ToliticaAssistant_autogen
+Tolitica_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Tolitica_autogen
+.PHONY : Tolitica_autogen
 
 # fast build rule for target.
-ToliticaAssistant_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant_autogen.dir/build.make CMakeFiles/ToliticaAssistant_autogen.dir/build
-.PHONY : ToliticaAssistant_autogen/fast
+Tolitica_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica_autogen.dir/build.make CMakeFiles/Tolitica_autogen.dir/build
+.PHONY : Tolitica_autogen/fast
 
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.o: ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.o
-
-# target to build an object file
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
-
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.i: ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.i
-
-# target to preprocess a source file
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
-
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.s: ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.s
-
-# target to generate assembly for a file
-ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
-.PHONY : ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
-
-ToliticaAssistant_autogen/mocs_compilation.o: ToliticaAssistant_autogen/mocs_compilation.cpp.o
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.o
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.o: Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.o
 
 # target to build an object file
-ToliticaAssistant_autogen/mocs_compilation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/mocs_compilation.cpp.o
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.cpp.o
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
 
-ToliticaAssistant_autogen/mocs_compilation.i: ToliticaAssistant_autogen/mocs_compilation.cpp.i
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.i
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.i: Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.i
 
 # target to preprocess a source file
-ToliticaAssistant_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/mocs_compilation.cpp.i
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.cpp.i
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.i
 
-ToliticaAssistant_autogen/mocs_compilation.s: ToliticaAssistant_autogen/mocs_compilation.cpp.s
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.s
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.s: Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.s
 
 # target to generate assembly for a file
-ToliticaAssistant_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/ToliticaAssistant_autogen/mocs_compilation.cpp.s
-.PHONY : ToliticaAssistant_autogen/mocs_compilation.cpp.s
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
+.PHONY : Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.s
+
+Tolitica_autogen/mocs_compilation.o: Tolitica_autogen/mocs_compilation.cpp.o
+.PHONY : Tolitica_autogen/mocs_compilation.o
+
+# target to build an object file
+Tolitica_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o
+.PHONY : Tolitica_autogen/mocs_compilation.cpp.o
+
+Tolitica_autogen/mocs_compilation.i: Tolitica_autogen/mocs_compilation.cpp.i
+.PHONY : Tolitica_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+Tolitica_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.i
+.PHONY : Tolitica_autogen/mocs_compilation.cpp.i
+
+Tolitica_autogen/mocs_compilation.s: Tolitica_autogen/mocs_compilation.cpp.s
+.PHONY : Tolitica_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+Tolitica_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.s
+.PHONY : Tolitica_autogen/mocs_compilation.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -261,7 +261,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -269,7 +269,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 widget.o: widget.cpp.o
@@ -277,7 +277,7 @@ widget.o: widget.cpp.o
 
 # target to build an object file
 widget.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/widget.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/widget.cpp.o
 .PHONY : widget.cpp.o
 
 widget.i: widget.cpp.i
@@ -285,7 +285,7 @@ widget.i: widget.cpp.i
 
 # target to preprocess a source file
 widget.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/widget.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/widget.cpp.i
 .PHONY : widget.cpp.i
 
 widget.s: widget.cpp.s
@@ -293,7 +293,7 @@ widget.s: widget.cpp.s
 
 # target to generate assembly for a file
 widget.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ToliticaAssistant.dir/build.make CMakeFiles/ToliticaAssistant.dir/widget.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/widget.cpp.s
 .PHONY : widget.cpp.s
 
 # Help Target
@@ -308,15 +308,15 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... ToliticaAssistant_autogen"
-	@echo "... ToliticaAssistant_autogen_timestamp_deps"
-	@echo "... ToliticaAssistant"
-	@echo "... ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.o"
-	@echo "... ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.i"
-	@echo "... ToliticaAssistant_autogen/EWIEGA46WW/qrc_visualElements.s"
-	@echo "... ToliticaAssistant_autogen/mocs_compilation.o"
-	@echo "... ToliticaAssistant_autogen/mocs_compilation.i"
-	@echo "... ToliticaAssistant_autogen/mocs_compilation.s"
+	@echo "... Tolitica_autogen"
+	@echo "... Tolitica_autogen_timestamp_deps"
+	@echo "... Tolitica"
+	@echo "... Tolitica_autogen/EWIEGA46WW/qrc_visualElements.o"
+	@echo "... Tolitica_autogen/EWIEGA46WW/qrc_visualElements.i"
+	@echo "... Tolitica_autogen/EWIEGA46WW/qrc_visualElements.s"
+	@echo "... Tolitica_autogen/mocs_compilation.o"
+	@echo "... Tolitica_autogen/mocs_compilation.i"
+	@echo "... Tolitica_autogen/mocs_compilation.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
