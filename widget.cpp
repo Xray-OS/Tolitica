@@ -13,6 +13,10 @@
 #include <QFile>
 #include <QTextStream>
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE TWEAKS PAGE /////////////////////// /////////////////////// ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////
 /// TWEAKS::CLEAN ORPHANS FUCNTION
 //////////////////////////////////////////////////
@@ -222,6 +226,10 @@ void Widget::removeDBLock() {
     QMessageBox::information(this, "Lock Removed", "Pacman database lock has been successfully removed.");
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE ADDONS PAGE /////////////////////// /////////////////////// ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////
 /// ADDONS::INSTALL ADA-GAMING-META FUNCTION
 //////////////////////////////////////////////////
@@ -349,6 +357,136 @@ void Widget::removeAdaGamingMeta() {
     monitorTimer->start(250);
 }
 
+///////////////////////////////////////////////////
+/// ADDONS:: ADA-DEVELOPMENT-META FUNCTION
+//////////////////////////////////////////////////
+void Widget::adaDevelopmentMeta() {
+    QProcess *installADM = new QProcess(this);
+    QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
+
+    // Create the progress bar dynamically
+    QProgressDialog *progress = new QProgressDialog("Installing Ada Development Meta...", nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    // ** Fix: Real-time progress update using process output **
+    connect(installADM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+
+    // Adjust progress dynamically based on output
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+
+        QCoreApplication::processEvents(); // Ensure UI refresh
+    });
+
+    // **Fix: Reliable package detection using 'exitCode()'**
+    connect(installADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]
+            (int exitCode, QProcess::ExitStatus status) {
+                // Check if the package is already installed
+        QProcess checkInstalled;
+        checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
+        checkInstalled.waitForFinished(); // Ensure process completes before reading output
+
+        if (checkInstalled.exitCode() == 0) {
+            // Package is already installed
+            progress->setValue(100);
+            QMessageBox::information(nullptr, "Ada Development Meta Already Installed",
+                                              "Ada Development Meta packages are already installed on your system");
+        } else {
+            // Package was just installed
+            progress->setValue(100);
+            QMessageBox::information(nullptr, "Ada Development Meta has been installed",
+                                     "Ada Development Meta packages were installed successfully!");
+        }
+
+        // Cleanup Memory
+        progress->deleteLater();
+        installADM->deleteLater();
+        monitorTimer->deleteLater();
+    });
+
+    // Start installing process
+    installADM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-development-meta "
+                                                 "--noconfirm");
+    // Start aggressive monitoring
+    monitorTimer->start(250); // Updates every 250ms
+};
+
+///////////////////////////////////////////////////
+/// ADDONS:: REMOVE ADA-DEVELOPMENT-META FUNCTION
+//////////////////////////////////////////////////
+void Widget::removeAdaDevelopmentMeta() {
+    QProcess *removeADM = new QProcess(this);
+    QTimer *monitorTimer = new QTimer(this);
+
+    QProgressDialog *progress = new QProgressDialog("Removing Ada Development Meta...", nullptr, 0, 100,
+                                                    this);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    // Ensure yay detection
+    QProcess checkYay;
+    checkYay.start("bash", QStringList() << "-c" << "pacman -Q yay");
+    checkYay.waitForFinished();
+
+    bool yayInstalled = (checkYay.exitCode() == 0);
+
+    QStringList removeCommands = {
+        "pacman -R ada-development-meta --noconfirm",
+        "pacman -R geany-themes --noconfirm",
+        "pacman -R geany visual-studio-code-bin zed jetbrains-toolbox github-desktop sublime-text-4 --noconfirm"
+    };
+
+    if (yayInstalled) {
+        removeCommands.append("yay -Yc --noconfirm");
+    } else {
+        removeCommands.append("pacman -Rns &(pacman -Qtdq) --noconfirm");
+    }
+
+    int CurrentStep = 0;
+
+    // **Loop Execution: Process Commands Sequentially**
+    connect(removeADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
+            mutable {
+        if (CurrentStep <removeCommands.size()) {
+            removeADM->start("pkexec", QStringList() << "bash" << "-c" <<
+                                           removeCommands[CurrentStep]);
+
+            progressValue += (100 / removeCommands.size()); // Update progress dynamically
+            progress->setValue(qMin(progressValue, 95));
+            QCoreApplication::processEvents();
+
+            CurrentStep++; // Move to next command in sequence
+        } else {
+            progress->setValue(100);
+            QMessageBox::information(nullptr, "Ada Development Meta Removed",
+                                     "Ada Development Meta packages have been successfully removed");
+            progress->deleteLater();
+            removeADM->deleteLater();
+            monitorTimer->deleteLater();
+        }
+    });
+
+    removeADM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[CurrentStep]); // Start first commands
+    monitorTimer->start(250);
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: CHAOTIC-AUR
+//////////////////////////////////////////////////
+void Widget::chaoticAUR() {
+
+    QProcess addChaoticAUR;
+    addChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" <<
+                        "pacman-key --recv-key 3056513887B78AEB")
+}
+
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
 /// START MAIN FUNCTION
@@ -415,7 +553,8 @@ Widget::Widget(QWidget *parent)
     QGridLayout *addonsLayout = new QGridLayout(addonsPage);
     QPushButton *addonsBackButton = new QPushButton("Back", this);
 
-    // Functional Buttons Addons Layout
+    // ** Functional Buttons Addons Layout ** //
+    // *Ada Gaming Meta
     QPushButton *adaGamingMetaButton = new QPushButton(this);
     QProcess checkAGMinstalled;
     checkAGMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
@@ -426,9 +565,24 @@ Widget::Widget(QWidget *parent)
     } else {
         adaGamingMetaButton->setText("Install Ada Gaming Meta");
     }
+    // *Ada Development Meta
+    QPushButton *adaDevelopmentMetaButton = new QPushButton(this);
+    QProcess checkADMinstalled;
+    checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
+    checkADMinstalled.waitForFinished();
+
+    if (checkADMinstalled.exitCode() == 0) {
+        adaDevelopmentMetaButton->setText("Remove Ada Development Meta");
+    } else {
+        adaDevelopmentMetaButton->setText("Install Ada Development Meta");
+    }
+    // *ChaoticAUR Button
+    QPushButton *chaoticAURButton = new QPushButton(this);
 
     /* === Positioning Buttons === */
     addonsLayout->addWidget(adaGamingMetaButton);
+    addonsLayout->addWidget(adaDevelopmentMetaButton);
+    addonsLayout->addWidget(chaoticAURButton);
 
     // Push Back-button to bottom dynamically
     addonsLayout->setRowStretch(4, 1);
@@ -436,7 +590,8 @@ Widget::Widget(QWidget *parent)
     addonsPage->setLayout(addonsLayout);
 
     /* === Connections === */
-    addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton);
+    addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
+                           adaDevelopmentMetaButton, chaoticAURButton);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== End Pages =====
@@ -475,7 +630,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 }
 
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *adaGamingMetaButton) {
+                                    QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton) {
     // Navigation connections
     connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(2); // Switch to Addons page
@@ -484,6 +639,8 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         stackedWidget->setCurrentIndex(0); // Switch back to Main page
     });
 
+    // Connecting Buttons to their respective Functions
+    //** Ada Gaming Meta **//
     connect(adaGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
         if(adaGamingMetaButton->text() == "Install Ada Gaming Meta") {
             adaGamingMetaButton->setText("Remove Ada Gaming Meta");
@@ -491,6 +648,26 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         } else {
             adaGamingMetaButton->setText("Install Ada Gaming Meta");
             removeAdaGamingMeta();
+        }
+    });
+    //** Ada Development Meta **//
+    connect(adaDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
+        if(adaDevelopmentButton->text() == "Install Ada Development Meta") {
+            adaDevelopmentButton->setText("Remove Ada Development Meta");
+            adaDevelopmentMeta();
+        } else {
+            adaDevelopmentButton->setText("Install Ada Development Meta");
+            removeAdaDevelopmentMeta();
+        }
+    });
+    //** Chaotic AUR **//
+    connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
+        if(chaoticAURButton->text() == "Add Chaotic AUR repositories") {
+        chaoticAURButton->setText("Remove Chaotic AUR Repositories");
+        chaoticAUR();
+        } else {
+            chaoticAURButton->setText("Add Chaotic AUR Repositories");
+            removeChaoticAUR();
         }
     });
 }

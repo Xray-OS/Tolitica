@@ -32,8 +32,12 @@ private slots:
     // ADDONS
     void adaGamingMeta();
     void removeAdaGamingMeta();
+    void adaDevelopmentMeta();
+    void removeAdaDevelopmentMeta();
+    void chaoticAUR();
+    void removeChaoticAUR();
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                QPushButton *adaGamingMetaButton);
+                                QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton);
 
 private:
     Ui::Widget *ui;
