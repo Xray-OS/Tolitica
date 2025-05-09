@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
-    QByteArrayData data[25];
-    char stringdata0[400];
+    QByteArrayData data[30];
+    char stringdata0[486];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -52,11 +52,16 @@ QT_MOC_LITERAL(16, 228, 13), // "adaGamingMeta"
 QT_MOC_LITERAL(17, 242, 19), // "removeAdaGamingMeta"
 QT_MOC_LITERAL(18, 262, 18), // "adaDevelopmentMeta"
 QT_MOC_LITERAL(19, 281, 24), // "removeAdaDevelopmentMeta"
-QT_MOC_LITERAL(20, 306, 22), // "addonsSetupConnections"
-QT_MOC_LITERAL(21, 329, 12), // "addonsButton"
-QT_MOC_LITERAL(22, 342, 16), // "addonsBackButton"
-QT_MOC_LITERAL(23, 359, 19), // "adaGamingMetaButton"
-QT_MOC_LITERAL(24, 379, 20) // "adaDevelopmentButton"
+QT_MOC_LITERAL(20, 306, 10), // "chaoticAUR"
+QT_MOC_LITERAL(21, 317, 16), // "removeChaoticAUR"
+QT_MOC_LITERAL(22, 334, 21), // "checkChaoticAURStatus"
+QT_MOC_LITERAL(23, 356, 18), // "backupPacmanConfig"
+QT_MOC_LITERAL(24, 375, 22), // "addonsSetupConnections"
+QT_MOC_LITERAL(25, 398, 12), // "addonsButton"
+QT_MOC_LITERAL(26, 411, 16), // "addonsBackButton"
+QT_MOC_LITERAL(27, 428, 19), // "adaGamingMetaButton"
+QT_MOC_LITERAL(28, 448, 20), // "adaDevelopmentButton"
+QT_MOC_LITERAL(29, 469, 16) // "chaoticAURButton"
 
     },
     "Widget\0cleanOrphans\0\0cleanPkgCache\0"
@@ -67,10 +72,12 @@ QT_MOC_LITERAL(24, 379, 20) // "adaDevelopmentButton"
     "cleanPkgCacheButton\0updateSystemButton\0"
     "removeDBLockButton\0adaGamingMeta\0"
     "removeAdaGamingMeta\0adaDevelopmentMeta\0"
-    "removeAdaDevelopmentMeta\0"
-    "addonsSetupConnections\0addonsButton\0"
-    "addonsBackButton\0adaGamingMetaButton\0"
-    "adaDevelopmentButton"
+    "removeAdaDevelopmentMeta\0chaoticAUR\0"
+    "removeChaoticAUR\0checkChaoticAURStatus\0"
+    "backupPacmanConfig\0addonsSetupConnections\0"
+    "addonsButton\0addonsBackButton\0"
+    "adaGamingMetaButton\0adaDevelopmentButton\0"
+    "chaoticAURButton"
 };
 #undef QT_MOC_LITERAL
 
@@ -80,7 +87,7 @@ static const uint qt_meta_data_Widget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -88,16 +95,20 @@ static const uint qt_meta_data_Widget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x08 /* Private */,
-       3,    0,   65,    2, 0x08 /* Private */,
-       4,    0,   66,    2, 0x08 /* Private */,
-       5,    0,   67,    2, 0x08 /* Private */,
-       6,    7,   68,    2, 0x08 /* Private */,
-      16,    0,   83,    2, 0x08 /* Private */,
-      17,    0,   84,    2, 0x08 /* Private */,
-      18,    0,   85,    2, 0x08 /* Private */,
-      19,    0,   86,    2, 0x08 /* Private */,
-      20,    5,   87,    2, 0x08 /* Private */,
+       1,    0,   84,    2, 0x08 /* Private */,
+       3,    0,   85,    2, 0x08 /* Private */,
+       4,    0,   86,    2, 0x08 /* Private */,
+       5,    0,   87,    2, 0x08 /* Private */,
+       6,    7,   88,    2, 0x08 /* Private */,
+      16,    0,  103,    2, 0x08 /* Private */,
+      17,    0,  104,    2, 0x08 /* Private */,
+      18,    0,  105,    2, 0x08 /* Private */,
+      19,    0,  106,    2, 0x08 /* Private */,
+      20,    0,  107,    2, 0x08 /* Private */,
+      21,    0,  108,    2, 0x08 /* Private */,
+      22,    0,  109,    2, 0x08 /* Private */,
+      23,    0,  110,    2, 0x08 /* Private */,
+      24,    6,  111,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -109,7 +120,11 @@ static const uint qt_meta_data_Widget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   21,   22,   23,   24,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Int,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   25,   26,   27,   28,   29,
 
        0        // eod
 };
@@ -129,7 +144,12 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 6: _t->removeAdaGamingMeta(); break;
         case 7: _t->adaDevelopmentMeta(); break;
         case 8: _t->removeAdaDevelopmentMeta(); break;
-        case 9: _t->addonsSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5]))); break;
+        case 9: _t->chaoticAUR(); break;
+        case 10: _t->removeChaoticAUR(); break;
+        case 11: { int _r = _t->checkChaoticAURStatus();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 12: _t->backupPacmanConfig(); break;
+        case 13: _t->addonsSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -149,9 +169,10 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QStackedWidget* >(); break;
             }
             break;
-        case 9:
+        case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 5:
             case 4:
             case 3:
             case 2:
@@ -194,13 +215,13 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 14;
     }
     return _id;
 }

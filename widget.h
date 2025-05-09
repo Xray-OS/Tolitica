@@ -36,6 +36,8 @@ private slots:
     void removeAdaDevelopmentMeta();
     void chaoticAUR();
     void removeChaoticAUR();
+    int checkChaoticAURStatus();
+    void backupPacmanConfig();
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                 QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton);
 

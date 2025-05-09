@@ -478,13 +478,145 @@ void Widget::removeAdaDevelopmentMeta() {
 }
 
 ///////////////////////////////////////////////////
+/// ADDONS:: CHECK CHAOTIC-AUR STATUS
+//////////////////////////////////////////////////
+int Widget::checkChaoticAURStatus() {
+    QProcess checkChaotic;
+
+    // Check if the key is properly imported
+    checkChaotic.start("bash", QStringList() << "-c" << "pacman-key --list-keys 3056513887B78AEB");
+    checkChaotic.waitForFinished();
+    bool keyExist = (checkChaotic.exitCode() == 0);
+
+    // Check if the required packages are installed
+    checkChaotic.start("bash", QStringList() << "-c" << "pacman -Q chaotic-keyring chaotic-mirrorlist");
+    checkChaotic.waitForFinished();
+    bool packagesInstalled = (checkChaotic.exitCode() == 0);
+
+    // **Fix: Check if repo exists in pacman.conf
+    // **Check if [chaotic-aur] header exists**
+    checkChaotic.start("bash", QStringList() << "-c" << "grep -q '\\[chaotic-aur\\]' /etc/pacman.conf");
+    checkChaotic.waitForFinished();
+    bool repoHeaderExists = (checkChaotic.exitCode() == 0);
+
+    // **Check if Include line exists**
+    checkChaotic.start("bash", QStringList() << "-c" << "grep -q 'Include = /etc/pacman.d/chaotic-mirrorlist' /etc/pacman.conf");
+    checkChaotic.waitForFinished();
+    bool includeLineExists = (checkChaotic.exitCode() == 0);
+
+    // **Refined Status Logic**
+    if (keyExist && packagesInstalled && repoHeaderExists && includeLineExists) {
+        return 1; // Fully configured
+    } else if (!keyExist && !packagesInstalled && !repoHeaderExists && !includeLineExists) {
+        return 2; // No setup detected
+    } else {
+        return 3; // Partial setup detected (Repair needed)
+    }
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: BACKUP PACMAN CONFIG FUNCTION
+//////////////////////////////////////////////////
+void Widget::backupPacmanConfig() {
+    int status = checkChaoticAURStatus();
+
+    if (status != 1) {
+        return; // Backup is only made when status is 1 (working)
+    }
+
+    QProcess createBackupDir;
+    createBackupDir.start("pkexec", QStringList() << "bash" << "-c" << "mkdir -p /usr/share/tolitica-backups");
+    createBackupDir.waitForFinished();
+
+    QString errorOutput = createBackupDir.readAllStandardError();
+    if (!errorOutput.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Failed to create backup directory:\n" + errorOutput);
+    }
+
+    QProcess backupCheck;
+    backupCheck.start("bash", QStringList() << "-c" << "cmp -s /etc/pacman.conf /usr/share/tolitica-backups/pacman.conf || pkexec cp -r /etc/pacman.conf /usr/share/tolitica-backups/");
+    backupCheck.waitForFinished();
+}
+
+///////////////////////////////////////////////////
 /// ADDONS:: CHAOTIC-AUR
 //////////////////////////////////////////////////
 void Widget::chaoticAUR() {
+    int status = checkChaoticAURStatus();
 
     QProcess addChaoticAUR;
-    addChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" <<
-                        "pacman-key --recv-key 3056513887B78AEB")
+
+    if(status == 2) {
+        addChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" <<
+                            "pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
+                            "pkexec pacman-key --lsign-key 3056513887B78AEB && "
+                            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm && "
+                            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm &&"
+                            "echo -e '\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist' | pkexec tee -a /etc/pacman.conf");
+        addChaoticAUR.waitForFinished();
+        backupPacmanConfig();
+
+        if(addChaoticAUR.exitCode() == 0) {
+            QMessageBox::information(this, "Chaotic AUR Added", "Chaotic AUR repositories has been successfully setup in Ada");
+        } else {
+            QMessageBox::warning(this, "error", "error: " + addChaoticAUR.readAllStandardError());
+        }
+    }
+    //**Fix broken repo entries if Chaotic AUR is partially broken or if the repo is messed
+    if (status == 3) {
+        QProcess restoreChaotic;
+
+        if(!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
+            QProcess removeRepo;
+            removeRepo.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf");
+            removeRepo.waitForFinished();
+;        }
+        restoreChaotic.start("pkexec", QStringList() << "bash" << "-c" << "pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm &&"
+                                                                          "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm &&"
+                                                                          "pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
+                                                                          "pkexec pacman-key --lsign-key 3056513887B78AEB");
+        restoreChaotic.waitForFinished();
+
+        restoreChaotic.start("pkexec", QStringList() << "bash" << "-c" << "cp -r /usr/share/tolitica-backups/pacman.conf /etc/pacman.conf");
+        restoreChaotic.waitForFinished();
+
+        if(restoreChaotic.exitCode() == 0)
+        {
+            QMessageBox::information(this, "Restore complete", "Chaotic AUR has been repaired!");
+        } else {
+            QMessageBox::warning(this, "Error", "Something went wrong restoring pacman.conf" + restoreChaotic.readAllStandardError());
+        }
+    }
+
+    // **Fix broken repo entries if Chaotic AUR is partially broken or if the repo is messed**
+
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: REMOVE-CHAOTIC-AUR
+//////////////////////////////////////////////////
+void Widget::removeChaoticAUR() {
+    QProcess removeChaoticAUR;
+    removeChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf && "
+                           "pkexec pacman -Rns chaotic-keyring chaotic-mirrorlist --noconfirm &&"
+                           "pkexec pacman-key --delete 3056513887B78AEB");
+    removeChaoticAUR.waitForFinished();
+    // deleting pacman.conf from /usr/share/tolitica-backups if it was already created
+    if (QFile::exists("/usr/share/tolitica-backups/pacman.conf")) {
+        QProcess delPacman;
+
+        delPacman.start("pkexec", QStringList() << "bash" << "-c" << "rm -r /usr/share/tolitica-backups/pacman.conf");
+        delPacman.waitForFinished();
+    }
+
+    // Capture standard error output
+    QString errorOutput = removeChaoticAUR.readAllStandardError();
+
+    if (removeChaoticAUR.exitCode() == QProcess::NormalExit && removeChaoticAUR.exitCode() == 0) {
+        QMessageBox::information(this, "Chaotic AUR Removed", "Chaotic AUR repositories have been removed successfully");
+    } else {
+        QMessageBox::warning(this, "Error", "Something went wrong removing Chaotic AUR repositories" + errorOutput);
+    }
 }
 
 // == I LOVE CPP ==================================
@@ -579,6 +711,11 @@ Widget::Widget(QWidget *parent)
     // *ChaoticAUR Button
     QPushButton *chaoticAURButton = new QPushButton(this);
 
+    int chaoticStatus = checkChaoticAURStatus();
+    chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
+                              chaoticStatus == 2 ? "Add Chaotic AUR" :
+                              "Repair Chaotic AUR");
+
     /* === Positioning Buttons === */
     addonsLayout->addWidget(adaGamingMetaButton);
     addonsLayout->addWidget(adaDevelopmentMetaButton);
@@ -662,12 +799,22 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     });
     //** Chaotic AUR **//
     connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
-        if(chaoticAURButton->text() == "Add Chaotic AUR repositories") {
-        chaoticAURButton->setText("Remove Chaotic AUR Repositories");
-        chaoticAUR();
-        } else {
-            chaoticAURButton->setText("Add Chaotic AUR Repositories");
+        int chaoticStatus = checkChaoticAURStatus();
+
+        if (chaoticStatus == 2) { // Not installed
+            chaoticAUR();
+            chaoticAURButton->setText("Remove Chaotic AUR");
+        } else if (chaoticStatus == 1) { // Fully installed
             removeChaoticAUR();
+            chaoticAURButton->setText("Add Chaotic AUR");
+        } else if (chaoticStatus == 3) { // Run repair
+            chaoticAUR();
+
+            // **Recheck status after repair**
+            chaoticStatus = checkChaoticAURStatus();
+            chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
+                                      chaoticStatus == 2 ? "Add Chaotic AUR" :
+                                        "Repair Chaotic AUR");
         }
     });
 }
