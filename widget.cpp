@@ -544,6 +544,11 @@ void Widget::backupPacmanConfig() {
 void Widget::chaoticAUR() {
     int status = checkChaoticAURStatus();
 
+    if (status == 1)
+    {
+        removeChaoticAUR();
+    }
+
     QProcess addChaoticAUR;
 
     if(status == 2) {
@@ -617,6 +622,189 @@ void Widget::removeChaoticAUR() {
     } else {
         QMessageBox::warning(this, "Error", "Something went wrong removing Chaotic AUR repositories" + errorOutput);
     }
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: CHECK VMWARE SERVICES STATUS
+//////////////////////////////////////////////////
+bool Widget::vmwareServiceStatus() {
+    QStringList services = {
+        "vmware-networks.service",
+        "vmware-usbarbitrator.service"
+    };
+
+    bool allServicesActive = true;
+
+    for (const QString &service : services) {
+        QProcess checkEnabled;
+        checkEnabled.start("bash", QStringList() << "-c" << "systemctl is-enabled " + service);
+        checkEnabled.waitForFinished();
+        bool isEnabled = (checkEnabled.readAllStandardOutput().trimmed() == "enabled");
+
+        QProcess checkActive;
+        checkActive.start("bash", QStringList() << "-c" << "systemctl is-active " + service);
+        checkActive.waitForFinished();
+        bool isActive = (checkActive.readAllStandardOutput().trimmed() == "active");
+
+        if (!isActive || !isEnabled) {
+            allServicesActive = false;
+            break;
+        }
+
+    }
+
+    return allServicesActive;
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: CHECK VMWARE STATUS
+//////////////////////////////////////////////////
+int Widget::vmwareStatus() {
+    QProcess checkVMware;
+
+    // Check if the pkg is installed
+    checkVMware.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
+    checkVMware.waitForFinished();
+
+    bool pkgInstalled = (checkVMware.exitCode() == 0);
+
+    if (pkgInstalled && vmwareServiceStatus()) {
+        return 0;
+    }
+    if (!pkgInstalled  && !vmwareServiceStatus())
+    {
+        return 1;
+    }
+    else {
+        return 2;
+    }
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: ADD VMWARE SUPPORT
+//////////////////////////////////////////////////
+void Widget::addVMware(QPushButton *vmwButton) {
+
+    QProcess vmInstalled;
+    vmInstalled.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
+    vmInstalled.waitForFinished();
+
+    bool pkgInstalled = (vmInstalled.exitCode() == 0);
+
+    if (!pkgInstalled) {
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            this, "VMware Workstation is not installed", "Do you want to install it?");
+        if (reply == QMessageBox::No) {
+            return;
+        }
+
+        QProcess *installVMware = new QProcess(this);
+        QTimer *monitorTimer = new QTimer(this);
+
+        // Create the progress bar dynamically
+        QProgressDialog *progress = new QProgressDialog("Installing VMware Workstation...", nullptr, 0, 100, this);
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(nullptr);
+        progress->show();
+
+        int progressValue = 0;
+
+        // **Real-Time progress update using process output**
+        connect(installVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+            progressValue += 5;
+            progress->setValue(qMin(progressValue, 95));
+            QCoreApplication::processEvents();
+        });
+
+        // **Update the button immediately hen installation is completed**
+        connect(installVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
+                mutable {
+                    QProcess checkInstalled;
+                    checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
+                    checkInstalled.waitForFinished();
+
+                    if (checkInstalled.exitCode() == 0) {
+                        progress->setValue(100);
+                        QMessageBox::information(nullptr, "VMware Workstation Installed", "VMware Workstation was installed successfully!");
+
+                        // ** Refresh the button text dynamically**
+                        int updatedStatus = vmwareStatus();
+                        vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
+
+                    } else {
+                        progress->setValue(100);
+                        QMessageBox::warning(nullptr, "Error", "Something went wrong installing VMware Workstation");
+
+                    }
+
+                    // Cleanup
+                    progress->deleteLater();
+                    installVMware->deleteLater();
+                    monitorTimer->deleteLater();
+                });
+
+        // Start installation
+        installVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S vmware-workstation --noconfirm");
+        monitorTimer->start(250);
+    }
+    if (!vmwareServiceStatus()) {
+        QProcess enableServices;
+        enableServices.start("pkexec", QStringList() << "bash" << "-c" << "systemctl enable vmware-networks-configuration.service && pkexec systemctl start vmware-networks-configuration.service &&"
+                                                                          "pkexec systemctl enable vmware-networks.service && pkexec systemctl start vmware-networks.service &&"
+                                                                          "pkexec systemctl enable vmware-usbarbitrator.service && pkexec systemctl start vmware-usbarbitrator.service");
+        enableServices.waitForFinished();
+        QMessageBox::information(this, "Services Enabled and Active",
+                                 "All VMware Workstation services has been Activated successfully");
+        int updatedStatus = vmwareStatus();
+        vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
+    }
+
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: REMOVE VMWARE
+//////////////////////////////////////////////////
+void Widget::removeVMware(QPushButton *vmwButton) {
+    QProcess *removeVMware = new QProcess(this);
+    QTimer *monitorTimer = new QTimer(this);
+
+    QProgressDialog *progress = new QProgressDialog("Removing VMware Workstation...", nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    connect(removeVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+        QCoreApplication::processEvents();
+    });
+
+    connect(removeVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]() mutable {
+        QProcess checkRemoved;
+        checkRemoved.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
+        checkRemoved.waitForFinished();
+
+        if (checkRemoved.exitCode() != 0) {
+            progress->setValue(100);
+            QMessageBox::information(nullptr, "VMware Workstation Removed",
+                                     "VMware Workstation has been removed successfully");
+            // **Update button dynamically**
+            int updatedStatus = vmwareStatus();
+            vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
+        } else {
+            progress->setValue(100);
+            QMessageBox::warning(nullptr, "Error", "Something went wrong removing VMware Workstation!");
+        }
+
+        progress->deleteLater();
+        removeVMware->deleteLater();
+        monitorTimer->deleteLater();
+    });
+
+    removeVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Rns vmware-workstation --noconfirm");
+    monitorTimer->start(250);
 }
 
 // == I LOVE CPP ==================================
@@ -715,11 +903,21 @@ Widget::Widget(QWidget *parent)
     chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
                               chaoticStatus == 2 ? "Add Chaotic AUR" :
                               "Repair Chaotic AUR");
+    // **Add VMware Support**//
+    QPushButton *vmwButton = new QPushButton(this);
+
+    int vmStatus = vmwareStatus();
+    if(vmStatus == 0) {
+        vmwButton->setText("Remove VMware Workstation");
+    } else {
+        vmwButton->setText("Install/Enable VMware Workstation");
+    }
 
     /* === Positioning Buttons === */
     addonsLayout->addWidget(adaGamingMetaButton);
     addonsLayout->addWidget(adaDevelopmentMetaButton);
     addonsLayout->addWidget(chaoticAURButton);
+    addonsLayout->addWidget(vmwButton);
 
     // Push Back-button to bottom dynamically
     addonsLayout->setRowStretch(4, 1);
@@ -728,7 +926,7 @@ Widget::Widget(QWidget *parent)
 
     /* === Connections === */
     addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
-                           adaDevelopmentMetaButton, chaoticAURButton);
+                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== End Pages =====
@@ -767,7 +965,8 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 }
 
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton) {
+                                    QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
+                                    QPushButton *vmwButton) {
     // Navigation connections
     connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(2); // Switch to Addons page
@@ -801,22 +1000,31 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
         int chaoticStatus = checkChaoticAURStatus();
 
-        if (chaoticStatus == 2) { // Not installed
+        if (chaoticStatus == 1) { // Fully installed
             chaoticAUR();
-            chaoticAURButton->setText("Remove Chaotic AUR");
-        } else if (chaoticStatus == 1) { // Fully installed
-            removeChaoticAUR();
-            chaoticAURButton->setText("Add Chaotic AUR");
+        } else if (chaoticStatus == 2) { // Not installed
+            chaoticAUR();
         } else if (chaoticStatus == 3) { // Run repair
             chaoticAUR();
 
-            // **Recheck status after repair**
-            chaoticStatus = checkChaoticAURStatus();
-            chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
+        }
+        // **Recheck status after repair**
+        chaoticStatus = checkChaoticAURStatus();
+        chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
                                       chaoticStatus == 2 ? "Add Chaotic AUR" :
-                                        "Repair Chaotic AUR");
+                                      "Repair Chaotic AUR");
+    });
+    //** Add VMware Support **//
+    connect(vmwButton, &QPushButton::clicked, this, [=]() mutable {
+        int vmStatus = vmwareStatus();
+
+        if(vmStatus == 0) { // Fully installed
+            removeVMware(vmwButton);
+        } else { // Not installed or partially installed
+            addVMware(vmwButton);
         }
     });
+
 }
 
 Widget::~Widget()

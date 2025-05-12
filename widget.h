@@ -38,8 +38,13 @@ private slots:
     void removeChaoticAUR();
     int checkChaoticAURStatus();
     void backupPacmanConfig();
+    void addVMware(QPushButton *vmwButton);
+    int vmwareStatus();
+    bool vmwareServiceStatus();
+    void removeVMware(QPushButton *vmwButton);
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton);
+                                QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
+                                QPushButton *vmwButton);
 
 private:
     Ui::Widget *ui;

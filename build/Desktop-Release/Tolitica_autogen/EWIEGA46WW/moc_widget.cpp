@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
-    QByteArrayData data[30];
-    char stringdata0[486];
+    QByteArrayData data[35];
+    char stringdata0[552];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,12 +56,17 @@ QT_MOC_LITERAL(20, 306, 10), // "chaoticAUR"
 QT_MOC_LITERAL(21, 317, 16), // "removeChaoticAUR"
 QT_MOC_LITERAL(22, 334, 21), // "checkChaoticAURStatus"
 QT_MOC_LITERAL(23, 356, 18), // "backupPacmanConfig"
-QT_MOC_LITERAL(24, 375, 22), // "addonsSetupConnections"
-QT_MOC_LITERAL(25, 398, 12), // "addonsButton"
-QT_MOC_LITERAL(26, 411, 16), // "addonsBackButton"
-QT_MOC_LITERAL(27, 428, 19), // "adaGamingMetaButton"
-QT_MOC_LITERAL(28, 448, 20), // "adaDevelopmentButton"
-QT_MOC_LITERAL(29, 469, 16) // "chaoticAURButton"
+QT_MOC_LITERAL(24, 375, 9), // "addVMware"
+QT_MOC_LITERAL(25, 385, 9), // "vmwButton"
+QT_MOC_LITERAL(26, 395, 12), // "vmwareStatus"
+QT_MOC_LITERAL(27, 408, 19), // "vmwareServiceStatus"
+QT_MOC_LITERAL(28, 428, 12), // "removeVMware"
+QT_MOC_LITERAL(29, 441, 22), // "addonsSetupConnections"
+QT_MOC_LITERAL(30, 464, 12), // "addonsButton"
+QT_MOC_LITERAL(31, 477, 16), // "addonsBackButton"
+QT_MOC_LITERAL(32, 494, 19), // "adaGamingMetaButton"
+QT_MOC_LITERAL(33, 514, 20), // "adaDevelopmentButton"
+QT_MOC_LITERAL(34, 535, 16) // "chaoticAURButton"
 
     },
     "Widget\0cleanOrphans\0\0cleanPkgCache\0"
@@ -74,7 +79,9 @@ QT_MOC_LITERAL(29, 469, 16) // "chaoticAURButton"
     "removeAdaGamingMeta\0adaDevelopmentMeta\0"
     "removeAdaDevelopmentMeta\0chaoticAUR\0"
     "removeChaoticAUR\0checkChaoticAURStatus\0"
-    "backupPacmanConfig\0addonsSetupConnections\0"
+    "backupPacmanConfig\0addVMware\0vmwButton\0"
+    "vmwareStatus\0vmwareServiceStatus\0"
+    "removeVMware\0addonsSetupConnections\0"
     "addonsButton\0addonsBackButton\0"
     "adaGamingMetaButton\0adaDevelopmentButton\0"
     "chaoticAURButton"
@@ -87,7 +94,7 @@ static const uint qt_meta_data_Widget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -95,20 +102,24 @@ static const uint qt_meta_data_Widget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x08 /* Private */,
-       3,    0,   85,    2, 0x08 /* Private */,
-       4,    0,   86,    2, 0x08 /* Private */,
-       5,    0,   87,    2, 0x08 /* Private */,
-       6,    7,   88,    2, 0x08 /* Private */,
-      16,    0,  103,    2, 0x08 /* Private */,
-      17,    0,  104,    2, 0x08 /* Private */,
-      18,    0,  105,    2, 0x08 /* Private */,
-      19,    0,  106,    2, 0x08 /* Private */,
-      20,    0,  107,    2, 0x08 /* Private */,
-      21,    0,  108,    2, 0x08 /* Private */,
-      22,    0,  109,    2, 0x08 /* Private */,
-      23,    0,  110,    2, 0x08 /* Private */,
-      24,    6,  111,    2, 0x08 /* Private */,
+       1,    0,  104,    2, 0x08 /* Private */,
+       3,    0,  105,    2, 0x08 /* Private */,
+       4,    0,  106,    2, 0x08 /* Private */,
+       5,    0,  107,    2, 0x08 /* Private */,
+       6,    7,  108,    2, 0x08 /* Private */,
+      16,    0,  123,    2, 0x08 /* Private */,
+      17,    0,  124,    2, 0x08 /* Private */,
+      18,    0,  125,    2, 0x08 /* Private */,
+      19,    0,  126,    2, 0x08 /* Private */,
+      20,    0,  127,    2, 0x08 /* Private */,
+      21,    0,  128,    2, 0x08 /* Private */,
+      22,    0,  129,    2, 0x08 /* Private */,
+      23,    0,  130,    2, 0x08 /* Private */,
+      24,    1,  131,    2, 0x08 /* Private */,
+      26,    0,  134,    2, 0x08 /* Private */,
+      27,    0,  135,    2, 0x08 /* Private */,
+      28,    1,  136,    2, 0x08 /* Private */,
+      29,    7,  139,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -124,7 +135,11 @@ static const uint qt_meta_data_Widget[] = {
     QMetaType::Void,
     QMetaType::Int,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   25,   26,   27,   28,   29,
+    QMetaType::Void, 0x80000000 | 9,   25,
+    QMetaType::Int,
+    QMetaType::Bool,
+    QMetaType::Void, 0x80000000 | 9,   25,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   30,   31,   32,   33,   34,   25,
 
        0        // eod
 };
@@ -149,7 +164,13 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 11: { int _r = _t->checkChaoticAURStatus();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 12: _t->backupPacmanConfig(); break;
-        case 13: _t->addonsSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6]))); break;
+        case 13: _t->addVMware((*reinterpret_cast< QPushButton*(*)>(_a[1]))); break;
+        case 14: { int _r = _t->vmwareStatus();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 15: { bool _r = _t->vmwareServiceStatus();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        case 16: _t->removeVMware((*reinterpret_cast< QPushButton*(*)>(_a[1]))); break;
+        case 17: _t->addonsSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6])),(*reinterpret_cast< QPushButton*(*)>(_a[7]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -172,6 +193,21 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QPushButton* >(); break;
+            }
+            break;
+        case 16:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QPushButton* >(); break;
+            }
+            break;
+        case 17:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 6:
             case 5:
             case 4:
             case 3:
@@ -215,13 +251,13 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 18;
     }
     return _id;
 }
