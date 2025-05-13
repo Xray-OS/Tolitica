@@ -345,6 +345,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QComboBox \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
   /usr/include/qt/QtWidgets/QWidget \
@@ -354,6 +355,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -793,6 +795,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: Tolitica_autoge
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QComboBox \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
   /usr/include/qt/QtWidgets/QWidget \
@@ -802,6 +805,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: Tolitica_autoge
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -850,18 +854,23 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
+  /usr/include/bits/confname.h \
   /usr/include/bits/cpu-set.h \
   /usr/include/bits/endian.h \
   /usr/include/bits/endianness.h \
+  /usr/include/bits/environments.h \
   /usr/include/bits/errno.h \
   /usr/include/bits/floatn-common.h \
   /usr/include/bits/floatn.h \
+  /usr/include/bits/getopt_core.h \
+  /usr/include/bits/getopt_posix.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/local_lim.h \
   /usr/include/bits/locale.h \
   /usr/include/bits/long-double.h \
   /usr/include/bits/posix1_lim.h \
   /usr/include/bits/posix2_lim.h \
+  /usr/include/bits/posix_opt.h \
   /usr/include/bits/pthread_stack_min-dynamic.h \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/pthreadtypes.h \
@@ -910,6 +919,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/bits/typesizes.h \
   /usr/include/bits/uintn-identity.h \
   /usr/include/bits/uio_lim.h \
+  /usr/include/bits/unistd_ext.h \
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
@@ -1074,6 +1084,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
   /usr/include/limits.h \
+  /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/linux/posix_types.h \
@@ -1173,12 +1184,16 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt/QtGui/qmatrix.h \
   /usr/include/qt/QtGui/qpaintdevice.h \
   /usr/include/qt/QtGui/qpalette.h \
+  /usr/include/qt/QtGui/qpen.h \
   /usr/include/qt/QtGui/qpixelformat.h \
   /usr/include/qt/QtGui/qpixmap.h \
   /usr/include/qt/QtGui/qpolygon.h \
   /usr/include/qt/QtGui/qregion.h \
   /usr/include/qt/QtGui/qrgb.h \
   /usr/include/qt/QtGui/qrgba64.h \
+  /usr/include/qt/QtGui/qtextcursor.h \
+  /usr/include/qt/QtGui/qtextformat.h \
+  /usr/include/qt/QtGui/qtextoption.h \
   /usr/include/qt/QtGui/qtgui-config.h \
   /usr/include/qt/QtGui/qtguiglobal.h \
   /usr/include/qt/QtGui/qtransform.h \
@@ -1186,6 +1201,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QGroupBox \
+  /usr/include/qt/QtWidgets/QInputDialog \
   /usr/include/qt/QtWidgets/QMessageBox \
   /usr/include/qt/QtWidgets/QProgressDialog \
   /usr/include/qt/QtWidgets/QPushButton \
@@ -1202,8 +1218,10 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qgridlayout.h \
   /usr/include/qt/QtWidgets/qgroupbox.h \
+  /usr/include/qt/QtWidgets/qinputdialog.h \
   /usr/include/qt/QtWidgets/qlayout.h \
   /usr/include/qt/QtWidgets/qlayoutitem.h \
+  /usr/include/qt/QtWidgets/qlineedit.h \
   /usr/include/qt/QtWidgets/qmessagebox.h \
   /usr/include/qt/QtWidgets/qprogressdialog.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
@@ -1230,6 +1248,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/sys/single_threaded.h \
   /usr/include/sys/types.h \
   /usr/include/time.h \
+  /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
@@ -1578,6 +1597,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o: /home/angel/Documents/Development/_APPS/Toli
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QApplication \
   /usr/include/qt/QtWidgets/QComboBox \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
   /usr/include/qt/QtWidgets/QWidget \
@@ -1588,6 +1608,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o: /home/angel/Documents/Development/_APPS/Toli
   /usr/include/qt/QtWidgets/qapplication.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -1982,6 +2003,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: /home/angel/Documents/Development/_APPS/To
   /usr/include/qt/QtWidgets/QApplication \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QGroupBox \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QMessageBox \
   /usr/include/qt/QtWidgets/QProgressDialog \
   /usr/include/qt/QtWidgets/QPushButton \
@@ -1999,6 +2021,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: /home/angel/Documents/Development/_APPS/To
   /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qgridlayout.h \
   /usr/include/qt/QtWidgets/qgroupbox.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
   /usr/include/qt/QtWidgets/qlayout.h \
   /usr/include/qt/QtWidgets/qlayoutitem.h \
   /usr/include/qt/QtWidgets/qmessagebox.h \
@@ -2203,6 +2226,24 @@ CMakeFiles/Tolitica.dir/widget.cpp.o:
 
 Tolitica_autogen/include/ui_widget.h:
 
+/usr/include/qt/QtWidgets/qapplication.h:
+
+/usr/include/qt/QtWidgets/QApplication:
+
+/usr/include/qt/QtGui/qguiapplication.h:
+
+/usr/lib/crti.o:
+
+/usr/include/qt/QtCore/qeventloop.h:
+
+/usr/include/qt/QtCore/qcoreevent.h:
+
+/usr/include/qt/QtCore/qcoreapplication.h:
+
+/usr/include/qt/QtWidgets/qprogressdialog.h:
+
+/usr/include/qt/QtWidgets/qmessagebox.h:
+
 /usr/lib/libpcre2-16.so.0:
 
 /usr/include/locale.h:
@@ -2229,11 +2270,15 @@ Tolitica_autogen/include/ui_widget.h:
 
 /usr/include/qt/QtCore/qgenericatomic.h:
 
+/usr/include/qt/QtWidgets/qlabel.h:
+
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake:
 
 /usr/include/c++/15.1.1/chrono:
 
 /usr/include/c++/15.1.1/stdlib.h:
+
+/usr/include/qt/QtGui/qtextformat.h:
 
 /usr/include/c++/15.1.1/ios:
 
@@ -2303,8 +2348,6 @@ Tolitica_autogen/include/ui_widget.h:
 
 /usr/include/c++/15.1.1/bits/stream_iterator.h:
 
-/usr/include/qt/QtGui/qguiapplication.h:
-
 /usr/include/qt/QtCore/qobjectdefs.h:
 
 /usr/share/cmake/Modules/Linker/GNU.cmake:
@@ -2340,6 +2383,10 @@ Tolitica_autogen/include/ui_widget.h:
 /usr/include/c++/15.1.1/type_traits:
 
 /usr/include/endian.h:
+
+/usr/include/qt/QtGui/qinputmethod.h:
+
+/usr/include/stdint.h:
 
 /usr/include/c++/15.1.1/bits/std_mutex.h:
 
@@ -2468,6 +2515,8 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o:
 /usr/lib/libgcc_s.so.1:
 
 /usr/include/c++/15.1.1/bits/list.tcc:
+
+/usr/include/qt/QtWidgets/QInputDialog:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
@@ -2713,6 +2762,8 @@ Tolitica_autogen/moc_predefs.h:
 
 /usr/include/c++/15.1.1/atomic:
 
+/usr/include/qt/QtGui/qpen.h:
+
 /usr/include/bits/types/mbstate_t.h:
 
 /usr/include/c++/15.1.1/bits/stl_algo.h:
@@ -2740,6 +2791,8 @@ Tolitica_autogen/moc_predefs.h:
 /usr/include/qt/QtWidgets/qabstractslider.h:
 
 /usr/include/bits/types/struct_sched_param.h:
+
+/usr/include/qt/QtWidgets/QLabel:
 
 /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake:
 
@@ -2821,10 +2874,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/c++/15.1.1/bits/concept_check.h:
-
-/usr/lib/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake:
-
 /usr/include/c++/15.1.1/unordered_map:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++locale.h:
@@ -2876,8 +2925,6 @@ Tolitica_autogen/EWIEGA46WW/moc_widget.cpp:
 /usr/include/c++/15.1.1/bits/hash_bytes.h:
 
 /usr/include/c++/15.1.1/bits/hashtable_policy.h:
-
-/usr/include/qt/QtCore/qcoreevent.h:
 
 /usr/include/c++/15.1.1/bits/basic_ios.tcc:
 
@@ -3215,7 +3262,11 @@ Tolitica_autogen/mocs_compilation.cpp:
 
 /usr/share/cmake/Modules/Platform/Linker/GNU.cmake:
 
+/usr/include/qt/QtWidgets/qlineedit.h:
+
 /usr/include/c++/15.1.1/ctime:
+
+/usr/include/linux/close_range.h:
 
 /usr/include/qt/QtGui/qpaintdevice.h:
 
@@ -3307,6 +3358,14 @@ Tolitica_autogen/mocs_compilation.cpp:
 
 /usr/include/qt/QtCore/qtextstream.h:
 
+/usr/include/c++/15.1.1/bits/concept_check.h:
+
+/usr/lib/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake:
+
+/usr/include/qt/QtGui/qtextcursor.h:
+
+/usr/include/qt/QtGui/qtextoption.h:
+
 /usr/include/qt/QtWidgets/QGroupBox:
 
 /home/angel/Documents/Development/_APPS/Tolitica/widget.h:
@@ -3321,22 +3380,6 @@ Tolitica_autogen/mocs_compilation.cpp:
 
 /usr/include/qt/QtWidgets/qgroupbox.h:
 
+/usr/include/qt/QtWidgets/qinputdialog.h:
+
 /usr/include/qt/QtWidgets/qlayout.h:
-
-/usr/include/qt/QtWidgets/qmessagebox.h:
-
-/usr/include/qt/QtWidgets/qprogressdialog.h:
-
-/usr/include/qt/QtCore/qcoreapplication.h:
-
-/usr/lib/crti.o:
-
-/usr/include/qt/QtCore/qeventloop.h:
-
-/usr/include/stdint.h:
-
-/usr/include/qt/QtGui/qinputmethod.h:
-
-/usr/include/qt/QtWidgets/QApplication:
-
-/usr/include/qt/QtWidgets/qapplication.h:

@@ -270,6 +270,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt/QtWidgets/qtabwidget.h \
  /usr/include/qt/QtWidgets/qrubberband.h \
  /usr/include/qt/QtCore/qabstractitemmodel.h \
+ /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include/./ui_widget.h \
  /usr/include/qt/QtCore/QVariant /usr/include/qt/QtCore/qvariant.h \
  /usr/include/qt/QtWidgets/QApplication \

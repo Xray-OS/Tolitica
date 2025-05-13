@@ -336,6 +336,7 @@
  mdp:/usr/include/qt/QtGui/qvalidator.h
  mdp:/usr/include/qt/QtGui/qwindowdefs.h
  mdp:/usr/include/qt/QtWidgets/QComboBox
+ mdp:/usr/include/qt/QtWidgets/QLabel
  mdp:/usr/include/qt/QtWidgets/QPushButton
  mdp:/usr/include/qt/QtWidgets/QStackedWidget
  mdp:/usr/include/qt/QtWidgets/QWidget
@@ -345,6 +346,7 @@
  mdp:/usr/include/qt/QtWidgets/qabstractspinbox.h
  mdp:/usr/include/qt/QtWidgets/qcombobox.h
  mdp:/usr/include/qt/QtWidgets/qframe.h
+ mdp:/usr/include/qt/QtWidgets/qlabel.h
  mdp:/usr/include/qt/QtWidgets/qpushbutton.h
  mdp:/usr/include/qt/QtWidgets/qrubberband.h
  mdp:/usr/include/qt/QtWidgets/qsizepolicy.h

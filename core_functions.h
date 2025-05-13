@@ -9,6 +9,7 @@ public:
 
     // TERMINAL
     static QStringList getInstalledShells();
+    static QString getCurrentShell();
     static void changeShell(QWidget *parent, const QString &selectedShell);
 };
 

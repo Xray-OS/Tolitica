@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QComboBox>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -48,7 +49,7 @@ private slots:
                                 QPushButton *vmwButton);
     // TERMINAL
     void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
-                                  QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox);
+                                  QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox, QLabel *shellLabel);
     void disableTermTheme(QPushButton *terminalThemeButton);
     int checkTermThemingStatus();
 

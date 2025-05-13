@@ -13,6 +13,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
+#include <QLabel>
 
 // CUSTOM CLASSES
 #include "core_functions.h"
@@ -1003,10 +1004,17 @@ Widget::Widget(QWidget *parent)
         terminalThemeButton->setText(checkTermStatus == 1 ? "Disable Terminal Theming" :
                                                             "Enable Terminal Theming");
     }
-    // *Enable/Disable Terminal Theming
+    // *Change the shell
     QPushButton *changeShellButton = new QPushButton("Change Shell", this);
     QComboBox *shellComboBox = new QComboBox(this); // Added for shell selection
     QStringList shells = CoreFunctions::getInstalledShells(); // Call to get installed shells
+    QLabel *shellLabel = new QLabel("Current Shell: Unknown", this); // Add sehll label
+    QGroupBox *shellGroupBox = new QGroupBox("Shell Options", this);
+    QVBoxLayout *shellBoxGroupLayout = new QVBoxLayout(shellGroupBox);
+
+    // Fetch and isplay the current shell
+    QString currentShell = CoreFunctions::getCurrentShell();
+    shellLabel->setText("Current Shell: " + currentShell);
 
     if (shells.isEmpty()) {
         shellComboBox->addItem("No shells detected");
@@ -1015,18 +1023,28 @@ Widget::Widget(QWidget *parent)
         shellComboBox->addItems(shells);
     }
 
+
     /* === Positioning Buttons === */
     terminalLayout->addWidget(terminalThemeButton);
     terminalLayout->addWidget(changeShellButton);
     /* === Boxes === */
     terminalLayout->addWidget(shellComboBox); // Dropdown for shell selection
+        // Widgets for current shell-box
+    shellBoxGroupLayout->addWidget(shellLabel);
+    shellBoxGroupLayout->addWidget(shellComboBox);
+    shellBoxGroupLayout->addWidget(changeShellButton);
+    shellGroupBox->setLayout(shellBoxGroupLayout);
+    shellGroupBox->setAlignment(Qt::AlignCenter);
+
+    /* === Others === */
+    terminalLayout->addWidget(shellGroupBox, 5, 0, Qt::AlignRight);
 
     // Push back button to bottom dynamically
     terminalLayout->setRowStretch(4, 1);
     terminalLayout->addWidget(terminalBackButton, 5, 0, Qt::AlignLeft);
     terminalPage->setLayout(terminalLayout);
 
-    terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox);
+    terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox, shellLabel);
 
 
 
@@ -1204,7 +1222,8 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 /// TERMINAL SETUP CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
-                                      QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox) {
+                                      QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox,
+                                      QLabel *shellLabel) {
     // Navigation connections
     connect(terminalButton, &QPushButton::clicked, this, [stackedWidget] () {
         stackedWidget->setCurrentIndex(3); // Switch to Terminal page
@@ -1229,6 +1248,10 @@ void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton
         if (selectedShell.contains("No shells detected")) return;
 
         CoreFunctions::changeShell(this, selectedShell); // Call CoreFunctions::changeShell
+
+        // Refresh label after shell change
+        QString newShell = CoreFunctions::getCurrentShell();
+        shellLabel->setText("Current Shell: " + newShell);
     });
 }
 

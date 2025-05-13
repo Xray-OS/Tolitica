@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
-    QByteArrayData data[44];
-    char stringdata0[714];
+    QByteArrayData data[46];
+    char stringdata0[733];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -74,8 +74,10 @@ QT_MOC_LITERAL(38, 611, 19), // "terminalThemeButton"
 QT_MOC_LITERAL(39, 631, 17), // "changeShellButton"
 QT_MOC_LITERAL(40, 649, 10), // "QComboBox*"
 QT_MOC_LITERAL(41, 660, 13), // "shellComboBox"
-QT_MOC_LITERAL(42, 674, 16), // "disableTermTheme"
-QT_MOC_LITERAL(43, 691, 22) // "checkTermThemingStatus"
+QT_MOC_LITERAL(42, 674, 7), // "QLabel*"
+QT_MOC_LITERAL(43, 682, 10), // "shellLabel"
+QT_MOC_LITERAL(44, 693, 16), // "disableTermTheme"
+QT_MOC_LITERAL(45, 710, 22) // "checkTermThemingStatus"
 
     },
     "Widget\0cleanOrphans\0\0cleanPkgCache\0"
@@ -96,7 +98,8 @@ QT_MOC_LITERAL(43, 691, 22) // "checkTermThemingStatus"
     "chaoticAURButton\0terminalSetupConnections\0"
     "terminalButton\0terminalBackButton\0"
     "terminalThemeButton\0changeShellButton\0"
-    "QComboBox*\0shellComboBox\0disableTermTheme\0"
+    "QComboBox*\0shellComboBox\0QLabel*\0"
+    "shellLabel\0disableTermTheme\0"
     "checkTermThemingStatus"
 };
 #undef QT_MOC_LITERAL
@@ -133,9 +136,9 @@ static const uint qt_meta_data_Widget[] = {
       27,    0,  150,    2, 0x08 /* Private */,
       28,    1,  151,    2, 0x08 /* Private */,
       29,    7,  154,    2, 0x08 /* Private */,
-      35,    6,  169,    2, 0x08 /* Private */,
-      42,    1,  182,    2, 0x08 /* Private */,
-      43,    0,  185,    2, 0x08 /* Private */,
+      35,    7,  169,    2, 0x08 /* Private */,
+      44,    1,  184,    2, 0x08 /* Private */,
+      45,    0,  187,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -156,7 +159,7 @@ static const uint qt_meta_data_Widget[] = {
     QMetaType::Bool,
     QMetaType::Void, 0x80000000 | 9,   25,
     QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   30,   31,   32,   33,   34,   25,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 40,    8,   36,   37,   38,   39,   41,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 40, 0x80000000 | 42,    8,   36,   37,   38,   39,   41,   43,
     QMetaType::Void, 0x80000000 | 9,   38,
     QMetaType::Int,
 
@@ -190,7 +193,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 16: _t->removeVMware((*reinterpret_cast< QPushButton*(*)>(_a[1]))); break;
         case 17: _t->addonsSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6])),(*reinterpret_cast< QPushButton*(*)>(_a[7]))); break;
-        case 18: _t->terminalSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QComboBox*(*)>(_a[6]))); break;
+        case 18: _t->terminalSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QComboBox*(*)>(_a[6])),(*reinterpret_cast< QLabel*(*)>(_a[7]))); break;
         case 19: _t->disableTermTheme((*reinterpret_cast< QPushButton*(*)>(_a[1]))); break;
         case 20: { int _r = _t->checkTermThemingStatus();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
@@ -246,6 +249,8 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 5:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QComboBox* >(); break;
+            case 6:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QLabel* >(); break;
             case 4:
             case 3:
             case 2:

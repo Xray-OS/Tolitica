@@ -345,6 +345,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QComboBox \
+  /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
   /usr/include/qt/QtWidgets/QWidget \
@@ -354,6 +355,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qlabel.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -780,6 +782,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/include/bits/types/struct_timespec.h:
 
 /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake:
+
+/usr/include/qt/QtWidgets/QLabel:
 
 /usr/include/c++/15.1.1/clocale:
 
@@ -1314,6 +1318,8 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/c++/15.1.1/tuple:
 
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake:
+
+/usr/include/qt/QtWidgets/qlabel.h:
 
 /usr/include/qt/QtCore/qgenericatomic.h:
 
