@@ -4,6 +4,7 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QComboBox>
 #include <QProcess>
 #include <QMessageBox>
 #include <QDir>
@@ -12,6 +13,9 @@
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
+
+// CUSTOM CLASSES
+#include "core_functions.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TWEAKS PAGE /////////////////////// /////////////////////// ////////////////
@@ -807,6 +811,119 @@ void Widget::removeVMware(QPushButton *vmwButton) {
     monitorTimer->start(250);
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE TERMINAL PAGE /////////////////////// /////////////////////// ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+/// TERMINAL: CHECK TERMINAL-THEMING STATUS
+//////////////////////////////////////////////////
+int Widget::checkTermThemingStatus(){
+    QString termConfigFile = QDir::homePath() + "/.config/fish/config.fish";
+    QFile configFile(termConfigFile);
+
+    if (!configFile.exists()) {
+        return 0; // File not found
+    }
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return 0; // Treat as not found due to error
+    }
+
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/ada-atomic.omp.json";
+    QTextStream in(&configFile);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        if (line.contains(targetLine)) {
+            configFile.close();
+            return line.startsWith("#") ? 2 : 1; // 2 if commented, 1 if uncommented
+        }
+    }
+
+    configFile.close();
+    return 0; // Line not found
+}
+
+////////////////////////////////////////////////////////
+/// TERMINAL: DISABLE/ENABLE TERMINAL THEMING FUNCTION
+//////////////////////////////////////////////////////
+void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
+    QString termConfigFile = QDir::homePath() + "/.config/fish/config.fish";
+    QFile configFile(termConfigFile);
+
+    int status = checkTermThemingStatus(); // Get the current line status
+
+    // Handle the case were the file or target line is missing
+    if (status == 0) {
+        terminalThemeButton->setText("No config.fish found");
+        QMessageBox::warning(this, "No Oh-My-Posh theme Found!",
+                                    "No current config.fish file was found in '$HOME/.config/fish'");
+        return;
+    }
+
+    // If there is no actual ada-atomic.omp.json file
+    if (!QFile::exists(QDir::homePath() + "/.config/oh-my-posh-themes/ada-atomic.omp.json")) {
+        QMessageBox::warning(this, "ada-atomic.omp.json is Missing!",
+                                   "ada-atomic.omp.json is missing from /.config/oh-my-posh-themes");
+        return;
+    }
+
+    // Confirm action with the user
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Terminal Theming");
+    msgBox.setIcon(QMessageBox::Information);
+
+    if (status == 1) {
+        msgBox.setText("Terminal theming is currently enabled.\nWould you like to disable it?");
+    } else if (status == 2) {
+        msgBox.setText("Terminal theming is currently disabled\nWould you like to enable it?");
+    }
+
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    int userChoice = msgBox.exec();
+
+    if (userChoice != QMessageBox::Yes) {
+        return; // User canceled the action
+    }
+
+    // Attempt to open the file for reading
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::critical(this, "Error", "Failed to read configuration file.");
+        return;
+    }
+
+    QStringList lines;
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/ada-atomic.omp.json";
+
+    QTextStream in(&configFile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+
+        if (line.contains(targetLine)) {
+            line = (status == 1) ? "#" + line : line.mid(1); // Comment or uncomment
+        }
+
+        lines.append(line);
+    }
+    configFile.close();
+
+    // Attempt to open the file for writing
+    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        QMessageBox::critical(this, "Error", "Failed to modify configuration file.");
+        return;
+    }
+
+    QTextStream out(&configFile);
+    for (const QString &line : lines) {
+        out << line << "\n";
+    }
+    configFile.close();
+
+    // Update the button text after successful modification
+    terminalThemeButton->setText(status == 1 ? "Enable Terminal Theming" : "Disable Terminal Theming");
+    QMessageBox::information(this, "Success", "Terminal theming successfully updated");
+}
+
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
 /// START MAIN FUNCTION
@@ -833,9 +950,11 @@ Widget::Widget(QWidget *parent)
     QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific Layout for Buttons
     QPushButton *tweaksButton = new QPushButton("Configuration", this);
     QPushButton *addonsButton = new QPushButton("Addons", this);
+    QPushButton *terminalButton = new QPushButton("Terminal", this);
 
     buttonsLayout->addWidget(tweaksButton);
     buttonsLayout->addWidget(addonsButton);
+    buttonsLayout->addWidget(terminalButton);
     mainLayout->addLayout(buttonsLayout);
     mainPage->setLayout(mainLayout);
 
@@ -865,6 +984,52 @@ Widget::Widget(QWidget *parent)
 
     tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
                            cleanPkgCacheButton, updateSystemButton, removeDBLockButton);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // ==== Terminal Page =====
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    QWidget *terminalPage = new QWidget();
+    QGridLayout *terminalLayout = new QGridLayout(terminalPage);
+    QPushButton *terminalBackButton = new QPushButton("Back", this);
+
+    // ** Functional Buttons Terminal Layout ** //
+    // *Enable/Disable Terminal Theming
+    QPushButton *terminalThemeButton = new QPushButton("Disable Terminal Theming", this);
+    int checkTermStatus = checkTermThemingStatus();
+
+    if (checkTermStatus == 0) {
+        terminalThemeButton->setText("No config.fish found");
+    } else {
+        terminalThemeButton->setText(checkTermStatus == 1 ? "Disable Terminal Theming" :
+                                                            "Enable Terminal Theming");
+    }
+    // *Enable/Disable Terminal Theming
+    QPushButton *changeShellButton = new QPushButton("Change Shell", this);
+    QComboBox *shellComboBox = new QComboBox(this); // Added for shell selection
+    QStringList shells = CoreFunctions::getInstalledShells(); // Call to get installed shells
+
+    if (shells.isEmpty()) {
+        shellComboBox->addItem("No shells detected");
+        changeShellButton->setEnabled(false); // Disable button if no shells detected
+    } else {
+        shellComboBox->addItems(shells);
+    }
+
+    /* === Positioning Buttons === */
+    terminalLayout->addWidget(terminalThemeButton);
+    terminalLayout->addWidget(changeShellButton);
+    /* === Boxes === */
+    terminalLayout->addWidget(shellComboBox); // Dropdown for shell selection
+
+    // Push back button to bottom dynamically
+    terminalLayout->setRowStretch(4, 1);
+    terminalLayout->addWidget(terminalBackButton, 5, 0, Qt::AlignLeft);
+    terminalPage->setLayout(terminalLayout);
+
+    terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox);
+
+
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Addons Page =====
@@ -935,6 +1100,7 @@ Widget::Widget(QWidget *parent)
     stackedWidget->addWidget(mainPage);
     stackedWidget->addWidget(tweaksPage);
     stackedWidget->addWidget(addonsPage);
+    stackedWidget->addWidget(terminalPage);
 
     // Set the initial layout
     QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
@@ -947,6 +1113,10 @@ Widget::Widget(QWidget *parent)
 //////////////////////////////////////////////////
 // == I LOVE C++ ==================================
 
+
+///////////////////////////////////////////////////
+/// TWEAK SETUP CONNECTIONS FUNCTION
+//////////////////////////////////////////////////
 void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                     QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
                                     QPushButton *updateSystemButton, QPushButton *removeDBLockButton){
@@ -964,6 +1134,9 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     connect(removeDBLockButton, &QPushButton::clicked, this, &Widget::removeDBLock);
 }
 
+///////////////////////////////////////////////////
+/// ADDONS SETUP CONNECTIONS FUNCTION
+//////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                     QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
                                     QPushButton *vmwButton) {
@@ -1026,6 +1199,39 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     });
 
 }
+
+///////////////////////////////////////////////////
+/// TERMINAL SETUP CONNECTIONS FUNCTION
+//////////////////////////////////////////////////
+void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
+                                      QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox) {
+    // Navigation connections
+    connect(terminalButton, &QPushButton::clicked, this, [stackedWidget] () {
+        stackedWidget->setCurrentIndex(3); // Switch to Terminal page
+    });
+    connect(terminalBackButton, &QPushButton::clicked, this, [stackedWidget]() {
+        stackedWidget->setCurrentIndex(0); // Switch back to Main page
+    });
+
+    //** Enable/Disable Terminal theming **//
+    connect(terminalThemeButton, &QPushButton::clicked, this, [=]() mutable {
+        int termStatus = checkTermThemingStatus();
+
+        if(checkTermThemingStatus() == 0) {
+            disableTermTheme(terminalThemeButton);
+        } else {
+            disableTermTheme(terminalThemeButton);
+        }
+    });
+
+    connect(changeShellButton, &QPushButton::clicked, this, [=]() {
+        QString selectedShell = shellComboBox->currentText(); // Get selected shell from QComboBox
+        if (selectedShell.contains("No shells detected")) return;
+
+        CoreFunctions::changeShell(this, selectedShell); // Call CoreFunctions::changeShell
+    });
+}
+
 
 Widget::~Widget()
 {

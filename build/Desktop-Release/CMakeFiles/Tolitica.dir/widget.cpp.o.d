@@ -254,18 +254,30 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
  /usr/include/qt/QtWidgets/QStackedWidget \
  /usr/include/qt/QtWidgets/qstackedwidget.h \
- /usr/include/qt/QtWidgets/qframe.h \
- /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include/./ui_widget.h \
- /usr/include/qt/QtCore/QVariant /usr/include/qt/QtCore/qvariant.h \
+ /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QComboBox \
+ /usr/include/qt/QtWidgets/qcombobox.h \
+ /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+ /usr/include/qt/QtWidgets/qstyleoption.h \
+ /usr/include/qt/QtCore/qlocale.h /usr/include/qt/QtCore/qvariant.h \
  /usr/include/qt/QtCore/qmap.h /usr/include/c++/15.1.1/variant \
  /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/qt/QtWidgets/qabstractspinbox.h \
+ /usr/include/qt/QtGui/qvalidator.h \
+ /usr/include/qt/QtCore/qregularexpression.h \
+ /usr/include/qt/QtWidgets/qslider.h \
+ /usr/include/qt/QtWidgets/qabstractslider.h \
+ /usr/include/qt/QtWidgets/qstyle.h /usr/include/qt/QtWidgets/qtabbar.h \
+ /usr/include/qt/QtWidgets/qtabwidget.h \
+ /usr/include/qt/QtWidgets/qrubberband.h \
+ /usr/include/qt/QtCore/qabstractitemmodel.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include/./ui_widget.h \
+ /usr/include/qt/QtCore/QVariant /usr/include/qt/QtCore/qvariant.h \
  /usr/include/qt/QtWidgets/QApplication \
  /usr/include/qt/QtWidgets/qapplication.h \
  /usr/include/qt/QtCore/qcoreapplication.h \
  /usr/include/qt/QtCore/qcoreevent.h /usr/include/qt/QtCore/qeventloop.h \
  /usr/include/qt/QtGui/qguiapplication.h \
- /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtCore/qlocale.h \
- /usr/include/qt/QtCore/qvariant.h /usr/include/qt/QtWidgets/QWidget \
+ /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtWidgets/QWidget \
  /usr/include/qt/QtWidgets/QGroupBox \
  /usr/include/qt/QtWidgets/qgroupbox.h \
  /usr/include/qt/QtWidgets/QVBoxLayout \
@@ -287,4 +299,6 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt/QtCore/QTimer /usr/include/qt/QtCore/qtimer.h \
  /usr/include/qt/QtCore/qbasictimer.h /usr/include/qt/QtCore/QFile \
  /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/QTextStream \
- /usr/include/qt/QtCore/qtextstream.h
+ /usr/include/qt/QtCore/qtextstream.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+ /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h

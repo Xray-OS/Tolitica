@@ -248,6 +248,30 @@ Tolitica_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.s
 .PHONY : Tolitica_autogen/mocs_compilation.cpp.s
 
+core_functions.o: core_functions.cpp.o
+.PHONY : core_functions.o
+
+# target to build an object file
+core_functions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/core_functions.cpp.o
+.PHONY : core_functions.cpp.o
+
+core_functions.i: core_functions.cpp.i
+.PHONY : core_functions.i
+
+# target to preprocess a source file
+core_functions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/core_functions.cpp.i
+.PHONY : core_functions.cpp.i
+
+core_functions.s: core_functions.cpp.s
+.PHONY : core_functions.s
+
+# target to generate assembly for a file
+core_functions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/core_functions.cpp.s
+.PHONY : core_functions.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -317,6 +341,9 @@ help:
 	@echo "... Tolitica_autogen/mocs_compilation.o"
 	@echo "... Tolitica_autogen/mocs_compilation.i"
 	@echo "... Tolitica_autogen/mocs_compilation.s"
+	@echo "... core_functions.o"
+	@echo "... core_functions.i"
+	@echo "... core_functions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

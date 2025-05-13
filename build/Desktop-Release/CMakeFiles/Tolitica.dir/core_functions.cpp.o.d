@@ -1,11 +1,10 @@
-CMakeFiles/Tolitica.dir/main.cpp.o: \
- /home/angel/Documents/Development/_APPS/Tolitica/main.cpp \
+CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
+ /home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp \
  /usr/include/stdc-predef.h \
- /home/angel/Documents/Development/_APPS/Tolitica/widget.h \
- /usr/include/qt/QtWidgets/QWidget /usr/include/qt/QtWidgets/qwidget.h \
- /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
- /usr/include/qt/QtGui/qtguiglobal.h /usr/include/qt/QtCore/qglobal.h \
- /usr/include/c++/15.1.1/type_traits \
+ /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+ /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h \
+ /usr/include/qt/QtCore/qlist.h /usr/include/qt/QtCore/qalgorithms.h \
+ /usr/include/qt/QtCore/qglobal.h /usr/include/c++/15.1.1/type_traits \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -86,15 +85,11 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
  /usr/include/qt/QtCore/qglobalstatic.h /usr/include/qt/QtCore/qnumeric.h \
  /usr/include/qt/QtCore/qversiontagging.h \
- /usr/include/qt/QtGui/qtgui-config.h \
- /usr/include/qt/QtWidgets/qtwidgets-config.h \
- /usr/include/qt/QtGui/qwindowdefs.h /usr/include/qt/QtCore/qobjectdefs.h \
- /usr/include/qt/QtCore/qnamespace.h \
- /usr/include/qt/QtCore/qobjectdefs_impl.h \
- /usr/include/qt/QtCore/qobject.h /usr/include/qt/QtCore/qstring.h \
- /usr/include/qt/QtCore/qchar.h /usr/include/qt/QtCore/qbytearray.h \
- /usr/include/qt/QtCore/qrefcount.h /usr/include/qt/QtCore/qarraydata.h \
- /usr/include/string.h /usr/include/strings.h \
+ /usr/include/qt/QtCore/qiterator.h /usr/include/qt/QtCore/qrefcount.h \
+ /usr/include/qt/QtCore/qarraydata.h /usr/include/string.h \
+ /usr/include/strings.h /usr/include/qt/QtCore/qhashfunctions.h \
+ /usr/include/qt/QtCore/qstring.h /usr/include/qt/QtCore/qchar.h \
+ /usr/include/qt/QtCore/qbytearray.h /usr/include/qt/QtCore/qnamespace.h \
  /usr/include/c++/15.1.1/stdlib.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
  /usr/include/c++/15.1.1/string \
@@ -178,9 +173,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/c++/15.1.1/bits/streambuf.tcc \
  /usr/include/qt/QtCore/qstringliteral.h \
  /usr/include/qt/QtCore/qstringalgorithms.h \
- /usr/include/qt/QtCore/qstringview.h /usr/include/qt/QtCore/qlist.h \
- /usr/include/qt/QtCore/qalgorithms.h /usr/include/qt/QtCore/qiterator.h \
- /usr/include/qt/QtCore/qhashfunctions.h /usr/include/qt/QtCore/qpair.h \
+ /usr/include/qt/QtCore/qstringview.h /usr/include/qt/QtCore/qpair.h \
  /usr/include/c++/15.1.1/numeric \
  /usr/include/c++/15.1.1/bits/stl_numeric.h \
  /usr/include/c++/15.1.1/pstl/glue_numeric_defs.h \
@@ -211,7 +204,13 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/bits/uio_lim.h /usr/include/qt/QtCore/qbytearraylist.h \
  /usr/include/qt/QtCore/qstringlist.h /usr/include/qt/QtCore/qregexp.h \
  /usr/include/qt/QtCore/qstringmatcher.h \
- /usr/include/qt/QtCore/qscopedpointer.h \
+ /usr/include/qt/QtWidgets/QWidget /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
+ /usr/include/qt/QtGui/qtguiglobal.h /usr/include/qt/QtGui/qtgui-config.h \
+ /usr/include/qt/QtWidgets/qtwidgets-config.h \
+ /usr/include/qt/QtGui/qwindowdefs.h /usr/include/qt/QtCore/qobjectdefs.h \
+ /usr/include/qt/QtCore/qobjectdefs_impl.h \
+ /usr/include/qt/QtCore/qobject.h /usr/include/qt/QtCore/qscopedpointer.h \
  /usr/include/qt/QtCore/qmetatype.h \
  /usr/include/qt/QtCore/qvarlengtharray.h \
  /usr/include/qt/QtCore/qcontainerfwd.h /usr/include/c++/15.1.1/memory \
@@ -247,20 +246,41 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/qt/QtGui/qfont.h /usr/include/qt/QtGui/qfontmetrics.h \
  /usr/include/qt/QtGui/qfontinfo.h \
  /usr/include/qt/QtWidgets/qsizepolicy.h /usr/include/qt/QtGui/qcursor.h \
- /usr/include/qt/QtGui/qkeysequence.h /usr/include/qt/QtGui/QIcon \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/QPushButton \
- /usr/include/qt/QtWidgets/qpushbutton.h \
- /usr/include/qt/QtWidgets/qabstractbutton.h \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtGui/qkeysequence.h \
+ /usr/include/qt/QtWidgets/QMessageBox \
+ /usr/include/qt/QtWidgets/qmessagebox.h \
+ /usr/include/qt/QtWidgets/qdialog.h /usr/include/qt/QtWidgets/qwidget.h \
  /usr/include/qt/QtWidgets/QStackedWidget \
  /usr/include/qt/QtWidgets/qstackedwidget.h \
- /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QComboBox \
+ /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QGroupBox \
+ /usr/include/qt/QtWidgets/qgroupbox.h \
+ /usr/include/qt/QtWidgets/QVBoxLayout \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qlayout.h \
+ /usr/include/qt/QtWidgets/qlayoutitem.h \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qgridlayout.h \
+ /usr/include/qt/QtWidgets/QPushButton \
+ /usr/include/qt/QtWidgets/qpushbutton.h \
+ /usr/include/qt/QtWidgets/qabstractbutton.h \
+ /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtCore/QProcess \
+ /usr/include/qt/QtCore/qprocess.h /usr/include/qt/QtCore/QDir \
+ /usr/include/qt/QtCore/qdir.h /usr/include/qt/QtCore/qfileinfo.h \
+ /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/qfiledevice.h \
+ /usr/include/qt/QtCore/QDebug /usr/include/qt/QtCore/qdebug.h \
+ /usr/include/qt/QtCore/qmap.h /usr/include/qt/QtCore/qtextstream.h \
+ /usr/include/qt/QtCore/qlocale.h /usr/include/qt/QtCore/qvariant.h \
+ /usr/include/c++/15.1.1/variant /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/qt/QtCore/qset.h /usr/include/qt/QtCore/qcontiguouscache.h \
+ /usr/include/qt/QtWidgets/QProgressDialog \
+ /usr/include/qt/QtWidgets/qprogressdialog.h \
+ /usr/include/qt/QtCore/QTimer /usr/include/qt/QtCore/qtimer.h \
+ /usr/include/qt/QtCore/qbasictimer.h /usr/include/qt/QtCore/QFile \
+ /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/QTextStream \
+ /usr/include/qt/QtCore/qtextstream.h /usr/include/qt/QtWidgets/QComboBox \
  /usr/include/qt/QtWidgets/qcombobox.h \
  /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
  /usr/include/qt/QtWidgets/qstyleoption.h \
- /usr/include/qt/QtCore/qlocale.h /usr/include/qt/QtCore/qvariant.h \
- /usr/include/qt/QtCore/qmap.h /usr/include/c++/15.1.1/variant \
- /usr/include/c++/15.1.1/bits/monostate.h \
  /usr/include/qt/QtWidgets/qabstractspinbox.h \
  /usr/include/qt/QtGui/qvalidator.h \
  /usr/include/qt/QtCore/qregularexpression.h \
@@ -269,10 +289,4 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/qt/QtWidgets/qstyle.h /usr/include/qt/QtWidgets/qtabbar.h \
  /usr/include/qt/QtWidgets/qtabwidget.h \
  /usr/include/qt/QtWidgets/qrubberband.h \
- /usr/include/qt/QtCore/qabstractitemmodel.h \
- /usr/include/qt/QtWidgets/QApplication \
- /usr/include/qt/QtWidgets/qapplication.h \
- /usr/include/qt/QtCore/qcoreapplication.h \
- /usr/include/qt/QtCore/qcoreevent.h /usr/include/qt/QtCore/qeventloop.h \
- /usr/include/qt/QtGui/qguiapplication.h \
- /usr/include/qt/QtGui/qinputmethod.h
+ /usr/include/qt/QtCore/qabstractitemmodel.h

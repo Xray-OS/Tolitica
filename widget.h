@@ -5,6 +5,7 @@
 #include <QIcon>
 #include <QPushButton>
 #include <QStackedWidget>
+#include <QComboBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -45,6 +46,11 @@ private slots:
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                 QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
                                 QPushButton *vmwButton);
+    // TERMINAL
+    void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
+                                  QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox);
+    void disableTermTheme(QPushButton *terminalThemeButton);
+    int checkTermThemingStatus();
 
 private:
     Ui::Widget *ui;

@@ -39,6 +39,8 @@ else()
         add_executable(Tolitica
             ${PROJECT_SOURCES}
             visualElements.qrc
+            core_functions.h
+            core_functions.cpp
         )
     endif()
 endif()

@@ -254,4 +254,19 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
  /usr/include/qt/QtWidgets/QStackedWidget \
  /usr/include/qt/QtWidgets/qstackedwidget.h \
- /usr/include/qt/QtWidgets/qframe.h
+ /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QComboBox \
+ /usr/include/qt/QtWidgets/qcombobox.h \
+ /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+ /usr/include/qt/QtWidgets/qstyleoption.h \
+ /usr/include/qt/QtCore/qlocale.h /usr/include/qt/QtCore/qvariant.h \
+ /usr/include/qt/QtCore/qmap.h /usr/include/c++/15.1.1/variant \
+ /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/qt/QtWidgets/qabstractspinbox.h \
+ /usr/include/qt/QtGui/qvalidator.h \
+ /usr/include/qt/QtCore/qregularexpression.h \
+ /usr/include/qt/QtWidgets/qslider.h \
+ /usr/include/qt/QtWidgets/qabstractslider.h \
+ /usr/include/qt/QtWidgets/qstyle.h /usr/include/qt/QtWidgets/qtabbar.h \
+ /usr/include/qt/QtWidgets/qtabwidget.h \
+ /usr/include/qt/QtWidgets/qrubberband.h \
+ /usr/include/qt/QtCore/qabstractitemmodel.h
