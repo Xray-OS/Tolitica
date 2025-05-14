@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
-    QByteArrayData data[46];
-    char stringdata0[733];
+    QByteArrayData data[48];
+    char stringdata0[760];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,36 +48,38 @@ QT_MOC_LITERAL(12, 151, 18), // "cleanOrphansButton"
 QT_MOC_LITERAL(13, 170, 19), // "cleanPkgCacheButton"
 QT_MOC_LITERAL(14, 190, 18), // "updateSystemButton"
 QT_MOC_LITERAL(15, 209, 18), // "removeDBLockButton"
-QT_MOC_LITERAL(16, 228, 13), // "adaGamingMeta"
-QT_MOC_LITERAL(17, 242, 19), // "removeAdaGamingMeta"
-QT_MOC_LITERAL(18, 262, 18), // "adaDevelopmentMeta"
-QT_MOC_LITERAL(19, 281, 24), // "removeAdaDevelopmentMeta"
-QT_MOC_LITERAL(20, 306, 10), // "chaoticAUR"
-QT_MOC_LITERAL(21, 317, 16), // "removeChaoticAUR"
-QT_MOC_LITERAL(22, 334, 21), // "checkChaoticAURStatus"
-QT_MOC_LITERAL(23, 356, 18), // "backupPacmanConfig"
-QT_MOC_LITERAL(24, 375, 9), // "addVMware"
-QT_MOC_LITERAL(25, 385, 9), // "vmwButton"
-QT_MOC_LITERAL(26, 395, 12), // "vmwareStatus"
-QT_MOC_LITERAL(27, 408, 19), // "vmwareServiceStatus"
-QT_MOC_LITERAL(28, 428, 12), // "removeVMware"
-QT_MOC_LITERAL(29, 441, 22), // "addonsSetupConnections"
-QT_MOC_LITERAL(30, 464, 12), // "addonsButton"
-QT_MOC_LITERAL(31, 477, 16), // "addonsBackButton"
-QT_MOC_LITERAL(32, 494, 19), // "adaGamingMetaButton"
-QT_MOC_LITERAL(33, 514, 20), // "adaDevelopmentButton"
-QT_MOC_LITERAL(34, 535, 16), // "chaoticAURButton"
-QT_MOC_LITERAL(35, 552, 24), // "terminalSetupConnections"
-QT_MOC_LITERAL(36, 577, 14), // "terminalButton"
-QT_MOC_LITERAL(37, 592, 18), // "terminalBackButton"
-QT_MOC_LITERAL(38, 611, 19), // "terminalThemeButton"
-QT_MOC_LITERAL(39, 631, 17), // "changeShellButton"
-QT_MOC_LITERAL(40, 649, 10), // "QComboBox*"
-QT_MOC_LITERAL(41, 660, 13), // "shellComboBox"
-QT_MOC_LITERAL(42, 674, 7), // "QLabel*"
-QT_MOC_LITERAL(43, 682, 10), // "shellLabel"
-QT_MOC_LITERAL(44, 693, 16), // "disableTermTheme"
-QT_MOC_LITERAL(45, 710, 22) // "checkTermThemingStatus"
+QT_MOC_LITERAL(16, 228, 10), // "QCheckBox*"
+QT_MOC_LITERAL(17, 239, 15), // "bluetoothToggle"
+QT_MOC_LITERAL(18, 255, 13), // "adaGamingMeta"
+QT_MOC_LITERAL(19, 269, 19), // "removeAdaGamingMeta"
+QT_MOC_LITERAL(20, 289, 18), // "adaDevelopmentMeta"
+QT_MOC_LITERAL(21, 308, 24), // "removeAdaDevelopmentMeta"
+QT_MOC_LITERAL(22, 333, 10), // "chaoticAUR"
+QT_MOC_LITERAL(23, 344, 16), // "removeChaoticAUR"
+QT_MOC_LITERAL(24, 361, 21), // "checkChaoticAURStatus"
+QT_MOC_LITERAL(25, 383, 18), // "backupPacmanConfig"
+QT_MOC_LITERAL(26, 402, 9), // "addVMware"
+QT_MOC_LITERAL(27, 412, 9), // "vmwButton"
+QT_MOC_LITERAL(28, 422, 12), // "vmwareStatus"
+QT_MOC_LITERAL(29, 435, 19), // "vmwareServiceStatus"
+QT_MOC_LITERAL(30, 455, 12), // "removeVMware"
+QT_MOC_LITERAL(31, 468, 22), // "addonsSetupConnections"
+QT_MOC_LITERAL(32, 491, 12), // "addonsButton"
+QT_MOC_LITERAL(33, 504, 16), // "addonsBackButton"
+QT_MOC_LITERAL(34, 521, 19), // "adaGamingMetaButton"
+QT_MOC_LITERAL(35, 541, 20), // "adaDevelopmentButton"
+QT_MOC_LITERAL(36, 562, 16), // "chaoticAURButton"
+QT_MOC_LITERAL(37, 579, 24), // "terminalSetupConnections"
+QT_MOC_LITERAL(38, 604, 14), // "terminalButton"
+QT_MOC_LITERAL(39, 619, 18), // "terminalBackButton"
+QT_MOC_LITERAL(40, 638, 19), // "terminalThemeButton"
+QT_MOC_LITERAL(41, 658, 17), // "changeShellButton"
+QT_MOC_LITERAL(42, 676, 10), // "QComboBox*"
+QT_MOC_LITERAL(43, 687, 13), // "shellComboBox"
+QT_MOC_LITERAL(44, 701, 7), // "QLabel*"
+QT_MOC_LITERAL(45, 709, 10), // "shellLabel"
+QT_MOC_LITERAL(46, 720, 16), // "disableTermTheme"
+QT_MOC_LITERAL(47, 737, 22) // "checkTermThemingStatus"
 
     },
     "Widget\0cleanOrphans\0\0cleanPkgCache\0"
@@ -86,7 +88,8 @@ QT_MOC_LITERAL(45, 710, 22) // "checkTermThemingStatus"
     "stackedWidget\0QPushButton*\0tweaksButton\0"
     "backButton\0cleanOrphansButton\0"
     "cleanPkgCacheButton\0updateSystemButton\0"
-    "removeDBLockButton\0adaGamingMeta\0"
+    "removeDBLockButton\0QCheckBox*\0"
+    "bluetoothToggle\0adaGamingMeta\0"
     "removeAdaGamingMeta\0adaDevelopmentMeta\0"
     "removeAdaDevelopmentMeta\0chaoticAUR\0"
     "removeChaoticAUR\0checkChaoticAURStatus\0"
@@ -122,30 +125,30 @@ static const uint qt_meta_data_Widget[] = {
        3,    0,  120,    2, 0x08 /* Private */,
        4,    0,  121,    2, 0x08 /* Private */,
        5,    0,  122,    2, 0x08 /* Private */,
-       6,    7,  123,    2, 0x08 /* Private */,
-      16,    0,  138,    2, 0x08 /* Private */,
-      17,    0,  139,    2, 0x08 /* Private */,
+       6,    8,  123,    2, 0x08 /* Private */,
       18,    0,  140,    2, 0x08 /* Private */,
       19,    0,  141,    2, 0x08 /* Private */,
       20,    0,  142,    2, 0x08 /* Private */,
       21,    0,  143,    2, 0x08 /* Private */,
       22,    0,  144,    2, 0x08 /* Private */,
       23,    0,  145,    2, 0x08 /* Private */,
-      24,    1,  146,    2, 0x08 /* Private */,
-      26,    0,  149,    2, 0x08 /* Private */,
-      27,    0,  150,    2, 0x08 /* Private */,
-      28,    1,  151,    2, 0x08 /* Private */,
-      29,    7,  154,    2, 0x08 /* Private */,
-      35,    7,  169,    2, 0x08 /* Private */,
-      44,    1,  184,    2, 0x08 /* Private */,
-      45,    0,  187,    2, 0x08 /* Private */,
+      24,    0,  146,    2, 0x08 /* Private */,
+      25,    0,  147,    2, 0x08 /* Private */,
+      26,    1,  148,    2, 0x08 /* Private */,
+      28,    0,  151,    2, 0x08 /* Private */,
+      29,    0,  152,    2, 0x08 /* Private */,
+      30,    1,  153,    2, 0x08 /* Private */,
+      31,    7,  156,    2, 0x08 /* Private */,
+      37,    7,  171,    2, 0x08 /* Private */,
+      46,    1,  186,    2, 0x08 /* Private */,
+      47,    0,  189,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   10,   11,   12,   13,   14,   15,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 16,    8,   10,   11,   12,   13,   14,   15,   17,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -154,13 +157,13 @@ static const uint qt_meta_data_Widget[] = {
     QMetaType::Void,
     QMetaType::Int,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 9,   25,
+    QMetaType::Void, 0x80000000 | 9,   27,
     QMetaType::Int,
     QMetaType::Bool,
-    QMetaType::Void, 0x80000000 | 9,   25,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   30,   31,   32,   33,   34,   25,
-    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 40, 0x80000000 | 42,    8,   36,   37,   38,   39,   41,   43,
-    QMetaType::Void, 0x80000000 | 9,   38,
+    QMetaType::Void, 0x80000000 | 9,   27,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9,    8,   32,   33,   34,   35,   36,   27,
+    QMetaType::Void, 0x80000000 | 7, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 9, 0x80000000 | 42, 0x80000000 | 44,    8,   38,   39,   40,   41,   43,   45,
+    QMetaType::Void, 0x80000000 | 9,   40,
     QMetaType::Int,
 
        0        // eod
@@ -176,7 +179,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: _t->cleanPkgCache(); break;
         case 2: _t->systemUpdate(); break;
         case 3: _t->removeDBLock(); break;
-        case 4: _t->tweaksSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6])),(*reinterpret_cast< QPushButton*(*)>(_a[7]))); break;
+        case 4: _t->tweaksSetupConnections((*reinterpret_cast< QStackedWidget*(*)>(_a[1])),(*reinterpret_cast< QPushButton*(*)>(_a[2])),(*reinterpret_cast< QPushButton*(*)>(_a[3])),(*reinterpret_cast< QPushButton*(*)>(_a[4])),(*reinterpret_cast< QPushButton*(*)>(_a[5])),(*reinterpret_cast< QPushButton*(*)>(_a[6])),(*reinterpret_cast< QPushButton*(*)>(_a[7])),(*reinterpret_cast< QCheckBox*(*)>(_a[8]))); break;
         case 5: _t->adaGamingMeta(); break;
         case 6: _t->removeAdaGamingMeta(); break;
         case 7: _t->adaDevelopmentMeta(); break;
@@ -205,6 +208,8 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 4:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 7:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QCheckBox* >(); break;
             case 6:
             case 5:
             case 4:

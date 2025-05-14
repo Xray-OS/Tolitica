@@ -246,10 +246,13 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt/QtGui/qfont.h /usr/include/qt/QtGui/qfontmetrics.h \
  /usr/include/qt/QtGui/qfontinfo.h \
  /usr/include/qt/QtWidgets/qsizepolicy.h /usr/include/qt/QtGui/qcursor.h \
- /usr/include/qt/QtGui/qkeysequence.h \
+ /usr/include/qt/QtGui/qkeysequence.h /usr/include/qt/QtWidgets/QCheckBox \
+ /usr/include/qt/QtWidgets/qcheckbox.h \
+ /usr/include/qt/QtWidgets/qabstractbutton.h \
+ /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
  /usr/include/qt/QtWidgets/QMessageBox \
  /usr/include/qt/QtWidgets/qmessagebox.h \
- /usr/include/qt/QtWidgets/qdialog.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtWidgets/qdialog.h \
  /usr/include/qt/QtWidgets/QStackedWidget \
  /usr/include/qt/QtWidgets/qstackedwidget.h \
  /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QGroupBox \
@@ -261,9 +264,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt/QtWidgets/qboxlayout.h \
  /usr/include/qt/QtWidgets/qgridlayout.h \
  /usr/include/qt/QtWidgets/QPushButton \
- /usr/include/qt/QtWidgets/qpushbutton.h \
- /usr/include/qt/QtWidgets/qabstractbutton.h \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtCore/QProcess \
+ /usr/include/qt/QtWidgets/qpushbutton.h /usr/include/qt/QtCore/QProcess \
  /usr/include/qt/QtCore/qprocess.h /usr/include/qt/QtCore/QDir \
  /usr/include/qt/QtCore/qdir.h /usr/include/qt/QtCore/qfileinfo.h \
  /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/qfiledevice.h \

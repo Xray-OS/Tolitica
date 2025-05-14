@@ -7,6 +7,7 @@
 #include <QStackedWidget>
 #include <QComboBox>
 #include <QLabel>
+#include <QCheckBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,7 +31,7 @@ private slots:
     void removeDBLock();
     void tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                 QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
-                                QPushButton *updateSystemButton, QPushButton *removeDBLockButton);
+                                QPushButton *updateSystemButton, QPushButton *removeDBLockButton, QCheckBox *bluetoothToggle);
     // ADDONS
     void adaGamingMeta();
     void removeAdaGamingMeta();

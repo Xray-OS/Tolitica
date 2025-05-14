@@ -270,4 +270,6 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt/QtWidgets/qtabwidget.h \
  /usr/include/qt/QtWidgets/qrubberband.h \
  /usr/include/qt/QtCore/qabstractitemmodel.h \
- /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h
+ /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
+ /usr/include/qt/QtWidgets/QCheckBox \
+ /usr/include/qt/QtWidgets/qcheckbox.h

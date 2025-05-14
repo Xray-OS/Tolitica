@@ -344,6 +344,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
@@ -353,6 +354,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qlabel.h \
@@ -794,6 +796,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: Tolitica_autoge
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
@@ -803,6 +806,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: Tolitica_autoge
   /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qlabel.h \
@@ -1199,6 +1203,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QGroupBox \
   /usr/include/qt/QtWidgets/QInputDialog \
@@ -1213,6 +1218,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qboxlayout.h \
+  /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qdialog.h \
   /usr/include/qt/QtWidgets/qframe.h \
@@ -1596,6 +1602,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o: /home/angel/Documents/Development/_APPS/Toli
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QApplication \
+  /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
@@ -1606,6 +1613,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o: /home/angel/Documents/Development/_APPS/Toli
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qapplication.h \
+  /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
   /usr/include/qt/QtWidgets/qlabel.h \
@@ -2001,6 +2009,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: /home/angel/Documents/Development/_APPS/To
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
   /usr/include/qt/QtWidgets/QApplication \
+  /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QGroupBox \
   /usr/include/qt/QtWidgets/QLabel \
@@ -2016,6 +2025,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: /home/angel/Documents/Development/_APPS/To
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qapplication.h \
   /usr/include/qt/QtWidgets/qboxlayout.h \
+  /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qdialog.h \
   /usr/include/qt/QtWidgets/qframe.h \
@@ -2244,6 +2254,10 @@ Tolitica_autogen/include/ui_widget.h:
 
 /usr/include/qt/QtWidgets/qmessagebox.h:
 
+/usr/include/qt/QtWidgets/qlayoutitem.h:
+
+/usr/include/qt/QtWidgets/qlayout.h:
+
 /usr/lib/libpcre2-16.so.0:
 
 /usr/include/locale.h:
@@ -2321,8 +2335,6 @@ Tolitica_autogen/include/ui_widget.h:
 /usr/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake:
 
 /usr/share/cmake/Modules/Platform/Linux-GNU.cmake:
-
-/usr/include/c++/15.1.1/cctype:
 
 /usr/include/c++/15.1.1/bits/version.h:
 
@@ -3014,8 +3026,6 @@ Tolitica_autogen/EWIEGA46WW/moc_widget.cpp:
 
 /usr/include/qt/QtCore/qrefcount.h:
 
-/usr/include/qt/QtWidgets/qlayoutitem.h:
-
 /usr/include/qt/QtCore/qregexp.h:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
@@ -3071,6 +3081,12 @@ Tolitica_autogen/mocs_compilation.cpp:
 /usr/include/qt/QtCore/qvarlengtharray.h:
 
 /usr/include/qt/QtCore/qvector.h:
+
+/usr/include/qt/QtWidgets/QCheckBox:
+
+/usr/include/c++/15.1.1/cctype:
+
+/usr/include/qt/QtWidgets/qcheckbox.h:
 
 /usr/include/qt/QtGui/qcolor.h:
 
@@ -3381,5 +3397,3 @@ Tolitica_autogen/mocs_compilation.cpp:
 /usr/include/qt/QtWidgets/qgroupbox.h:
 
 /usr/include/qt/QtWidgets/qinputdialog.h:
-
-/usr/include/qt/QtWidgets/qlayout.h:

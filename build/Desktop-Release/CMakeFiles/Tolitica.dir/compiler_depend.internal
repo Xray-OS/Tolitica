@@ -345,6 +345,7 @@
  /usr/include/qt/QtGui/qtransform.h
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
+ /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QLabel
  /usr/include/qt/QtWidgets/QPushButton
@@ -354,6 +355,7 @@
  /usr/include/qt/QtWidgets/qabstractitemdelegate.h
  /usr/include/qt/QtWidgets/qabstractslider.h
  /usr/include/qt/QtWidgets/qabstractspinbox.h
+ /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h
  /usr/include/qt/QtWidgets/qframe.h
  /usr/include/qt/QtWidgets/qlabel.h
@@ -797,6 +799,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o
  /usr/include/qt/QtGui/qtransform.h
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
+ /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QLabel
  /usr/include/qt/QtWidgets/QPushButton
@@ -806,6 +809,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o
  /usr/include/qt/QtWidgets/qabstractitemdelegate.h
  /usr/include/qt/QtWidgets/qabstractslider.h
  /usr/include/qt/QtWidgets/qabstractspinbox.h
+ /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h
  /usr/include/qt/QtWidgets/qframe.h
  /usr/include/qt/QtWidgets/qlabel.h
@@ -1203,6 +1207,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtGui/qtransform.h
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
+ /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QGroupBox
  /usr/include/qt/QtWidgets/QInputDialog
@@ -1217,6 +1222,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtWidgets/qabstractslider.h
  /usr/include/qt/QtWidgets/qabstractspinbox.h
  /usr/include/qt/QtWidgets/qboxlayout.h
+ /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h
  /usr/include/qt/QtWidgets/qdialog.h
  /usr/include/qt/QtWidgets/qframe.h
@@ -1601,6 +1607,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
  /usr/include/qt/QtWidgets/QApplication
+ /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QLabel
  /usr/include/qt/QtWidgets/QPushButton
@@ -1611,6 +1618,7 @@ CMakeFiles/Tolitica.dir/main.cpp.o
  /usr/include/qt/QtWidgets/qabstractslider.h
  /usr/include/qt/QtWidgets/qabstractspinbox.h
  /usr/include/qt/QtWidgets/qapplication.h
+ /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h
  /usr/include/qt/QtWidgets/qframe.h
  /usr/include/qt/QtWidgets/qlabel.h
@@ -2007,6 +2015,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
  /usr/include/qt/QtWidgets/QApplication
+ /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QGroupBox
  /usr/include/qt/QtWidgets/QLabel
@@ -2022,6 +2031,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o
  /usr/include/qt/QtWidgets/qabstractspinbox.h
  /usr/include/qt/QtWidgets/qapplication.h
  /usr/include/qt/QtWidgets/qboxlayout.h
+ /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h
  /usr/include/qt/QtWidgets/qdialog.h
  /usr/include/qt/QtWidgets/qframe.h

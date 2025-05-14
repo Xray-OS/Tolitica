@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QLabel>
+#include <QCheckBox>
 
 // CUSTOM CLASSES
 #include "core_functions.h"
@@ -972,6 +973,15 @@ Widget::Widget(QWidget *parent)
     QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
     QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
 
+    // ** Bluetooth Toggle CheckBox ** //
+    QCheckBox *bluetoothToggle = new QCheckBox("Enable Bluetooth", this);
+    tweaksLayout->addWidget(bluetoothToggle, 3, 0, Qt::AlignLeft);
+        // ** Bluetooth: set initial state based on Bluetooth status ** //
+    bool bluetoothEnabled = (CoreFunctions::bluetoothStatus() == 0);
+    bluetoothToggle->setChecked(bluetoothEnabled);
+    bluetoothToggle->setText(bluetoothEnabled ? "Disable Bluetooth" : "Enable Bluetooth");
+    //bluetoothToggle->setChecked(CoreFunctions::bluetoothStatus() == 0);
+
     /* === Positioning Buttons === */
     tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
     tweaksLayout->addWidget(cleanPkgCacheButton, 1, 0, Qt::AlignRight);
@@ -984,7 +994,7 @@ Widget::Widget(QWidget *parent)
     tweaksPage->setLayout(tweaksLayout);
 
     tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
-                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton);
+                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Terminal Page =====
@@ -1137,7 +1147,8 @@ Widget::Widget(QWidget *parent)
 //////////////////////////////////////////////////
 void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                     QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
-                                    QPushButton *updateSystemButton, QPushButton *removeDBLockButton){
+                                    QPushButton *updateSystemButton, QPushButton *removeDBLockButton,
+                                    QCheckBox *bluetoothToggle){
     // Navigation connections
     connect(tweaksButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(1); // Switch to Tweaks page
@@ -1150,6 +1161,14 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     connect(cleanPkgCacheButton, &QPushButton::clicked, this, &Widget::cleanPkgCache);
     connect(updateSystemButton, &QPushButton::clicked, this, &Widget::systemUpdate);
     connect(removeDBLockButton, &QPushButton::clicked, this, &Widget::removeDBLock);
+
+    // ** Bluetooth Toggle Connection ** //
+    connect(bluetoothToggle, &QCheckBox::toggled, this, [this, bluetoothToggle]() {
+        CoreFunctions::enableBluetooth(this, bluetoothToggle);
+
+        // ** Update Checkbox label based on new state ** //
+        bluetoothToggle->setText(bluetoothToggle->isChecked() ? "Disable Bluetooth" : "Enable Bluetooth");
+    });
 }
 
 ///////////////////////////////////////////////////

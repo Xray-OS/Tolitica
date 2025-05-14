@@ -69,12 +69,12 @@ void CoreFunctions::changeShell(QWidget *parent, const QString &selectedShell) {
         QMessageBox::warning(parent, "Shell Change", "No shell selected.");
         return;
     }
-    QString username = qgetenv("USER");  // ✅ Get actual username
+    QString username = qgetenv("USER");  // Get actual username
 
     qDebug() << "Attempting to change shell to:" << selectedShell;
 
     QProcess process;
-    process.start("pkexec", QStringList() << "chsh" << "-s" << selectedShell << username); // ✅ Use `pkexec` for permissions
+    process.start("pkexec", QStringList() << "chsh" << "-s" << selectedShell << username); // Use `pkexec` for permissions
     process.waitForFinished();
 
     if (process.exitCode() == 0) {
@@ -84,45 +84,64 @@ void CoreFunctions::changeShell(QWidget *parent, const QString &selectedShell) {
     }
 }
 
-// void CoreFunctions::changeShell(QWidget *parent, const QString &selectedShell) {
-//     if (selectedShell.isEmpty()) {
-//         QMessageBox::warning(parent, "Shell Change", "No shell selected.");
-//         return;
-//     }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE TWEAKS PAGE /////////////////////// /////////////////////// ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-//     QString username = qgetenv("USER");  // ✅ Get actual username
-//     qDebug() << "Attempting to change shell for user:" << username << " to:" << selectedShell;
+///////////////////////////////////////////////////
+/// TWEAKS: BLUETOOTH STATUS
+/////////////////////////////////////////////////
+int CoreFunctions::bluetoothStatus() {
+    QProcess bluetoothService;
+    bluetoothService.start("bash", QStringList() << "-c" << "systemctl is-enabled bluetooth.service");
+    bluetoothService.waitForFinished();
+    bool bluetoothEnabled = (bluetoothService.exitCode() == 0);
 
-//     // Prompt user for password
-//     bool ok;
-//     QString password = QInputDialog::getText(parent, "Authentication Required",
-//                                              "Enter your password:", QLineEdit::Password, "", &ok);
+    bluetoothService.start("bash", QStringList() << "-c" << "systemctl is-active bluetooth.service");
+    bluetoothService.waitForFinished();
+    bool bluetoothActive = (bluetoothService.exitCode() == 0);
 
-//     if (!ok || password.isEmpty()) {
-//         QMessageBox::warning(parent, "Shell Change", "Password is required to proceed.");
-//         return;
-//     }
-
-//     // Start process with password input
-//     QProcess process;
-//     process.start("sudo", QStringList() << "-S" << "chsh" << "-s" << selectedShell << username);  // ✅ Use actual username
-//     process.write(password.toUtf8() + "\n");  // ✅ Send password to sudo
-//     process.waitForFinished();
-
-//     QString errorOutput = process.readAllStandardError();
-//     qDebug() << "chsh command output:" << errorOutput;
-
-//     if (process.exitCode() == 0) {
-//         QMessageBox::information(parent, "Shell Change", "Shell changed successfully to: " + selectedShell);
-//     } else {
-//         QMessageBox::warning(parent, "Shell Change", "Failed to change shell. Error:\n" + errorOutput);
-//     }
-// }
+    if (bluetoothEnabled && bluetoothActive) {
+        return 0;
+    } else if (!bluetoothEnabled && !bluetoothActive) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
 
 
 
+///////////////////////////////////////////////////
+/// TWEAKS: ENABLE/DISABLE BLUETOOTH
+//////////////////////////////////////////////////
+void CoreFunctions::enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle) {
+    int status = bluetoothStatus();
 
+    QProcess process;
+    QString command = (status == 0) ? "systemctl disable --now bluetooth.service" : "systemctl enable --now bluetooth.service";
 
+    process.start("pkexec", QStringList() << "bash" << "-c" << command);
+    process.waitForFinished();
+
+    // ** Check process success or failure ** //
+    if (process.exitCode() == 0) {
+        bluetoothToggle->setChecked(status != 0);
+        bluetoothToggle->setText(status != 0 ? "Disable Bluetooth" : "Enable Bluetooth");
+        QMessageBox::information(parent, "Bluetooth",
+                                 status == 0 ? "Bluetooth Disabled Successfully" :
+                                 "Bluetooth Enabled Successfully");
+    } else {
+        bluetoothToggle->setChecked(status == 0);
+        bluetoothToggle->setText(status == 0 ? "Disable Bluetooth" : "Enable Bluetooth");
+        QMessageBox::warning(nullptr, "Error", "Failed to change Bluetooth state:\n" +
+                                                   process.readAllStandardError());
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE ADDONS PAGE /////////////////////// /////////////////////// ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
