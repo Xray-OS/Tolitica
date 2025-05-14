@@ -15,6 +15,8 @@
 #include <QComboBox>
 #include <unistd.h>
 #include <QInputDialog>
+#include <QApplication>
+#include <QObject>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TERMINAL PAGE /////////////////////// /////////////////////// ////////////////
@@ -142,6 +144,102 @@ void CoreFunctions::enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle)
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE ADDONS PAGE /////////////////////// /////////////////////// ////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+/// ADDONS: CHECK FLATPAK STATUS
+//////////////////////////////////////////////////
+int CoreFunctions::flatpakStatus() {
+    QProcess flatpakStatus;
+    flatpakStatus.start("bash", QStringList() << "-c" << "pacman -Q flatpak");
+    flatpakStatus.waitForFinished();
+    bool pkgInstalled = (flatpakStatus.exitCode() == 0);
+
+    flatpakStatus.start("bash", QStringList() << "-c" << "flatpak remotes | grep -q flathub");
+    flatpakStatus.waitForFinished();
+    bool repoSet = (flatpakStatus.exitCode() == 0);
+
+    if (pkgInstalled && repoSet) {
+        return 0;
+    } else if (!pkgInstalled && !repoSet) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
+
+///////////////////////////////////////////////////
+/// ADDONS: ENABLE/DISABLE FLATPAK
+//////////////////////////////////////////////////
+void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
+    int status = flatpakStatus();
+
+    QProcess dependencyCheck;
+    dependencyCheck.start("bash", QStringList() << "-c" << "pacman -Qi flatpak | grep 'Required by' | cut -d':' -f2 | tr '\n' ' '");
+    dependencyCheck.waitForFinished();
+    QString dependencies = dependencyCheck.readAllStandardOutput().trimmed();
+
+    // ** Warn user before removing Flatpak and its dependent packages ** //
+    if (status == 0) {
+        QString warningMessage = "Removing Flatpak will also uninstall:\n\n";
+        warningMessage += dependencies.isEmpty() ? "All Flatpak Apps" : "All Flatpak Apps\n" + dependencies;
+        warningMessage += "\n\nDo you want to continue?";
+
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            parent, "Warning: Flatpak Removal", warningMessage, QMessageBox::Yes | QMessageBox::No);
+
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+
+    QProcess *process = new QProcess(parent);
+    QTimer *monitorTimer = new QTimer(parent);
+
+    QProgressDialog *progress = new QProgressDialog(
+        status == 0 ? "Removing Flatpak..." : "Installing Flatpak...", nullptr, 0, 100, parent);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    connect(process, &QProcess::readyReadStandardOutput, parent, [=]() mutable {
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+        QCoreApplication::processEvents();
+    });
+
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    parent, [=]() mutable {
+        if (process->exitCode() == 0){
+            progress->setValue(100);
+
+            QMessageBox::information(parent, "Flatpak",
+                                     status == 0 ? "Flatpak Disabled Successfully!" :
+                                     "Flatpak Enabled Successfully!");
+            flatpakToggle->setChecked(status != 0);
+            flatpakToggle->setText(flatpakToggle->isChecked() ? "Disable/Remove Flatpak"
+                                                              : "Enable/Install Flatpak");
+        } else {
+            progress->setValue(100);
+            QMessageBox::warning(parent, "Error", "Failed performing operations with Flatpak:\n"
+                                 + process->readAllStandardError());
+        }
+
+        progress->deleteLater();
+        process->deleteLater();
+        monitorTimer->deleteLater();
+    });
+
+    QString enableCommand = "pacman -S --noconfirm flatpak && flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo";
+    QString disableCommand = "flatpak uninstall --all && flatpak remotes | grep -q flathub && flatpak remote-delete flathub && sudo pacman -Rcns --noconfirm flatpak";
+    QString command = (status == 0) ? disableCommand : enableCommand;
+
+    process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    monitorTimer->start(250);
+}
+
+
 
 
 

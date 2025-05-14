@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QCheckBox>
 
-class CoreFunctions {
+class CoreFunctions : public QObject {
 public:
 
     // TERMINAL
@@ -14,8 +14,12 @@ public:
     static void changeShell(QWidget *parent, const QString &selectedShell);
 
     //TWEAKS
-    static void enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle);
     static int bluetoothStatus();
+    static void enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle);
+
+    // ADDONS
+    static int flatpakStatus();
+    static void enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle);
 };
 
 #endif // CORE_FUNCTIONS_H

@@ -298,4 +298,11 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt/QtWidgets/qinputdialog.h \
  /usr/include/qt/QtWidgets/qlineedit.h \
  /usr/include/qt/QtGui/qtextcursor.h /usr/include/qt/QtGui/qtextformat.h \
- /usr/include/qt/QtGui/qpen.h /usr/include/qt/QtGui/qtextoption.h
+ /usr/include/qt/QtGui/qpen.h /usr/include/qt/QtGui/qtextoption.h \
+ /usr/include/qt/QtWidgets/QApplication \
+ /usr/include/qt/QtWidgets/qapplication.h \
+ /usr/include/qt/QtCore/qcoreapplication.h \
+ /usr/include/qt/QtCore/qcoreevent.h /usr/include/qt/QtCore/qeventloop.h \
+ /usr/include/qt/QtGui/qguiapplication.h \
+ /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtCore/QObject \
+ /usr/include/qt/QtCore/qobject.h

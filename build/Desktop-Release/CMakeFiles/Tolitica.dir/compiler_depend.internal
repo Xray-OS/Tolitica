@@ -1104,6 +1104,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtCore/QDebug
  /usr/include/qt/QtCore/QDir
  /usr/include/qt/QtCore/QFile
+ /usr/include/qt/QtCore/QObject
  /usr/include/qt/QtCore/QProcess
  /usr/include/qt/QtCore/QStringList
  /usr/include/qt/QtCore/QTextStream
@@ -1123,9 +1124,12 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtCore/qcontainerfwd.h
  /usr/include/qt/QtCore/qcontainertools_impl.h
  /usr/include/qt/QtCore/qcontiguouscache.h
+ /usr/include/qt/QtCore/qcoreapplication.h
+ /usr/include/qt/QtCore/qcoreevent.h
  /usr/include/qt/QtCore/qdatastream.h
  /usr/include/qt/QtCore/qdebug.h
  /usr/include/qt/QtCore/qdir.h
+ /usr/include/qt/QtCore/qeventloop.h
  /usr/include/qt/QtCore/qfile.h
  /usr/include/qt/QtCore/qfiledevice.h
  /usr/include/qt/QtCore/qfileinfo.h
@@ -1186,8 +1190,10 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtGui/qfont.h
  /usr/include/qt/QtGui/qfontinfo.h
  /usr/include/qt/QtGui/qfontmetrics.h
+ /usr/include/qt/QtGui/qguiapplication.h
  /usr/include/qt/QtGui/qicon.h
  /usr/include/qt/QtGui/qimage.h
+ /usr/include/qt/QtGui/qinputmethod.h
  /usr/include/qt/QtGui/qkeysequence.h
  /usr/include/qt/QtGui/qmatrix.h
  /usr/include/qt/QtGui/qpaintdevice.h
@@ -1207,6 +1213,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtGui/qtransform.h
  /usr/include/qt/QtGui/qvalidator.h
  /usr/include/qt/QtGui/qwindowdefs.h
+ /usr/include/qt/QtWidgets/QApplication
  /usr/include/qt/QtWidgets/QCheckBox
  /usr/include/qt/QtWidgets/QComboBox
  /usr/include/qt/QtWidgets/QGroupBox
@@ -1221,6 +1228,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o
  /usr/include/qt/QtWidgets/qabstractitemdelegate.h
  /usr/include/qt/QtWidgets/qabstractslider.h
  /usr/include/qt/QtWidgets/qabstractspinbox.h
+ /usr/include/qt/QtWidgets/qapplication.h
  /usr/include/qt/QtWidgets/qboxlayout.h
  /usr/include/qt/QtWidgets/qcheckbox.h
  /usr/include/qt/QtWidgets/qcombobox.h

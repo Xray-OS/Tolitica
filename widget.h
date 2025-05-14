@@ -47,7 +47,7 @@ private slots:
     void removeVMware(QPushButton *vmwButton);
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                 QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
-                                QPushButton *vmwButton);
+                                QPushButton *vmwButton, QCheckBox *flatpakToggle);
     // TERMINAL
     void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
                                   QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox, QLabel *shellLabel);

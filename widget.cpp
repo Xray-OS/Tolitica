@@ -1106,6 +1106,14 @@ Widget::Widget(QWidget *parent)
         vmwButton->setText("Install/Enable VMware Workstation");
     }
 
+    // ** Flatpak Toggle CheckBox ** //
+    QCheckBox *flatpakToggle = new QCheckBox(this);
+    addonsLayout->addWidget(flatpakToggle, 5, 0, Qt::AlignCenter);
+        /* Flatpak set initial state based on Flatpak-Status */
+    bool flatpakEnabled = (CoreFunctions::flatpakStatus() == 0);
+    flatpakToggle->setChecked(flatpakEnabled);
+    flatpakToggle->setText(flatpakEnabled ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
+
     /* === Positioning Buttons === */
     addonsLayout->addWidget(adaGamingMetaButton);
     addonsLayout->addWidget(adaDevelopmentMetaButton);
@@ -1119,7 +1127,7 @@ Widget::Widget(QWidget *parent)
 
     /* === Connections === */
     addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
-                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton);
+                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton, flatpakToggle);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== End Pages =====
@@ -1176,7 +1184,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                     QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
-                                    QPushButton *vmwButton) {
+                                    QPushButton *vmwButton, QCheckBox *flatpakToggle) {
     // Navigation connections
     connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(2); // Switch to Addons page
@@ -1233,6 +1241,14 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         } else { // Not installed or partially installed
             addVMware(vmwButton);
         }
+    });
+
+    // ** Flatpak Toggle Connection ** //
+        connect(flatpakToggle, &QCheckBox::toggled, this, [this, flatpakToggle]() {
+        CoreFunctions::enableFlatpak(this, flatpakToggle);
+
+        // ** Update CheckBox label based on new state ** //
+        flatpakToggle->setText(flatpakToggle->isChecked() ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
     });
 
 }
