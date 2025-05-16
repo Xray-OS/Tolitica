@@ -16,6 +16,8 @@ public:
     //TWEAKS
     static int bluetoothStatus();
     static void enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle);
+    static int apparmorStatus();
+    static void enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle);
 
     // ADDONS
     static int flatpakStatus();

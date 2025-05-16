@@ -2,6 +2,7 @@
 /home/angel/Documents/Development/_APPS/Tolitica/widget.cpp
  uic:./ui_widget.h
 /home/angel/Documents/Development/_APPS/Tolitica/main.cpp
+/home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp
 /home/angel/Documents/Development/_APPS/Tolitica/widget.h
  mmc:Q_OBJECT
  mdp:/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/moc_predefs.h
@@ -251,6 +252,7 @@
  mdp:/usr/include/linux/types.h
  mdp:/usr/include/locale.h
  mdp:/usr/include/pthread.h
+ mdp:/usr/include/qt/QtCore/qabstractitemmodel.h
  mdp:/usr/include/qt/QtCore/qalgorithms.h
  mdp:/usr/include/qt/QtCore/qarraydata.h
  mdp:/usr/include/qt/QtCore/qatomic.h
@@ -274,7 +276,9 @@
  mdp:/usr/include/qt/QtCore/qiterator.h
  mdp:/usr/include/qt/QtCore/qline.h
  mdp:/usr/include/qt/QtCore/qlist.h
+ mdp:/usr/include/qt/QtCore/qlocale.h
  mdp:/usr/include/qt/QtCore/qlogging.h
+ mdp:/usr/include/qt/QtCore/qmap.h
  mdp:/usr/include/qt/QtCore/qmargins.h
  mdp:/usr/include/qt/QtCore/qmetatype.h
  mdp:/usr/include/qt/QtCore/qnamespace.h
@@ -289,6 +293,7 @@
  mdp:/usr/include/qt/QtCore/qrect.h
  mdp:/usr/include/qt/QtCore/qrefcount.h
  mdp:/usr/include/qt/QtCore/qregexp.h
+ mdp:/usr/include/qt/QtCore/qregularexpression.h
  mdp:/usr/include/qt/QtCore/qscopedpointer.h
  mdp:/usr/include/qt/QtCore/qshareddata.h
  mdp:/usr/include/qt/QtCore/qsharedpointer.h
@@ -304,6 +309,7 @@
  mdp:/usr/include/qt/QtCore/qsystemdetection.h
  mdp:/usr/include/qt/QtCore/qtcore-config.h
  mdp:/usr/include/qt/QtCore/qtypeinfo.h
+ mdp:/usr/include/qt/QtCore/qvariant.h
  mdp:/usr/include/qt/QtCore/qvarlengtharray.h
  mdp:/usr/include/qt/QtCore/qvector.h
  mdp:/usr/include/qt/QtCore/qversiontagging.h
@@ -329,15 +335,31 @@
  mdp:/usr/include/qt/QtGui/qtgui-config.h
  mdp:/usr/include/qt/QtGui/qtguiglobal.h
  mdp:/usr/include/qt/QtGui/qtransform.h
+ mdp:/usr/include/qt/QtGui/qvalidator.h
  mdp:/usr/include/qt/QtGui/qwindowdefs.h
+ mdp:/usr/include/qt/QtWidgets/QCheckBox
+ mdp:/usr/include/qt/QtWidgets/QComboBox
+ mdp:/usr/include/qt/QtWidgets/QLabel
  mdp:/usr/include/qt/QtWidgets/QPushButton
  mdp:/usr/include/qt/QtWidgets/QStackedWidget
  mdp:/usr/include/qt/QtWidgets/QWidget
  mdp:/usr/include/qt/QtWidgets/qabstractbutton.h
+ mdp:/usr/include/qt/QtWidgets/qabstractitemdelegate.h
+ mdp:/usr/include/qt/QtWidgets/qabstractslider.h
+ mdp:/usr/include/qt/QtWidgets/qabstractspinbox.h
+ mdp:/usr/include/qt/QtWidgets/qcheckbox.h
+ mdp:/usr/include/qt/QtWidgets/qcombobox.h
  mdp:/usr/include/qt/QtWidgets/qframe.h
+ mdp:/usr/include/qt/QtWidgets/qlabel.h
  mdp:/usr/include/qt/QtWidgets/qpushbutton.h
+ mdp:/usr/include/qt/QtWidgets/qrubberband.h
  mdp:/usr/include/qt/QtWidgets/qsizepolicy.h
+ mdp:/usr/include/qt/QtWidgets/qslider.h
  mdp:/usr/include/qt/QtWidgets/qstackedwidget.h
+ mdp:/usr/include/qt/QtWidgets/qstyle.h
+ mdp:/usr/include/qt/QtWidgets/qstyleoption.h
+ mdp:/usr/include/qt/QtWidgets/qtabbar.h
+ mdp:/usr/include/qt/QtWidgets/qtabwidget.h
  mdp:/usr/include/qt/QtWidgets/qtwidgets-config.h
  mdp:/usr/include/qt/QtWidgets/qtwidgetsglobal.h
  mdp:/usr/include/qt/QtWidgets/qwidget.h
@@ -356,3 +378,4 @@
  mdp:/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h
  mdp:/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h
  mdp:/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
+/home/angel/Documents/Development/_APPS/Tolitica/core_functions.h

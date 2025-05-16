@@ -31,7 +31,8 @@ private slots:
     void removeDBLock();
     void tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                 QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
-                                QPushButton *updateSystemButton, QPushButton *removeDBLockButton, QCheckBox *bluetoothToggle);
+                                QPushButton *updateSystemButton, QPushButton *removeDBLockButton, QCheckBox *bluetoothToggle,
+                                QCheckBox *appArmorToggle);
     // ADDONS
     void adaGamingMeta();
     void removeAdaGamingMeta();

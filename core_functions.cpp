@@ -17,6 +17,8 @@
 #include <QInputDialog>
 #include <QApplication>
 #include <QObject>
+#include <QProgressBar>
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TERMINAL PAGE /////////////////////// /////////////////////// ////////////////
@@ -112,8 +114,6 @@ int CoreFunctions::bluetoothStatus() {
     }
 }
 
-
-
 ///////////////////////////////////////////////////
 /// TWEAKS: ENABLE/DISABLE BLUETOOTH
 //////////////////////////////////////////////////
@@ -140,6 +140,173 @@ void CoreFunctions::enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle)
                                                    process.readAllStandardError());
     }
 }
+
+///////////////////////////////////////////////////
+/// TWEAKS: CHECK APP-ARMOR STATUS
+/////////////////////////////////////////////////
+int CoreFunctions::apparmorStatus() {
+    QProcess process;
+
+    QStringList tests = {
+        "lsmod | grep apparmor",
+        "zgrep \"CONFIG_SECURITY_APPARMOR=y\" /proc/config.gz",
+        "cat /sys/module/apparmor/parameters/enabled"
+    };
+
+    bool supportsApparmor = true;
+
+    for (const QString &test : tests) {
+        process.start("bash", QStringList() << "-c" << test);
+        process.waitForFinished();
+        QString result = process.readAllStandardOutput().trimmed();
+
+
+        bool valid = test.contains("cat") ? (result == "Y") : !result.isEmpty();
+
+        if(!valid) {
+            supportsApparmor = false;
+            break;
+        }
+
+    }
+    if (!supportsApparmor) {
+        return 0;
+    }
+
+    process.start("bash", QStringList() << "-c" << "pacman -Q apparmor");
+    process.waitForFinished();
+    bool pkgInstalled = (process.exitCode() == 0);
+
+    process.start("bash", QStringList() << "-c" << "systemctl is-enabled apparmor.service");
+    process.waitForFinished();
+    bool isEnabled = (process.exitCode() == 0);
+
+    // **Check if AppArmor modules exist in GRUB (Handle both Quote Types!)**
+    QFile grubFile("/etc/default/grub");
+    bool grubSet = false;
+
+    if(grubFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString grubContent = QTextStream(&grubFile).readAll();
+        grubFile.close();
+
+        static const QRegularExpression grubRegex(R"(GRUB_CMDLINE_LINUX_DEFAULT=(['\"])(.*?)\1)");
+        QRegularExpressionMatch match = grubRegex.match(grubContent);
+
+        if (match.hasMatch()) {
+            QString grubParams = match.captured(2); // Extract GRUB_CMDLINE_LINUX_DEFAULT contents
+            grubSet = grubParams.contains("lsm=landlock lockdown yama integrity apparmor bpf");
+        }
+    }
+
+    // **Determine final status**
+    if (pkgInstalled && isEnabled && grubSet) {
+        return 1;
+    } else if (!pkgInstalled && !isEnabled && !grubSet) {
+        return 2;
+    }
+    return 3;
+}
+
+///////////////////////////////////////////////////
+/// TWEAKS::ENABLE/DISABLE APPARMOR
+/////////////////////////////////////////////////
+
+void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
+   int status = apparmorStatus();
+    if(status == 0) {
+       apparmorToggle->blockSignals(true);
+        apparmorToggle->setChecked(false);
+       apparmorToggle->blockSignals(false);
+        //apparmorToggle->setText("Enable AppArmor");
+       QMessageBox::information(parent, "AppArmor not Supported", "Please Install a Kernel that supports AppArmor");
+        return;
+    }
+
+    if (status == 1) {
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            parent,
+            "Warning: Disable AppArmor",
+            "Disabling AppArmor will remove security enforcement and system integrity protections.\n\nContinue?",
+            QMessageBox::Yes | QMessageBox::No
+            );
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+
+    // Prepare asynchronous progress reporting (like in your Flatpak function)
+    QProcess *process = new QProcess(parent);
+    QTimer *monitorTimer = new QTimer(parent);
+    QProgressDialog *progress = new QProgressDialog(
+        (status == 1) ? "Disabling AppArmor..." : "Enabling AppArmor...",
+        nullptr, 0, 100, parent
+        );
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    connect(process, &QProcess::readyReadStandardOutput, parent, [progressValue, progress]() mutable {
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+        QCoreApplication::processEvents();
+    });
+
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            parent, [=]() mutable {
+                progress->setValue(100);
+                if (process->exitCode() == 0) {
+
+                    bool newState = (status != 1);
+                    QString msg = (status == 1) ?
+                                      "AppArmor Disabled Successfully!" :
+                                      "AppArmor Enabled Successfully!";
+                    QMessageBox::information(parent, "AppArmor", msg);
+
+                    // Update the checkbox according to the new state:
+                    apparmorToggle->setChecked(newState);
+                    apparmorToggle->setText(newState ? "Disable AppArmor" : "Enable AppArmor");
+                } else {
+                    QMessageBox::warning(parent, "Error",
+                                         "Failed performing operations with AppArmor:\n" + process->readAllStandardError());
+                }
+                progress->deleteLater();
+                process->deleteLater();
+                monitorTimer->deleteLater();
+            });
+
+    // Our AppArmor parameter (note the leading space!)
+    const QString param = " lsm=landlock lockdown yama integrity apparmor bpf";
+
+    QString command;
+    if (status == 1) {
+        // Disabling AppArmor:
+        command = QString(
+                      "sed -Ei \"s/%1//g\" /etc/default/grub; "          // Remove duplicates from GRUB
+                      "grub-mkconfig -o /boot/grub/grub.cfg; "             // Regenerate GRUB config
+                      "systemctl disable apparmor.service; "             // Disable AppArmor service
+                      "systemctl stop apparmor.service"                  // Stop AppArmor service
+                      ).arg(param);
+    } else {
+        // Enabling AppArmor:
+        command = QString(
+                      "pacman -Q apparmor || pacman -S --noconfirm apparmor; " // Install if not present
+                      "systemctl enable apparmor.service; "                   // Enable service
+                      "systemctl start apparmor.service; "                    // Start service
+                      "sed -Ei \"s/%1//g\" /etc/default/grub; "                // Remove duplicate parameters
+                      // For double-quoted GRUB line:
+                      "sed -Ei 's/^(GRUB_CMDLINE_LINUX_DEFAULT=\")(.*)\"/\\1\\2%1\"/' /etc/default/grub; "
+                      // For single-quoted GRUB line:
+                      "sed -Ei \"s/^(GRUB_CMDLINE_LINUX_DEFAULT=')([^']*)'/\\1\\2%1'/\" /etc/default/grub; "
+                      "grub-mkconfig -o /boot/grub/grub.cfg"                  // Regenerate GRUB config
+                      ).arg(param);
+    }
+
+    process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    monitorTimer->start(250);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE ADDONS PAGE /////////////////////// /////////////////////// ////////////////

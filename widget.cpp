@@ -980,7 +980,20 @@ Widget::Widget(QWidget *parent)
     bool bluetoothEnabled = (CoreFunctions::bluetoothStatus() == 0);
     bluetoothToggle->setChecked(bluetoothEnabled);
     bluetoothToggle->setText(bluetoothEnabled ? "Disable Bluetooth" : "Enable Bluetooth");
-    //bluetoothToggle->setChecked(CoreFunctions::bluetoothStatus() == 0);
+    // ** AppArmor Toggle CheckBox
+    QCheckBox *apparmorToggle = new QCheckBox(this);
+    tweaksLayout->addWidget(apparmorToggle, 3, 0, Qt::AlignRight);
+        // ** AppArmor: set initial state base on AppArmor statud ** //
+    int apparmorStatus = CoreFunctions::apparmorStatus();
+
+    if(apparmorStatus == 0) {
+        apparmorToggle->setText("Enable AppArmor");
+    } else {
+        bool appArmorEnabled = (CoreFunctions::apparmorStatus() == 0);
+        apparmorToggle->setChecked(appArmorEnabled);
+        apparmorToggle->setText(appArmorEnabled ? "Disable AppArmor" : "Enable AppArmor");
+    }
+
 
     /* === Positioning Buttons === */
     tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
@@ -994,7 +1007,8 @@ Widget::Widget(QWidget *parent)
     tweaksPage->setLayout(tweaksLayout);
 
     tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
-                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle);
+                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle,
+                           apparmorToggle);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Terminal Page =====
@@ -1115,10 +1129,10 @@ Widget::Widget(QWidget *parent)
     flatpakToggle->setText(flatpakEnabled ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
 
     /* === Positioning Buttons === */
-    addonsLayout->addWidget(adaGamingMetaButton);
-    addonsLayout->addWidget(adaDevelopmentMetaButton);
-    addonsLayout->addWidget(chaoticAURButton);
-    addonsLayout->addWidget(vmwButton);
+    addonsLayout->addWidget(adaGamingMetaButton, 1, 0, Qt::AlignLeft);
+    addonsLayout->addWidget(adaDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
+    addonsLayout->addWidget(chaoticAURButton, 1, 0, Qt::AlignRight);
+    addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
 
     // Push Back-button to bottom dynamically
     addonsLayout->setRowStretch(4, 1);
@@ -1156,7 +1170,7 @@ Widget::Widget(QWidget *parent)
 void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                     QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
                                     QPushButton *updateSystemButton, QPushButton *removeDBLockButton,
-                                    QCheckBox *bluetoothToggle){
+                                    QCheckBox *bluetoothToggle, QCheckBox *appArmorToggle){
     // Navigation connections
     connect(tweaksButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(1); // Switch to Tweaks page
@@ -1176,6 +1190,13 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 
         // ** Update Checkbox label based on new state ** //
         bluetoothToggle->setText(bluetoothToggle->isChecked() ? "Disable Bluetooth" : "Enable Bluetooth");
+    });
+        // ** AppArmor Toggle Connection ** //
+        connect(appArmorToggle, &QCheckBox::toggled, this, [this, appArmorToggle]() {
+        CoreFunctions::enableAppArmor(this, appArmorToggle);
+
+        // ** Update CheckBox label based on new state ** //
+        appArmorToggle->setText(appArmorToggle->isChecked() ? "Disable AppArmor" : "Enable AppArmor");
     });
 }
 
