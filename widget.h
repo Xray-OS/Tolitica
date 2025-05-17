@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QCheckBox>
+#include "core_functions.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -32,7 +33,7 @@ private slots:
     void tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                 QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
                                 QPushButton *updateSystemButton, QPushButton *removeDBLockButton, QCheckBox *bluetoothToggle,
-                                QCheckBox *appArmorToggle);
+                                QCheckBox *appArmorToggle, QPushButton *rankMirrorsButton);
     // ADDONS
     void adaGamingMeta();
     void removeAdaGamingMeta();
@@ -57,5 +58,6 @@ private slots:
 
 private:
     Ui::Widget *ui;
+    CoreFunctions* coreFunctions;
 };
 #endif // WIDGET_H

@@ -1,6 +1,0 @@
-polkit.addRule(function(action, subject) {
-    if (action.id == "org.tolitica.modify-system-files" && subject.isInGroup("wheel")) {
-        return polkit.Result.YES;
-    }
-});
-EOF

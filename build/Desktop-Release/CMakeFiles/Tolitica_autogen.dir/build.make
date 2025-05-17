@@ -68,8 +68,8 @@ include CMakeFiles/Tolitica_autogen.dir/progress.make
 
 CMakeFiles/Tolitica_autogen: Tolitica_autogen/timestamp
 
-Tolitica_autogen/timestamp: /usr/bin/moc
-Tolitica_autogen/timestamp: /usr/bin/uic
+Tolitica_autogen/timestamp: /usr/lib/qt6/moc
+Tolitica_autogen/timestamp: /usr/lib/qt6/uic
 Tolitica_autogen/timestamp: CMakeFiles/Tolitica_autogen.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Tolitica"
 	/usr/bin/cmake -E cmake_autogen /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles/Tolitica_autogen.dir/AutogenInfo.json Release

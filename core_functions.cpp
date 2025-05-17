@@ -16,8 +16,14 @@
 #include <unistd.h>
 #include <QInputDialog>
 #include <QApplication>
+
 #include <QObject>
-#include <QProgressBar>
+#include <QDialog>
+#include <QFormLayout>
+#include <QLabel>
+#include <QSpinBox>
+#include <QDialogButtonBox>
+#include <QDebug>
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,6 +313,163 @@ void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
     monitorTimer->start(250);
 }
 
+///////////////////////////////////////////////////
+/// TWEAKS: GET MIRROR COUNT
+//////////////////////////////////////////////////
+int CoreFunctions::getMirrorCount(QWidget *parent, int defaultValue, int minValue, int maxValue) {
+    QDialog dialog(parent);
+    dialog.setWindowTitle(QObject::tr("Rank Mirrors"));
+
+    QFormLayout form(&dialog);
+
+    // Create a label and a spinBox on the same row.
+    QLabel *label = new QLabel(
+        QObject::tr("It ranks all current mirrors by default. You can also set this from %1 up to %2").arg(minValue).arg(maxValue),
+        &dialog);
+    QSpinBox *spinBox = new QSpinBox(&dialog);
+    spinBox->setRange(minValue, maxValue);
+    spinBox->setValue(defaultValue);
+    form.addRow(label, spinBox);
+
+    // Add standard OK/Cancel buttons to a QDialogButtonBox.
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+
+    // Create an extra button for "Rank All Mirrors"
+    QPushButton *rankAllButton = new QPushButton(QObject::tr("Rank All Mirrors"), &dialog);
+    buttonBox.addButton(rankAllButton, QDialogButtonBox::ActionRole);
+
+    form.addRow(&buttonBox);
+
+    // Standard connections for Ok and Cancel.
+    QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    // Extra behaviour for Rank All Mirror button.
+    QObject::connect(rankAllButton, &QPushButton::clicked, &dialog, [&dialog]() {
+        dialog.setProperty("mirrorCountResult", 0);
+        dialog.accept();
+    });
+
+    int result = defaultValue;
+
+    // Execute the dialog.
+    if (dialog.exec() == QDialog::Accepted) {
+        QVariant prop = dialog.property("mirrorCountResult");
+        if (prop.isValid() && prop.canConvert<int>() && prop.toInt() == 0)
+            result = 0;
+        else
+            result = spinBox->value();
+    } else {
+        return -1;
+    }
+
+    return result;
+}
+
+///////////////////////////////////////////////////
+/// TWEAKS: RANK MIRRORS
+//////////////////////////////////////////////////
+void CoreFunctions::rankMirrors(QWidget *parent, int mirrorCount) {
+    // Creating a progress dialog with range 0-100
+    QProgressDialog *progressDialog = new QProgressDialog(
+        "Performing backup and ranking mirrors...", "Cancel", 0, 100, parent);
+    progressDialog->setWindowModality(Qt::WindowModal);
+    progressDialog->setAutoClose(true);
+    progressDialog->setAutoReset(true);
+    progressDialog->setMinimumDuration(0);
+    progressDialog->setValue(0);
+
+    // Create and start the backup process asynchronously.
+    QProcess *backupProcess = new QProcess(parent);
+    connect(backupProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]
+    (int exitCode, QProcess::ExitStatus /*status*/) {
+        if (progressDialog->wasCanceled()) {
+            backupProcess->kill();
+            backupProcess->deleteLater();
+            progressDialog->deleteLater();
+            return;
+        }
+
+        if (exitCode != 0) {
+            QMessageBox::warning(parent, "Error", "Backup process encountered an error");
+            backupProcess->deleteLater();
+            progressDialog->cancel();
+            progressDialog->deleteLater();
+            return;
+        }
+        progressDialog->setValue(50);
+
+        // Check if Reflector is installed by running "which reflector".
+        QProcess whichProcess;
+        whichProcess.start("which", QStringList() << "reflector");
+        whichProcess.waitForFinished();
+        bool hasReflector = (whichProcess.exitCode() == 0 &&
+                             !QString(whichProcess.readAllStandardOutput()).trimmed().isEmpty());
+
+        QString command;
+        if (hasReflector) {
+            // If mirrorCount is non-zero, run reflector with --latest, otherwise rank all mirrors
+            if (mirrorCount != 0) {
+                command = QString(
+                "exec sudo reflector --latest %1 --sort rate --save /etc/pacman.d/mirrorlist")
+                .arg(mirrorCount);
+            } else {
+                command = QString(
+                "exec sudo reflector --sort rate --save /etc/pacman.d/mirrorlist");
+            }
+        } else {
+            // Similarly, if using rankmirrors: include -n when mirrorCount is non-zero
+            if (mirrorCount != 0) {
+                command = QString("exec rankmirrors -n %1 /etc/pacman.d/mirrorlist").arg(mirrorCount);
+            } else {
+                command = QString("exec rankmirrors /etc/pacman.d/mirrorlist");
+            }
+        }
+
+        //Create and start the ranking process asynchronously
+        QProcess *rankProcess = new QProcess(parent);
+        connect(rankProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [=](int exitCode, QProcess::ExitStatus /*status*/) {
+            if (progressDialog->wasCanceled()) {
+                rankProcess->kill();
+                rankProcess->deleteLater();
+                progressDialog->deleteLater();
+                return;
+            }
+
+            // Update progress to completed
+            progressDialog->setValue(100);
+
+            if (exitCode == 0) {
+                if (mirrorCount != 0) {
+                    QMessageBox::information(parent, "Mirrors Ranked",
+                    QString("The mirrors have been ranked by the %1 fastest ones").arg(mirrorCount));
+                }
+                QMessageBox::information(parent, "Mirrors Ranked",
+                                         QString("All the mirrors have been ranked to the fastest ones").arg(mirrorCount));
+            } else {
+                QMessageBox::warning(parent, "Error",
+                "Something went wrong ranking the mirrors\n" +
+                rankProcess->readAllStandardError());
+            }
+            rankProcess->deleteLater();
+            progressDialog->deleteLater();
+        });
+        // Start the ranking process via pkexec in a bash shell
+        rankProcess->start("pkexec", QStringList() << "bash" << "-c" << command);
+        backupProcess->deleteLater();
+    });
+
+    // Connect the progress dialog's cancellation to the backup process.
+    connect(progressDialog, &QProgressDialog::canceled, this, [=]() {
+        if (backupProcess->state() != QProcess::NotRunning)
+            backupProcess->kill();
+    });
+
+    // Start the backup process asynchronously via pkexec in a bash shell.
+    backupProcess->start("pkexec", QStringList() << "bash" << "-c"
+                        << "cp -r /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup");
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE ADDONS PAGE /////////////////////// /////////////////////// ////////////////
@@ -405,13 +568,3 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
     process->start("pkexec", QStringList() << "bash" << "-c" << command);
     monitorTimer->start(250);
 }
-
-
-
-
-
-
-
-
-
-

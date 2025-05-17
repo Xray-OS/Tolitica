@@ -69,8 +69,8 @@ include CMakeFiles/Tolitica.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Tolitica.dir/flags.make
 
-Tolitica_autogen/timestamp: /usr/bin/moc
-Tolitica_autogen/timestamp: /usr/bin/uic
+Tolitica_autogen/timestamp: /usr/lib/qt6/moc
+Tolitica_autogen/timestamp: /usr/lib/qt6/uic
 Tolitica_autogen/timestamp: CMakeFiles/Tolitica.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Tolitica"
 	/usr/bin/cmake -E cmake_autogen /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles/Tolitica_autogen.dir/AutogenInfo.json Release
@@ -79,8 +79,8 @@ Tolitica_autogen/timestamp: CMakeFiles/Tolitica.dir/compiler_depend.ts
 Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc
 Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: CMakeFiles/Tolitica_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Info.json
 Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /home/angel/Documents/Development/_APPS/Tolitica/resources/icons/tolitica-icon.png
-Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /usr/bin/rcc
-Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /usr/bin/rcc
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /usr/lib/qt6/rcc
+Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp: /usr/lib/qt6/rcc
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for visualElements.qrc"
 	/usr/bin/cmake -E cmake_autorcc /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles/Tolitica_autogen.dir/AutoRcc_visualElements_EWIEGA46WW_Info.json Release
 
@@ -175,9 +175,11 @@ Tolitica: CMakeFiles/Tolitica.dir/core_functions.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/build.make
 Tolitica: CMakeFiles/Tolitica.dir/compiler_depend.ts
-Tolitica: /usr/lib/libQt5Widgets.so.5.15.16
-Tolitica: /usr/lib/libQt5Gui.so.5.15.16
-Tolitica: /usr/lib/libQt5Core.so.5.15.16
+Tolitica: /usr/lib/libQt6Widgets.so.6.9.0
+Tolitica: /usr/lib/libQt6Gui.so.6.9.0
+Tolitica: /usr/lib/libGLX.so
+Tolitica: /usr/lib/libOpenGL.so
+Tolitica: /usr/lib/libQt6Core.so.6.9.0
 Tolitica: CMakeFiles/Tolitica.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Tolitica"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tolitica.dir/link.txt --verbose=$(VERBOSE)

@@ -937,6 +937,8 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    coreFunctions = new CoreFunctions(this);
+
     setWindowTitle("Tolitica Ada Assistant");
     resize(800,600);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
@@ -972,6 +974,7 @@ Widget::Widget(QWidget *parent)
     QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
     QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
     QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
+    QPushButton *rankMirrorsButton = new QPushButton("Rank Mirrors", this);
 
     // ** Bluetooth Toggle CheckBox ** //
     QCheckBox *bluetoothToggle = new QCheckBox("Enable Bluetooth", this);
@@ -998,6 +1001,7 @@ Widget::Widget(QWidget *parent)
     /* === Positioning Buttons === */
     tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
     tweaksLayout->addWidget(cleanPkgCacheButton, 1, 0, Qt::AlignRight);
+    tweaksLayout->addWidget(rankMirrorsButton, 2, 0, Qt::AlignRight);
     tweaksLayout->addWidget(updateSystemButton, 2, 0, Qt::AlignCenter);
     tweaksLayout->addWidget(removeDBLockButton, 2, 0, Qt::AlignLeft);
 
@@ -1008,7 +1012,7 @@ Widget::Widget(QWidget *parent)
 
     tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
                            cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle,
-                           apparmorToggle);
+                           apparmorToggle, rankMirrorsButton);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Terminal Page =====
@@ -1170,7 +1174,7 @@ Widget::Widget(QWidget *parent)
 void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *tweaksButton, QPushButton *backButton,
                                     QPushButton *cleanOrphansButton, QPushButton *cleanPkgCacheButton,
                                     QPushButton *updateSystemButton, QPushButton *removeDBLockButton,
-                                    QCheckBox *bluetoothToggle, QCheckBox *appArmorToggle){
+                                    QCheckBox *bluetoothToggle, QCheckBox *appArmorToggle, QPushButton *rankMirrorsButton){
     // Navigation connections
     connect(tweaksButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(1); // Switch to Tweaks page
@@ -1198,6 +1202,15 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         // ** Update CheckBox label based on new state ** //
         appArmorToggle->setText(appArmorToggle->isChecked() ? "Disable AppArmor" : "Enable AppArmor");
     });
+        // ** Rank Mirrors ** //
+        connect(rankMirrorsButton, &QPushButton::clicked, this, [this]() {
+            int mirrorCount = coreFunctions->getMirrorCount(this);
+            if (mirrorCount == -1) {
+                // User cancel the dialog
+                return;
+            }
+            coreFunctions->rankMirrors(this, mirrorCount);
+        });
 }
 
 ///////////////////////////////////////////////////

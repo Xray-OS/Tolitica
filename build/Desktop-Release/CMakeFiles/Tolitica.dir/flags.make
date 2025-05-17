@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
 
-CXX_INCLUDES = -I/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++
+CXX_INCLUDES = -I/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include -isystem /usr/include/qt6/QtCore -isystem /usr/include/qt6 -isystem /usr/lib/qt6/mkspecs/linux-g++ -isystem /usr/include/qt6/QtWidgets -isystem /usr/include/qt6/QtGui
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fdiagnostics-color=always -fPIC
+CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fdiagnostics-color=always -mno-direct-extern-access
 
