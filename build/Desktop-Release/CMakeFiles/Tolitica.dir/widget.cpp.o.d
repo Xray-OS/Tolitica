@@ -372,6 +372,16 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h /usr/include/qt6/QtCore/QObject \
  /usr/include/qt6/QtCore/qobject.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
+ /usr/include/qt6/QtWidgets/QTreeWidget \
+ /usr/include/qt6/QtWidgets/qtreewidget.h \
+ /usr/include/qt6/QtWidgets/qtreeview.h \
+ /usr/include/qt6/QtWidgets/qabstractitemview.h \
+ /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt6/QtCore/qitemselectionmodel.h \
+ /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt6/QtWidgets/QToolButton \
+ /usr/include/qt6/QtWidgets/qtoolbutton.h \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include/./ui_widget.h \
  /usr/include/qt6/QtCore/QVariant /usr/include/qt6/QtCore/qvariant.h \
  /usr/include/qt6/QtWidgets/QApplication \

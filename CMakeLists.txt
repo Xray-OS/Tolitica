@@ -26,6 +26,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Tolitica
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        drive_list_widget.h drive_list_widget.cpp
+        drive_list_widget.h
+        drive_list_widget.h
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Tolitica APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

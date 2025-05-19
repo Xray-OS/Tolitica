@@ -27,6 +27,14 @@ public:
     // ADDONS
     static int flatpakStatus();
     static void enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle);
+    int snapdStatus();
+    void enableSnapd(QWidget *parent, QCheckBox *snapdToggle);
+
+    // SOCIAL MEDIA
+    void socialMedia(const QString &platform);
+
+    // MOUNT/UNMOUNT DRIVES
+    // QWidget* listAvailableDrives();
 };
 
 #endif // CORE_FUNCTIONS_H

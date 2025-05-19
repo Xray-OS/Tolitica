@@ -9,6 +9,8 @@
 #include <QLabel>
 #include <QCheckBox>
 #include "core_functions.h"
+#include "drive_list_widget.h"
+#include <QToolButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -49,15 +51,20 @@ private slots:
     void removeVMware(QPushButton *vmwButton);
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                 QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
-                                QPushButton *vmwButton, QCheckBox *flatpakToggle);
+                                QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle);
     // TERMINAL
     void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,
                                   QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox, QLabel *shellLabel);
     void disableTermTheme(QPushButton *terminalThemeButton);
     int checkTermThemingStatus();
+    // MOUNT/UNMOUNT DRIVES
+    void mountDrivesSetupConnections(QStackedWidget *stackedWidget, QToolButton *mountDriveButton);
 
 private:
     Ui::Widget *ui;
+
     CoreFunctions* coreFunctions;
+    QWidget *mountDrivesPage = nullptr;
+    drive_list_widget* drivesPage = nullptr;
 };
 #endif // WIDGET_H

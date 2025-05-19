@@ -447,4 +447,25 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt6/QtGui/qpicture.h /usr/include/qt6/QtWidgets/QSpinBox \
  /usr/include/qt6/QtWidgets/qspinbox.h \
  /usr/include/qt6/QtWidgets/QDialogButtonBox \
- /usr/include/qt6/QtWidgets/qdialogbuttonbox.h
+ /usr/include/qt6/QtWidgets/qdialogbuttonbox.h \
+ /usr/include/qt6/QtGui/QDesktopServices \
+ /usr/include/qt6/QtGui/qdesktopservices.h /usr/include/qt6/QtCore/QUrl \
+ /usr/include/qt6/QtCore/qurl.h /usr/include/qt6/QtCore/QJsonDocument \
+ /usr/include/qt6/QtCore/qjsondocument.h \
+ /usr/include/qt6/QtCore/qjsonparseerror.h \
+ /usr/include/qt6/QtCore/QJsonObject \
+ /usr/include/qt6/QtCore/qjsonobject.h \
+ /usr/include/qt6/QtCore/qjsonvalue.h \
+ /usr/include/qt6/QtCore/qcborvalue.h \
+ /usr/include/qt6/QtCore/qcborcommon.h /usr/include/qt6/QtCore/quuid.h \
+ /usr/include/qt6/QtCore/qjsondocument.h \
+ /usr/include/qt6/QtCore/QJsonArray /usr/include/qt6/QtCore/qjsonarray.h \
+ /usr/include/qt6/QtWidgets/QTreeWidget \
+ /usr/include/qt6/QtWidgets/qtreewidget.h \
+ /usr/include/qt6/QtWidgets/qtreeview.h \
+ /usr/include/qt6/QtWidgets/qabstractitemview.h \
+ /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt6/QtCore/qitemselectionmodel.h \
+ /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt6/QtWidgets/QTreeWidgetItem \
+ /usr/include/qt6/QtWidgets/QHBoxLayout

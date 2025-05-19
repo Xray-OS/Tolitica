@@ -272,6 +272,30 @@ core_functions.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/core_functions.cpp.s
 .PHONY : core_functions.cpp.s
 
+drive_list_widget.o: drive_list_widget.cpp.o
+.PHONY : drive_list_widget.o
+
+# target to build an object file
+drive_list_widget.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o
+.PHONY : drive_list_widget.cpp.o
+
+drive_list_widget.i: drive_list_widget.cpp.i
+.PHONY : drive_list_widget.i
+
+# target to preprocess a source file
+drive_list_widget.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/drive_list_widget.cpp.i
+.PHONY : drive_list_widget.cpp.i
+
+drive_list_widget.s: drive_list_widget.cpp.s
+.PHONY : drive_list_widget.s
+
+# target to generate assembly for a file
+drive_list_widget.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/drive_list_widget.cpp.s
+.PHONY : drive_list_widget.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -344,6 +368,9 @@ help:
 	@echo "... core_functions.o"
 	@echo "... core_functions.i"
 	@echo "... core_functions.s"
+	@echo "... drive_list_widget.o"
+	@echo "... drive_list_widget.i"
+	@echo "... drive_list_widget.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -8,6 +8,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   Tolitica_autogen/moc_predefs.h \
   /home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp \
   /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
   /home/angel/Documents/Development/_APPS/Tolitica/main.cpp \
   /home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc \
   /home/angel/Documents/Development/_APPS/Tolitica/widget.cpp \
@@ -326,6 +328,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt6/QtCore/qhashfunctions.h \
   /usr/include/qt6/QtCore/qiodevice.h \
   /usr/include/qt6/QtCore/qiodevicebase.h \
+  /usr/include/qt6/QtCore/qitemselectionmodel.h \
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
@@ -440,9 +443,13 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt6/QtWidgets/QLabel \
   /usr/include/qt6/QtWidgets/QPushButton \
   /usr/include/qt6/QtWidgets/QStackedWidget \
+  /usr/include/qt6/QtWidgets/QToolButton \
+  /usr/include/qt6/QtWidgets/QTreeWidget \
   /usr/include/qt6/QtWidgets/QWidget \
   /usr/include/qt6/QtWidgets/qabstractbutton.h \
   /usr/include/qt6/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt6/QtWidgets/qabstractitemview.h \
+  /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
   /usr/include/qt6/QtWidgets/qabstractslider.h \
   /usr/include/qt6/QtWidgets/qabstractspinbox.h \
   /usr/include/qt6/QtWidgets/qcheckbox.h \
@@ -458,6 +465,10 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt6/QtWidgets/qstyleoption.h \
   /usr/include/qt6/QtWidgets/qtabbar.h \
   /usr/include/qt6/QtWidgets/qtabwidget.h \
+  /usr/include/qt6/QtWidgets/qtoolbutton.h \
+  /usr/include/qt6/QtWidgets/qtreeview.h \
+  /usr/include/qt6/QtWidgets/qtreewidget.h \
+  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
   /usr/include/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/qt6/QtWidgets/qtwidgetsexports.h \
   /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
@@ -1124,8 +1135,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/lib/cmake/Qt6Gui/Qt6QEglFSKmsEglDeviceIntegrationPluginAdditionalTargetInfo.cmake:
 
-/usr/lib/cmake/Qt6Gui/Qt6QEglFSIntegrationPluginTargets-relwithdebinfo.cmake:
-
 /usr/lib/cmake/Qt6Gui/Qt6QEglFSEmulatorIntegrationPluginTargets.cmake:
 
 /usr/lib/cmake/Qt6Gui/Qt6QEglFSEmulatorIntegrationPluginConfig.cmake:
@@ -1180,11 +1189,19 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/lib/cmake/Qt6DBus/Qt6DBusConfigVersion.cmake:
 
-/usr/share/cmake/Modules/CMakeLanguageInformation.cmake:
+/usr/lib/cmake/Qt6DBus/Qt6DBusAdditionalTargetInfo.cmake:
 
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake:
 
-/usr/include/qt6/QtWidgets/qcombobox.h:
+/usr/lib/cmake/Qt6DBus/Qt6DBusDependencies.cmake:
+
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets-relwithdebinfo.cmake:
+
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersionImpl.cmake:
+
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake:
+
+/usr/lib/cmake/Qt6CorePrivate/Qt6CorePrivateVersionlessAliasTargets.cmake:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
 
@@ -1352,6 +1369,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/endian.h:
 
+/usr/include/qt6/QtCore/qitemselectionmodel.h:
+
 /usr/include/qt6/QtCore/qstringbuilder.h:
 
 /usr/include/qt6/QtGui/qregion.h:
@@ -1398,12 +1417,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/c++/15.1.1/list:
 
-/usr/include/bits/types/FILE.h:
-
-/usr/include/linux/posix_types.h:
-
-/usr/include/qt6/QtCore/q23utility.h:
-
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateVersionlessAliasTargets.cmake:
 
 /usr/include/c++/15.1.1/bits/node_handle.h:
@@ -1413,6 +1426,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/include/bits/thread-shared-types.h:
 
 /usr/include/bits/types/struct_timeval.h:
+
+/usr/include/qt6/QtWidgets/qabstractitemview.h:
 
 /usr/include/c++/15.1.1/bits/stl_set.h:
 
@@ -1460,8 +1475,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/stl_iterator_base_funcs.h:
 
-/usr/include/c++/15.1.1/bits/erase_if.h:
-
 /usr/include/asm-generic/posix_types.h:
 
 /usr/lib/cmake/Qt6Gui/Qt6QEglFSIntegrationPluginConfig.cmake:
@@ -1490,33 +1503,21 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/bits/endian.h:
 
-/usr/include/bits/setjmp.h:
+/usr/lib/cmake/Qt6Gui/Qt6QEvdevMousePluginAdditionalTargetInfo.cmake:
 
-/usr/share/cmake/Modules/FindOpenGL.cmake:
+/usr/include/c++/15.1.1/bits/memoryfwd.h:
 
-/usr/include/bits/types/struct___jmp_buf_tag.h:
+/usr/lib/cmake/Qt6Core/Qt6CoreTargets.cmake:
 
-/usr/include/bits/wchar.h:
+/usr/include/bits/stdlib-float.h:
 
-/usr/include/c++/15.1.1/bits/functexcept.h:
+/usr/lib/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginConfig.cmake:
 
-/usr/include/bits/local_lim.h:
+/usr/include/qt6/QtGui/qtransform.h:
 
-/usr/lib/cmake/Qt6Gui/Qt6QEglFSEmulatorIntegrationPluginTargets-relwithdebinfo.cmake:
+/usr/lib/cmake/Qt6Gui/Qt6QMinimalEglIntegrationPluginTargets-relwithdebinfo.cmake:
 
-/usr/include/c++/15.1.1/bits/stl_relops.h:
-
-/usr/include/qt6/QtCore/qtcoreexports.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/c++/15.1.1/bits/basic_string.tcc:
-
-/usr/lib/cmake/Qt6Gui/Qt6QEglFSX11IntegrationPluginAdditionalTargetInfo.cmake:
-
-/usr/include/c++/15.1.1/cassert:
-
-/usr/include/c++/15.1.1/bits/ios_base.h:
+/usr/include/c++/15.1.1/bits/algorithmfwd.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h:
 
@@ -1531,8 +1532,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/c++/15.1.1/tr1/hypergeometric.tcc:
 
 /usr/include/qt6/QtWidgets/QWidget:
-
-/usr/include/asm/posix_types_64.h:
 
 /usr/include/c++/15.1.1/bits/concept_check.h:
 
@@ -1560,11 +1559,31 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake:
 
+/usr/include/bits/local_lim.h:
+
+/usr/include/c++/15.1.1/bits/functexcept.h:
+
+/usr/lib/cmake/Qt6Gui/Qt6QEglFSEmulatorIntegrationPluginTargets-relwithdebinfo.cmake:
+
+/usr/include/c++/15.1.1/bits/stl_relops.h:
+
+/usr/include/qt6/QtCore/qtcoreexports.h:
+
 /usr/include/c++/15.1.1/bits/cxxabi_forced.h:
 
 /usr/include/bits/types/time_t.h:
 
 /usr/include/bits/timex.h:
+
+/usr/include/c++/15.1.1/utility:
+
+/usr/include/c++/15.1.1/bits/localefwd.h:
+
+/usr/include/qt6/QtCore/qttypetraits.h:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/c++/15.1.1/bits/alloc_traits.h:
 
 /usr/include/bits/types.h:
 
@@ -1573,6 +1592,8 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/lib/cmake/Qt6Gui/Qt6QXcbGlxIntegrationPluginConfig.cmake:
 
 /usr/include/qt6/QtCore/qtaggedpointer.h:
+
+/usr/include/bits/types/__sigset_t.h:
 
 /usr/lib/cmake/Qt6Gui/Qt6QXdgDesktopPortalThemePluginConfig.cmake:
 
@@ -1588,7 +1609,23 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/lib/cmake/Qt6/QtPublicPluginHelpers_v2.cmake:
 
-/usr/include/bits/types/__sigset_t.h:
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/c++/15.1.1/bits/stl_bvector.h:
+
+/usr/lib/cmake/Qt6Gui/Qt6QMinimalEglIntegrationPluginConfig.cmake:
+
+/usr/include/bits/cpu-set.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/lib/cmake/Qt6/QtPublicSbomPurlHelpers.cmake:
+
+/usr/lib/cmake/Qt6WidgetsPrivate/Qt6WidgetsPrivateConfigVersion.cmake:
+
+/usr/include/qt6/QtWidgets/qrubberband.h:
+
+/usr/include/c++/15.1.1/bits/shared_ptr_base.h:
 
 /usr/include/c++/15.1.1/limits:
 
@@ -1606,21 +1643,29 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/bits/pthreadtypes.h:
 
-/usr/include/bits/struct_mutex.h:
+/usr/share/cmake/Modules/CMakeLanguageInformation.cmake:
 
-/usr/lib/cmake/Qt6WidgetsPrivate/Qt6WidgetsPrivateConfigVersion.cmake:
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
 
-/usr/include/qt6/QtWidgets/qrubberband.h:
+/usr/include/qt6/QtWidgets/qcombobox.h:
 
-/usr/include/c++/15.1.1/bits/shared_ptr_base.h:
+/usr/include/bits/setjmp.h:
 
-/usr/include/c++/15.1.1/bits/stl_bvector.h:
+/usr/share/cmake/Modules/FindOpenGL.cmake:
 
-/usr/lib/cmake/Qt6Gui/Qt6QMinimalEglIntegrationPluginConfig.cmake:
+/usr/include/bits/types/struct___jmp_buf_tag.h:
 
-/usr/include/bits/cpu-set.h:
+/usr/include/bits/wchar.h:
 
-/usr/include/bits/typesizes.h:
+/usr/include/bits/waitstatus.h:
+
+/usr/include/c++/15.1.1/bits/basic_string.tcc:
+
+/usr/lib/cmake/Qt6Gui/Qt6QEglFSX11IntegrationPluginAdditionalTargetInfo.cmake:
+
+/usr/include/c++/15.1.1/cassert:
+
+/usr/include/c++/15.1.1/bits/ios_base.h:
 
 /usr/include/bits/uintn-identity.h:
 
@@ -1646,6 +1691,10 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/bits/floatn.h:
 
+/usr/lib/cmake/Qt6DBus/Qt6DBusConfig.cmake:
+
+/usr/lib/cmake/Qt6/QtPublicSbomCpeHelpers.cmake:
+
 /usr/lib/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginTargets-relwithdebinfo.cmake:
 
 /usr/include/c++/15.1.1/cstdlib:
@@ -1656,23 +1705,21 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/error_constants.h:
 
+/usr/include/c++/15.1.1/bits/erase_if.h:
+
+/usr/include/qt6/QtWidgets/qtreeview.h:
+
 /usr/include/qt6/QtCore/qbytearray.h:
 
-/usr/lib/cmake/Qt6Gui/Qt6QEvdevMousePluginAdditionalTargetInfo.cmake:
+/usr/include/bits/types/FILE.h:
 
-/usr/include/c++/15.1.1/bits/memoryfwd.h:
+/usr/include/linux/posix_types.h:
 
-/usr/lib/cmake/Qt6Core/Qt6CoreTargets.cmake:
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake:
 
-/usr/include/bits/stdlib-float.h:
+/usr/include/qt6/QtCore/QObject:
 
-/usr/lib/cmake/Qt6Gui/Qt6QWaylandIntegrationPluginConfig.cmake:
-
-/usr/include/qt6/QtGui/qtransform.h:
-
-/usr/lib/cmake/Qt6Gui/Qt6QMinimalEglIntegrationPluginTargets-relwithdebinfo.cmake:
-
-/usr/include/c++/15.1.1/bits/algorithmfwd.h:
+/usr/include/qt6/QtCore/q23utility.h:
 
 /usr/include/c++/15.1.1/new:
 
@@ -1681,14 +1728,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/lib/cmake/Qt6Gui/Qt6GuiConfigVersion.cmake:
 
 /usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
-
-Tolitica_autogen/moc_predefs.h:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
-
-/usr/include/sys/select.h:
 
 /usr/include/c++/15.1.1/set:
 
@@ -1712,8 +1751,6 @@ Tolitica_autogen/moc_predefs.h:
 
 /usr/include/c++/15.1.1/atomic:
 
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets.cmake:
-
 /usr/include/bits/types/mbstate_t.h:
 
 /usr/include/bits/types/sigset_t.h:
@@ -1723,8 +1760,6 @@ Tolitica_autogen/moc_predefs.h:
 /usr/include/c++/15.1.1/exception:
 
 /usr/include/c++/15.1.1/bits/stl_algobase.h:
-
-/usr/lib/cmake/Qt6CorePrivate/Qt6CorePrivateVersionlessAliasTargets.cmake:
 
 /usr/include/bits/sched.h:
 
@@ -1746,8 +1781,6 @@ Tolitica_autogen/moc_predefs.h:
 
 /usr/include/qt6/QtCore/qcompilerdetection.h:
 
-/usr/lib/cmake/Qt6/QtPublicSbomPurlHelpers.cmake:
-
 /usr/include/c++/15.1.1/optional:
 
 /usr/include/bits/types/struct_timespec.h:
@@ -1763,6 +1796,10 @@ Tolitica_autogen/moc_predefs.h:
 /usr/include/c++/15.1.1/streambuf:
 
 /usr/include/bits/types/struct_tm.h:
+
+/usr/lib/cmake/Qt6Gui/Qt6QEglFSIntegrationPluginTargets-relwithdebinfo.cmake:
+
+/usr/include/qt6/QtWidgets/qtoolbutton.h:
 
 /usr/include/c++/15.1.1/clocale:
 
@@ -1818,6 +1855,8 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/c++/15.1.1/bits/invoke.h:
 
+/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h:
+
 /usr/include/c++/15.1.1/bit:
 
 /usr/lib/cmake/Qt6Gui/Qt6QMinimalIntegrationPluginConfig.cmake:
@@ -1831,10 +1870,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/include/asm/types.h:
 
 /usr/lib/cmake/Qt6Core/Qt6CoreConfig.cmake:
-
-/usr/include/c++/15.1.1/bits/alloc_traits.h:
-
-/usr/include/bits/atomic_wide_counter.h:
 
 /usr/lib/cmake/Qt6Gui/Qt6QOffscreenIntegrationPluginTargets.cmake:
 
@@ -1882,11 +1917,13 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h:
 
-/usr/include/c++/15.1.1/utility:
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
 
-/usr/include/c++/15.1.1/bits/localefwd.h:
+Tolitica_autogen/moc_predefs.h:
 
-/usr/include/qt6/QtCore/qttypetraits.h:
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
+
+/usr/include/sys/select.h:
 
 /usr/share/cmake/Modules/CMakeGenericSystem.cmake:
 
@@ -1928,8 +1965,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/qt6/QtCore/qfunctionpointer.h:
 
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfigVersionImpl.cmake:
-
 /usr/lib/cmake/Qt6Gui/Qt6QEvdevKeyboardPluginConfig.cmake:
 
 /usr/include/c++/15.1.1/bits/stream_iterator.h:
@@ -1950,6 +1985,8 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/lib/cmake/Qt6GuiTools/Qt6GuiToolsAdditionalTargetInfo.cmake:
 
+/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp:
+
 /usr/include/qt6/QtCore/qarraydata.h:
 
 /usr/include/qt6/QtCore/qarraydataops.h:
@@ -1957,8 +1994,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/lib/cmake/Qt6Gui/Qt6QWaylandEglPlatformIntegrationPluginTargets-relwithdebinfo.cmake:
 
 /usr/include/qt6/QtCore/qflags.h:
-
-/usr/lib/cmake/Qt6DBus/Qt6DBusAdditionalTargetInfo.cmake:
 
 /usr/include/qt6/QtCore/qarraydatapointer.h:
 
@@ -2108,11 +2143,11 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/qt6/QtCore/qprocessordetection.h:
 
-/usr/include/qt6/QtCore/qscopedpointer.h:
+/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake:
 
 /usr/include/qt6/QtCore/qrefcount.h:
 
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake:
+/usr/include/qt6/QtCore/qscopedpointer.h:
 
 /usr/include/qt6/QtCore/qscopeguard.h:
 
@@ -2168,10 +2203,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/qt6/QtCore/qsystemdetection.h:
 
-/usr/lib/cmake/Qt6/QtPublicSbomCpeHelpers.cmake:
-
-/usr/lib/cmake/Qt6DBus/Qt6DBusConfig.cmake:
-
 /usr/include/qt6/QtCore/qtclasshelpermacros.h:
 
 /usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake:
@@ -2195,8 +2226,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/include/locale.h:
 
 /usr/include/qt6/QtCore/qtdeprecationmarkers.h:
-
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsAdditionalTargetInfo.cmake:
 
 /usr/include/qt6/QtCore/qtenvironmentvariables.h:
 
@@ -2241,6 +2270,8 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/lib/cmake/Qt6DBusTools/Qt6DBusToolsVersionlessTargets.cmake:
 
 /usr/include/qt6/QtGui/qaction.h:
+
+/usr/include/qt6/QtWidgets/qtreewidget.h:
 
 /usr/include/qt6/QtGui/qbitmap.h:
 
@@ -2308,9 +2339,17 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/include/qt6/QtWidgets/QPushButton:
 
+/usr/include/qt6/QtWidgets/QToolButton:
+
+/usr/include/asm/posix_types_64.h:
+
+/usr/include/qt6/QtWidgets/QTreeWidget:
+
 /usr/include/bits/types/wint_t.h:
 
 /usr/include/qt6/QtWidgets/qabstractbutton.h:
+
+/usr/include/qt6/QtWidgets/qabstractscrollarea.h:
 
 /usr/include/qt6/QtCore/qtypeinfo.h:
 
@@ -2353,6 +2392,8 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/include/bits/floatn-common.h:
 
 /usr/include/qt6/QtWidgets/qtabwidget.h:
+
+/usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h:
 
 /usr/include/qt6/QtWidgets/qtwidgetsexports.h:
 
@@ -2399,10 +2440,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/lib/cmake/Qt6/QtPublicGitHelpers.cmake:
 
 /usr/lib/cmake/Qt6/QtPublicPluginHelpers.cmake:
-
-/usr/lib/cmake/Qt6DBus/Qt6DBusDependencies.cmake:
-
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsTargets-relwithdebinfo.cmake:
 
 /usr/include/qt6/QtCore/qxptype_traits.h:
 
@@ -2455,7 +2492,3 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 /usr/lib/cmake/Qt6Gui/Qt6QTiffPluginTargets-relwithdebinfo.cmake:
 
 /usr/lib/cmake/Qt6CorePrivate/Qt6CorePrivateConfigVersion.cmake:
-
-/usr/include/qt6/QtCore/QObject:
-
-/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsDependencies.cmake:

@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Release-3ee1f39a82f3d6f73604.json",
+					"jsonFile" : "directory-.-Release-8295d93495c073cf72c3.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Tolitica::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Tolitica-Release-736bf1cf744cf5ed7ba3.json",
+					"jsonFile" : "target-Tolitica-Release-ef36007941749f3f5f7d.json",
 					"name" : "Tolitica",
 					"projectIndex" : 0
 				},

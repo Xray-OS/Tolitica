@@ -24,7 +24,16 @@
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QDebug>
+#include <QDesktopServices>
+#include <QUrl>
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QHBoxLayout>
+#include <QWidget>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TERMINAL PAGE /////////////////////// /////////////////////// ////////////////
@@ -568,3 +577,244 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
     process->start("pkexec", QStringList() << "bash" << "-c" << command);
     monitorTimer->start(250);
 }
+
+///////////////////////////////////////////////////
+/// ADDONS: SNAPD-STATUS
+//////////////////////////////////////////////////
+int CoreFunctions::snapdStatus() {
+    QProcess process;
+    process.start("bash", QStringList() << "-c" << "pacman -Q snapd");
+    process.waitForFinished();
+    bool pkgInstalled = (process.exitCode() == 0);
+
+    process.start("bash", QStringList() << "-c" << "systemctl is-enabled snapd.socket");
+    process.waitForFinished();
+    bool isEnabled = (process.exitCode() == 0);
+
+    process.start("bash", QStringList() << "-c" << "readlink /snap");
+    process.waitForFinished();
+    bool linkExist = (QString(process.readAllStandardOutput()).trimmed() == "/var/lib/snapd/snap");
+
+    if (pkgInstalled && isEnabled && linkExist) {
+        return 0;
+    } else if (!pkgInstalled && !isEnabled && !linkExist) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
+
+///////////////////////////////////////////////////
+/// ADDONS: ENABLE/DISABLE SNAPD
+//////////////////////////////////////////////////
+void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
+    int status = snapdStatus();
+
+    if (status == 0) {
+        QString confirmationMsg = "Are you sure you want to disable/remove snapd support?";
+
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            parent, "Confirmation: ", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
+
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+
+    QProcess *process = new QProcess(parent);
+    QTimer *monitorTimer = new QTimer(parent);
+
+    QProgressDialog *progress = new QProgressDialog(
+        status == 0 ? "Removing Snapd..." : "Installing Snapd...", nullptr, 0, 100, parent);
+    progress->setWindowModality(Qt::WindowModal);
+    progress->setCancelButton(nullptr);
+    progress->show();
+
+    int progressValue = 0;
+
+    // This connection updates the progress value when new standard output is available.
+    connect(process, &QProcess::readyReadStandardOutput, parent, [=]() mutable {
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+        QCoreApplication::processEvents();
+    });
+
+    // Using monitorTimer to simulate progress updates if process output is insufficient
+    connect(monitorTimer, &QTimer::timeout, parent, [=]() mutable {
+        if (progressValue < 95) {
+            progressValue += 2;
+            progress->setValue(qMin(progressValue, 95));
+        }
+    });
+    monitorTimer->start(250);
+
+    // Handling success/failure and clean up resources
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), parent, [=]()
+        mutable {
+        // Stop timer, no further updates needed
+        monitorTimer->stop();
+
+        if (process->exitCode() == 0){
+            progress->setValue(100);
+
+            QMessageBox::information(parent, "Snapd",
+                                     status == 0 ? "Snapd Disabled Successfully!" :
+                                         "Snapd Enabled Successfully!");
+            snapdToggle->setChecked(status != 0);
+            snapdToggle->setText(snapdToggle->isChecked() ?
+                "Disable/Remove SNAPD" : "Enable/Install SNAPD");
+        } else {
+            QMessageBox::warning(parent, "Snapd", "An error occurred while processing");
+        }
+
+        progress->deleteLater();
+        process->deleteLater();
+        monitorTimer->deleteLater();
+    });
+
+    QString enableCommand = "pacman -S --noconfirm snapd && systemctl enable --now snapd.socket && "
+                            "ln -s /var/lib/snapd/snap /snap";
+    QString disableCommand = "pacman -Rns snapd && rm -rf /snap";
+    QString command = (status == 0) ? disableCommand : enableCommand;
+
+    if (status == 0) {
+        if (QFile::exists("/var/lib/snapd")) {
+            QString uninstallSnapdPkgs = "Would you also like to remove all SNAPD packages?";
+            QMessageBox::StandardButton reply = QMessageBox::question(
+                parent, "confirmation: ", uninstallSnapdPkgs, QMessageBox::Yes | QMessageBox::No);
+
+            if (reply == QMessageBox::Yes) {
+                disableCommand = "pacman -Rns --noconfirm snapd && rm -rf /snap && rm -rf /var/lib/snapd";
+            }
+        }
+        command = disableCommand;
+    } else {
+        command = enableCommand;
+    }
+
+    process->start("pkexec", QStringList() << "bash" << "-c" << command);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS FOR THE SOCIAL MEDIA BUTTONS /////////////////////// /////////////////////// ///////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+/// SOCIAL MEDIA: SOCIAL MEDIA BUTTONS
+//////////////////////////////////////////////////
+void CoreFunctions::socialMedia(const QString &platform) {
+    QString url;
+
+    if (platform == "discord") {
+        url = "https://discord.gg/dBR7wR3ABk";
+    } else if (platform == "twitter") {
+        url ="https://twitter.com/Ada_Linux";
+    } else if (platform == "youtube") {
+        url = "https://www.youtube.com/@Xray_OS-Linux";
+    } else if (platform == "patreon") {
+        url = "patreon.com/Ada_Linux";
+    }
+
+    if (!url.isEmpty()) {
+        QDesktopServices::openUrl(QUrl(url));
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCTIONS TO MOUNT DRIVES              /////////////////////// /////////////////////// ///////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+/// FUNCTION TO LIST THE AVAILABLE DRIVES
+//////////////////////////////////////////////////
+
+// QWidget* CoreFunctions::listAvailableDrives() {
+//     // Create a container widget and its layout
+//     QWidget *driveWidget = new QWidget();
+//     QVBoxLayout *layout = new QVBoxLayout(driveWidget);
+
+//     // Create a tree widget to serve as our details-view list.
+//     QTreeWidget *treeWidget = new QTreeWidget(driveWidget);
+//     treeWidget->setColumnCount(3);
+//     treeWidget->setHeaderLabels(QStringList() << "Device" << "Size" << "Action");
+
+//     // Use QProcess to execute "lsblk" with JSON output.
+//     QProcess process;
+//     // We ask the for the following columns: NAME, SIZE, TYPE, MOUNTPOINT
+//     process.start("lsblk", QStringList() << "--json" << "--output" << "NAME,SIZE,TYPE,MOUNTPOINT");
+//     process.waitForFinished();
+//     QByteArray output = process.readAllStandardOutput();
+
+//     // Parse the JSON output.
+//     QJsonDocument jsonDoc = QJsonDocument::fromJson(output);
+//     QJsonObject jsonObj = jsonDoc.object();
+
+//     // "blockdevices" array contains the drive information.
+//     QJsonArray devicesArray = jsonObj.value("blockdevices").toArray();
+//     for (const auto &value : std::as_const(devicesArray)) {
+//         QJsonObject deviceObj = value.toObject();
+//         QString type = deviceObj.value("type").toString();
+
+//         // Filter: display only disks and partitions
+//         if (type != "disk" && type != "part")
+//             continue;
+
+//         QString name = deviceObj.value("name").toString();
+//         QString size = deviceObj.value("size").toString();
+//         QString mountpoint = deviceObj.value("mountpoint").toString(); // May be empty if unmounted
+
+//         // Create a new row in the tree widget for this drive.
+//         QTreeWidgetItem *item = new QTreeWidgetItem(treeWidget);
+//         QString deviceName = "/dev/" + name;
+//         item->setText(0, deviceName);
+//         item->setText(1, size);
+
+//         // --- Create a widget for the "Action" column ---
+//         // This widget holds a checkbox with the label "Mount Drive".
+//         QWidget *actionWidget = new QWidget();
+//         QHBoxLayout *hlayout = new QHBoxLayout(actionWidget);
+//         hlayout->setContentsMargins(0, 0, 0, 0);
+//         QCheckBox *mountCheckBox = new QCheckBox("Mount Drive", actionWidget);
+//         hlayout->addWidget(mountCheckBox);
+//         actionWidget->setLayout(hlayout);
+
+//         // Add the action widget to the third column of the current row.
+//         treeWidget->setItemWidget(item, 2, actionWidget);
+
+//         // Future note: is possible to store additional information (like mountpoint)
+//         // into the item's data for use later (e.g., when handling the checkbox signal).
+//         item->setData(0, Qt::UserRole, mountpoint);
+//     }
+
+//     // Add the tree widget to our layout.
+//     layout->addWidget(treeWidget);
+//     driveWidget->setLayout(layout);
+
+//     // Return the widget containing the details view
+//     return driveWidget;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
 /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp: /home/angel/Documents/Development/_APPS/Tolitica/widget.h \
   /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/moc_predefs.h \
   /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -313,6 +314,7 @@
   /usr/include/qt6/QtCore/qhashfunctions.h \
   /usr/include/qt6/QtCore/qiodevice.h \
   /usr/include/qt6/QtCore/qiodevicebase.h \
+  /usr/include/qt6/QtCore/qitemselectionmodel.h \
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
@@ -427,9 +429,13 @@
   /usr/include/qt6/QtWidgets/QLabel \
   /usr/include/qt6/QtWidgets/QPushButton \
   /usr/include/qt6/QtWidgets/QStackedWidget \
+  /usr/include/qt6/QtWidgets/QToolButton \
+  /usr/include/qt6/QtWidgets/QTreeWidget \
   /usr/include/qt6/QtWidgets/QWidget \
   /usr/include/qt6/QtWidgets/qabstractbutton.h \
   /usr/include/qt6/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt6/QtWidgets/qabstractitemview.h \
+  /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
   /usr/include/qt6/QtWidgets/qabstractslider.h \
   /usr/include/qt6/QtWidgets/qabstractspinbox.h \
   /usr/include/qt6/QtWidgets/qcheckbox.h \
@@ -445,6 +451,10 @@
   /usr/include/qt6/QtWidgets/qstyleoption.h \
   /usr/include/qt6/QtWidgets/qtabbar.h \
   /usr/include/qt6/QtWidgets/qtabwidget.h \
+  /usr/include/qt6/QtWidgets/qtoolbutton.h \
+  /usr/include/qt6/QtWidgets/qtreeview.h \
+  /usr/include/qt6/QtWidgets/qtreewidget.h \
+  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
   /usr/include/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/qt6/QtWidgets/qtwidgetsexports.h \
   /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \

@@ -1,8 +1,8 @@
 CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
- /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/../../../../widget.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/moc_drive_list_widget.cpp \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/../../../../drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -343,15 +343,14 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtGui/qfontvariableaxis.h \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
- /usr/include/qt6/QtGui/QIcon /usr/include/qt6/QtGui/qicon.h \
- /usr/include/qt6/QtWidgets/QPushButton \
- /usr/include/qt6/QtWidgets/qpushbutton.h \
- /usr/include/qt6/QtWidgets/qabstractbutton.h \
- /usr/include/qt6/QtWidgets/qwidget.h \
- /usr/include/qt6/QtWidgets/QStackedWidget \
- /usr/include/qt6/QtWidgets/qstackedwidget.h \
- /usr/include/qt6/QtWidgets/qframe.h /usr/include/qt6/QtWidgets/QComboBox \
- /usr/include/qt6/QtWidgets/qcombobox.h \
+ /usr/include/qt6/QtWidgets/QTreeWidget \
+ /usr/include/qt6/QtWidgets/qtreewidget.h \
+ /usr/include/qt6/QtWidgets/qtreeview.h \
+ /usr/include/qt6/QtWidgets/qabstractitemview.h \
+ /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt6/QtWidgets/qframe.h /usr/include/qt6/QtWidgets/qwidget.h \
+ /usr/include/qt6/QtCore/qabstractitemmodel.h \
+ /usr/include/qt6/QtCore/qitemselectionmodel.h \
  /usr/include/qt6/QtWidgets/qabstractitemdelegate.h \
  /usr/include/qt6/QtWidgets/qstyleoption.h \
  /usr/include/qt6/QtCore/qlocale.h \
@@ -363,19 +362,33 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtWidgets/qstyle.h /usr/include/qt6/QtWidgets/qtabbar.h \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtWidgets/qrubberband.h \
- /usr/include/qt6/QtCore/qabstractitemmodel.h \
- /usr/include/qt6/QtWidgets/QLabel /usr/include/qt6/QtWidgets/qlabel.h \
- /usr/include/qt6/QtGui/qpicture.h /usr/include/qt6/QtCore/qiodevice.h \
+ /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt6/QtCore/qtmochelpers.h \
+ /usr/include/qt6/QtCore/qtmocconstants.h \
+ /usr/include/qt6/QtCore/q20algorithm.h \
+ /usr/include/qt6/QtCore/q23type_traits.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/../../../../widget.h \
+ /usr/include/qt6/QtGui/QIcon /usr/include/qt6/QtGui/qicon.h \
+ /usr/include/qt6/QtWidgets/QPushButton \
+ /usr/include/qt6/QtWidgets/qpushbutton.h \
+ /usr/include/qt6/QtWidgets/qabstractbutton.h \
+ /usr/include/qt6/QtWidgets/QStackedWidget \
+ /usr/include/qt6/QtWidgets/qstackedwidget.h \
+ /usr/include/qt6/QtWidgets/QComboBox \
+ /usr/include/qt6/QtWidgets/qcombobox.h /usr/include/qt6/QtWidgets/QLabel \
+ /usr/include/qt6/QtWidgets/qlabel.h /usr/include/qt6/QtGui/qpicture.h \
+ /usr/include/qt6/QtCore/qiodevice.h \
  /usr/include/qt6/QtGui/qtextdocument.h /usr/include/qt6/QtCore/qurl.h \
  /usr/include/qt6/QtWidgets/QCheckBox \
  /usr/include/qt6/QtWidgets/qcheckbox.h \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/../../../../core_functions.h \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h /usr/include/qt6/QtCore/QObject \
- /usr/include/qt6/QtCore/qobject.h /usr/include/qt6/QtGui/qtextcursor.h \
+ /usr/include/qt6/QtCore/qobject.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/../../../../drive_list_widget.h \
+ /usr/include/qt6/QtWidgets/QToolButton \
+ /usr/include/qt6/QtWidgets/qtoolbutton.h \
+ /usr/include/qt6/QtGui/qtextcursor.h \
  /usr/include/qt6/QtGui/qtextformat.h /usr/include/qt6/QtGui/qpen.h \
- /usr/include/qt6/QtGui/qtextoption.h \
- /usr/include/qt6/QtCore/qtmochelpers.h \
- /usr/include/qt6/QtCore/qtmocconstants.h \
- /usr/include/qt6/QtCore/q20algorithm.h \
- /usr/include/qt6/QtCore/q23type_traits.h
+ /usr/include/qt6/QtGui/qtextoption.h

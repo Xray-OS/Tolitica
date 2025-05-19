@@ -79,6 +79,7 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
         "adaDevelopmentButton",
         "chaoticAURButton",
         "flatpakToggle",
+        "snapdToggle",
         "terminalSetupConnections",
         "terminalButton",
         "terminalBackButton",
@@ -89,7 +90,10 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
         "QLabel*",
         "shellLabel",
         "disableTermTheme",
-        "checkTermThemingStatus"
+        "checkTermThemingStatus",
+        "mountDrivesSetupConnections",
+        "QToolButton*",
+        "mountDriveButton"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -136,21 +140,26 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
             { 0x80000000 | 9, 29 },
         }}),
         // Slot 'addonsSetupConnections'
-        QtMocHelpers::SlotData<void(QStackedWidget *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QCheckBox *)>(33, 2, QMC::AccessPrivate, QMetaType::Void, {{
+        QtMocHelpers::SlotData<void(QStackedWidget *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QCheckBox *, QCheckBox *)>(33, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { 0x80000000 | 7, 8 }, { 0x80000000 | 9, 34 }, { 0x80000000 | 9, 35 }, { 0x80000000 | 9, 36 },
             { 0x80000000 | 9, 37 }, { 0x80000000 | 9, 38 }, { 0x80000000 | 9, 29 }, { 0x80000000 | 16, 39 },
+            { 0x80000000 | 16, 40 },
         }}),
         // Slot 'terminalSetupConnections'
-        QtMocHelpers::SlotData<void(QStackedWidget *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QComboBox *, QLabel *)>(40, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 7, 8 }, { 0x80000000 | 9, 41 }, { 0x80000000 | 9, 42 }, { 0x80000000 | 9, 43 },
-            { 0x80000000 | 9, 44 }, { 0x80000000 | 45, 46 }, { 0x80000000 | 47, 48 },
+        QtMocHelpers::SlotData<void(QStackedWidget *, QPushButton *, QPushButton *, QPushButton *, QPushButton *, QComboBox *, QLabel *)>(41, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 7, 8 }, { 0x80000000 | 9, 42 }, { 0x80000000 | 9, 43 }, { 0x80000000 | 9, 44 },
+            { 0x80000000 | 9, 45 }, { 0x80000000 | 46, 47 }, { 0x80000000 | 48, 49 },
         }}),
         // Slot 'disableTermTheme'
-        QtMocHelpers::SlotData<void(QPushButton *)>(49, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 9, 43 },
+        QtMocHelpers::SlotData<void(QPushButton *)>(50, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 9, 44 },
         }}),
         // Slot 'checkTermThemingStatus'
-        QtMocHelpers::SlotData<int()>(50, 2, QMC::AccessPrivate, QMetaType::Int),
+        QtMocHelpers::SlotData<int()>(51, 2, QMC::AccessPrivate, QMetaType::Int),
+        // Slot 'mountDrivesSetupConnections'
+        QtMocHelpers::SlotData<void(QStackedWidget *, QToolButton *)>(52, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 7, 8 }, { 0x80000000 | 53, 54 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -194,11 +203,12 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 15: { bool _r = _t->vmwareServiceStatus();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 16: _t->removeVMware((*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[1]))); break;
-        case 17: _t->addonsSetupConnections((*reinterpret_cast< std::add_pointer_t<QStackedWidget*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<QCheckBox*>>(_a[8]))); break;
+        case 17: _t->addonsSetupConnections((*reinterpret_cast< std::add_pointer_t<QStackedWidget*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<QCheckBox*>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<QCheckBox*>>(_a[9]))); break;
         case 18: _t->terminalSetupConnections((*reinterpret_cast< std::add_pointer_t<QStackedWidget*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<QComboBox*>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[7]))); break;
         case 19: _t->disableTermTheme((*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[1]))); break;
         case 20: { int _r = _t->checkTermThemingStatus();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 21: _t->mountDrivesSetupConnections((*reinterpret_cast< std::add_pointer_t<QStackedWidget*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QToolButton*>>(_a[2]))); break;
         default: ;
         }
     }
@@ -240,6 +250,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 17:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 8:
             case 7:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QCheckBox* >(); break;
             case 6:
@@ -276,6 +287,15 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
             }
             break;
+        case 21:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QStackedWidget* >(); break;
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QToolButton* >(); break;
+            }
+            break;
         }
     }
 }
@@ -299,14 +319,14 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 21)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 22;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 21)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 22;
     }
     return _id;
 }

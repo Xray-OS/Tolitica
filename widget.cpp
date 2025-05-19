@@ -15,6 +15,7 @@
 #include <QTextStream>
 #include <QLabel>
 #include <QCheckBox>
+#include <QToolButton>
 
 // CUSTOM CLASSES
 #include "core_functions.h"
@@ -950,17 +951,135 @@ Widget::Widget(QWidget *parent)
     QWidget *mainPage = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
 
+    // ==== Header and Description ==== //
+    QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Ada Assistant!</h1>", this);
+        // == Description == //
+    QLabel *greetingsLabel = new QLabel("<span style=\"font-size:11pt; font-weight:bold;\">Greetings from Angel!</span> - Owner & Maintainer of Ada", this);
+    QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
+    "configurations from your system, please enjoy using "
+    "Ada, break it, repair it or donate to me... Anyway have fun using my ArchLinux distro.", this);
+    headerLabel->setContentsMargins(0,20,0,0);
+    greetingsLabel->setContentsMargins(0,10,0,0);
+    greetingsLabel->setAlignment(Qt::AlignCenter);
+    descriptionLabel->setContentsMargins(0,10,0,0);
+    descriptionLabel->setWordWrap(true);
+    descriptionLabel->setAlignment(Qt::AlignCenter);
+
+    mainLayout->addWidget(headerLabel, 0, Qt::AlignTop | Qt::AlignCenter);
+    mainLayout->addWidget(greetingsLabel);
+    mainLayout->addWidget(descriptionLabel, 1, Qt::AlignTop);
+    // ==== End Header and Description ==== //
+
+    // ==== Add Tolitica Icon ==== //
+    QLabel *iconLabel = new QLabel(this);
+    QPixmap toliticaIcon(":/icons/resources/icons/tolitica-icon.png");
+    QPixmap scaledIcon = toliticaIcon.scaled(100, 100, Qt::KeepAspectRatio,
+                         Qt::SmoothTransformation);
+    iconLabel->setPixmap(scaledIcon);
+    iconLabel->setAlignment(Qt::AlignCenter);
+    mainLayout->addWidget(iconLabel, 3, Qt::AlignCenter | Qt::AlignTop);
+
+    //* ==== Button to Mount/Umount Hard Drives ==== *//
+        // Create a container widget for the label and the button
+    QWidget *mountDriveWidget = new QWidget(this);
+    QVBoxLayout *mountDriveLayout = new QVBoxLayout(mountDriveWidget);
+    mountDriveLayout->setContentsMargins(0, 0, 0, 0);
+    mountDriveLayout->setSpacing(5); // Adjust as needed for vertical spacing
+
+    QLabel *mountDriveLabel = new QLabel("Mount/Unmount Drives", this);
+    mountDriveLabel->setAlignment(Qt::AlignLeft);
+
+    QToolButton *mountDriveButton = new QToolButton(this);
+    mountDriveButton->setIcon(QIcon(":/icons/resources/icons/hdd.png"));
+    mountDriveButton->setIconSize(QSize(48, 48));
+    mountDriveButton->setAutoRaise(true);
+    mountDriveButton->setToolTip("Mount/Umount Drives");
+
+        // Add the label and button to the container layout
+    mountDriveLayout->addWidget(mountDriveLabel);
+    mountDriveLayout->addWidget(mountDriveButton, 0, Qt::AlignCenter);
+        // Adjust the container's width to match the label's sizeHint,
+        // so the button's horizontal center is determine by the label's width.
+    mountDriveWidget->setFixedWidth(mountDriveLabel->sizeHint().width());
+    //mainLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
+
     /* === Navigation Buttons === */
     QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific Layout for Buttons
     QPushButton *tweaksButton = new QPushButton("Configuration", this);
     QPushButton *addonsButton = new QPushButton("Addons", this);
     QPushButton *terminalButton = new QPushButton("Terminal", this);
 
+    buttonsLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
     buttonsLayout->addWidget(tweaksButton);
     buttonsLayout->addWidget(addonsButton);
     buttonsLayout->addWidget(terminalButton);
     mainLayout->addLayout(buttonsLayout);
     mainPage->setLayout(mainLayout);
+
+    // Horizontal layout for social media buttons
+    QHBoxLayout *socialMediaLayout = new QHBoxLayout();
+
+    //* === Social Media Icon Buttons === */
+    // * == Discord
+    QToolButton *discordButton = new QToolButton(this);
+    discordButton->setIcon(QIcon(":/icons/resources/icons/discord.png"));
+    discordButton->setIconSize(QSize(38, 38));
+    discordButton->setAutoRaise(true);
+    discordButton->setToolTip("Join my Discord!");
+
+    // * == Twitter
+    QToolButton *twitterButton = new QToolButton(this);
+    twitterButton->setIcon(QIcon(":/icons/resources/icons/twitter.png"));
+    twitterButton->setIconSize(QSize(48, 48));
+    twitterButton->setAutoRaise(true);
+    twitterButton->setToolTip("Follow me on Twitter!");
+
+    // * == YouTube
+    QToolButton *youtubeButton = new QToolButton(this);
+    youtubeButton->setIcon(QIcon(":/icons/resources/icons/youtube.png"));
+    youtubeButton->setIconSize(QSize(48, 48));
+    youtubeButton->setAutoRaise(true);
+    youtubeButton->setToolTip("Subscribe to my Channel!");
+
+    // * == Patreon
+    QToolButton *patreonButton = new QToolButton(this);
+    patreonButton->setIcon(QIcon(":/icons/resources/icons/patreon.png"));
+    patreonButton->setIconSize(QSize(48, 48));
+    patreonButton->setAutoRaise(true);
+    patreonButton->setToolTip("Become my patreon!");
+
+    // * == Instagram
+    // QToolButton *instagramButton = new QToolButton(this);
+    // instagramButton->setIcon(QIcon(":/icons/resources/icons/instagram.png"));
+    // instagramButton->setIconSize(QSize(48, 48));
+    // instagramButton->setAutoRaise(true);
+    // instagramButton->setToolTip("Follow me on Instagram!");
+
+    // Insert social media buttons into the horizontal layout
+    socialMediaLayout->addWidget(discordButton);
+    socialMediaLayout->addWidget(twitterButton);
+    socialMediaLayout->addWidget(youtubeButton);
+    socialMediaLayout->addWidget(patreonButton);
+    // socialMediaLayout->addWidget(instagramButton);
+    socialMediaLayout->setSpacing(2);
+    socialMediaLayout->setAlignment(Qt::AlignLeft);
+
+    // Adding the horizontal layout to the main one
+    mainLayout->addLayout(socialMediaLayout);
+
+    // === Connect signals to the socialMedia function === //
+    connect(discordButton, &QToolButton::clicked, this, [=](){
+        coreFunctions->socialMedia("discord");
+    });
+    connect(twitterButton, &QToolButton::clicked, this, [=](){
+        coreFunctions->socialMedia("twitter");
+    });
+    connect(youtubeButton, &QToolButton::clicked, this, [=](){
+        coreFunctions->socialMedia("youtube");
+    });
+    connect(patreonButton, &QToolButton::clicked, this, [=](){
+        coreFunctions->socialMedia("patreon");
+    });
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Tweaks Page =====
@@ -996,7 +1115,6 @@ Widget::Widget(QWidget *parent)
         apparmorToggle->setChecked(appArmorEnabled);
         apparmorToggle->setText(appArmorEnabled ? "Disable AppArmor" : "Enable AppArmor");
     }
-
 
     /* === Positioning Buttons === */
     tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
@@ -1051,7 +1169,6 @@ Widget::Widget(QWidget *parent)
         shellComboBox->addItems(shells);
     }
 
-
     /* === Positioning Buttons === */
     terminalLayout->addWidget(terminalThemeButton);
     terminalLayout->addWidget(changeShellButton);
@@ -1073,9 +1190,6 @@ Widget::Widget(QWidget *parent)
     terminalPage->setLayout(terminalLayout);
 
     terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox, shellLabel);
-
-
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Addons Page =====
@@ -1132,6 +1246,14 @@ Widget::Widget(QWidget *parent)
     flatpakToggle->setChecked(flatpakEnabled);
     flatpakToggle->setText(flatpakEnabled ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
 
+    // ** Snapd Toggle CheckBox ** //
+    QCheckBox *snapdToggle = new QCheckBox(this);
+    addonsLayout->addWidget(snapdToggle, 5, 0, Qt::AlignRight);
+        /*Snapd set initial state based on Flatpak-status*/
+    bool snapdEnabled = (coreFunctions->snapdStatus() == 0);
+    snapdToggle->setChecked(snapdEnabled);
+    snapdToggle->setText(snapdEnabled ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
+
     /* === Positioning Buttons === */
     addonsLayout->addWidget(adaGamingMetaButton, 1, 0, Qt::AlignLeft);
     addonsLayout->addWidget(adaDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
@@ -1145,7 +1267,13 @@ Widget::Widget(QWidget *parent)
 
     /* === Connections === */
     addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
-                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton, flatpakToggle);
+                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton, flatpakToggle, snapdToggle);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // ==== Mount Drives Page =====
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    mountDrivesSetupConnections(stackedWidget, mountDriveButton);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== End Pages =====
@@ -1218,18 +1346,18 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                     QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
-                                    QPushButton *vmwButton, QCheckBox *flatpakToggle) {
-    // Navigation connections
-    connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
+                                    QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle) {
+        // Navigation connections
+        connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(2); // Switch to Addons page
     });
-    connect(addonsBackButton, &QPushButton::clicked, this, [stackedWidget]() {
+        connect(addonsBackButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(0); // Switch back to Main page
     });
 
-    // Connecting Buttons to their respective Functions
-    //** Ada Gaming Meta **//
-    connect(adaGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
+        // Connecting Buttons to their respective Functions
+        //** Ada Gaming Meta **//
+        connect(adaGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
         if(adaGamingMetaButton->text() == "Install Ada Gaming Meta") {
             adaGamingMetaButton->setText("Remove Ada Gaming Meta");
             adaGamingMeta();
@@ -1238,8 +1366,8 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
             removeAdaGamingMeta();
         }
     });
-    //** Ada Development Meta **//
-    connect(adaDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
+        //** Ada Development Meta **//
+        connect(adaDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
         if(adaDevelopmentButton->text() == "Install Ada Development Meta") {
             adaDevelopmentButton->setText("Remove Ada Development Meta");
             adaDevelopmentMeta();
@@ -1248,8 +1376,8 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
             removeAdaDevelopmentMeta();
         }
     });
-    //** Chaotic AUR **//
-    connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
+        //** Chaotic AUR **//
+        connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
         int chaoticStatus = checkChaoticAURStatus();
 
         if (chaoticStatus == 1) { // Fully installed
@@ -1266,8 +1394,8 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
                                       chaoticStatus == 2 ? "Add Chaotic AUR" :
                                       "Repair Chaotic AUR");
     });
-    //** Add VMware Support **//
-    connect(vmwButton, &QPushButton::clicked, this, [=]() mutable {
+        //** Add VMware Support **//
+        connect(vmwButton, &QPushButton::clicked, this, [=]() mutable {
         int vmStatus = vmwareStatus();
 
         if(vmStatus == 0) { // Fully installed
@@ -1277,12 +1405,21 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         }
     });
 
-    // ** Flatpak Toggle Connection ** //
+        // ** Flatpak Toggle Connection ** //
         connect(flatpakToggle, &QCheckBox::toggled, this, [this, flatpakToggle]() {
         CoreFunctions::enableFlatpak(this, flatpakToggle);
 
-        // ** Update CheckBox label based on new state ** //
-        flatpakToggle->setText(flatpakToggle->isChecked() ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
+        // ** Update checkBox label based on new state ** //
+        flatpakToggle->setText(flatpakToggle->isChecked()
+        ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
+    });
+        // ** Snapd Toggle Connection ** //
+        connect(snapdToggle, &QCheckBox::toggled, this, [this, snapdToggle]() {
+        coreFunctions->enableSnapd(this, snapdToggle);
+
+        // ** Update checkBox label based on new state ** //
+        snapdToggle->setText(snapdToggle->isChecked()
+        ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
     });
 
 }
@@ -1321,6 +1458,49 @@ void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton
         // Refresh label after shell change
         QString newShell = CoreFunctions::getCurrentShell();
         shellLabel->setText("Current Shell: " + newShell);
+    });
+}
+
+///////////////////////////////////////////////////
+/// MOUNT DRIVES SETUP CONNECTION
+//////////////////////////////////////////////////
+void Widget::mountDrivesSetupConnections(QStackedWidget *stackedWidget, QToolButton *mountDriveButton) {
+    connect(mountDriveButton, &QPushButton::clicked, this, [this, stackedWidget]() {
+       // Create the mount drives page container only once
+        if (!mountDrivesPage) {
+           mountDrivesPage = new QWidget(this);
+            // Use a vertical layout for a natural top-to-bottom arrangement
+           QVBoxLayout *mountDrivesLayout = new QVBoxLayout(mountDrivesPage);
+           mountDrivesLayout->setContentsMargins(0, 0, 0, 0);
+
+           // Create or refresh the drive list widget
+           if (!drivesPage) {
+               drivesPage = new drive_list_widget(mountDrivesPage);
+           } else {
+               drivesPage->refresh();
+           }
+           // Add the drive list widget with a stretch factor of 1 so it takes available space.
+           mountDrivesLayout->addWidget(drivesPage, 1);
+
+           // Create the back button using mountDrivesPage as its parent
+           // ensuring it only appears on this page
+           QPushButton *mountDrivesBackButton = new QPushButton("Back", mountDrivesPage);
+           // Add the back button at the bottom. A stretch factor of 0 keeps it at it natural size.
+           mountDrivesLayout->addWidget(mountDrivesBackButton, 0, Qt::AlignLeft);
+
+           mountDrivesPage->setLayout(mountDrivesLayout);
+           stackedWidget->insertWidget(4, mountDrivesPage);
+
+           // Connect the back button to switch back to the main page (index 0).
+           connect(mountDrivesBackButton, &QPushButton::clicked, this, [stackedWidget]() {
+               stackedWidget->setCurrentIndex(0);
+           });
+        } else {
+            drivesPage->refresh();
+        }
+
+        // Switch to the mount drives page (index 4).
+        stackedWidget->setCurrentIndex(4);
     });
 }
 
