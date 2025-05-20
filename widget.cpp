@@ -1464,46 +1464,85 @@ void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton
 ///////////////////////////////////////////////////
 /// MOUNT DRIVES SETUP CONNECTION
 //////////////////////////////////////////////////
-void Widget::mountDrivesSetupConnections(QStackedWidget *stackedWidget, QToolButton *mountDriveButton) {
-    connect(mountDriveButton, &QPushButton::clicked, this, [this, stackedWidget]() {
-       // Create the mount drives page container only once
+void Widget::mountDrivesSetupConnections(QStackedWidget *stackedWidget,
+QToolButton *mountDriveButton) {
+    connect(mountDriveButton, &QToolButton::clicked, this, [this, stackedWidget]() {
         if (!mountDrivesPage) {
-           mountDrivesPage = new QWidget(this);
-            // Use a vertical layout for a natural top-to-bottom arrangement
-           QVBoxLayout *mountDrivesLayout = new QVBoxLayout(mountDrivesPage);
-           mountDrivesLayout->setContentsMargins(0, 0, 0, 0);
+            mountDrivesPage = new QWidget(this);
+            QVBoxLayout *mainLayout = new QVBoxLayout(mountDrivesPage);
+            mainLayout->setContentsMargins(0, 0, 0, 0);
 
-           // Create or refresh the drive list widget
-           if (!drivesPage) {
-               drivesPage = new drive_list_widget(mountDrivesPage);
-           } else {
-               drivesPage->refresh();
-           }
-           // Add the drive list widget with a stretch factor of 1 so it takes available space.
-           mountDrivesLayout->addWidget(drivesPage, 1);
+            if (!drivesPage) {
+                drivesPage = new drive_list_widget(mountDrivesPage);
+            } else {
+                drivesPage->refresh();
+            }
+            mainLayout->addWidget(drivesPage, 1);
 
-           // Create the back button using mountDrivesPage as its parent
-           // ensuring it only appears on this page
-           QPushButton *mountDrivesBackButton = new QPushButton("Back", mountDrivesPage);
-           // Add the back button at the bottom. A stretch factor of 0 keeps it at it natural size.
-           mountDrivesLayout->addWidget(mountDrivesBackButton, 0, Qt::AlignLeft);
+            QHBoxLayout *bottomLayout = new QHBoxLayout();
+            QPushButton *mountDrivesBackButton = new QPushButton("Back", mountDrivesPage);
+            bottomLayout->addWidget(mountDrivesBackButton, 0, Qt::AlignLeft);
+            bottomLayout->addStretch();
+            QPushButton *showAdditionalButton = new QPushButton("Show Additional Partitions",
+            mountDrivesPage);
+            bottomLayout->addWidget(showAdditionalButton, 0, Qt::AlignCenter);
+            bottomLayout->addStretch();
+            QPushButton *mountUnmountButton = new QPushButton("Mount/Unmount", mountDrivesPage);
+            mountUnmountButton->setObjectName("mountUnmountButton");
+            mountUnmountButton->setEnabled(false);
+            bottomLayout->addWidget(mountUnmountButton, 0, Qt::AlignRight);
 
-           mountDrivesPage->setLayout(mountDrivesLayout);
-           stackedWidget->insertWidget(4, mountDrivesPage);
+            mainLayout->addLayout(bottomLayout);
+            mountDrivesPage->setLayout(mainLayout);
+            stackedWidget->insertWidget(4, mountDrivesPage);
 
-           // Connect the back button to switch back to the main page (index 0).
-           connect(mountDrivesBackButton, &QPushButton::clicked, this, [stackedWidget]() {
-               stackedWidget->setCurrentIndex(0);
-           });
+            connect(mountDrivesBackButton, &QPushButton::clicked, this, [stackedWidget]() {
+                stackedWidget->setCurrentIndex(0);
+            });
+
+            connect(drivesPage, &drive_list_widget::selectionChanged, this,
+            [mountUnmountButton, this]() {
+                if (this->drivesPage->isModified()) {
+                    mountUnmountButton->setEnabled(true);
+                    if (this->drivesPage->isDangerousModified())
+                        mountUnmountButton->setStyleSheet("background-color: red;");
+                    else
+                        mountUnmountButton->setStyleSheet("");
+                } else {
+                    mountUnmountButton->setEnabled(false);
+                    mountUnmountButton->setStyleSheet("");
+                }
+            });
+
+            connect(showAdditionalButton, &QPushButton::clicked, this, [this]() {
+                drivesPage->showAdditionalPartitionsDialog();
+            });
+            connect(mountUnmountButton, &QPushButton::clicked, this, [this, mountUnmountButton]() {
+                QString username = qgetenv("USER");
+                if (drivesPage->applyMountSelection(username)) {
+                    QMessageBox::information(this, "Mount/Unmount",
+                    "The process has been successfully completed!");
+                    mountUnmountButton->setEnabled(false);
+                    mountUnmountButton->setStyleSheet("");
+                } else {
+                    QMessageBox::warning(this, "Mount/Unmount",
+                    "There was an error during the process");
+                }
+            });
         } else {
             drivesPage->refresh();
+            // After a refresh, reset the mount/unmount button since the checkboxes are now at
+            // their default state.
+            QPushButton *mountUnmountButton = mountDrivesPage->
+            findChild<QPushButton*>("mountUnmountButton");
+            if (mountUnmountButton) {
+                mountUnmountButton->setEnabled(false);
+                mountUnmountButton->setStyleSheet("");
+            }
         }
-
-        // Switch to the mount drives page (index 4).
         stackedWidget->setCurrentIndex(4);
     });
 }
-
 
 Widget::~Widget()
 {

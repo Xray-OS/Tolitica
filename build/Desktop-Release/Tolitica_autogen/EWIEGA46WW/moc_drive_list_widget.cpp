@@ -38,10 +38,14 @@ template <> constexpr inline auto drive_list_widget::qt_create_metaobjectdata<qt
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "drive_list_widget"
+        "drive_list_widget",
+        "selectionChanged",
+        ""
     };
 
     QtMocHelpers::UintData qt_methods {
+        // Signal 'selectionChanged'
+        QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -63,10 +67,16 @@ Q_CONSTINIT const QMetaObject drive_list_widget::staticMetaObject = { {
 void drive_list_widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     auto *_t = static_cast<drive_list_widget *>(_o);
-    (void)_t;
-    (void)_c;
-    (void)_id;
-    (void)_a;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: _t->selectionChanged(); break;
+        default: ;
+        }
+    }
+    if (_c == QMetaObject::IndexOfMethod) {
+        if (QtMocHelpers::indexOfMethod<void (drive_list_widget::*)()>(_a, &drive_list_widget::selectionChanged, 0))
+            return;
+    }
 }
 
 const QMetaObject *drive_list_widget::metaObject() const
@@ -85,6 +95,24 @@ void *drive_list_widget::qt_metacast(const char *_clname)
 int drive_list_widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 1)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 1;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void drive_list_widget::selectionChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

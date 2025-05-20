@@ -13,9 +13,34 @@ public:
     // Public method to refresh the drive list.
     void refresh();
 
+    // Goes through all items, writes the new config files, and calls the mount/unmount helper.
+    // Returns true on sucess.
+    bool applyMountSelection(const QString &username);
+
+    // Opens a dialog to let the user choose additional partitions to show.
+    void showAdditionalPartitionsDialog();
+
+    bool hasDangerousChange() const {return m_dangerousChange;}
+    void resetDangerousChange() { m_dangerousChange = false; }
+
+    // Checks if any checkbox has been modified relative to its default state.
+    bool isModified() const;
+    bool isDangerousModified() const;
+
+signals:
+    // Emitted whenever a checkbox (drive or partition) is toggled.
+    void selectionChanged();
+
 private:
     QTreeWidget *m_treeWidget;
 
+    // User options to display additional partitions
+    bool m_showSwap = false; // By default we hide swap partitions.
+    bool m_showBoot = false; // By default we hide bbot partitions.
+    bool m_showHidden = false; // By default we hide hidden partitions.
+
+    bool m_ignoreSelectionChanges = false;
+    bool m_dangerousChange = false;
 signals:
 };
 
