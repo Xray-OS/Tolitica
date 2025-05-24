@@ -272,6 +272,26 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
  /usr/include/qt/QtWidgets/QCheckBox \
  /usr/include/qt/QtWidgets/qcheckbox.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+ /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h \
+ /usr/include/qt/QtCore/QObject /usr/include/qt/QtCore/qobject.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
+ /usr/include/qt/QtWidgets/QTreeWidget \
+ /usr/include/qt/QtWidgets/qtreewidget.h \
+ /usr/include/qt/QtWidgets/qtreeview.h \
+ /usr/include/qt/QtWidgets/qabstractitemview.h \
+ /usr/include/qt/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt/QtCore/qitemselectionmodel.h \
+ /usr/include/qt/QtCore/qset.h \
+ /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt/QtWidgets/QToolButton \
+ /usr/include/qt/QtWidgets/qtoolbutton.h \
+ /usr/include/qt/QtWidgets/QBoxLayout \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qlayout.h \
+ /usr/include/qt/QtWidgets/qlayoutitem.h \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qgridlayout.h \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/include/./ui_widget.h \
  /usr/include/qt/QtCore/QVariant /usr/include/qt/QtCore/qvariant.h \
  /usr/include/qt/QtWidgets/QApplication \
@@ -282,25 +302,18 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtWidgets/QWidget \
  /usr/include/qt/QtWidgets/QGroupBox \
  /usr/include/qt/QtWidgets/qgroupbox.h \
- /usr/include/qt/QtWidgets/QVBoxLayout \
- /usr/include/qt/QtWidgets/qboxlayout.h \
- /usr/include/qt/QtWidgets/qlayout.h \
- /usr/include/qt/QtWidgets/qlayoutitem.h \
- /usr/include/qt/QtWidgets/qboxlayout.h \
- /usr/include/qt/QtWidgets/qgridlayout.h /usr/include/qt/QtCore/QProcess \
+ /usr/include/qt/QtWidgets/QVBoxLayout /usr/include/qt/QtCore/QProcess \
  /usr/include/qt/QtCore/qprocess.h /usr/include/qt/QtWidgets/QMessageBox \
  /usr/include/qt/QtWidgets/qmessagebox.h \
  /usr/include/qt/QtWidgets/qdialog.h /usr/include/qt/QtCore/QDir \
  /usr/include/qt/QtCore/qdir.h /usr/include/qt/QtCore/qfileinfo.h \
  /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/qfiledevice.h \
  /usr/include/qt/QtCore/QDebug /usr/include/qt/QtCore/qdebug.h \
- /usr/include/qt/QtCore/qtextstream.h /usr/include/qt/QtCore/qset.h \
+ /usr/include/qt/QtCore/qtextstream.h \
  /usr/include/qt/QtCore/qcontiguouscache.h \
  /usr/include/qt/QtWidgets/QProgressDialog \
  /usr/include/qt/QtWidgets/qprogressdialog.h \
  /usr/include/qt/QtCore/QTimer /usr/include/qt/QtCore/qtimer.h \
  /usr/include/qt/QtCore/qbasictimer.h /usr/include/qt/QtCore/QFile \
  /usr/include/qt/QtCore/qfile.h /usr/include/qt/QtCore/QTextStream \
- /usr/include/qt/QtCore/qtextstream.h \
- /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
- /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h
+ /usr/include/qt/QtCore/qtextstream.h

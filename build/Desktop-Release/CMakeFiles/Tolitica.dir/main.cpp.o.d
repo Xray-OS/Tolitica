@@ -382,6 +382,12 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
  /usr/include/qt6/QtWidgets/QToolButton \
  /usr/include/qt6/QtWidgets/qtoolbutton.h \
+ /usr/include/qt6/QtWidgets/QBoxLayout \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
+ /usr/include/qt6/QtWidgets/qlayout.h \
+ /usr/include/qt6/QtWidgets/qlayoutitem.h \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
+ /usr/include/qt6/QtWidgets/qgridlayout.h \
  /usr/include/qt6/QtWidgets/QApplication \
  /usr/include/qt6/QtWidgets/qapplication.h \
  /usr/include/qt6/QtCore/qcoreapplication.h \

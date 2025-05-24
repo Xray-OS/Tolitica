@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o.d"
   "CMakeFiles/Tolitica.dir/core_functions.cpp.o"
   "CMakeFiles/Tolitica.dir/core_functions.cpp.o.d"
+  "CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o"
+  "CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o.d"
   "CMakeFiles/Tolitica.dir/main.cpp.o"
   "CMakeFiles/Tolitica.dir/main.cpp.o.d"
   "CMakeFiles/Tolitica.dir/widget.cpp.o"

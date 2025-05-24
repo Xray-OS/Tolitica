@@ -249,6 +249,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt/QtWidgets/qcheckbox.h \
  /usr/include/qt/QtWidgets/qabstractbutton.h \
  /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtCore/QObject /usr/include/qt/QtCore/qobject.h \
  /usr/include/qt/QtWidgets/QMessageBox \
  /usr/include/qt/QtWidgets/qmessagebox.h \
  /usr/include/qt/QtWidgets/qdialog.h \
@@ -303,6 +304,32 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt/QtCore/qcoreapplication.h \
  /usr/include/qt/QtCore/qcoreevent.h /usr/include/qt/QtCore/qeventloop.h \
  /usr/include/qt/QtGui/qguiapplication.h \
- /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtCore/QObject \
- /usr/include/qt/QtCore/qobject.h /usr/include/qt/QtWidgets/QProgressBar \
- /usr/include/qt/QtWidgets/qprogressbar.h
+ /usr/include/qt/QtGui/qinputmethod.h /usr/include/qt/QtWidgets/QDialog \
+ /usr/include/qt/QtWidgets/qdialog.h \
+ /usr/include/qt/QtWidgets/QFormLayout \
+ /usr/include/qt/QtWidgets/qformlayout.h \
+ /usr/include/qt/QtWidgets/QLayout /usr/include/qt/QtWidgets/qlayout.h \
+ /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
+ /usr/include/qt/QtWidgets/QSpinBox /usr/include/qt/QtWidgets/qspinbox.h \
+ /usr/include/qt/QtWidgets/QDialogButtonBox \
+ /usr/include/qt/QtWidgets/qdialogbuttonbox.h \
+ /usr/include/qt/QtGui/QDesktopServices \
+ /usr/include/qt/QtGui/qdesktopservices.h \
+ /usr/include/qt/QtCore/qstandardpaths.h /usr/include/qt/QtCore/QUrl \
+ /usr/include/qt/QtCore/qurl.h /usr/include/qt/QtCore/QJsonDocument \
+ /usr/include/qt/QtCore/qjsondocument.h \
+ /usr/include/qt/QtCore/qjsonvalue.h /usr/include/qt/QtCore/qcborvalue.h \
+ /usr/include/qt/QtCore/qdatetime.h /usr/include/qt/QtCore/qcborcommon.h \
+ /usr/include/qt/QtCore/qdebug.h /usr/include/qt/QtCore/qurl.h \
+ /usr/include/qt/QtCore/quuid.h /usr/include/qt/QtCore/QJsonObject \
+ /usr/include/qt/QtCore/qjsonobject.h /usr/include/qt/QtCore/QJsonArray \
+ /usr/include/qt/QtCore/qjsonarray.h \
+ /usr/include/qt/QtWidgets/QTreeWidget \
+ /usr/include/qt/QtWidgets/qtreewidget.h \
+ /usr/include/qt/QtWidgets/qtreeview.h \
+ /usr/include/qt/QtWidgets/qabstractitemview.h \
+ /usr/include/qt/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt/QtCore/qitemselectionmodel.h \
+ /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt/QtWidgets/QTreeWidgetItem \
+ /usr/include/qt/QtWidgets/QHBoxLayout

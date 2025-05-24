@@ -424,6 +424,7 @@
   /usr/include/qt6/QtGui/qtransform.h \
   /usr/include/qt6/QtGui/qvalidator.h \
   /usr/include/qt6/QtGui/qwindowdefs.h \
+  /usr/include/qt6/QtWidgets/QBoxLayout \
   /usr/include/qt6/QtWidgets/QCheckBox \
   /usr/include/qt6/QtWidgets/QComboBox \
   /usr/include/qt6/QtWidgets/QLabel \
@@ -438,10 +439,14 @@
   /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
   /usr/include/qt6/QtWidgets/qabstractslider.h \
   /usr/include/qt6/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt6/QtWidgets/qboxlayout.h \
   /usr/include/qt6/QtWidgets/qcheckbox.h \
   /usr/include/qt6/QtWidgets/qcombobox.h \
   /usr/include/qt6/QtWidgets/qframe.h \
+  /usr/include/qt6/QtWidgets/qgridlayout.h \
   /usr/include/qt6/QtWidgets/qlabel.h \
+  /usr/include/qt6/QtWidgets/qlayout.h \
+  /usr/include/qt6/QtWidgets/qlayoutitem.h \
   /usr/include/qt6/QtWidgets/qpushbutton.h \
   /usr/include/qt6/QtWidgets/qrubberband.h \
   /usr/include/qt6/QtWidgets/qsizepolicy.h \

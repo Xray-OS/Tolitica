@@ -31,17 +31,38 @@ drive_list_widget::drive_list_widget(QWidget *parent)
     refresh();
 }
 
+QSet<QString> drive_list_widget::loadManuallyEnabledDevices() const {
+    QSet<QString> enabledSet;
+    QString configPath = "/etc/ada/tolitica/automount/manually_enabled.conf";
+    QFile file(configPath);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        while (!in.atEnd()) {
+            QString line = in.readLine().trimmed();
+            if (line.isEmpty() || line.startsWith("#"))
+                continue;
+            enabledSet.insert(line);
+        }
+        file.close();
+    }
+    return enabledSet;
+}
+
 void drive_list_widget::refresh() {
+    // Load the current enabled device tokens from the configuration file.
+    QSet<QString> enabledDevices = loadManuallyEnabledDevices();
+
     // Block selection-change signals during refresh.
     m_ignoreSelectionChanges = true;
     m_treeWidget->clear();
 
-    // Run lsblk with JSON output.
+    // Run lsblk with JSON output including the UUID.
     QProcess process;
-    process.start("lsblk", QStringList()
-                               << "--json"
-                               << "--output" << "NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,LABEL");
+    process.start("lsblk", QStringList() << "--json"
+                                         << "--output" << "NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,LABEL,UUID");
     process.waitForFinished();
+
     QByteArray output = process.readAllStandardOutput();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(output);
     QJsonObject jsonObj = jsonDoc.object();
@@ -54,17 +75,22 @@ void drive_list_widget::refresh() {
         if (type != "disk")
             continue;
 
+        // Extract the disk's UUID token.
+        QString diskUUID = deviceObj.value("uuid").toString().trimmed();
+        QString diskToken = diskUUID.isEmpty() ? "" : "UUID=" + diskUUID;
+
         // Create the parent tree item.
         QTreeWidgetItem *parentItem = new QTreeWidgetItem(m_treeWidget);
         QString driveName = "/dev/" + deviceObj.value("name").toString();
         QString driveSize = deviceObj.value("size").toString();
         parentItem->setText(0, driveName);
         parentItem->setText(1, driveSize);
-        QString parentMount = deviceObj.value("mountpoint").toString();
-        parentItem->setData(0, Qt::UserRole, parentMount);
+        // Store the UUID token in the item's UserRole.
+        parentItem->setData(0, Qt::UserRole, diskToken);
 
         // Check if this disk is partitioned.
-        bool hasChildren = deviceObj.contains("children") && deviceObj.value("children").isArray();
+        bool hasChildren = deviceObj.contains("children")
+                           && deviceObj.value("children").isArray();
 
         if (!hasChildren) {
             // For unpartitioned drives, add a parent checkbox.
@@ -73,21 +99,24 @@ void drive_list_widget::refresh() {
             parentLayout->setContentsMargins(0, 0, 0, 0);
             QCheckBox *parentCheckBox = new QCheckBox("Mount Drive", parentActionWidget);
 
-            if (!parentMount.isEmpty())
+            // Set checkbox state based on whether diskToken is in the config.
+            if (!diskToken.isEmpty() && enabledDevices.contains(diskToken))
                 parentCheckBox->setCheckState(Qt::Checked);
             else
                 parentCheckBox->setCheckState(Qt::Unchecked);
+
             // Store default state.
             parentCheckBox->setProperty("defaultState", parentCheckBox->checkState());
             parentLayout->addWidget(parentCheckBox);
             parentActionWidget->setLayout(parentLayout);
             m_treeWidget->setItemWidget(parentItem, 2, parentActionWidget);
 
-            // Emit selectionChanged only if not during refresh.
-            connect(parentCheckBox, &QCheckBox::checkStateChanged, this, [this, parentCheckBox]() {
-                if (!m_ignoreSelectionChanges)
-                    emit selectionChanged();
-            });
+            // 🔵 CONNECT USING THE CORRECT SIGNAL 'stateChanged' WITH EXPLICIT CAPTURE AND PARAMETER
+            connect(parentCheckBox, &QCheckBox::checkStateChanged, this,
+                    [this, parentCheckBox](int state) {
+                        if (!m_ignoreSelectionChanges)
+                            emit selectionChanged();
+                    });
         } else {
             // For partitioned drives, leave the parent's widget empty.
             QWidget *emptyWidget = new QWidget();
@@ -108,6 +137,10 @@ void drive_list_widget::refresh() {
                 QString label = partObj.value("label").toString().toLower();
                 QString sizeStr = partObj.value("size").toString().toLower();
 
+                // Extract partition UUID token.
+                QString partUUID = partObj.value("uuid").toString().trimmed();
+                QString partToken = partUUID.isEmpty() ? "" : "UUID=" + partUUID;
+
                 // Determine whether to hide this partition.
                 bool skip = false;
                 if (fstype == "swap" && !m_showSwap)
@@ -116,8 +149,7 @@ void drive_list_widget::refresh() {
                     bool appearsBootlike = false;
                     if (partMount == "/boot" || partMount == "/boot/efi")
                         appearsBootlike = true;
-                    if (label.contains("boot") || label.contains("efi") ||
-                        label.contains("esp"))
+                    if (label.contains("boot") || label.contains("efi") || label.contains("esp"))
                         appearsBootlike = true;
                     bool isVfat = (fstype == "vfat" || fstype == "fat32");
                     if (isVfat) {
@@ -148,21 +180,25 @@ void drive_list_widget::refresh() {
                 QString partitionSize = partObj.value("size").toString();
                 childItem->setText(0, partitionName);
                 childItem->setText(1, partitionSize);
-                childItem->setData(0, Qt::UserRole, partMount);
+                // Store the partition's UUID token.
+                childItem->setData(0, Qt::UserRole, partToken);
 
                 // Create widget with a checkbox for the partition.
                 QWidget *childActionWidget = new QWidget();
                 QHBoxLayout *childLayout = new QHBoxLayout(childActionWidget);
                 childLayout->setContentsMargins(0, 0, 0, 0);
                 QCheckBox *childCheckBox = new QCheckBox("Mount Drive", childActionWidget);
-                if (!partMount.isEmpty())
+
+                // Set checkbox state based on whether partToken is in the config.
+                if (!partToken.isEmpty() && enabledDevices.contains(partToken))
                     childCheckBox->setCheckState(Qt::Checked);
                 else
                     childCheckBox->setCheckState(Qt::Unchecked);
+
                 // Save the default state.
                 childCheckBox->setProperty("defaultState", childCheckBox->checkState());
 
-                // Mark dangerous if this partition is swap or boot-like.
+                // Mark as dangerous if this partition is swap/boot-like.
                 bool isHarmful = (fstype == "swap" ||
                                   partMount == "/boot" || partMount == "/boot/efi" ||
                                   label.contains("boot") || label.contains("efi") || label.contains("esp"));
@@ -172,8 +208,9 @@ void drive_list_widget::refresh() {
                 childActionWidget->setLayout(childLayout);
                 m_treeWidget->setItemWidget(childItem, 2, childActionWidget);
 
+                // 🔵 CONNECT USING 'stateChanged(int)' FOR CHILD CHECKBOX WITH EXPLICIT CAPTURE
                 connect(childCheckBox, &QCheckBox::checkStateChanged, this,
-                        [this, childCheckBox](int /*state*/) {
+                        [this, childCheckBox](int state) {
                             if (childCheckBox->property("isDangerous").toBool()) {
                                 QMessageBox::StandardButton reply =
                                     QMessageBox::warning(this, "Warning",
@@ -184,8 +221,7 @@ void drive_list_widget::refresh() {
                                 if (reply == QMessageBox::No) {
                                     childCheckBox->blockSignals(true);
                                     int defState = childCheckBox->property("defaultState").toInt();
-                                    childCheckBox->setCheckState(static_cast<Qt::CheckState>
-                                                                 (defState));
+                                    childCheckBox->setCheckState(static_cast<Qt::CheckState>(defState));
                                     childCheckBox->blockSignals(false);
                                     return;
                                 }
@@ -198,85 +234,6 @@ void drive_list_widget::refresh() {
     }
     // Re-enable selection signals once refresh is complete.
     m_ignoreSelectionChanges = false;
-}
-
-bool drive_list_widget::applyMountSelection(const QString &username) {
-    // Build lists of devices to enable (checked) and disable (unchecked).
-    QStringList enabledDevices;
-    QStringList disabledDevices;
-
-    for (int i = 0; i < m_treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *parentItem = m_treeWidget->topLevelItem(i);
-        QWidget *parentWidget = m_treeWidget->itemWidget(parentItem, 2);
-        QCheckBox *parentCheckBox = parentWidget ? parentWidget->findChild<QCheckBox*>(): nullptr;
-
-        if(parentCheckBox) {
-            if (parentItem->childCount() == 0) {
-                // No partitions: use parent's checkbox state.
-                QString dev = parentItem->text(0);
-                if (parentCheckBox->isChecked())
-                    enabledDevices.append(dev);
-                else
-                    disabledDevices.append(dev);
-            } else {
-                // For drives with partitions, process each partition.
-                for (int j = 0; j < parentItem->childCount(); j++) {
-                    QTreeWidgetItem *childItem = parentItem->child(j);
-                    QWidget *childWidget = m_treeWidget->itemWidget(childItem, 2);
-                    QCheckBox *childCheckBox = childWidget ? childWidget->findChild<QCheckBox*>() : nullptr;
-
-                    if (childCheckBox) {
-                        QString dev = childItem->text(0);
-                        if (childCheckBox->isChecked())
-                            enabledDevices.append(dev);
-                        else
-                            disabledDevices.append(dev);
-                    }
-                }
-            }
-        }
-    }
-
-    // Write the configuration files.
-    // (Note: these files are written as root; here we assume the ada external helper handles that.)
-    QString enabledPath = "/etc/ada/tolitica/automount/enabled.conf";
-    QString disabledPath = "/etc/ada/tolitica/automount/disabled.conf";
-    bool success = true;
-
-    QFile fileEnabled(enabledPath);
-    if (fileEnabled.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&fileEnabled);
-        for (const QString &line : enabledDevices)
-            out << line << "\n";
-        fileEnabled.close();
-    } else {
-        success = false;
-    }
-    QFile fileDisabled(disabledPath);
-    if (fileDisabled.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&fileDisabled);
-        for (const QString &line : disabledDevices)
-            out << line << "\n";
-        fileDisabled.close();
-    } else {
-        success = false;
-    }
-
-    // If file writes succedded, launch the external helper via pkexec
-    if (success) {
-        QProcess proc;
-        QString helperBinary = "/etc/ada/tolitica/automount/ada-automount-helper";
-        QStringList args;
-        args << username; // Passing the username, so the helper can use the correct media path.
-        proc.start("pkexec", QStringList() << helperBinary << args);
-        proc.waitForFinished();
-        if (proc.exitCode() == 0)
-            return true;
-        else
-            return false;
-    }
-
-    return success;
 }
 
 
@@ -360,6 +317,99 @@ bool drive_list_widget::isDangerousModified() const {
     }
     return false;
 }
+
+bool drive_list_widget::applyMountSelection() {
+    QString configPath = "/etc/ada/tolitica/automount/manually_enabled.conf";
+
+    // Reset cancellation flag at the beginning.
+    m_operationCancelled = false;
+
+    // Build a string containing the new configuration content.
+    QStringList enabledTokens;
+    for (int i = 0; i < m_treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *parentItem = m_treeWidget->topLevelItem(i);
+        QWidget *parentWidget = m_treeWidget->itemWidget(parentItem, 2);
+        QCheckBox *parentCheckBox = parentWidget ? parentWidget->findChild<QCheckBox*>() : nullptr;
+
+        if (parentCheckBox && parentItem->childCount() == 0) {
+            QString token = parentItem->data(0, Qt::UserRole).toString();
+            if (parentCheckBox->isChecked() && !token.isEmpty())
+                enabledTokens.append(token);
+        } else if (parentItem->childCount() > 0) {
+            for (int j = 0; j < parentItem->childCount(); j++) {
+                QTreeWidgetItem *childItem = parentItem->child(j);
+                QWidget *childWidget = m_treeWidget->itemWidget(childItem, 2);
+                QCheckBox *childCheckBox = childWidget ? childWidget->findChild<QCheckBox*>() : nullptr;
+                if (childCheckBox) {
+                    QString token = childItem->data(0, Qt::UserRole).toString();
+                    if (childCheckBox->isChecked() && !token.isEmpty())
+                        enabledTokens.append(token);
+                }
+            }
+        }
+    }
+
+    // Construct the shell command to write the data.
+    QString command = "echo '# list of enabled automount partitions' | pkexec tee " + configPath;
+    for (const QString &token : enabledTokens) {
+        command += " && echo '" + token + "' | pkexec tee -a " + configPath;
+    }
+    command += " && pkexec touch " + configPath; // Force the system to update timestamp.
+
+    // Run the command using QProcess.
+    QProcess process;
+    process.start("bash", QStringList() << "-c" << command);
+    process.waitForFinished();
+
+    // Retrieve and trim standard error output to check for cancellation.
+    QString errorOutput = process.readAllStandardError().trimmed();
+
+    // (Optional) Debug output:
+    // qDebug() << "applyMountSelection errorOutput:" << errorOutput << "exitCode:" << process.exitCode();
+
+    // Check for success.
+    if (process.exitCode() != 0) {
+        // If errorOutput is empty, unusually short, contains cancellation text, or the exit code is 126,
+        // assume a cancel occurred—and do not warn.
+        if (errorOutput.isEmpty() ||
+            errorOutput.length() < 15 ||
+            errorOutput.contains("cancel", Qt::CaseInsensitive) ||
+            errorOutput.contains("canceled", Qt::CaseInsensitive) ||
+            errorOutput.contains("Authentication canceled", Qt::CaseInsensitive) ||
+            process.exitCode() == 126) {
+            m_operationCancelled = true;
+            return true; // Treat cancellation as non-error.
+        }
+        // Instead of issuing a warning, we silently return false.
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

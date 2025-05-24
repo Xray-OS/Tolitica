@@ -8,6 +8,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   Tolitica_autogen/moc_predefs.h \
   /home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp \
   /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
   /home/angel/Documents/Development/_APPS/Tolitica/main.cpp \
   /home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc \
   /home/angel/Documents/Development/_APPS/Tolitica/widget.cpp \
@@ -259,6 +261,8 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/linux/types.h \
   /usr/include/locale.h \
   /usr/include/pthread.h \
+  /usr/include/qt/QtCore/QObject \
+  /usr/include/qt/QtCore/QStringList \
   /usr/include/qt/QtCore/qabstractitemmodel.h \
   /usr/include/qt/QtCore/qalgorithms.h \
   /usr/include/qt/QtCore/qarraydata.h \
@@ -280,6 +284,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtCore/qhash.h \
   /usr/include/qt/QtCore/qhashfunctions.h \
   /usr/include/qt/QtCore/qiodevice.h \
+  /usr/include/qt/QtCore/qitemselectionmodel.h \
   /usr/include/qt/QtCore/qiterator.h \
   /usr/include/qt/QtCore/qline.h \
   /usr/include/qt/QtCore/qlist.h \
@@ -302,6 +307,7 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtCore/qregexp.h \
   /usr/include/qt/QtCore/qregularexpression.h \
   /usr/include/qt/QtCore/qscopedpointer.h \
+  /usr/include/qt/QtCore/qset.h \
   /usr/include/qt/QtCore/qshareddata.h \
   /usr/include/qt/QtCore/qsharedpointer.h \
   /usr/include/qt/QtCore/qsharedpointer_impl.h \
@@ -344,20 +350,29 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtWidgets/QBoxLayout \
   /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
+  /usr/include/qt/QtWidgets/QToolButton \
+  /usr/include/qt/QtWidgets/QTreeWidget \
   /usr/include/qt/QtWidgets/QWidget \
   /usr/include/qt/QtWidgets/qabstractbutton.h \
   /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt/QtWidgets/qabstractitemview.h \
+  /usr/include/qt/QtWidgets/qabstractscrollarea.h \
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt/QtWidgets/qboxlayout.h \
   /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qgridlayout.h \
   /usr/include/qt/QtWidgets/qlabel.h \
+  /usr/include/qt/QtWidgets/qlayout.h \
+  /usr/include/qt/QtWidgets/qlayoutitem.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -367,6 +382,10 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/include/qt/QtWidgets/qstyleoption.h \
   /usr/include/qt/QtWidgets/qtabbar.h \
   /usr/include/qt/QtWidgets/qtabwidget.h \
+  /usr/include/qt/QtWidgets/qtoolbutton.h \
+  /usr/include/qt/QtWidgets/qtreeview.h \
+  /usr/include/qt/QtWidgets/qtreewidget.h \
+  /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
   /usr/include/qt/QtWidgets/qtwidgets-config.h \
   /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
   /usr/include/qt/QtWidgets/qwidget.h \
@@ -412,7 +431,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake \
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake \
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake \
-  /usr/lib/cmake/Qt5Gui/Qt5Gui_QPdfPlugin.cmake \
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake \
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake \
   /usr/lib/cmake/Qt5Gui/Qt5Gui_QTsLibPlugin.cmake \
@@ -434,85 +452,25 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h \
-  /usr/share/cmake/Modules/CMakeCXXCompiler.cmake.in \
-  /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp \
   /usr/share/cmake/Modules/CMakeCXXInformation.cmake \
   /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake \
-  /usr/share/cmake/Modules/CMakeCompilerIdDetection.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineCompiler.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineCompilerSupport.cmake \
-  /usr/share/cmake/Modules/CMakeDetermineSystem.cmake \
-  /usr/share/cmake/Modules/CMakeFindBinUtils.cmake \
   /usr/share/cmake/Modules/CMakeGenericSystem.cmake \
   /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake \
   /usr/share/cmake/Modules/CMakeLanguageInformation.cmake \
   /usr/share/cmake/Modules/CMakeParseArguments.cmake \
-  /usr/share/cmake/Modules/CMakeParseImplicitIncludeInfo.cmake \
-  /usr/share/cmake/Modules/CMakeParseImplicitLinkInfo.cmake \
-  /usr/share/cmake/Modules/CMakeParseLibraryArchitecture.cmake \
-  /usr/share/cmake/Modules/CMakeSystem.cmake.in \
   /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake \
   /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake \
-  /usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake \
-  /usr/share/cmake/Modules/CMakeTestCompilerCommon.cmake \
-  /usr/share/cmake/Modules/Compiler/ADSP-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Borland-DetermineCompiler.cmake \
   /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
-  /usr/share/cmake/Modules/Compiler/Clang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
-  /usr/share/cmake/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Cray-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/CrayClang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/GHS-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
   /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake \
-  /usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake \
   /usr/share/cmake/Modules/Compiler/GNU.cmake \
-  /usr/share/cmake/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/IAR-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
-  /usr/share/cmake/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Intel-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/MSVC-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/OrangeC-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/PGI-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/PathScale-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/SCO-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/TI-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/TIClang-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Tasking-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/Watcom-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
-  /usr/share/cmake/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
   /usr/share/cmake/Modules/GNUInstallDirs.cmake \
   /usr/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake \
   /usr/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake \
-  /usr/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake \
-  /usr/share/cmake/Modules/Internal/CMakeInspectCXXLinker.cmake \
-  /usr/share/cmake/Modules/Internal/FeatureTesting.cmake \
   /usr/share/cmake/Modules/Linker/GNU-CXX.cmake \
   /usr/share/cmake/Modules/Linker/GNU.cmake \
   /usr/share/cmake/Modules/Platform/Linker/GNU.cmake \
   /usr/share/cmake/Modules/Platform/Linker/Linux-GNU-CXX.cmake \
   /usr/share/cmake/Modules/Platform/Linker/Linux-GNU.cmake \
-  /usr/share/cmake/Modules/Platform/Linux-Determine-CXX.cmake \
   /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake \
   /usr/share/cmake/Modules/Platform/Linux-GNU.cmake \
   /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake \
@@ -526,75 +484,19 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake:
 
-/usr/share/cmake/Modules/Platform/Linux-Determine-CXX.cmake:
-
 /usr/share/cmake/Modules/Platform/Linker/GNU.cmake:
-
-/usr/share/cmake/Modules/Internal/FeatureTesting.cmake:
-
-/usr/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:
 
 /usr/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake:
 
-/usr/share/cmake/Modules/Compiler/XL-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/Watcom-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/TIClang-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/TI-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/NVIDIA-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake:
+/usr/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake:
 
 /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake:
 
-/usr/share/cmake/Modules/Compiler/GHS-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/Fujitsu-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/CrayClang-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake:
-
-/usr/share/cmake/Modules/Compiler/Clang-DetermineCompilerInternal.cmake:
-
-/usr/share/cmake/Modules/Compiler/Clang-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/Borland-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/ARMClang-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/CMakeTestCompilerCommon.cmake:
-
 /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake:
-
-/usr/share/cmake/Modules/CMakeParseLibraryArchitecture.cmake:
 
 /usr/share/cmake/Modules/CMakeLanguageInformation.cmake:
 
 /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake:
-
-/usr/share/cmake/Modules/CMakeDetermineCompilerSupport.cmake:
-
-/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:
-
-/usr/share/cmake/Modules/CMakeDetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp:
-
-/usr/share/cmake/Modules/CMakeCXXCompiler.cmake.in:
 
 /usr/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake:
 
@@ -607,8 +509,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake:
 
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QTsLibPlugin.cmake:
-
-/usr/lib/cmake/Qt5Gui/Qt5Gui_QPdfPlugin.cmake:
 
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake:
 
@@ -640,8 +540,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/lib/cmake/Qt5/Qt5Config.cmake:
 
-/usr/share/cmake/Modules/Compiler/SCO-DetermineCompiler.cmake:
-
 /usr/include/wchar.h:
 
 /usr/include/unistd.h:
@@ -658,8 +556,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/stdc-predef.h:
 
-/usr/share/cmake/Modules/Compiler/PGI-DetermineCompiler.cmake:
-
 /usr/include/wctype.h:
 
 /usr/include/sched.h:
@@ -667,6 +563,10 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/include/qt/QtWidgets/qwidget.h:
 
 /usr/include/qt/QtWidgets/qtwidgets-config.h:
+
+/usr/include/qt/QtWidgets/qtreewidgetitemiterator.h:
+
+/usr/include/qt/QtWidgets/qtreeview.h:
 
 /usr/include/qt/QtWidgets/qstyleoption.h:
 
@@ -682,9 +582,21 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtWidgets/qpushbutton.h:
 
+/usr/include/qt/QtWidgets/qlayout.h:
+
+/usr/include/qt/QtWidgets/qgridlayout.h:
+
+/usr/include/qt/QtWidgets/qboxlayout.h:
+
+/usr/include/qt/QtWidgets/qabstractscrollarea.h:
+
 /usr/include/qt/QtWidgets/qabstractitemdelegate.h:
 
 /usr/include/qt/QtWidgets/QWidget:
+
+/usr/include/qt/QtWidgets/QTreeWidget:
+
+/usr/include/qt/QtWidgets/QToolButton:
 
 /usr/include/qt/QtWidgets/QPushButton:
 
@@ -746,8 +658,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtCore/qstringliteral.h:
 
-/usr/share/cmake/Modules/CMakeSystem.cmake.in:
-
 /usr/include/qt/QtCore/qstringalgorithms.h:
 
 /usr/include/qt/QtCore/qstring.h:
@@ -760,11 +670,15 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtCore/qshareddata.h:
 
+/usr/include/qt/QtCore/qset.h:
+
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake:
 
 /usr/include/qt/QtCore/qregularexpression.h:
 
 /usr/include/qt/QtCore/qregexp.h:
+
+/usr/include/qt/QtWidgets/qlayoutitem.h:
 
 /usr/include/qt/QtCore/qrefcount.h:
 
@@ -776,11 +690,13 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtCore/qnamespace.h:
 
-/usr/share/cmake/Modules/CMakeCompilerIdDetection.cmake:
-
 /usr/include/qt/QtCore/qmap.h:
 
 /usr/include/qt/QtCore/qlist.h:
+
+/usr/include/qt/QtWidgets/QBoxLayout:
+
+/usr/include/qt/QtCore/qitemselectionmodel.h:
 
 /usr/include/qt/QtCore/qhashfunctions.h:
 
@@ -798,11 +714,11 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtCore/qdatastream.h:
 
-/usr/share/cmake/Modules/Compiler/Cray-DetermineCompiler.cmake:
-
 /usr/include/qt/QtGui/qcolor.h:
 
 /usr/include/qt/QtCore/qcontainertools_impl.h:
+
+/usr/include/qt/QtWidgets/qabstractitemview.h:
 
 /usr/include/qt/QtCore/qcompilerdetection.h:
 
@@ -810,23 +726,27 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/qt/QtCore/qbytearraylist.h:
 
-/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:
-
 /usr/include/qt/QtCore/qbasicatomic.h:
 
 /usr/include/qt/QtCore/qatomic_cxx11.h:
 
 /usr/include/qt/QtCore/qarraydata.h:
 
-/usr/share/cmake/Modules/CMakeParseImplicitIncludeInfo.cmake:
-
 /usr/include/qt/QtCore/qalgorithms.h:
 
 /usr/include/qt/QtCore/qabstractitemmodel.h:
 
+/usr/include/qt/QtCore/QStringList:
+
 /usr/include/pthread.h:
 
-/usr/include/bits/typesizes.h:
+/usr/share/cmake/Modules/CMakeParseArguments.cmake:
+
+/usr/include/linux/types.h:
+
+/usr/include/locale.h:
+
+/usr/include/c++/15.1.1/bits/memoryfwd.h:
 
 /usr/include/qt/QtCore/qnumeric.h:
 
@@ -849,10 +769,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/include/c++/15.1.1/backward/auto_ptr.h:
 
 /usr/include/c++/15.1.1/numbers:
-
-/usr/include/c++/15.1.1/bits/monostate.h:
-
-/usr/include/c++/15.1.1/vector:
 
 /usr/include/sys/syscall.h:
 
@@ -878,13 +794,13 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/c++/15.1.1/bits/alloc_traits.h:
 
-/usr/share/cmake/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake:
-
 /usr/include/asm/errno.h:
 
 /usr/include/c++/15.1.1/pstl/glue_numeric_defs.h:
 
 /usr/include/c++/15.1.1/bit:
+
+/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h:
 
 /usr/include/c++/15.1.1/bits/functional_hash.h:
 
@@ -910,13 +826,9 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/bits/types/struct_tm.h:
 
-/usr/share/cmake/Modules/Compiler/MSVC-DetermineCompiler.cmake:
-
 /usr/include/c++/15.1.1/bits/max_size_type.h:
 
 /usr/include/c++/15.1.1/bits/basic_string.tcc:
-
-/usr/share/cmake/Modules/Internal/CMakeInspectCXXLinker.cmake:
 
 /usr/include/c++/15.1.1/bits/functexcept.h:
 
@@ -925,16 +837,6 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 /usr/include/c++/15.1.1/bits/allocator.h:
 
 /usr/include/bits/types/struct_timespec.h:
-
-/usr/share/cmake/Modules/Compiler/IAR-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake:
-
-/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:
-
-/usr/include/qt/QtWidgets/QLabel:
-
-/usr/include/c++/15.1.1/clocale:
 
 /usr/include/bits/types/struct_sched_param.h:
 
@@ -978,6 +880,10 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/c++/15.1.1/concepts:
 
+/usr/include/bits/types/__locale_t.h:
+
+/usr/include/c++/15.1.1/bits/uses_allocator_args.h:
+
 /usr/include/assert.h:
 
 /usr/include/c++/15.1.1/bits/cxxabi_forced.h:
@@ -990,19 +896,9 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/error_constants.h:
 
-/usr/lib/cmake/Qt5Gui/Qt5Gui_QWaylandIntegrationPlugin.cmake:
-
-/usr/include/qt/QtGui/qimage.h:
-
-/usr/include/c++/15.1.1/bits/mofunc_impl.h:
-
-/usr/include/c++/15.1.1/cstdlib:
-
 /usr/include/bits/types/struct_timeval.h:
 
 /usr/include/c++/15.1.1/bits/locale_classes.h:
-
-/usr/share/cmake/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake:
 
 /usr/include/bits/floatn.h:
 
@@ -1018,25 +914,23 @@ Tolitica_autogen/timestamp: /home/angel/Documents/Development/_APPS/Tolitica/CMa
 
 /usr/include/c++/15.1.1/bits/sat_arith.h:
 
-/usr/include/c++/15.1.1/ext/string_conversions.h:
-
-/usr/include/bits/confname.h:
-
-/usr/share/cmake/Modules/Compiler/ADSP-DetermineCompiler.cmake:
-
-/home/angel/Documents/Development/_APPS/Tolitica/widget.cpp:
-
-/usr/include/c++/15.1.1/stdexcept:
-
 /usr/include/c++/15.1.1/utility:
 
 /usr/include/asm/unistd.h:
 
-/usr/share/cmake/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake:
-
 /usr/include/qt/QtCore/qlogging.h:
 
 Tolitica_autogen/moc_predefs.h:
+
+/usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake:
+
+/usr/include/c++/15.1.1/bits/ios_base.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/bits/setjmp.h:
 
 /usr/include/bits/pthreadtypes.h:
 
@@ -1064,8 +958,6 @@ CMakeFiles/4.0.2-dirty/CMakeCXXCompiler.cmake:
 
 /usr/share/cmake/Modules/Platform/Linker/Linux-GNU-CXX.cmake:
 
-/usr/share/cmake/Modules/CMakeFindBinUtils.cmake:
-
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake:
 
 /usr/lib/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake:
@@ -1078,21 +970,29 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h:
 
+/usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake:
+
+/usr/include/qt/QtWidgets/QLabel:
+
+/usr/include/c++/15.1.1/clocale:
+
+/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/qt/QtWidgets/qtoolbutton.h:
+
+/usr/include/c++/15.1.1/vector:
+
+/usr/include/c++/15.1.1/bits/monostate.h:
+
 /usr/include/bits/cpu-set.h:
 
 /usr/include/c++/15.1.1/bits/stl_bvector.h:
 
 /usr/include/bits/struct_mutex.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h:
-
-/usr/include/qt/QtGui/qwindowdefs.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
 .qtc/package-manager/auto-setup.cmake:
-
-/usr/share/cmake/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake:
 
 /usr/include/c++/15.1.1/iterator:
 
@@ -1112,11 +1012,15 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/bits/timesize.h:
 
-/usr/share/cmake/Modules/CMakeParseImplicitLinkInfo.cmake:
-
 /usr/include/c++/15.1.1/bits/std_function.h:
 
 /usr/include/c++/15.1.1/iosfwd:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h:
+
+/usr/include/qt/QtGui/qwindowdefs.h:
+
+/usr/include/bits/types/__sigset_t.h:
 
 /home/angel/Documents/Development/_APPS/Tolitica/widget.h:
 
@@ -1138,15 +1042,13 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/limits:
 
-/usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake:
+/usr/include/c++/15.1.1/ext/string_conversions.h:
 
-/usr/include/c++/15.1.1/bits/ios_base.h:
+/usr/include/bits/confname.h:
 
-/usr/include/bits/wchar.h:
+/home/angel/Documents/Development/_APPS/Tolitica/widget.cpp:
 
-/usr/include/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/bits/setjmp.h:
+/usr/include/c++/15.1.1/stdexcept:
 
 /usr/include/bits/endianness.h:
 
@@ -1180,8 +1082,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
 
-/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:
-
 /usr/include/qt/QtGui/qbrush.h:
 
 /usr/include/c++/15.1.1/bits/atomic_base.h:
@@ -1210,19 +1110,23 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/array:
 
-/usr/share/cmake/Modules/Compiler/HP-CXX-DetermineCompiler.cmake:
-
 /usr/include/c++/15.1.1/bits/stl_function.h:
 
 /usr/include/gnu/stubs.h:
-
-/usr/share/cmake/Modules/Compiler/AppleClang-DetermineCompiler.cmake:
 
 /usr/include/c++/15.1.1/bits/ranges_uninitialized.h:
 
 /usr/include/c++/15.1.1/bits/exception_ptr.h:
 
 /usr/include/linux/errno.h:
+
+/usr/include/c++/15.1.1/ext/numeric_traits.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/sched.h:
 
 /usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h:
 
@@ -1234,13 +1138,9 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/stl_construct.h:
 
-/usr/share/cmake/Modules/Compiler/Intel-DetermineCompiler.cmake:
-
 /usr/include/bits/time.h:
 
 /usr/include/asm/posix_types.h:
-
-/usr/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:
 
 /usr/include/c++/15.1.1/optional:
 
@@ -1252,31 +1152,19 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/algorithmfwd.h:
 
-/usr/share/cmake/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake:
+/usr/lib/cmake/Qt5Gui/Qt5Gui_QWaylandIntegrationPlugin.cmake:
 
-/usr/include/c++/15.1.1/ext/numeric_traits.h:
+/usr/include/qt/QtGui/qimage.h:
 
-/usr/include/features.h:
+/usr/include/c++/15.1.1/cstdlib:
 
-/usr/include/bits/sched.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/bits/types/__locale_t.h:
-
-/usr/share/cmake/Modules/Compiler/PathScale-DetermineCompiler.cmake:
-
-/usr/include/c++/15.1.1/bits/uses_allocator_args.h:
-
-/usr/share/cmake/Modules/Compiler/ARMCC-DetermineCompiler.cmake:
+/usr/include/c++/15.1.1/bits/mofunc_impl.h:
 
 /usr/include/c++/15.1.1/bits/move.h:
 
 /usr/include/c++/15.1.1/list:
 
 /usr/include/c++/15.1.1/bits/stl_heap.h:
-
-/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/nested_exception.h:
 
@@ -1316,6 +1204,8 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/qt/QtCore/qobjectdefs_impl.h:
 
+/usr/include/qt/QtCore/QObject:
+
 /usr/include/linux/stddef.h:
 
 /usr/include/c++/15.1.1/bits/stl_tree.h:
@@ -1337,10 +1227,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/c++/15.1.1/bits/ranges_util.h:
 
 /usr/include/c++/15.1.1/bits/refwrap.h:
-
-/usr/share/cmake/Modules/Compiler/OrangeC-DetermineCompiler.cmake:
-
-/usr/share/cmake/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake:
 
 /usr/include/qt/QtCore/qobject_impl.h:
 
@@ -1382,6 +1268,8 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/stl_list.h:
 
+/usr/include/qt/QtWidgets/qtreewidget.h:
+
 /usr/include/c++/15.1.1/bits/stl_map.h:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h:
@@ -1403,8 +1291,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/c++/15.1.1/bits/stl_tempbuf.h:
 
 /usr/share/cmake/Modules/Linker/GNU.cmake:
-
-/usr/share/cmake/Modules/Compiler/NVHPC-DetermineCompiler.cmake:
 
 /usr/include/qt/QtCore/qstringmatcher.h:
 
@@ -1458,8 +1344,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/cstddef:
 
-/usr/share/cmake/Modules/Compiler/Tasking-DetermineCompiler.cmake:
-
 /usr/include/asm/bitsperlong.h:
 
 /usr/include/c++/15.1.1/cstdint:
@@ -1485,8 +1369,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/bits/wctype-wchar.h:
 
 /usr/include/c++/15.1.1/functional:
-
-/usr/share/cmake/Modules/Compiler/Embarcadero-DetermineCompiler.cmake:
 
 /usr/share/cmake/Modules/CMakeCXXInformation.cmake:
 
@@ -1545,11 +1427,3 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 /usr/include/bits/types/FILE.h:
 
 /usr/include/linux/posix_types.h:
-
-/usr/share/cmake/Modules/CMakeParseArguments.cmake:
-
-/usr/include/linux/types.h:
-
-/usr/include/c++/15.1.1/bits/memoryfwd.h:
-
-/usr/include/locale.h:

@@ -15,7 +15,8 @@ public:
 
     // Goes through all items, writes the new config files, and calls the mount/unmount helper.
     // Returns true on sucess.
-    bool applyMountSelection(const QString &username);
+    bool applyMountSelection();
+    bool operationCancelled() const { return m_operationCancelled; }
 
     // Opens a dialog to let the user choose additional partitions to show.
     void showAdditionalPartitionsDialog();
@@ -26,6 +27,10 @@ public:
     // Checks if any checkbox has been modified relative to its default state.
     bool isModified() const;
     bool isDangerousModified() const;
+
+    // Reads the configuration file and returns a QSet containing all enabled device UUID
+    // tokens (ignoring empty lines or comments).
+    QSet<QString> loadManuallyEnabledDevices() const;
 
 signals:
     // Emitted whenever a checkbox (drive or partition) is toggled.
@@ -41,6 +46,9 @@ private:
 
     bool m_ignoreSelectionChanges = false;
     bool m_dangerousChange = false;
+
+    // Operation canceled don't return error
+    bool m_operationCancelled = false;
 signals:
 };
 

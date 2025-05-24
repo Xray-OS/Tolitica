@@ -19,6 +19,7 @@
 
 // CUSTOM CLASSES
 #include "core_functions.h"
+#include "calamares_page.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TWEAKS PAGE /////////////////////// /////////////////////// ////////////////
@@ -947,8 +948,52 @@ Widget::Widget(QWidget *parent)
     // Stacked widget to hold both layouts
     QStackedWidget *stackedWidget = new QStackedWidget(this);
 
-    // ==== Main Page =====
+    // Create all pages
     QWidget *mainPage = new QWidget();
+    QWidget *tweaksPage = new QWidget();
+    QWidget *addonsPage = new QWidget();
+    QWidget *terminalPage = new QWidget();
+    calamares_page *calamaresPage = new calamares_page(this);
+
+    // Add pages to stacked idget
+    stackedWidget->addWidget(mainPage);
+    stackedWidget->addWidget(tweaksPage);
+    stackedWidget->addWidget(addonsPage);
+    stackedWidget->addWidget(terminalPage);
+    stackedWidget->addWidget(calamaresPage);
+
+    // Setting initial index to 0 (regular UI)
+    stackedWidget->setCurrentIndex(0);
+
+    // Redirects to the calamares_page
+    QTimer::singleShot(0, this, [=]() {
+        QProcess process;
+        process.start("bash", QStringList() << "-c" << "grep -q '/cow' /proc/mounts || [ -f /run/live/medium ]");
+        process.waitForFinished();
+
+        // bool isLiveEnv = (process.exitCode() == 0);
+
+        // if (isLiveEnv) {
+        //     stackedWidget->setCurrentIndex(5);
+        // } else {
+        //     qDebug() << "Staying on default index(0";
+        // }
+
+        QString word = "tolitica";
+
+        if (word == "tolitica") {
+            stackedWidget->setCurrentIndex(4);
+        } else {
+            qDebug() << "Staying on default index(0";
+        }
+    });
+
+    // Set the initial layout
+    QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
+    mainWidgetLayout->addWidget(stackedWidget);
+    setLayout(mainWidgetLayout);
+
+    // ==== Main Page =====
     QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
 
     // ==== Header and Description ==== //
@@ -1084,7 +1129,6 @@ Widget::Widget(QWidget *parent)
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Tweaks Page =====
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    QWidget *tweaksPage = new QWidget();
     QGridLayout *tweaksLayout = new QGridLayout(tweaksPage);
     QPushButton *backButton = new QPushButton("Back", this);
 
@@ -1135,7 +1179,6 @@ Widget::Widget(QWidget *parent)
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Terminal Page =====
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    QWidget *terminalPage = new QWidget();
     QGridLayout *terminalLayout = new QGridLayout(terminalPage);
     QPushButton *terminalBackButton = new QPushButton("Back", this);
 
@@ -1194,7 +1237,6 @@ Widget::Widget(QWidget *parent)
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // ==== Addons Page =====
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    QWidget *addonsPage = new QWidget();
     QGridLayout *addonsLayout = new QGridLayout(addonsPage);
     QPushButton *addonsBackButton = new QPushButton("Back", this);
 
@@ -1275,19 +1317,6 @@ Widget::Widget(QWidget *parent)
 
     mountDrivesSetupConnections(stackedWidget, mountDriveButton);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // ==== End Pages =====
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // Add pages to stacked widget
-    stackedWidget->addWidget(mainPage);
-    stackedWidget->addWidget(tweaksPage);
-    stackedWidget->addWidget(addonsPage);
-    stackedWidget->addWidget(terminalPage);
-
-    // Set the initial layout
-    QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
-    mainWidgetLayout->addWidget(stackedWidget);
-    setLayout(mainWidgetLayout);
 }
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
@@ -1465,13 +1494,14 @@ void Widget::terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton
 /// MOUNT DRIVES SETUP CONNECTION
 //////////////////////////////////////////////////
 void Widget::mountDrivesSetupConnections(QStackedWidget *stackedWidget,
-QToolButton *mountDriveButton) {
+                                         QToolButton *mountDriveButton) {
     connect(mountDriveButton, &QToolButton::clicked, this, [this, stackedWidget]() {
         if (!mountDrivesPage) {
             mountDrivesPage = new QWidget(this);
             QVBoxLayout *mainLayout = new QVBoxLayout(mountDrivesPage);
             mainLayout->setContentsMargins(0, 0, 0, 0);
 
+            // INITIALIZE OR REFRESH THE DRIVES PAGE
             if (!drivesPage) {
                 drivesPage = new drive_list_widget(mountDrivesPage);
             } else {
@@ -1483,8 +1513,7 @@ QToolButton *mountDriveButton) {
             QPushButton *mountDrivesBackButton = new QPushButton("Back", mountDrivesPage);
             bottomLayout->addWidget(mountDrivesBackButton, 0, Qt::AlignLeft);
             bottomLayout->addStretch();
-            QPushButton *showAdditionalButton = new QPushButton("Show Additional Partitions",
-            mountDrivesPage);
+            QPushButton *showAdditionalButton = new QPushButton("Show Additional Partitions", mountDrivesPage);
             bottomLayout->addWidget(showAdditionalButton, 0, Qt::AlignCenter);
             bottomLayout->addStretch();
             QPushButton *mountUnmountButton = new QPushButton("Mount/Unmount", mountDrivesPage);
@@ -1500,11 +1529,74 @@ QToolButton *mountDriveButton) {
                 stackedWidget->setCurrentIndex(0);
             });
 
-            connect(drivesPage, &drive_list_widget::selectionChanged, this,
-            [mountUnmountButton, this]() {
-                if (this->drivesPage->isModified()) {
+            // CONNECT SELECTION CHANGED SIGNAL TO UPDATE THE MOUNT/UNMOUNT BUTTON
+            connect(drivesPage, &drive_list_widget::selectionChanged, this, [this, mountUnmountButton]() {
+                bool mod = drivesPage->isModified();
+                qDebug() << "SELECTION CHANGED CALLED - isModified():" << mod;
+                bool dangerous = drivesPage->isDangerousModified();
+                qDebug() << "DANGEROUS STATE:" << dangerous;
+                if (mod) {
                     mountUnmountButton->setEnabled(true);
-                    if (this->drivesPage->isDangerousModified())
+                    mountUnmountButton->setProperty("dangerousState", dangerous);
+                } else {
+                    mountUnmountButton->setEnabled(false);
+                    mountUnmountButton->setProperty("dangerousState", false);
+                }
+                // APPLY STYLING BASED ON DANGEROUS STATE
+                if (mountUnmountButton->property("dangerousState").toBool())
+                    mountUnmountButton->setStyleSheet("background-color: red;");
+                else
+                    mountUnmountButton->setStyleSheet("");
+                qDebug() << "MOUNT/UNMOUNT BUTTON ENABLED:" << mountUnmountButton->isEnabled();
+            });
+
+            connect(showAdditionalButton, &QPushButton::clicked, this, [this]() {
+                drivesPage->showAdditionalPartitionsDialog();
+            });
+
+            // MOUNT/UNMOUNT BUTTON CLICK HANDLER
+            connect(mountUnmountButton, &QPushButton::clicked, this, [this, mountUnmountButton]() {
+                QMessageBox::StandardButton reply;
+                reply = QMessageBox::question(this, "Mount/Unmount", "Are you sure you want to proceed?",
+                                              QMessageBox::Yes | QMessageBox::No);
+                if (reply == QMessageBox::Yes) {
+                    if (drivesPage->applyMountSelection()) {
+                        // If the operation was canceled (for example, pkexec cancelled),
+                        // simply refresh and exit silently.
+                        if (drivesPage->operationCancelled()) {
+                            drivesPage->refresh();
+                            return;
+                        }
+                        drivesPage->refresh();
+
+                        bool mod = drivesPage->isModified();
+                        mountUnmountButton->setEnabled(mod);
+                        bool dangerous = drivesPage->isDangerousModified();
+                        mountUnmountButton->setProperty("dangerousState", dangerous);
+                        mountUnmountButton->setStyleSheet(dangerous ? "background-color: red;" : "");
+
+                        QMessageBox::information(this, "Mount/Unmount",
+                                                 "The process has been successfully completed!");
+                    } else {
+                        // Instead of displaying error dialogs, just refresh the drive page.
+                        drivesPage->refresh();
+                    }
+                }
+            });
+
+        } else {
+            // IF THE PAGE ALREADY EXISTS, REFRESH THE DRIVE PAGE
+            drivesPage->refresh();
+
+            // UPDATE MOUNT/UNMOUNT BUTTON STATE
+            QPushButton *mountUnmountButton = mountDrivesPage->findChild<QPushButton*>("mountUnmountButton");
+            if (mountUnmountButton) {
+                bool mod = drivesPage->isModified();
+                qDebug() << "PAGE EXISTS - isModified():" << mod;
+                if (mod) {
+                    mountUnmountButton->setEnabled(true);
+                    mountUnmountButton->setProperty("dangerousState", drivesPage->isDangerousModified());
+                    if (mountUnmountButton->property("dangerousState").toBool())
                         mountUnmountButton->setStyleSheet("background-color: red;");
                     else
                         mountUnmountButton->setStyleSheet("");
@@ -1512,37 +1604,16 @@ QToolButton *mountDriveButton) {
                     mountUnmountButton->setEnabled(false);
                     mountUnmountButton->setStyleSheet("");
                 }
-            });
-
-            connect(showAdditionalButton, &QPushButton::clicked, this, [this]() {
-                drivesPage->showAdditionalPartitionsDialog();
-            });
-            connect(mountUnmountButton, &QPushButton::clicked, this, [this, mountUnmountButton]() {
-                QString username = qgetenv("USER");
-                if (drivesPage->applyMountSelection(username)) {
-                    QMessageBox::information(this, "Mount/Unmount",
-                    "The process has been successfully completed!");
-                    mountUnmountButton->setEnabled(false);
-                    mountUnmountButton->setStyleSheet("");
-                } else {
-                    QMessageBox::warning(this, "Mount/Unmount",
-                    "There was an error during the process");
-                }
-            });
-        } else {
-            drivesPage->refresh();
-            // After a refresh, reset the mount/unmount button since the checkboxes are now at
-            // their default state.
-            QPushButton *mountUnmountButton = mountDrivesPage->
-            findChild<QPushButton*>("mountUnmountButton");
-            if (mountUnmountButton) {
-                mountUnmountButton->setEnabled(false);
-                mountUnmountButton->setStyleSheet("");
+                qDebug() << "MOUNT/UNMOUNT BUTTON (EXISTING PAGE) ENABLED:" << mountUnmountButton->isEnabled();
             }
         }
         stackedWidget->setCurrentIndex(4);
     });
 }
+
+
+
+
 
 Widget::~Widget()
 {

@@ -11,6 +11,7 @@
 #include "core_functions.h"
 #include "drive_list_widget.h"
 #include <QToolButton>
+#include <QBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -66,5 +67,8 @@ private:
     CoreFunctions* coreFunctions;
     QWidget *mountDrivesPage = nullptr;
     drive_list_widget* drivesPage = nullptr;
+
+    void setupMountDrivesButtons(QWidget *parent, QHBoxLayout *layout);
+    void resetMountUnmountButtonState();
 };
 #endif // WIDGET_H

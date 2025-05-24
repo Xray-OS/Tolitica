@@ -508,6 +508,44 @@
 		"/usr/lib/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake",
 		"/usr/lib/cmake/Qt6Widgets/Qt6WidgetsPlugins.cmake",
 		"/usr/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessAliasTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkConfigVersionImpl.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkDependencies.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateConfigVersion.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateConfigVersionImpl.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateDependencies.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateTargets.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateVersionlessAliasTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkPlugins.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginAdditionalTargetInfo.cmake",
+		"/usr/lib/cmake/Qt6Network/Qt6NetworkVersionlessAliasTargets.cmake",
 		"/usr/share/cmake/Modules/GNUInstallDirs.cmake",
 		"/home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc"
 	],
@@ -517,6 +555,18 @@
 	"DEP_FILE_RULE_NAME" : "Tolitica_autogen/timestamp",
 	"HEADERS" : 
 	[
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/calamares_page.h",
+			"MU",
+			"EWIEGA46WW/moc_calamares_page.cpp",
+			null
+		],
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.h",
+			"MU",
+			"EWIEGA46WW/moc_connectivityChecker.cpp",
+			null
+		],
 		[
 			"/home/angel/Documents/Development/_APPS/Tolitica/core_functions.h",
 			"MU",
@@ -539,7 +589,14 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_NO_DEBUG",
+		"QT_WIDGETS_LIB"
+	],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -554,6 +611,7 @@
 		"/usr/lib/qt6/mkspecs/linux-g++",
 		"/usr/include/qt6/QtWidgets",
 		"/usr/include/qt6/QtGui",
+		"/usr/include/qt6/QtNetwork",
 		"/usr/include",
 		"/usr/include/c++/15.1.1",
 		"/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
@@ -595,6 +653,16 @@
 	"SETTINGS_FILE" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles/Tolitica_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/calamares_page.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.cpp",
+			"MU",
+			null
+		],
 		[
 			"/home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp",
 			"MU",

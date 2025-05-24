@@ -6,6 +6,7 @@ Tolitica: \
   CMakeFiles/Tolitica.dir/main.cpp.o \
   CMakeFiles/Tolitica.dir/widget.cpp.o \
   CMakeFiles/Tolitica.dir/core_functions.cpp.o \
+  CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o \
   CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o \
   /usr/lib/libQt5Widgets.so.5.15.16 \
   /usr/lib/libQt5Gui.so.5.15.16 \
@@ -100,6 +101,8 @@ CMakeFiles/Tolitica.dir/main.cpp.o:
 CMakeFiles/Tolitica.dir/widget.cpp.o:
 
 CMakeFiles/Tolitica.dir/core_functions.cpp.o:
+
+CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o:
 
 CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o:
 

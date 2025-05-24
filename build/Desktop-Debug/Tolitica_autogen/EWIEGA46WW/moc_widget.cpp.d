@@ -1,5 +1,7 @@
 /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp: /home/angel/Documents/Development/_APPS/Tolitica/widget.h \
   /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/moc_predefs.h \
+  /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+  /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -245,6 +247,8 @@
   /usr/include/linux/types.h \
   /usr/include/locale.h \
   /usr/include/pthread.h \
+  /usr/include/qt/QtCore/QObject \
+  /usr/include/qt/QtCore/QStringList \
   /usr/include/qt/QtCore/qabstractitemmodel.h \
   /usr/include/qt/QtCore/qalgorithms.h \
   /usr/include/qt/QtCore/qarraydata.h \
@@ -266,6 +270,7 @@
   /usr/include/qt/QtCore/qhash.h \
   /usr/include/qt/QtCore/qhashfunctions.h \
   /usr/include/qt/QtCore/qiodevice.h \
+  /usr/include/qt/QtCore/qitemselectionmodel.h \
   /usr/include/qt/QtCore/qiterator.h \
   /usr/include/qt/QtCore/qline.h \
   /usr/include/qt/QtCore/qlist.h \
@@ -288,6 +293,7 @@
   /usr/include/qt/QtCore/qregexp.h \
   /usr/include/qt/QtCore/qregularexpression.h \
   /usr/include/qt/QtCore/qscopedpointer.h \
+  /usr/include/qt/QtCore/qset.h \
   /usr/include/qt/QtCore/qshareddata.h \
   /usr/include/qt/QtCore/qsharedpointer.h \
   /usr/include/qt/QtCore/qsharedpointer_impl.h \
@@ -330,20 +336,29 @@
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtWidgets/QBoxLayout \
   /usr/include/qt/QtWidgets/QCheckBox \
   /usr/include/qt/QtWidgets/QComboBox \
   /usr/include/qt/QtWidgets/QLabel \
   /usr/include/qt/QtWidgets/QPushButton \
   /usr/include/qt/QtWidgets/QStackedWidget \
+  /usr/include/qt/QtWidgets/QToolButton \
+  /usr/include/qt/QtWidgets/QTreeWidget \
   /usr/include/qt/QtWidgets/QWidget \
   /usr/include/qt/QtWidgets/qabstractbutton.h \
   /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt/QtWidgets/qabstractitemview.h \
+  /usr/include/qt/QtWidgets/qabstractscrollarea.h \
   /usr/include/qt/QtWidgets/qabstractslider.h \
   /usr/include/qt/QtWidgets/qabstractspinbox.h \
+  /usr/include/qt/QtWidgets/qboxlayout.h \
   /usr/include/qt/QtWidgets/qcheckbox.h \
   /usr/include/qt/QtWidgets/qcombobox.h \
   /usr/include/qt/QtWidgets/qframe.h \
+  /usr/include/qt/QtWidgets/qgridlayout.h \
   /usr/include/qt/QtWidgets/qlabel.h \
+  /usr/include/qt/QtWidgets/qlayout.h \
+  /usr/include/qt/QtWidgets/qlayoutitem.h \
   /usr/include/qt/QtWidgets/qpushbutton.h \
   /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
@@ -353,6 +368,10 @@
   /usr/include/qt/QtWidgets/qstyleoption.h \
   /usr/include/qt/QtWidgets/qtabbar.h \
   /usr/include/qt/QtWidgets/qtabwidget.h \
+  /usr/include/qt/QtWidgets/qtoolbutton.h \
+  /usr/include/qt/QtWidgets/qtreeview.h \
+  /usr/include/qt/QtWidgets/qtreewidget.h \
+  /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
   /usr/include/qt/QtWidgets/qtwidgets-config.h \
   /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
   /usr/include/qt/QtWidgets/qwidget.h \

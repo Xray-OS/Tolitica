@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/moc_drive_list_widget.cpp \
  /usr/include/c++/15.1.1/memory /usr/include/c++/15.1.1/bits/memoryfwd.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -106,7 +106,7 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/15.1.1/backward/auto_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.1.1/pstl/execution_defs.h \
- /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/../../../../widget.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/../../../../drive_list_widget.h \
  /usr/include/qt/QtWidgets/QWidget /usr/include/qt/QtWidgets/qwidget.h \
  /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt/QtGui/qtguiglobal.h /usr/include/qt/QtCore/qglobal.h \
@@ -247,29 +247,51 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt/QtGui/qfont.h /usr/include/qt/QtGui/qfontmetrics.h \
  /usr/include/qt/QtGui/qfontinfo.h \
  /usr/include/qt/QtWidgets/qsizepolicy.h /usr/include/qt/QtGui/qcursor.h \
- /usr/include/qt/QtGui/qkeysequence.h /usr/include/qt/QtGui/QIcon \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/QPushButton \
- /usr/include/qt/QtWidgets/qpushbutton.h \
- /usr/include/qt/QtWidgets/qabstractbutton.h \
- /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qwidget.h \
- /usr/include/qt/QtWidgets/QStackedWidget \
- /usr/include/qt/QtWidgets/qstackedwidget.h \
- /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/QComboBox \
- /usr/include/qt/QtWidgets/qcombobox.h \
+ /usr/include/qt/QtGui/qkeysequence.h \
+ /usr/include/qt/QtWidgets/QTreeWidget \
+ /usr/include/qt/QtWidgets/qtreewidget.h \
+ /usr/include/qt/QtWidgets/qtreeview.h \
+ /usr/include/qt/QtWidgets/qabstractitemview.h \
+ /usr/include/qt/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt/QtWidgets/qframe.h /usr/include/qt/QtWidgets/qwidget.h \
+ /usr/include/qt/QtCore/qabstractitemmodel.h \
+ /usr/include/qt/QtCore/qvariant.h /usr/include/qt/QtCore/qmap.h \
+ /usr/include/c++/15.1.1/variant /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/qt/QtCore/qitemselectionmodel.h \
+ /usr/include/qt/QtCore/qset.h \
  /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
  /usr/include/qt/QtWidgets/qstyleoption.h \
- /usr/include/qt/QtCore/qlocale.h /usr/include/qt/QtCore/qvariant.h \
- /usr/include/qt/QtCore/qmap.h /usr/include/c++/15.1.1/variant \
- /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/qt/QtCore/qlocale.h \
  /usr/include/qt/QtWidgets/qabstractspinbox.h \
  /usr/include/qt/QtGui/qvalidator.h \
  /usr/include/qt/QtCore/qregularexpression.h \
- /usr/include/qt/QtWidgets/qslider.h \
+ /usr/include/qt/QtGui/qicon.h /usr/include/qt/QtWidgets/qslider.h \
  /usr/include/qt/QtWidgets/qabstractslider.h \
  /usr/include/qt/QtWidgets/qstyle.h /usr/include/qt/QtWidgets/qtabbar.h \
  /usr/include/qt/QtWidgets/qtabwidget.h \
  /usr/include/qt/QtWidgets/qrubberband.h \
- /usr/include/qt/QtCore/qabstractitemmodel.h \
- /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
- /usr/include/qt/QtWidgets/QCheckBox \
- /usr/include/qt/QtWidgets/qcheckbox.h
+ /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/../../../../widget.h \
+ /usr/include/qt/QtGui/QIcon /usr/include/qt/QtGui/qicon.h \
+ /usr/include/qt/QtWidgets/QPushButton \
+ /usr/include/qt/QtWidgets/qpushbutton.h \
+ /usr/include/qt/QtWidgets/qabstractbutton.h \
+ /usr/include/qt/QtWidgets/QStackedWidget \
+ /usr/include/qt/QtWidgets/qstackedwidget.h \
+ /usr/include/qt/QtWidgets/QComboBox \
+ /usr/include/qt/QtWidgets/qcombobox.h /usr/include/qt/QtWidgets/QLabel \
+ /usr/include/qt/QtWidgets/qlabel.h /usr/include/qt/QtWidgets/QCheckBox \
+ /usr/include/qt/QtWidgets/qcheckbox.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/../../../../core_functions.h \
+ /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h \
+ /usr/include/qt/QtCore/QObject /usr/include/qt/QtCore/qobject.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/EWIEGA46WW/../../../../drive_list_widget.h \
+ /usr/include/qt/QtWidgets/QToolButton \
+ /usr/include/qt/QtWidgets/qtoolbutton.h \
+ /usr/include/qt/QtWidgets/QBoxLayout \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qlayout.h \
+ /usr/include/qt/QtWidgets/qlayoutitem.h \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qgridlayout.h

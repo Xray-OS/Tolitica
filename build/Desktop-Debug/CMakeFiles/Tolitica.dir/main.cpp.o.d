@@ -272,6 +272,26 @@ CMakeFiles/Tolitica.dir/main.cpp.o: \
  /usr/include/qt/QtWidgets/QLabel /usr/include/qt/QtWidgets/qlabel.h \
  /usr/include/qt/QtWidgets/QCheckBox \
  /usr/include/qt/QtWidgets/qcheckbox.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/core_functions.h \
+ /usr/include/qt/QtCore/QStringList /usr/include/qt/QtCore/qstringlist.h \
+ /usr/include/qt/QtCore/QObject /usr/include/qt/QtCore/qobject.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h \
+ /usr/include/qt/QtWidgets/QTreeWidget \
+ /usr/include/qt/QtWidgets/qtreewidget.h \
+ /usr/include/qt/QtWidgets/qtreeview.h \
+ /usr/include/qt/QtWidgets/qabstractitemview.h \
+ /usr/include/qt/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt/QtCore/qitemselectionmodel.h \
+ /usr/include/qt/QtCore/qset.h \
+ /usr/include/qt/QtWidgets/qtreewidgetitemiterator.h \
+ /usr/include/qt/QtWidgets/QToolButton \
+ /usr/include/qt/QtWidgets/qtoolbutton.h \
+ /usr/include/qt/QtWidgets/QBoxLayout \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qlayout.h \
+ /usr/include/qt/QtWidgets/qlayoutitem.h \
+ /usr/include/qt/QtWidgets/qboxlayout.h \
+ /usr/include/qt/QtWidgets/qgridlayout.h \
  /usr/include/qt/QtWidgets/QApplication \
  /usr/include/qt/QtWidgets/qapplication.h \
  /usr/include/qt/QtCore/qcoreapplication.h \

@@ -382,6 +382,12 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
  /usr/include/qt6/QtWidgets/QToolButton \
  /usr/include/qt6/QtWidgets/qtoolbutton.h \
+ /usr/include/qt6/QtWidgets/QBoxLayout \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
+ /usr/include/qt6/QtWidgets/qlayout.h \
+ /usr/include/qt6/QtWidgets/qlayoutitem.h \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
+ /usr/include/qt6/QtWidgets/qgridlayout.h \
  /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/include/./ui_widget.h \
  /usr/include/qt6/QtCore/QVariant /usr/include/qt6/QtCore/qvariant.h \
  /usr/include/qt6/QtWidgets/QApplication \
@@ -400,13 +406,8 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtGui/qguiapplication_platform.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/QGroupBox \
  /usr/include/qt6/QtWidgets/qgroupbox.h \
- /usr/include/qt6/QtWidgets/QVBoxLayout \
- /usr/include/qt6/QtWidgets/qboxlayout.h \
- /usr/include/qt6/QtWidgets/qlayout.h \
- /usr/include/qt6/QtWidgets/qlayoutitem.h \
- /usr/include/qt6/QtWidgets/qboxlayout.h \
- /usr/include/qt6/QtWidgets/qgridlayout.h \
- /usr/include/qt6/QtCore/QProcess /usr/include/qt6/QtCore/qprocess.h \
+ /usr/include/qt6/QtWidgets/QVBoxLayout /usr/include/qt6/QtCore/QProcess \
+ /usr/include/qt6/QtCore/qprocess.h \
  /usr/include/qt6/QtWidgets/QMessageBox \
  /usr/include/qt6/QtWidgets/qmessagebox.h \
  /usr/include/qt6/QtWidgets/qdialog.h \
@@ -448,4 +449,5 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtCore/QTimer /usr/include/qt6/QtCore/qtimer.h \
  /usr/include/qt6/QtCore/QFile /usr/include/qt6/QtCore/qfile.h \
  /usr/include/qt6/QtCore/QTextStream \
- /usr/include/qt6/QtCore/qtextstream.h
+ /usr/include/qt6/QtCore/qtextstream.h \
+ /home/angel/Documents/Development/_APPS/Tolitica/calamares_page.h

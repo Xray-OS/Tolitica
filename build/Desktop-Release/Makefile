@@ -248,6 +248,54 @@ Tolitica_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.s
 .PHONY : Tolitica_autogen/mocs_compilation.cpp.s
 
+calamares_page.o: calamares_page.cpp.o
+.PHONY : calamares_page.o
+
+# target to build an object file
+calamares_page.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/calamares_page.cpp.o
+.PHONY : calamares_page.cpp.o
+
+calamares_page.i: calamares_page.cpp.i
+.PHONY : calamares_page.i
+
+# target to preprocess a source file
+calamares_page.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/calamares_page.cpp.i
+.PHONY : calamares_page.cpp.i
+
+calamares_page.s: calamares_page.cpp.s
+.PHONY : calamares_page.s
+
+# target to generate assembly for a file
+calamares_page.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/calamares_page.cpp.s
+.PHONY : calamares_page.cpp.s
+
+connectivityChecker.o: connectivityChecker.cpp.o
+.PHONY : connectivityChecker.o
+
+# target to build an object file
+connectivityChecker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o
+.PHONY : connectivityChecker.cpp.o
+
+connectivityChecker.i: connectivityChecker.cpp.i
+.PHONY : connectivityChecker.i
+
+# target to preprocess a source file
+connectivityChecker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/connectivityChecker.cpp.i
+.PHONY : connectivityChecker.cpp.i
+
+connectivityChecker.s: connectivityChecker.cpp.s
+.PHONY : connectivityChecker.s
+
+# target to generate assembly for a file
+connectivityChecker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Tolitica.dir/build.make CMakeFiles/Tolitica.dir/connectivityChecker.cpp.s
+.PHONY : connectivityChecker.cpp.s
+
 core_functions.o: core_functions.cpp.o
 .PHONY : core_functions.o
 
@@ -365,6 +413,12 @@ help:
 	@echo "... Tolitica_autogen/mocs_compilation.o"
 	@echo "... Tolitica_autogen/mocs_compilation.i"
 	@echo "... Tolitica_autogen/mocs_compilation.s"
+	@echo "... calamares_page.o"
+	@echo "... calamares_page.i"
+	@echo "... calamares_page.s"
+	@echo "... connectivityChecker.o"
+	@echo "... connectivityChecker.i"
+	@echo "... connectivityChecker.s"
 	@echo "... core_functions.o"
 	@echo "... core_functions.i"
 	@echo "... core_functions.s"

@@ -163,10 +163,38 @@ CMakeFiles/Tolitica.dir/drive_list_widget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Tolitica.dir/drive_list_widget.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp -o CMakeFiles/Tolitica.dir/drive_list_widget.cpp.s
 
+CMakeFiles/Tolitica.dir/calamares_page.cpp.o: CMakeFiles/Tolitica.dir/flags.make
+CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/_APPS/Tolitica/calamares_page.cpp
+CMakeFiles/Tolitica.dir/calamares_page.cpp.o: CMakeFiles/Tolitica.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Tolitica.dir/calamares_page.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tolitica.dir/calamares_page.cpp.o -MF CMakeFiles/Tolitica.dir/calamares_page.cpp.o.d -o CMakeFiles/Tolitica.dir/calamares_page.cpp.o -c /home/angel/Documents/Development/_APPS/Tolitica/calamares_page.cpp
+
+CMakeFiles/Tolitica.dir/calamares_page.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Tolitica.dir/calamares_page.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/angel/Documents/Development/_APPS/Tolitica/calamares_page.cpp > CMakeFiles/Tolitica.dir/calamares_page.cpp.i
+
+CMakeFiles/Tolitica.dir/calamares_page.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Tolitica.dir/calamares_page.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/angel/Documents/Development/_APPS/Tolitica/calamares_page.cpp -o CMakeFiles/Tolitica.dir/calamares_page.cpp.s
+
+CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o: CMakeFiles/Tolitica.dir/flags.make
+CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o: /home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.cpp
+CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o: CMakeFiles/Tolitica.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o -MF CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o.d -o CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o -c /home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.cpp
+
+CMakeFiles/Tolitica.dir/connectivityChecker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Tolitica.dir/connectivityChecker.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.cpp > CMakeFiles/Tolitica.dir/connectivityChecker.cpp.i
+
+CMakeFiles/Tolitica.dir/connectivityChecker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Tolitica.dir/connectivityChecker.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/angel/Documents/Development/_APPS/Tolitica/connectivityChecker.cpp -o CMakeFiles/Tolitica.dir/connectivityChecker.cpp.s
+
 CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o: CMakeFiles/Tolitica.dir/flags.make
 CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o: Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp
 CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o: CMakeFiles/Tolitica.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o -MF CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o.d -o CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o -c /home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp
 
 CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.i: cmake_force
@@ -184,6 +212,8 @@ Tolitica_OBJECTS = \
 "CMakeFiles/Tolitica.dir/widget.cpp.o" \
 "CMakeFiles/Tolitica.dir/core_functions.cpp.o" \
 "CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o" \
+"CMakeFiles/Tolitica.dir/calamares_page.cpp.o" \
+"CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o" \
 "CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o"
 
 # External object files for target Tolitica
@@ -194,16 +224,19 @@ Tolitica: CMakeFiles/Tolitica.dir/main.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/widget.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/core_functions.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o
+Tolitica: CMakeFiles/Tolitica.dir/calamares_page.cpp.o
+Tolitica: CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/build.make
 Tolitica: CMakeFiles/Tolitica.dir/compiler_depend.ts
 Tolitica: /usr/lib/libQt6Widgets.so.6.9.0
+Tolitica: /usr/lib/libQt6Network.so.6.9.0
 Tolitica: /usr/lib/libQt6Gui.so.6.9.0
 Tolitica: /usr/lib/libGLX.so
 Tolitica: /usr/lib/libOpenGL.so
 Tolitica: /usr/lib/libQt6Core.so.6.9.0
 Tolitica: CMakeFiles/Tolitica.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable Tolitica"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable Tolitica"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tolitica.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -67,7 +67,6 @@
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake",
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake",
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake",
-		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QPdfPlugin.cmake",
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake",
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake",
 		"/usr/lib/cmake/Qt5Gui/Qt5Gui_QTsLibPlugin.cmake",
@@ -98,6 +97,12 @@
 			"/home/angel/Documents/Development/_APPS/Tolitica/core_functions.h",
 			"MU",
 			"EWIEGA46WW/moc_core_functions.cpp",
+			null
+		],
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.h",
+			"MU",
+			"EWIEGA46WW/moc_drive_list_widget.cpp",
 			null
 		],
 		[
@@ -160,6 +165,11 @@
 	[
 		[
 			"/home/angel/Documents/Development/_APPS/Tolitica/core_functions.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/angel/Documents/Development/_APPS/Tolitica/drive_list_widget.cpp",
 			"MU",
 			null
 		],
