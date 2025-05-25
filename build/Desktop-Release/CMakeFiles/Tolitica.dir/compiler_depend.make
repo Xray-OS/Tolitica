@@ -1556,6 +1556,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
+  /usr/include/bits/wctype-wchar.h \
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
   /usr/include/c++/15.1.1/algorithm \
@@ -1571,11 +1572,14 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/bits/allocator.h \
   /usr/include/c++/15.1.1/bits/atomic_base.h \
   /usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15.1.1/bits/basic_ios.h \
+  /usr/include/c++/15.1.1/bits/basic_ios.tcc \
   /usr/include/c++/15.1.1/bits/basic_string.h \
   /usr/include/c++/15.1.1/bits/basic_string.tcc \
   /usr/include/c++/15.1.1/bits/char_traits.h \
   /usr/include/c++/15.1.1/bits/charconv.h \
   /usr/include/c++/15.1.1/bits/chrono.h \
+  /usr/include/c++/15.1.1/bits/codecvt.h \
   /usr/include/c++/15.1.1/bits/concept_check.h \
   /usr/include/c++/15.1.1/bits/cpp_type_traits.h \
   /usr/include/c++/15.1.1/bits/cxxabi_forced.h \
@@ -1585,6 +1589,10 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/bits/exception.h \
   /usr/include/c++/15.1.1/bits/exception_defines.h \
   /usr/include/c++/15.1.1/bits/exception_ptr.h \
+  /usr/include/c++/15.1.1/bits/fs_dir.h \
+  /usr/include/c++/15.1.1/bits/fs_fwd.h \
+  /usr/include/c++/15.1.1/bits/fs_ops.h \
+  /usr/include/c++/15.1.1/bits/fs_path.h \
   /usr/include/c++/15.1.1/bits/functexcept.h \
   /usr/include/c++/15.1.1/bits/functional_hash.h \
   /usr/include/c++/15.1.1/bits/hash_bytes.h \
@@ -1592,9 +1600,15 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/bits/hashtable_policy.h \
   /usr/include/c++/15.1.1/bits/invoke.h \
   /usr/include/c++/15.1.1/bits/ios_base.h \
+  /usr/include/c++/15.1.1/bits/istream.tcc \
   /usr/include/c++/15.1.1/bits/list.tcc \
   /usr/include/c++/15.1.1/bits/locale_classes.h \
   /usr/include/c++/15.1.1/bits/locale_classes.tcc \
+  /usr/include/c++/15.1.1/bits/locale_conv.h \
+  /usr/include/c++/15.1.1/bits/locale_facets.h \
+  /usr/include/c++/15.1.1/bits/locale_facets.tcc \
+  /usr/include/c++/15.1.1/bits/locale_facets_nonio.h \
+  /usr/include/c++/15.1.1/bits/locale_facets_nonio.tcc \
   /usr/include/c++/15.1.1/bits/localefwd.h \
   /usr/include/c++/15.1.1/bits/memory_resource.h \
   /usr/include/c++/15.1.1/bits/memoryfwd.h \
@@ -1603,11 +1617,14 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/bits/nested_exception.h \
   /usr/include/c++/15.1.1/bits/new_allocator.h \
   /usr/include/c++/15.1.1/bits/node_handle.h \
+  /usr/include/c++/15.1.1/bits/ostream.h \
+  /usr/include/c++/15.1.1/bits/ostream.tcc \
   /usr/include/c++/15.1.1/bits/ostream_insert.h \
   /usr/include/c++/15.1.1/bits/parse_numbers.h \
   /usr/include/c++/15.1.1/bits/postypes.h \
   /usr/include/c++/15.1.1/bits/predefined_ops.h \
   /usr/include/c++/15.1.1/bits/ptr_traits.h \
+  /usr/include/c++/15.1.1/bits/quoted_string.h \
   /usr/include/c++/15.1.1/bits/range_access.h \
   /usr/include/c++/15.1.1/bits/refwrap.h \
   /usr/include/c++/15.1.1/bits/requires_hosted.h \
@@ -1615,6 +1632,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h \
   /usr/include/c++/15.1.1/bits/shared_ptr_base.h \
   /usr/include/c++/15.1.1/bits/specfun.h \
+  /usr/include/c++/15.1.1/bits/sstream.tcc \
   /usr/include/c++/15.1.1/bits/std_abs.h \
   /usr/include/c++/15.1.1/bits/std_function.h \
   /usr/include/c++/15.1.1/bits/stl_algo.h \
@@ -1660,6 +1678,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/climits \
   /usr/include/c++/15.1.1/clocale \
   /usr/include/c++/15.1.1/cmath \
+  /usr/include/c++/15.1.1/codecvt \
   /usr/include/c++/15.1.1/compare \
   /usr/include/c++/15.1.1/concepts \
   /usr/include/c++/15.1.1/cstddef \
@@ -1669,6 +1688,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/cstring \
   /usr/include/c++/15.1.1/ctime \
   /usr/include/c++/15.1.1/cwchar \
+  /usr/include/c++/15.1.1/cwctype \
   /usr/include/c++/15.1.1/debug/assertions.h \
   /usr/include/c++/15.1.1/debug/debug.h \
   /usr/include/c++/15.1.1/exception \
@@ -1679,17 +1699,23 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/ext/numeric_traits.h \
   /usr/include/c++/15.1.1/ext/string_conversions.h \
   /usr/include/c++/15.1.1/ext/type_traits.h \
+  /usr/include/c++/15.1.1/filesystem \
   /usr/include/c++/15.1.1/functional \
   /usr/include/c++/15.1.1/initializer_list \
+  /usr/include/c++/15.1.1/iomanip \
+  /usr/include/c++/15.1.1/ios \
   /usr/include/c++/15.1.1/iosfwd \
+  /usr/include/c++/15.1.1/istream \
   /usr/include/c++/15.1.1/iterator \
   /usr/include/c++/15.1.1/limits \
   /usr/include/c++/15.1.1/list \
+  /usr/include/c++/15.1.1/locale \
   /usr/include/c++/15.1.1/map \
   /usr/include/c++/15.1.1/memory \
   /usr/include/c++/15.1.1/new \
   /usr/include/c++/15.1.1/numeric \
   /usr/include/c++/15.1.1/optional \
+  /usr/include/c++/15.1.1/ostream \
   /usr/include/c++/15.1.1/pstl/execution_defs.h \
   /usr/include/c++/15.1.1/pstl/glue_algorithm_defs.h \
   /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
@@ -1697,6 +1723,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/pstl/pstl_config.h \
   /usr/include/c++/15.1.1/ratio \
   /usr/include/c++/15.1.1/set \
+  /usr/include/c++/15.1.1/sstream \
   /usr/include/c++/15.1.1/stdexcept \
   /usr/include/c++/15.1.1/stdlib.h \
   /usr/include/c++/15.1.1/streambuf \
@@ -1729,10 +1756,14 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/messages_members.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -1740,6 +1771,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -1751,6 +1783,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/math.h \
   /usr/include/pthread.h \
   /usr/include/qt6/QtCore/QDebug \
+  /usr/include/qt6/QtCore/QFile \
   /usr/include/qt6/QtCore/QFlags \
   /usr/include/qt6/QtCore/QIODevice \
   /usr/include/qt6/QtCore/QList \
@@ -1799,8 +1832,13 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/qdatastream.h \
   /usr/include/qt6/QtCore/qdatetime.h \
   /usr/include/qt6/QtCore/qdebug.h \
+  /usr/include/qt6/QtCore/qdir.h \
+  /usr/include/qt6/QtCore/qdirlisting.h \
   /usr/include/qt6/QtCore/qendian.h \
   /usr/include/qt6/QtCore/qexceptionhandling.h \
+  /usr/include/qt6/QtCore/qfile.h \
+  /usr/include/qt6/QtCore/qfiledevice.h \
+  /usr/include/qt6/QtCore/qfileinfo.h \
   /usr/include/qt6/QtCore/qflags.h \
   /usr/include/qt6/QtCore/qfloat16.h \
   /usr/include/qt6/QtCore/qforeach.h \
@@ -1836,6 +1874,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/qoverload.h \
   /usr/include/qt6/QtCore/qpair.h \
   /usr/include/qt6/QtCore/qpoint.h \
+  /usr/include/qt6/QtCore/qprocess.h \
   /usr/include/qt6/QtCore/qprocessordetection.h \
   /usr/include/qt6/QtCore/qrect.h \
   /usr/include/qt6/QtCore/qrefcount.h \
@@ -1875,6 +1914,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/qtenvironmentvariables.h \
   /usr/include/qt6/QtCore/qtextstream.h \
   /usr/include/qt6/QtCore/qtformat_impl.h \
+  /usr/include/qt6/QtCore/qtimezone.h \
   /usr/include/qt6/QtCore/qtmetamacros.h \
   /usr/include/qt6/QtCore/qtnoop.h \
   /usr/include/qt6/QtCore/qtpreprocessorsupport.h \
@@ -1892,12 +1932,14 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/qversiontagging.h \
   /usr/include/qt6/QtCore/qxptype_traits.h \
   /usr/include/qt6/QtCore/qyieldcpu.h \
+  /usr/include/qt6/QtGui/QDesktopServices \
   /usr/include/qt6/QtGui/QPixmap \
   /usr/include/qt6/QtGui/qaction.h \
   /usr/include/qt6/QtGui/qbitmap.h \
   /usr/include/qt6/QtGui/qbrush.h \
   /usr/include/qt6/QtGui/qcolor.h \
   /usr/include/qt6/QtGui/qcursor.h \
+  /usr/include/qt6/QtGui/qdesktopservices.h \
   /usr/include/qt6/QtGui/qfont.h \
   /usr/include/qt6/QtGui/qfontinfo.h \
   /usr/include/qt6/QtGui/qfontmetrics.h \
@@ -1948,6 +1990,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtWidgets/QSizePolicy \
   /usr/include/qt6/QtWidgets/QSpacerItem \
   /usr/include/qt6/QtWidgets/QStackedWidget \
+  /usr/include/qt6/QtWidgets/QToolTip \
   /usr/include/qt6/QtWidgets/QVBoxLayout \
   /usr/include/qt6/QtWidgets/QWidget \
   /usr/include/qt6/QtWidgets/qabstractbutton.h \
@@ -1963,6 +2006,8 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtWidgets/qpushbutton.h \
   /usr/include/qt6/QtWidgets/qsizepolicy.h \
   /usr/include/qt6/QtWidgets/qstackedwidget.h \
+  /usr/include/qt6/QtWidgets/qtoolbutton.h \
+  /usr/include/qt6/QtWidgets/qtooltip.h \
   /usr/include/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/qt6/QtWidgets/qtwidgetsexports.h \
   /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
@@ -1980,6 +2025,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: /home/angel/Documents/Development/
   /usr/include/sys/types.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
+  /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdbool.h \
@@ -4922,6 +4968,10 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o:
 
 /usr/lib/libkrb5.so.3:
 
+/usr/lib/libkeyutils.so.1:
+
+/usr/lib/libk5crypto.so.3:
+
 /usr/include/qt6/QtWidgets/QFormLayout:
 
 /usr/lib/cmake/Qt6/Qt6ConfigExtras.cmake:
@@ -5042,9 +5092,9 @@ Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp:
 
 /usr/include/qt6/QtCore/qfunctionaltools_impl.h:
 
-/usr/include/bits/getopt_posix.h:
-
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
+
+/usr/include/bits/getopt_posix.h:
 
 /usr/include/qt6/QtGui/qpixmap.h:
 
@@ -5271,8 +5321,6 @@ Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp:
 /usr/include/qt6/QtCore/qbytearraylist.h:
 
 /usr/include/qt6/QtCore/qbindingstorage.h:
-
-/usr/lib/libkeyutils.so.1:
 
 /usr/include/c++/15.1.1/cwchar:
 
@@ -6026,9 +6074,9 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/c++/15.1.1/bits/stl_map.h:
 
-/usr/include/qt6/QtCore/qelapsedtimer.h:
-
 /usr/include/qt6/QtCore/qfiledevice.h:
+
+/usr/include/qt6/QtCore/qelapsedtimer.h:
 
 /usr/lib/libc_nonshared.a:
 
@@ -6580,6 +6628,8 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o:
 
 /usr/lib/cmake/Qt6Gui/Qt6QMinimalIntegrationPluginTargets-relwithdebinfo.cmake:
 
+/usr/include/qt6/QtWidgets/qtooltip.h:
+
 /usr/lib/cmake/Qt6NetworkPrivate/Qt6NetworkPrivateAdditionalTargetInfo.cmake:
 
 /usr/lib/cmake/Qt6Gui/Qt6QMngPluginAdditionalTargetInfo.cmake:
@@ -6802,6 +6852,8 @@ CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o:
 
 /usr/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake:
 
+/usr/include/qt6/QtWidgets/QToolTip:
+
 /usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:
 
 /usr/include/stdio.h:
@@ -6996,30 +7048,6 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h:
 
-/usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake:
-
-/usr/include/qt6/QtGui/QPixmap:
-
-/usr/lib32/libgmodule-2.0.so.0:
-
-/usr/include/qt6/QtWidgets/QHBoxLayout:
-
-/usr/include/qt6/QtCore/qabstracteventdispatcher.h:
-
-/usr/include/qt6/QtWidgets/qdialogbuttonbox.h:
-
-/usr/include/bits/confname.h:
-
-/home/angel/Documents/Development/_APPS/Tolitica/main.cpp:
-
-/usr/include/bits/getopt_core.h:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/lib/libbrotlicommon.so.1:
-
-/usr/include/bits/unistd_ext.h:
-
 /usr/include/c++/15.1.1/bits/basic_ios.h:
 
 /usr/include/c++/15.1.1/bits/basic_ios.tcc:
@@ -7051,6 +7079,36 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 /usr/include/c++/15.1.1/sstream:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h:
+
+/usr/include/qt6/QtCore/qfileinfo.h:
+
+/usr/share/cmake/Modules/Internal/CheckFlagCommonConfig.cmake:
+
+/usr/include/qt6/QtGui/QPixmap:
+
+/usr/include/qt6/QtGui/qdesktopservices.h:
+
+/usr/lib32/libgmodule-2.0.so.0:
+
+/usr/include/qt6/QtWidgets/QHBoxLayout:
+
+/usr/include/qt6/QtCore/qabstracteventdispatcher.h:
+
+/usr/include/qt6/QtWidgets/qdialogbuttonbox.h:
+
+/usr/include/wctype.h:
+
+/usr/include/bits/confname.h:
+
+/home/angel/Documents/Development/_APPS/Tolitica/main.cpp:
+
+/usr/include/bits/getopt_core.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/lib/libbrotlicommon.so.1:
+
+/usr/include/bits/unistd_ext.h:
 
 /usr/include/bits/uintn-identity.h:
 
@@ -7084,8 +7142,6 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 
 /usr/include/qt6/QtCore/qeventloop.h:
 
-/usr/include/qt6/QtCore/qfileinfo.h:
-
 /usr/include/bits/math-vector.h:
 
 /usr/include/qt6/QtCore/qjsonarray.h:
@@ -7101,8 +7157,6 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 /usr/lib/libgcc_s.so.1:
 
 /usr/include/qt6/QtCore/quuid.h:
-
-/usr/include/qt6/QtGui/qdesktopservices.h:
 
 /usr/include/qt6/QtGui/qinputmethod.h:
 
@@ -7121,10 +7175,6 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 /usr/include/qt6/QtWidgets/qapplication.h:
 
 /usr/include/qt6/QtWidgets/qspinbox.h:
-
-/usr/include/wctype.h:
-
-/usr/lib/libk5crypto.so.3:
 
 /usr/include/c++/15.1.1/bits/shared_ptr.h:
 

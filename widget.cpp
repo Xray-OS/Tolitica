@@ -971,7 +971,7 @@ Widget::Widget(QWidget *parent)
         process.start("bash", QStringList() << "-c" << "grep -q '/cow' /proc/mounts || [ -f /run/live/medium ]");
         process.waitForFinished();
 
-        // bool isLiveEnv = (process.exitCode() == 0);
+        bool isLiveEnv = (process.exitCode() == 0);
 
         // if (isLiveEnv) {
         //     stackedWidget->setCurrentIndex(5);
@@ -981,7 +981,7 @@ Widget::Widget(QWidget *parent)
 
         QString word = "tolitica";
 
-        if (word == "tolitica") {
+        if (isLiveEnv && word == "tolitica") {
             stackedWidget->setCurrentIndex(4);
         } else {
             qDebug() << "Staying on default index(0";
