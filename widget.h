@@ -28,6 +28,13 @@ public:
     ~Widget();
 
 private slots:
+    // TERMINAL
+    // void autostartStatus();
+    ////////////////////////////////////////////////////////
+    /// GENERAL: DISABLE/ENABLE AUTOSTART
+    //////////////////////////////////////////////////////
+    bool autostart();
+
     // TWEAKS
     void cleanOrphans(); // Function to clean orphans and other useful stuff to fix Arch
     void cleanPkgCache();

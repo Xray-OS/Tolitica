@@ -928,6 +928,49 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
     QMessageBox::information(this, "Success", "Terminal theming successfully updated");
 }
 
+////////////////////////////////////////////////////////
+/// GENERAL: DISABLE/ENABLE AUTOSTART
+//////////////////////////////////////////////////////
+bool Widget::autostart() {
+    QString desktopFilePath = QDir::homePath() + "/.config/autostart/tolitica.desktop";
+    QFile desktopFile(desktopFilePath);
+
+    bool autoS = desktopFile.exists();
+    qDebug() << "Checking autostart file:" << desktopFilePath << "exists:" << autoS;
+
+    if (!autoS) {
+        if (!desktopFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            qWarning() << "Failed to create .desktop file:" << desktopFilePath;
+            return false;
+        }
+
+        QTextStream out(&desktopFile);
+        out << "[Desktop Entry]\n";
+        out << "Type=Application\n";
+        out << "Exec=/opt/tolitica/tolitica\n";
+        out << "Hidden=false\n";
+        out << "NoDisplay=false\n";
+        out << "X-GNOME-Autostart-enabled=true\n";
+        out << "Name=Tolitica\n";
+        out << "Comment=Tolitica Ada Assistant\n";
+        out << "Icon=/usr/share/icons/Ada-Custom-Icons/tolitica-icon.png\n";
+        desktopFile.close();
+
+        qDebug() << "Created .desktop file at" << desktopFilePath;
+
+        return true;
+    }
+    else {
+        if (desktopFile.remove()) {
+            qDebug() << "Deleted .desktop file successfully: " << desktopFilePath;
+            return false;
+        } else {
+            qWarning() << "Failed to delete .desktop file: " << desktopFilePath;
+            return true;
+        }
+    }
+}
+
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
 /// START MAIN FUNCTION
@@ -972,12 +1015,6 @@ Widget::Widget(QWidget *parent)
         process.waitForFinished();
 
         bool isLiveEnv = (process.exitCode() == 0);
-
-        // if (isLiveEnv) {
-        //     stackedWidget->setCurrentIndex(5);
-        // } else {
-        //     qDebug() << "Staying on default index(0";
-        // }
 
         QString word = "tolitica";
 
@@ -1112,7 +1149,7 @@ Widget::Widget(QWidget *parent)
     // Adding the horizontal layout to the main one
     mainLayout->addLayout(socialMediaLayout);
 
-    // === Connect signals to the socialMedia function === //
+        // === Connect signals to the socialMedia function === //
     connect(discordButton, &QToolButton::clicked, this, [=](){
         coreFunctions->socialMedia("discord");
     });
@@ -1124,6 +1161,25 @@ Widget::Widget(QWidget *parent)
     });
     connect(patreonButton, &QToolButton::clicked, this, [=](){
         coreFunctions->socialMedia("patreon");
+    });
+
+    // Disable/Enable at Startup
+    QCheckBox *disabledStartup = new QCheckBox(this);
+    mainLayout->addWidget(disabledStartup, 3, Qt::AlignRight);
+    // Determine the current autostart state by checking if the .desktop file exists.
+    QString desktopFilePath = QDir::homePath() + "/.config/autostart/tolitica.desktop";
+    QFile desktopFile(desktopFilePath);
+    bool currentAutoState = desktopFile.exists();
+
+    disabledStartup->setText(currentAutoState ? "Disable the app at startup" :
+                                                "Fire the app at startup");
+    disabledStartup->setChecked(currentAutoState);
+
+    // === Connect the toggled signal from the QCheckBox === //
+    connect(disabledStartup, &QCheckBox::toggled, this, [this, disabledStartup](bool /*checked*/) {
+        bool newState = autostart();
+        disabledStartup->setText(newState ? "Disable the app at startup" : "Fire the app at startup");
+        disabledStartup->setChecked(newState);
     });
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
