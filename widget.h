@@ -51,6 +51,7 @@ private slots:
     void removeAdaDevelopmentMeta();
     void chaoticAUR();
     void removeChaoticAUR();
+    bool runCommand(const QString &cmd);
     int checkChaoticAURStatus();
     void backupPacmanConfig();
     void addVMware(QPushButton *vmwButton);

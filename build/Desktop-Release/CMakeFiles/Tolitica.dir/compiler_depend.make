@@ -2824,6 +2824,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/QJsonObject \
   /usr/include/qt6/QtCore/QObject \
   /usr/include/qt6/QtCore/QProcess \
+  /usr/include/qt6/QtCore/QSettings \
   /usr/include/qt6/QtCore/QStringList \
   /usr/include/qt6/QtCore/QTextStream \
   /usr/include/qt6/QtCore/QTimer \
@@ -2933,6 +2934,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: /home/angel/Documents/Development/
   /usr/include/qt6/QtCore/qscopedpointer.h \
   /usr/include/qt6/QtCore/qscopeguard.h \
   /usr/include/qt6/QtCore/qset.h \
+  /usr/include/qt6/QtCore/qsettings.h \
   /usr/include/qt6/QtCore/qshareddata.h \
   /usr/include/qt6/QtCore/qshareddata_impl.h \
   /usr/include/qt6/QtCore/qsharedpointer.h \
@@ -4972,6 +4974,8 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o:
 
 /usr/lib/libk5crypto.so.3:
 
+/usr/lib/libicuuc.so.76:
+
 /usr/include/qt6/QtWidgets/QFormLayout:
 
 /usr/lib/cmake/Qt6/Qt6ConfigExtras.cmake:
@@ -5213,6 +5217,12 @@ Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp:
 /usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake:
 
 /usr/include/qt6/QtCore/qpoint.h:
+
+/usr/lib/libidn2.so.0:
+
+/usr/lib/cmake/Qt6Gui/Qt6QTuioTouchPluginTargets.cmake:
+
+/usr/include/qt6/QtCore/qpair.h:
 
 /usr/lib/libOpenGL.so:
 
@@ -6092,8 +6102,6 @@ CMakeFiles/4.0.2-dirty/CMakeSystem.cmake:
 
 /usr/include/qt6/QtWidgets/QDialog:
 
-/usr/lib/libicuuc.so.76:
-
 /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h:
 
 /usr/include/c++/15.1.1/bits/stl_tempbuf.h:
@@ -6582,12 +6590,6 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o:
 
 /usr/lib/cmake/Qt6Gui/Qt6QJpegPluginTargets-relwithdebinfo.cmake:
 
-/usr/lib/cmake/Qt6Gui/Qt6QTuioTouchPluginTargets.cmake:
-
-/usr/include/qt6/QtCore/qpair.h:
-
-/usr/lib/libidn2.so.0:
-
 /usr/lib/cmake/Qt6Gui/Qt6QJpegPluginTargets.cmake:
 
 /usr/lib/cmake/Qt6Gui/Qt6QLibInputPluginAdditionalTargetInfo.cmake:
@@ -6775,6 +6777,8 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o:
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateConfigVersionImpl.cmake:
 
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateDependencies.cmake:
+
+/usr/include/qt6/QtCore/QSettings:
 
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateTargets.cmake:
 
@@ -7071,6 +7075,8 @@ Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp:
 /usr/include/c++/15.1.1/codecvt:
 
 /usr/include/c++/15.1.1/cwctype:
+
+/usr/include/qt6/QtCore/qsettings.h:
 
 /usr/include/c++/15.1.1/ios:
 

@@ -468,4 +468,5 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt6/QtCore/qitemselectionmodel.h \
  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
  /usr/include/qt6/QtWidgets/QTreeWidgetItem \
- /usr/include/qt6/QtWidgets/QHBoxLayout
+ /usr/include/qt6/QtWidgets/QHBoxLayout /usr/include/qt6/QtCore/QSettings \
+ /usr/include/qt6/QtCore/qsettings.h

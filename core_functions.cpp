@@ -34,6 +34,7 @@
 #include <QTreeWidgetItem>
 #include <QHBoxLayout>
 #include <QWidget>
+#include <QSettings>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TERMINAL PAGE /////////////////////// /////////////////////// ////////////////
@@ -97,7 +98,7 @@ void CoreFunctions::changeShell(QWidget *parent, const QString &selectedShell) {
     process.waitForFinished();
 
     if (process.exitCode() == 0) {
-        QMessageBox::information(parent, "Shell Change", "Shell changed successfully to: " + selectedShell);
+        QMessageBox::information(parent, "Shell Change", "Shell changed successfully to: " + selectedShell + ". Please reboot your system to see the changes");
     } else {
         QMessageBox::warning(parent, "Shell Change", "Failed to change shell. Error:\n" + process.readAllStandardError());
     }
@@ -162,10 +163,10 @@ void CoreFunctions::enableBluetooth(QWidget *parent, QCheckBox *bluetoothToggle)
 int CoreFunctions::apparmorStatus() {
     QProcess process;
 
+    // Use one reliable test for kernel support.
     QStringList tests = {
-        "lsmod | grep apparmor",
-        "zgrep \"CONFIG_SECURITY_APPARMOR=y\" /proc/config.gz",
-        "cat /sys/module/apparmor/parameters/enabled"
+        "zgrep \"CONFIG_SECURITY_APPARMOR=y\" /proc/config.gz &&"
+        "sudo apparmor_status"
     };
 
     bool supportsApparmor = true;
@@ -173,30 +174,30 @@ int CoreFunctions::apparmorStatus() {
     for (const QString &test : tests) {
         process.start("bash", QStringList() << "-c" << test);
         process.waitForFinished();
+
         QString result = process.readAllStandardOutput().trimmed();
-
-
-        bool valid = test.contains("cat") ? (result == "Y") : !result.isEmpty();
-
-        if(!valid) {
+        qDebug() << "Result from test:" << result;
+        if(result.isEmpty()) {
             supportsApparmor = false;
             break;
         }
-
     }
+
     if (!supportsApparmor) {
         return 0;
     }
 
+    // Check if the AppArmor package is installed.
     process.start("bash", QStringList() << "-c" << "pacman -Q apparmor");
     process.waitForFinished();
     bool pkgInstalled = (process.exitCode() == 0);
 
+    // Check if the AppArmor service is enabled.
     process.start("bash", QStringList() << "-c" << "systemctl is-enabled apparmor.service");
     process.waitForFinished();
     bool isEnabled = (process.exitCode() == 0);
 
-    // **Check if AppArmor modules exist in GRUB (Handle both Quote Types!)**
+    // Check if GRUB includes the necessary AppArmor parameters.
     QFile grubFile("/etc/default/grub");
     bool grubSet = false;
 
@@ -204,16 +205,31 @@ int CoreFunctions::apparmorStatus() {
         QString grubContent = QTextStream(&grubFile).readAll();
         grubFile.close();
 
+        // Regular expression to capture the GRUB_CMDLINE_LINUX_DEFAULT contents:
         static const QRegularExpression grubRegex(R"(GRUB_CMDLINE_LINUX_DEFAULT=(['\"])(.*?)\1)");
         QRegularExpressionMatch match = grubRegex.match(grubContent);
 
         if (match.hasMatch()) {
-            QString grubParams = match.captured(2); // Extract GRUB_CMDLINE_LINUX_DEFAULT contents
-            grubSet = grubParams.contains("lsm=landlock lockdown yama integrity apparmor bpf");
+            QString grubParams = match.captured(2); // Extract the command line parameters.
+            qDebug() << "Extracted GRUB parameters:" << grubParams;
+
+            // Check for each individual required token.
+            QStringList requiredParams = {"landlock", "lockdown", "yama", "integrity", "apparmor", "bpf"};
+            grubSet = true;
+            for (const QString &token : requiredParams) {
+                if (!grubParams.contains(token)) {
+                    grubSet = false;
+                    qDebug() << "Missing GRUB parameter:" << token;
+                    break;
+                }
+            }
         }
     }
 
-    // **Determine final status**
+    // Determine final status:
+    // Return 1 if all indicators are positive.
+    // Return 2 if none are present.
+    // Otherwise, return 3.
     if (pkgInstalled && isEnabled && grubSet) {
         return 1;
     } else if (!pkgInstalled && !isEnabled && !grubSet) {
@@ -222,22 +238,30 @@ int CoreFunctions::apparmorStatus() {
     return 3;
 }
 
+
 ///////////////////////////////////////////////////
 /// TWEAKS::ENABLE/DISABLE APPARMOR
 /////////////////////////////////////////////////
 
 void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
-   int status = apparmorStatus();
-    if(status == 0) {
-       apparmorToggle->blockSignals(true);
+    int status = apparmorStatus();
+    qDebug() << "AppArmor status:" << status;
+
+    if (status == 0) {
+        // Kernel doesn't support AppArmor
+        apparmorToggle->blockSignals(true);
         apparmorToggle->setChecked(false);
-       apparmorToggle->blockSignals(false);
-        //apparmorToggle->setText("Enable AppArmor");
-       QMessageBox::information(parent, "AppArmor not Supported", "Please Install a Kernel that supports AppArmor");
+        apparmorToggle->blockSignals(false);
+        QMessageBox::information(parent, "AppArmor not Supported",
+                                 "Please Install a Kernel that supports AppArmor");
         return;
     }
 
-    if (status == 1) {
+    // Determine if we are enabling or disabling.
+    // Let's assume status == 1 means AppArmor is enabled.
+    bool currentlyEnabled = (status == 1);
+
+    if (currentlyEnabled) {
         QMessageBox::StandardButton reply = QMessageBox::question(
             parent,
             "Warning: Disable AppArmor",
@@ -249,11 +273,11 @@ void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
         }
     }
 
-    // Prepare asynchronous progress reporting (like in your Flatpak function)
+    // Prepare asynchronous progress reporting.
     QProcess *process = new QProcess(parent);
     QTimer *monitorTimer = new QTimer(parent);
     QProgressDialog *progress = new QProgressDialog(
-        (status == 1) ? "Disabling AppArmor..." : "Enabling AppArmor...",
+        currentlyEnabled ? "Disabling AppArmor..." : "Enabling AppArmor...",
         nullptr, 0, 100, parent
         );
     progress->setWindowModality(Qt::WindowModal);
@@ -261,8 +285,7 @@ void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
     progress->show();
 
     int progressValue = 0;
-
-    connect(process, &QProcess::readyReadStandardOutput, parent, [progressValue, progress]() mutable {
+    connect(process, &QProcess::readyReadStandardOutput, parent, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents();
@@ -272,49 +295,51 @@ void CoreFunctions::enableAppArmor(QWidget *parent, QCheckBox *apparmorToggle) {
             parent, [=]() mutable {
                 progress->setValue(100);
                 if (process->exitCode() == 0) {
-
-                    bool newState = (status != 1);
-                    QString msg = (status == 1) ?
+                    // Toggle the current state.
+                    bool newState = !currentlyEnabled;
+                    QString msg = currentlyEnabled ?
                                       "AppArmor Disabled Successfully!" :
                                       "AppArmor Enabled Successfully!";
                     QMessageBox::information(parent, "AppArmor", msg);
 
-                    // Update the checkbox according to the new state:
+                    apparmorToggle->blockSignals(true);
                     apparmorToggle->setChecked(newState);
                     apparmorToggle->setText(newState ? "Disable AppArmor" : "Enable AppArmor");
+                    apparmorToggle->blockSignals(false);
                 } else {
                     QMessageBox::warning(parent, "Error",
-                                         "Failed performing operations with AppArmor:\n" + process->readAllStandardError());
+                                         "Failed performing operations with AppArmor:\n"
+                                             + process->readAllStandardError());
                 }
                 progress->deleteLater();
                 process->deleteLater();
                 monitorTimer->deleteLater();
             });
 
-    // Our AppArmor parameter (note the leading space!)
+    // Our AppArmor parameter (note the leading space)
     const QString param = " lsm=landlock lockdown yama integrity apparmor bpf";
 
     QString command;
-    if (status == 1) {
-        // Disabling AppArmor:
+    if (currentlyEnabled) {
+        // Command to disable AppArmor.
         command = QString(
-                      "sed -Ei \"s/%1//g\" /etc/default/grub; "          // Remove duplicates from GRUB
-                      "grub-mkconfig -o /boot/grub/grub.cfg; "             // Regenerate GRUB config
-                      "systemctl disable apparmor.service; "             // Disable AppArmor service
-                      "systemctl stop apparmor.service"                  // Stop AppArmor service
+                      "sed -Ei \"s/%1//g\" /etc/default/grub; "
+                      "grub-mkconfig -o /boot/grub/grub.cfg; "
+                      "systemctl disable apparmor.service; "
+                      "systemctl stop apparmor.service"
                       ).arg(param);
     } else {
-        // Enabling AppArmor:
+        // Command to enable AppArmor.
         command = QString(
-                      "pacman -Q apparmor || pacman -S --noconfirm apparmor; " // Install if not present
-                      "systemctl enable apparmor.service; "                   // Enable service
-                      "systemctl start apparmor.service; "                    // Start service
-                      "sed -Ei \"s/%1//g\" /etc/default/grub; "                // Remove duplicate parameters
+                      "pacman -Q apparmor || pacman -S --noconfirm apparmor; "
+                      "systemctl enable apparmor.service; "
+                      "systemctl start apparmor.service; "
+                      "sed -Ei \"s/%1//g\" /etc/default/grub; "
                       // For double-quoted GRUB line:
                       "sed -Ei 's/^(GRUB_CMDLINE_LINUX_DEFAULT=\")(.*)\"/\\1\\2%1\"/' /etc/default/grub; "
                       // For single-quoted GRUB line:
                       "sed -Ei \"s/^(GRUB_CMDLINE_LINUX_DEFAULT=')([^']*)'/\\1\\2%1'/\" /etc/default/grub; "
-                      "grub-mkconfig -o /boot/grub/grub.cfg"                  // Regenerate GRUB config
+                      "grub-mkconfig -o /boot/grub/grub.cfg"
                       ).arg(param);
     }
 
@@ -453,9 +478,11 @@ void CoreFunctions::rankMirrors(QWidget *parent, int mirrorCount) {
                 if (mirrorCount != 0) {
                     QMessageBox::information(parent, "Mirrors Ranked",
                     QString("The mirrors have been ranked by the %1 fastest ones").arg(mirrorCount));
+                } else {
+                    QMessageBox::information(parent, "Mirrors Ranked",
+                                             QString("All the mirrors have been ranked to the fastest ones").arg(mirrorCount));
                 }
-                QMessageBox::information(parent, "Mirrors Ranked",
-                                         QString("All the mirrors have been ranked to the fastest ones").arg(mirrorCount));
+
             } else {
                 QMessageBox::warning(parent, "Error",
                 "Something went wrong ranking the mirrors\n" +
@@ -536,18 +563,32 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
 
     QProgressDialog *progress = new QProgressDialog(
         status == 0 ? "Removing Flatpak..." : "Installing Flatpak...", nullptr, 0, 100, parent);
-    progress->setWindowModality(Qt::WindowModal);
+    progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
+    progress->setValue(0);
     progress->show();
+
+    QCoreApplication::processEvents(); // forcing immediate rendering before the process starts
 
     int progressValue = 0;
 
+    // **Real-Time progress update using process output**
     connect(process, &QProcess::readyReadStandardOutput, parent, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents();
     });
 
+    // Using monitorTimer to simulate progress updates if process output is insufficient
+    connect(monitorTimer, &QTimer::timeout, parent, [=]() mutable {
+        if (progressValue < 0) {
+            progressValue += 2;
+            progress->setValue(qMin(progressValue, 95));
+        }
+    });
+    monitorTimer->start(250);
+
+    // **Update the button immediately when installation is completed**
     connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
     parent, [=]() mutable {
         if (process->exitCode() == 0){
@@ -565,16 +606,19 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
                                  + process->readAllStandardError());
         }
 
+        // Cleanup
         progress->deleteLater();
         process->deleteLater();
         monitorTimer->deleteLater();
     });
 
     QString enableCommand = "pacman -S --noconfirm flatpak && flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo";
-    QString disableCommand = "flatpak uninstall --all && flatpak remotes | grep -q flathub && flatpak remote-delete flathub && sudo pacman -Rcns --noconfirm flatpak";
+    QString disableCommand = "flatpak uninstall --all --assumeyes && flatpak remotes | grep -q flathub && flatpak remote-delete flathub && sudo pacman -Rcns --noconfirm flatpak";
     QString command = (status == 0) ? disableCommand : enableCommand;
 
     process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    process->waitForFinished();
+    qDebug() << "ERROR: -> " << process->readAllStandardOutput();
     monitorTimer->start(250);
 }
 
@@ -611,10 +655,32 @@ void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
     int status = snapdStatus();
 
     if (status == 0) {
-        QString confirmationMsg = "Are you sure you want to disable/remove snapd support?";
+        // Getting all dependencies it will take after removal
+        QProcess dependencyCheck;
+        dependencyCheck.start("bash", QStringList() << "-c" << "pacman -Qi snapd | grep 'Required by' | cut -d':' -f2 | tr '\n' ' '");
+        dependencyCheck.waitForFinished();
+        QString dependencies = dependencyCheck.readAllStandardOutput().trimmed();
 
-        QMessageBox::StandardButton reply = QMessageBox::question(
-            parent, "Confirmation: ", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
+        // Creating the warning message listing the dependencies
+
+        QString confirmationMsg;
+        QMessageBox::StandardButton reply;
+
+        // If dependencies are found
+        if (!dependencies.isEmpty())
+        {
+            confirmationMsg = "Removing SNAPD will also unistall:\n\n" + dependencies;
+            confirmationMsg += "\n\nDo you want to continue?";
+
+            reply = QMessageBox::question(
+                parent, "Warning: SNAPD Removal", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
+        }
+        else
+        {
+            confirmationMsg = "Are you sure you want to disable/remove snapd support?";
+            reply = QMessageBox::question(
+                parent, "Warning: SNAPD Removal", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
+        }
 
         if (reply == QMessageBox::No) {
             return;
@@ -674,25 +740,18 @@ void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
 
     QString enableCommand = "pacman -S --noconfirm snapd && systemctl enable --now snapd.socket && "
                             "ln -s /var/lib/snapd/snap /snap";
-    QString disableCommand = "pacman -Rns snapd && rm -rf /snap";
+    QString disableCommand = "pacman -Rcns --noconfirm snapd && sudo rm -rf /snap && rm -rf /var/lib/snapd";
     QString command = (status == 0) ? disableCommand : enableCommand;
 
     if (status == 0) {
-        if (QFile::exists("/var/lib/snapd")) {
-            QString uninstallSnapdPkgs = "Would you also like to remove all SNAPD packages?";
-            QMessageBox::StandardButton reply = QMessageBox::question(
-                parent, "confirmation: ", uninstallSnapdPkgs, QMessageBox::Yes | QMessageBox::No);
-
-            if (reply == QMessageBox::Yes) {
-                disableCommand = "pacman -Rns --noconfirm snapd && rm -rf /snap && rm -rf /var/lib/snapd";
-            }
-        }
         command = disableCommand;
     } else {
         command = enableCommand;
     }
 
     process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    process->waitForFinished();
+    qDebug() << "ERROR: -> "<< process->readAllStandardOutput();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

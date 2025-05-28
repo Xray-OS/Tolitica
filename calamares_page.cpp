@@ -32,35 +32,35 @@ void calamares_page::onlineInstallation() {
 
     connect(checker, &ConnectivityChecker::connectivityChecked,
             this, [this, checker](bool isConnected) {
-        checker->deleteLater();
+                checker->deleteLater();
 
-        if(!isConnected) {
-            QMessageBox::information(this, tr("Internet Connection"),
-                        tr("It appears you are not connected to the internet. "
-                        "Please connect to the internet before proceeding with the online installation"));
-            return;
-        } else {
-            QString onlinePath = "/etc/calamares/settings-advanced.conf";
-            QString sysUpdFileOnline = "/etc/calamares/modules/packages-system-update.conf";
+                if(!isConnected) {
+                    QMessageBox::information(this, tr("Internet Connection"),
+                                             tr("It appears you are not connected to the internet. "
+                                                "Please connect to the internet before proceeding with the online installation"));
+                    return;
+                } else {
+                    QString onlinePath = "/etc/calamares/settings-advanced.conf";
+                    QString sysUpdFileOnline = "/etc/calamares/modules/packages-system-update.conf";
 
-            QFile settings_adv_file(onlinePath);
-            QFile settings_sys_file(sysUpdFileOnline);
+                    QFile settings_adv_file(onlinePath);
+                    QFile settings_sys_file(sysUpdFileOnline);
 
-            QProcess proc;
-            QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_adv_file.fileName(), settings_sys_file.fileName());
-            proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
-            proc.waitForFinished();
+                    QProcess proc;
+                    QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_adv_file.fileName(), settings_sys_file.fileName());
+                    proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
+                    proc.waitForFinished();
 
-            QProcess *fireup = new QProcess(this);
-            fireup->setProcessChannelMode(QProcess::ForwardedChannels);
-            fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S calamares");
+                    QProcess *fireup = new QProcess(this);
+                    fireup->setProcessChannelMode(QProcess::ForwardedChannels);
+                    fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S calamares");
 
-            connect(fireup, &QProcess::finished, this, [fireup](int exitCode, QProcess::ExitStatus) {
-                qDebug() << "Calamares finished with exit code:" << exitCode;
-                fireup->deleteLater();
+                    connect(fireup, &QProcess::finished, this, [fireup](int exitCode, QProcess::ExitStatus) {
+                        qDebug() << "Calamares finished with exit code:" << exitCode;
+                        fireup->deleteLater();
+                    });
+                }
             });
-        }
-    });
 
     checker->checkConnectivity();
 

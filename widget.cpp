@@ -43,15 +43,16 @@ void Widget::cleanOrphans() {
 
     // Check if yay is installed
     QProcess checkYayProcess;
-    checkYayProcess.start("bash", QStringList() << "-c" << "command -v yay");
+    checkYayProcess.start("bash", QStringList() << "-c" << "pacman -Q yay");
     checkYayProcess.waitForFinished();
 
-    bool yayInstalled = (checkYayProcess.exitStatus() == QProcess::NormalExit && !checkYayProcess.readAllStandardOutput().isEmpty());
+    bool yayInstalled = (checkYayProcess.exitCode() == 0);
 
     // Create the command
     QStringList args;
     if (yayInstalled) {
-        args << "bash" << "-c" << "yay -Yc --noconfirm";
+        args << "bash" << "-c" << "yay -Yc --noconfirm && "
+                "pkexec pacman -Rns $(pacman -Qtdq) --noconfirm";
     } else {
         args << "bash" << "-c" << "pacman -Rns $(pacman -Qtdq) --noconfirm";
     }
@@ -134,69 +135,61 @@ void Widget::systemUpdate() {
 
     // Create the process bar dynamically
     QProgressDialog *progress = new QProgressDialog("Updating system...", nullptr, 0, 100, this);
-    progress->setWindowModality(Qt::WindowModal);
+    progress->setWindowModality(Qt::ApplicationModal); // Modality to prevent UI freezing
     progress->setCancelButton(nullptr);
+    progress->setValue(0); // Ensure it starts at 0
     progress->show();
+
+    QCoreApplication::processEvents(); // Forces immediate rendering before the process starts
 
     int progressValue = 0;
 
-    // Agressive monitoring (every 250ms)
+    // Updating the progress value when a new started output is available.
+    connect(sysUp, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+        progressValue += 5;
+        progress->setValue(qMin(progressValue, 95));
+        QCoreApplication::processEvents(); // Ensure progress updates properly
+    });
+
+    // Using monitorTimer to simulate progress updates if process output is insufficient
     connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
-        // Read CPU load from /proc/loadavg
-        QFile cpuFile("/proc/loadavg");
-        if (cpuFile.open(QIODevice::ReadOnly)) {
-            QTextStream in(&cpuFile);
-            QStringList loadValues = in.readLine().split(" ");
-            cpuFile.close();
-
-            double cpuLoad = loadValues[0].toDouble(); // First value represents recent system load
-
-            // Read disk activity from /proc/diskstats
-            QFile diskFile("/proc/diskstats");
-
-            if (diskFile.open(QIODevice::ReadOnly)) {
-                QTextStream diskStream(&diskFile);
-                QString diskData = diskStream.readAll();
-                diskFile.close();
-
-                int diskOps = diskData.count("\n"); // Approximate active disk operations
-
-                // Dynamically adjust progress speed
-                int loadFactor = static_cast<int>((cpuLoad * 10) + (diskOps % 10)); // Simple scaling
-
-                progressValue += qMin(loadFactor, 5); // Limit aggressive increments
-                progress->setValue(qMin(progressValue, 95)); // Prevent overflow
-            }
-        }
-        // Stop tracking when update process finishes
-        if(sysUp->state() != QProcess::Running) {
-            monitorTimer->stop();
+        if (progressValue < 95) {
+            progressValue += 2;
+            progress->setValue(qMin(progressValue, 95));
         }
     });
+    monitorTimer->start(250);
 
     // Detect when process finishes
     connect(sysUp, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=] (int exitCode,
-                                                                                            QProcess::ExitStatus status) {
-        QString output = QString::fromUtf8(sysUp->readAllStandardOutput());
+    QProcess::ExitStatus status) {
+        monitorTimer->stop();
 
+        QString output = QString::fromUtf8(sysUp->readAllStandardOutput());
         if (output.contains("Nothing to do") && output.contains("there is nothing to do")) {
             QMessageBox::information(nullptr, "System Already Upto Date", "No updates were found");
         } else {
             progress->setValue(100);
             QMessageBox::information(nullptr, "Ada Has Been Updated", "Your Operating System has been updated successfully");
+            progress->setValue(100);
         }
 
         // Cleanup Memory
         progress->deleteLater();
         sysUp->deleteLater();
         monitorTimer->deleteLater(); // Stop aggressive monitoring
+
     });
 
-    // Start update process
-    sysUp->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Syu --noconfirm && flatpak update --assumeyes");
+    // Adding a little delay to ensure UI stability before starting the process
+    QTimer::singleShot(150, this, [=]() {
+        // Start update process
+        sysUp->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Syu --noconfirm && flatpak update --assumeyes");
 
-    // Start aggressive monitoring
-    monitorTimer->start(250); // Updates every 250ms
+        // Start aggressive monitoring
+        monitorTimer->start(250); // Updates every 250ms
+    });
+
 }
 
 ///////////////////////////////////////////////////
@@ -486,64 +479,83 @@ void Widget::removeAdaDevelopmentMeta() {
 }
 
 ///////////////////////////////////////////////////
+/// ADDONS::HELPER: Run a shell command
+//////////////////////////////////////////////////
+bool Widget::runCommand(const QString &cmd) {
+    QProcess process;
+    process.start("bash", QStringList() << "-c" << cmd);
+    process.waitForFinished();
+    return (process.exitCode() == 0);
+}
+
+///////////////////////////////////////////////////
 /// ADDONS:: CHECK CHAOTIC-AUR STATUS
 //////////////////////////////////////////////////
 int Widget::checkChaoticAURStatus() {
-    QProcess checkChaotic;
+    // Check if key is imported
+    bool keyExist = runCommand("pacman-key --list-keys 3056513887B78AEB");
+    // Check if required packages are installed
+    bool packagesInstalled = runCommand("pacman -Q chaotic-keyring chaotic-mirrorlist");
+    // Check if repository header exists in pacman.conf
+    bool repoHeaderExists = runCommand("grep -q '\\[chaotic-aur\\]' /etc/pacman.conf");
 
-    // Check if the key is properly imported
-    checkChaotic.start("bash", QStringList() << "-c" << "pacman-key --list-keys 3056513887B78AEB");
-    checkChaotic.waitForFinished();
-    bool keyExist = (checkChaotic.exitCode() == 0);
+    // Check if Include line exists in pacman.conf
+    bool includeLineExists = runCommand("grep -q 'Include = /etc/pacman.d/chaotic-mirrorlist' /etc/pacman.conf");
 
-    // Check if the required packages are installed
-    checkChaotic.start("bash", QStringList() << "-c" << "pacman -Q chaotic-keyring chaotic-mirrorlist");
-    checkChaotic.waitForFinished();
-    bool packagesInstalled = (checkChaotic.exitCode() == 0);
-
-    // **Fix: Check if repo exists in pacman.conf
-    // **Check if [chaotic-aur] header exists**
-    checkChaotic.start("bash", QStringList() << "-c" << "grep -q '\\[chaotic-aur\\]' /etc/pacman.conf");
-    checkChaotic.waitForFinished();
-    bool repoHeaderExists = (checkChaotic.exitCode() == 0);
-
-    // **Check if Include line exists**
-    checkChaotic.start("bash", QStringList() << "-c" << "grep -q 'Include = /etc/pacman.d/chaotic-mirrorlist' /etc/pacman.conf");
-    checkChaotic.waitForFinished();
-    bool includeLineExists = (checkChaotic.exitCode() == 0);
-
-    // **Refined Status Logic**
-    if (keyExist && packagesInstalled && repoHeaderExists && includeLineExists) {
+    if (keyExist && packagesInstalled && repoHeaderExists && includeLineExists)
         return 1; // Fully configured
-    } else if (!keyExist && !packagesInstalled && !repoHeaderExists && !includeLineExists) {
-        return 2; // No setup detected
-    } else {
-        return 3; // Partial setup detected (Repair needed)
-    }
+    else if (!keyExist && !packagesInstalled && !repoHeaderExists && !includeLineExists)
+        return 2; // Not set up
+    else
+        return 3; // Partial setup (repair needed)
 }
 
 ///////////////////////////////////////////////////
 /// ADDONS:: BACKUP PACMAN CONFIG FUNCTION
 //////////////////////////////////////////////////
 void Widget::backupPacmanConfig() {
-    int status = checkChaoticAURStatus();
-
-    if (status != 1) {
-        return; // Backup is only made when status is 1 (working)
-    }
-
+    // Always backup before modifications
     QProcess createBackupDir;
-    createBackupDir.start("pkexec", QStringList() << "bash" << "-c" << "mkdir -p /usr/share/tolitica-backups");
+    createBackupDir.start("pkexec", QStringList() << "bash" << "-c"
+                                                  << "mkdir -p /etc/ada/tolitica/tolitica-settings/backups");
     createBackupDir.waitForFinished();
+    QString errOut = createBackupDir.readAllStandardError();
 
-    QString errorOutput = createBackupDir.readAllStandardError();
-    if (!errorOutput.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Failed to create backup directory:\n" + errorOutput);
+    if (!errOut.isEmpty()) {
+        QMessageBox::warning(this, "Backup Error", "Failed to create backup directory:\n" + errOut);
     }
 
+    // Create backup if the current /etc/pacman.conf differs from the backup
     QProcess backupCheck;
-    backupCheck.start("bash", QStringList() << "-c" << "cmp -s /etc/pacman.conf /usr/share/tolitica-backups/pacman.conf || pkexec cp -r /etc/pacman.conf /usr/share/tolitica-backups/");
+    QString backupCmd = "cmp -s /etc/pacman.conf /etc/ada/tolitica/tolitica-settings/backups/pacman.conf || pkexec cp /etc/pacman.conf /etc/ada/tolitica/tolitica-settings/backups/";
+    backupCheck.start("bash", QStringList() << "-c" << backupCmd);
     backupCheck.waitForFinished();
+}
+
+///////////////////////////////////////////////////
+/// ADDONS:: REMOVE-CHAOTIC-AUR
+//////////////////////////////////////////////////
+void Widget::removeChaoticAUR() {
+    QProcess removeProc;
+    removeProc.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf && "
+                                                                  "pkexec pacman -Rns chaotic-keyring chaotic-mirrorlist --noconfirm && "
+                                                                  "pkexec pacman-key --delete 3056513887B78AEB");
+    removeProc.waitForFinished();
+
+    // Optionally delete an outdated backup file if it exists
+    if (QFile::exists("/etc/ada/tolitica/tolitica-settings/backups/pacman.conf")) {
+        QProcess delProc;
+        delProc.start("pkexec", QStringList() << "bash" << "-c" << "rm -r /etc/ada/tolitica/tolitica-settings/backups/pacman.conf");
+        delProc.waitForFinished();
+    }
+
+    QString errorOutput = removeProc.readAllStandardError();
+    if (removeProc.exitCode() == 0) {
+        QMessageBox::information(this, "Chaotic AUR Removed",
+                                 "Chaotic AUR repositories have been removed successfully");
+    } else {
+        QMessageBox::warning(this, "Error", "Something went wrong removing Chaotic AUR repositories:\n" + errorOutput);
+    }
 }
 
 ///////////////////////////////////////////////////
@@ -551,84 +563,118 @@ void Widget::backupPacmanConfig() {
 //////////////////////////////////////////////////
 void Widget::chaoticAUR() {
     int status = checkChaoticAURStatus();
+    // Always back up before making any modifications
+    backupPacmanConfig();
 
-    if (status == 1)
-    {
+    // When fully configured, that is, repository is active, removal is the desired action.
+    if (status == 1) {
         removeChaoticAUR();
+        return;
     }
 
-    QProcess addChaoticAUR;
+    // For initial installation, modify pacman.conf via C++.
+    if (status == 2) {
 
-    if(status == 2) {
-        addChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" <<
-                            "pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
-                            "pkexec pacman-key --lsign-key 3056513887B78AEB && "
-                            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm && "
-                            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm &&"
-                            "echo -e '\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist' | pkexec tee -a /etc/pacman.conf");
-        addChaoticAUR.waitForFinished();
-        backupPacmanConfig();
+        // Proceed with package and key setup.
+        QProcess addProc;
+        QString addCmd =
+            "pkexec pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
+            "pkexec pacman-key --lsign-key 3056513887B78AEB && "
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm && "
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm";
+        addProc.start("bash", QStringList() << "-c" << addCmd);
+        addProc.waitForFinished();
+        qDebug() << "addProcFunction: " << addProc.readAllStandardOutput();
 
-        if(addChaoticAUR.exitCode() == 0) {
-            QMessageBox::information(this, "Chaotic AUR Added", "Chaotic AUR repositories has been successfully setup in Ada");
-        } else {
-            QMessageBox::warning(this, "error", "error: " + addChaoticAUR.readAllStandardError());
+        QString workingDir = QDir::homePath() + "/tolitica-home-settings/backups/current-use";
+        QDir().mkpath(workingDir);
+        QString configPath = workingDir + "/pacman.conf";
+        QString originalConfig = "/etc/pacman.conf";
+
+        // Copy the original config into our working directory
+        QProcess copyProc;
+        copyProc.start("pkexec", QStringList() << "cp" << originalConfig << configPath);
+        copyProc.waitForFinished();
+        if (copyProc.exitCode() != 0) {
+            QMessageBox::warning(this, "Error", "Failed to copy pacman.conf to working directory:\n" +
+                                                    copyProc.readAllStandardError());
+            return;
         }
-    }
-    //**Fix broken repo entries if Chaotic AUR is partially broken or if the repo is messed
-    if (status == 3) {
-        QProcess restoreChaotic;
 
-        if(!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
+        // Open the working copy in C++ for precise modification.
+        QFile configFile(configPath);
+        if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(this, "Error", "Failed to open working copy for reading.");
+            return;
+        }
+        QString content = configFile.readAll();
+        configFile.close();
+
+        // Append the Chaotic AUR repository block if it's not already there.
+        if (!content.contains("[chaotic-aur]")) {
+            content.append("\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n");
+        }
+
+        // Write back the modified configuration.
+        if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+            QMessageBox::warning(this, "Error", "Failed to open working copy for writing.");
+            return;
+        }
+        QTextStream out(&configFile);
+        out << content;
+        configFile.close();
+
+        // Copy the modified configuration back to /etc/pacman.conf using pkexec.
+        QProcess installConfig;
+        installConfig.start("pkexec", QStringList() << "cp" << configPath << originalConfig);
+        installConfig.waitForFinished();
+        if (installConfig.exitCode() != 0) {
+            QMessageBox::warning(this, "Error", "Failed to update /etc/pacman.conf:\n" +
+                                                    installConfig.readAllStandardError());
+            return;
+        }
+
+        if (installConfig.exitCode() == 0) {
+            QMessageBox::information(this, "Chaotic AUR Added",
+                                     "Chaotic AUR repositories have been successfully set up in Ada");
+        } else {
+            QMessageBox::warning(this, "Error", "Error adding Chaotic AUR:\n" + addProc.readAllStandardError());
+        }
+
+        return;
+    }
+
+    // For a partial/failed setup, attempt to repair.
+    if (status == 3) {
+        // If the local chaotic-mirrorlist does not exist, clean any broken entries.
+        if (!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
             QProcess removeRepo;
             removeRepo.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf");
             removeRepo.waitForFinished();
-;        }
-        restoreChaotic.start("pkexec", QStringList() << "bash" << "-c" << "pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm &&"
-                                                                          "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm &&"
-                                                                          "pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
-                                                                          "pkexec pacman-key --lsign-key 3056513887B78AEB");
-        restoreChaotic.waitForFinished();
-
-        restoreChaotic.start("pkexec", QStringList() << "bash" << "-c" << "cp -r /usr/share/tolitica-backups/pacman.conf /etc/pacman.conf");
-        restoreChaotic.waitForFinished();
-
-        if(restoreChaotic.exitCode() == 0)
-        {
-            QMessageBox::information(this, "Restore complete", "Chaotic AUR has been repaired!");
-        } else {
-            QMessageBox::warning(this, "Error", "Something went wrong restoring pacman.conf" + restoreChaotic.readAllStandardError());
         }
-    }
+        // Reinstall packages and re-import the key.
+        QProcess repairProc;
+        QString repairCmd =
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm && "
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm && "
+            "pkexec pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
+            "pkexec pacman-key --lsign-key 3056513887B78AEB";
+        repairProc.start("bash", QStringList() << "-c" << repairCmd);
+        repairProc.waitForFinished();
 
-    // **Fix broken repo entries if Chaotic AUR is partially broken or if the repo is messed**
+        // Restore the pacman.conf from your backup store.
+        QProcess restoreProc;
+        QString homePath = QDir::homePath();
+        restoreProc.start("pkexec", QStringList() << "bash" << "-c" << "cp -r /" << homePath << "/tolitica-home-settings/backups/current-use/pacman.conf /etc/pacman.conf");
+        restoreProc.waitForFinished();
+        qDebug() << "result: " << restoreProc.readAllStandardOutput();
 
-}
-
-///////////////////////////////////////////////////
-/// ADDONS:: REMOVE-CHAOTIC-AUR
-//////////////////////////////////////////////////
-void Widget::removeChaoticAUR() {
-    QProcess removeChaoticAUR;
-    removeChaoticAUR.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf && "
-                           "pkexec pacman -Rns chaotic-keyring chaotic-mirrorlist --noconfirm &&"
-                           "pkexec pacman-key --delete 3056513887B78AEB");
-    removeChaoticAUR.waitForFinished();
-    // deleting pacman.conf from /usr/share/tolitica-backups if it was already created
-    if (QFile::exists("/usr/share/tolitica-backups/pacman.conf")) {
-        QProcess delPacman;
-
-        delPacman.start("pkexec", QStringList() << "bash" << "-c" << "rm -r /usr/share/tolitica-backups/pacman.conf");
-        delPacman.waitForFinished();
-    }
-
-    // Capture standard error output
-    QString errorOutput = removeChaoticAUR.readAllStandardError();
-
-    if (removeChaoticAUR.exitCode() == QProcess::NormalExit && removeChaoticAUR.exitCode() == 0) {
-        QMessageBox::information(this, "Chaotic AUR Removed", "Chaotic AUR repositories have been removed successfully");
-    } else {
-        QMessageBox::warning(this, "Error", "Something went wrong removing Chaotic AUR repositories" + errorOutput);
+        if (restoreProc.exitCode() == 0) {
+            QMessageBox::information(this, "Restore Complete", "Chaotic AUR has been repaired!");
+        } else {
+            QMessageBox::warning(this, "Error", "Something went wrong restoring pacman.conf:\n" +
+                                                    restoreProc.readAllStandardError());
+        }
     }
 }
 
@@ -711,9 +757,12 @@ void Widget::addVMware(QPushButton *vmwButton) {
 
         // Create the progress bar dynamically
         QProgressDialog *progress = new QProgressDialog("Installing VMware Workstation...", nullptr, 0, 100, this);
-        progress->setWindowModality(Qt::WindowModal);
+        progress->setWindowModality(Qt::ApplicationModal);
         progress->setCancelButton(nullptr);
+        progress->setValue(0);
         progress->show();
+
+        QCoreApplication::processEvents(); // Forcing immediate rendering before the process starts
 
         int progressValue = 0;
 
@@ -723,6 +772,15 @@ void Widget::addVMware(QPushButton *vmwButton) {
             progress->setValue(qMin(progressValue, 95));
             QCoreApplication::processEvents();
         });
+
+        // using monitorTimer to simulate progress updates if process output is insufficient
+        connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
+            if (progressValue < 0) {
+                progressValue += 2;
+                progress->setValue(qMin(progressValue, 95));
+            }
+        });
+        monitorTimer->start(250);
 
         // **Update the button immediately hen installation is completed**
         connect(installVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
@@ -751,22 +809,24 @@ void Widget::addVMware(QPushButton *vmwButton) {
                     monitorTimer->deleteLater();
                 });
 
-        // Start installation
-        installVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S vmware-workstation --noconfirm");
-        monitorTimer->start(250);
-    }
-    if (!vmwareServiceStatus()) {
-        QProcess enableServices;
-        enableServices.start("pkexec", QStringList() << "bash" << "-c" << "systemctl enable vmware-networks-configuration.service && pkexec systemctl start vmware-networks-configuration.service &&"
-                                                                          "pkexec systemctl enable vmware-networks.service && pkexec systemctl start vmware-networks.service &&"
-                                                                          "pkexec systemctl enable vmware-usbarbitrator.service && pkexec systemctl start vmware-usbarbitrator.service");
-        enableServices.waitForFinished();
-        QMessageBox::information(this, "Services Enabled and Active",
-                                 "All VMware Workstation services has been Activated successfully");
-        int updatedStatus = vmwareStatus();
-        vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
-    }
+        // Slight delay to ensure UI stability before starting the process
+        QTimer::singleShot(150, this, [=]() {
+            if (!vmwareServiceStatus()) {
+                QProcess enableServices;
+                enableServices.start("pkexec", QStringList() << "bash" << "-c" << "systemctl enable vmware-networks-configuration.service && pkexec systemctl start vmware-networks-configuration.service &&"
+                                                                                  "pkexec systemctl enable vmware-networks.service && pkexec systemctl start vmware-networks.service &&"
+                                                                                  "pkexec systemctl enable vmware-usbarbitrator.service && pkexec systemctl start vmware-usbarbitrator.service");
+                enableServices.waitForFinished();
 
+                int updatedStatus = vmwareStatus();
+                vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
+            }
+
+            // Start installation
+            installVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S vmware-workstation --noconfirm");
+            monitorTimer->start(250);
+        });
+    }
 }
 
 ///////////////////////////////////////////////////
@@ -777,18 +837,32 @@ void Widget::removeVMware(QPushButton *vmwButton) {
     QTimer *monitorTimer = new QTimer(this);
 
     QProgressDialog *progress = new QProgressDialog("Removing VMware Workstation...", nullptr, 0, 100, this);
-    progress->setWindowModality(Qt::WindowModal);
+    progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
+    progress->setValue(0); // Ensure it starts at 0
     progress->show();
+
+    QCoreApplication::processEvents();
 
     int progressValue = 0;
 
+    // Updating the progress value when new standard is available.
     connect(removeVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents();
     });
 
+    // Using monitorTimer to simulate progress updates if process output is insufficient
+    connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
+        if (progressValue < 95) {
+            progressValue += 2;
+            progress->setValue(qMin(progressValue, 95));
+        }
+    });
+    monitorTimer->start(250);
+
+    // Handling success/failure and cleaning up resources
     connect(removeVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]() mutable {
         QProcess checkRemoved;
         checkRemoved.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
@@ -811,8 +885,12 @@ void Widget::removeVMware(QPushButton *vmwButton) {
         monitorTimer->deleteLater();
     });
 
-    removeVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Rns vmware-workstation --noconfirm");
-    monitorTimer->start(250);
+    // Slight delay to ensure UI stability before starting the process.
+    QTimer::singleShot(150, this, [=]() {
+        removeVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Rns vmware-workstation --noconfirm");
+        monitorTimer->start(250);
+    });
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -924,7 +1002,7 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
     configFile.close();
 
     // Update the button text after successful modification
-    terminalThemeButton->setText(status == 1 ? "Enable Terminal Theming" : "Disable Terminal Theming");
+    terminalThemeButton->setText(status == 1 ? "Enable Terminal Theming (Fish ONLY)" : "Disable Terminal Theming (Fish ONLY)");
     QMessageBox::information(this, "Success", "Terminal theming successfully updated");
 }
 
@@ -971,6 +1049,7 @@ bool Widget::autostart() {
     }
 }
 
+
 // == I LOVE CPP ==================================
 ///////////////////////////////////////////////////
 /// START MAIN FUNCTION
@@ -988,390 +1067,433 @@ Widget::Widget(QWidget *parent)
     resize(800,600);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
 
-    // Stacked widget to hold both layouts
-    QStackedWidget *stackedWidget = new QStackedWidget(this);
-
-    // Create all pages
-    QWidget *mainPage = new QWidget();
-    QWidget *tweaksPage = new QWidget();
-    QWidget *addonsPage = new QWidget();
-    QWidget *terminalPage = new QWidget();
-    calamares_page *calamaresPage = new calamares_page(this);
-
-    // Add pages to stacked idget
-    stackedWidget->addWidget(mainPage);
-    stackedWidget->addWidget(tweaksPage);
-    stackedWidget->addWidget(addonsPage);
-    stackedWidget->addWidget(terminalPage);
-    stackedWidget->addWidget(calamaresPage);
-
-    // Setting initial index to 0 (regular UI)
-    stackedWidget->setCurrentIndex(0);
-
-    // Redirects to the calamares_page
-    QTimer::singleShot(0, this, [=]() {
-        QProcess process;
-        process.start("bash", QStringList() << "-c" << "grep -q '/cow' /proc/mounts || [ -f /run/live/medium ]");
-        process.waitForFinished();
-
-        bool isLiveEnv = (process.exitCode() == 0);
-
-        QString word = "tolitica";
-
-        if (isLiveEnv && word == "tolitica") {
-            stackedWidget->setCurrentIndex(4);
-        } else {
-            qDebug() << "Staying on default index(0";
-        }
-    });
-
-    // Set the initial layout
     QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
-    mainWidgetLayout->addWidget(stackedWidget);
-    setLayout(mainWidgetLayout);
 
-    // ==== Main Page =====
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
+    //////////////////////////////////////
+    /// CALAMARES UI ---------////////////
+    //////////////////////////////////////
+    QProcess process;
+    process.start("bash", QStringList() << "-c" << "grep -q '/cow' /proc/mounts || [ -f /run/live/medium ]");
+    process.waitForFinished();
 
-    // ==== Header and Description ==== //
-    QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Ada Assistant!</h1>", this);
+    bool isLiveEnv = (process.exitCode() == 0);
+    QString word = "tolitica";
+
+    if (isLiveEnv && word == "tolitica") {
+        QStackedWidget *calStackedWidget = new QStackedWidget();
+        mainWidgetLayout->addWidget(calStackedWidget);
+
+        QWidget *calamaresContainer = new QWidget();
+        QVBoxLayout *calamaresContainerLayout = new QVBoxLayout(calamaresContainer);
+        calamares_page *calamaresPage = new calamares_page(nullptr);
+
+        calamaresContainerLayout->addWidget(calamaresPage);
+        calamaresContainer->setLayout(calamaresContainerLayout);
+
+        calStackedWidget->addWidget(calamaresContainer);
+        calStackedWidget->setCurrentIndex(0);
+
+        // Redirects to the calamares page
+    } else {
+        //////////////////////////////////////
+        /// MAIN UI ---------/////////////////
+        //////////////////////////////////////
+
+        // Create a stacked widget to hold the different pages
+        QStackedWidget *stackedWidget = new QStackedWidget(this);
+        // Setting initial index to 0 (regular UI)
+        stackedWidget->setCurrentIndex(0);
+
+        // Create all pages
+        // Use fixed width for mainPage to force 800px width.
+        QWidget *mainPage = new QWidget();
+        mainPage->setFixedWidth(800);
+        QWidget *tweaksPage = new QWidget();
+        QWidget *addonsPage = new QWidget();
+        QWidget *terminalPage = new QWidget();
+
+        // Add pages to the stacked widget
+        stackedWidget->addWidget(mainPage);
+        stackedWidget->addWidget(tweaksPage);
+        stackedWidget->addWidget(addonsPage);
+        stackedWidget->addWidget(terminalPage);
+
+        // Wrap the stacked widget in a centering container
+        QWidget *centerContainer = new QWidget(this);
+        QHBoxLayout *centerLayout = new QHBoxLayout(centerContainer);
+        centerLayout->setContentsMargins(0, 0, 0, 0);
+        centerLayout->addStretch(); // Left spacer
+        centerLayout->addWidget(stackedWidget);
+        centerLayout->addStretch(); // Right spacer
+
+        // Add the centering container to the main layout
+        mainWidgetLayout->addWidget(centerContainer, 0, Qt::AlignCenter);
+        setLayout(mainWidgetLayout);
+
+        // ==== Main Page Content ====
+        QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
+
+        // ==== Header and Description ==== //
+        QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Ada Assistant!</h1>", this);
         // == Description == //
-    QLabel *greetingsLabel = new QLabel("<span style=\"font-size:11pt; font-weight:bold;\">Greetings from Angel!</span> - Owner & Maintainer of Ada", this);
-    QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
-    "configurations from your system, please enjoy using "
-    "Ada, break it, repair it or donate to me... Anyway have fun using my ArchLinux distro.", this);
-    headerLabel->setContentsMargins(0,20,0,0);
-    greetingsLabel->setContentsMargins(0,10,0,0);
-    greetingsLabel->setAlignment(Qt::AlignCenter);
-    descriptionLabel->setContentsMargins(0,10,0,0);
-    descriptionLabel->setWordWrap(true);
-    descriptionLabel->setAlignment(Qt::AlignCenter);
+        QLabel *greetingsLabel = new QLabel("<span style=\"font-size:11pt; font-weight:bold;\">Greetings from Angel!</span> - Owner & Maintainer of Ada", this);
+        QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
+                                              "configurations from your system, please enjoy using "
+                                              "Ada, break it, repair it or donate to me... Anyway have fun using my ArchLinux distro.", this);
+        headerLabel->setContentsMargins(0, 0, 0, 0);
+        greetingsLabel->setContentsMargins(0, 5, 0, 0);
+        greetingsLabel->setAlignment(Qt::AlignCenter);
+        descriptionLabel->setContentsMargins(0,10,0,0);
+        descriptionLabel->setWordWrap(true);
+        descriptionLabel->setAlignment(Qt::AlignCenter);
 
-    mainLayout->addWidget(headerLabel, 0, Qt::AlignTop | Qt::AlignCenter);
-    mainLayout->addWidget(greetingsLabel);
-    mainLayout->addWidget(descriptionLabel, 1, Qt::AlignTop);
-    // ==== End Header and Description ==== //
+        mainLayout->addWidget(headerLabel, 0, Qt::AlignTop | Qt::AlignCenter);
+        mainLayout->addWidget(greetingsLabel);
+        mainLayout->addWidget(descriptionLabel, 1, Qt::AlignTop);
+        // ==== End Header and Description ==== //
 
-    // ==== Add Tolitica Icon ==== //
-    QLabel *iconLabel = new QLabel(this);
-    QPixmap toliticaIcon(":/icons/resources/icons/tolitica-icon.png");
-    QPixmap scaledIcon = toliticaIcon.scaled(100, 100, Qt::KeepAspectRatio,
-                         Qt::SmoothTransformation);
-    iconLabel->setPixmap(scaledIcon);
-    iconLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(iconLabel, 3, Qt::AlignCenter | Qt::AlignTop);
+        // ==== Add Tolitica Icon ==== //
+        QLabel *iconLabel = new QLabel(this);
+        QPixmap toliticaIcon(":/icons/resources/icons/tolitica-icon.png");
+        QPixmap scaledIcon = toliticaIcon.scaled(100, 100, Qt::KeepAspectRatio,
+                                                 Qt::SmoothTransformation);
+        iconLabel->setPixmap(scaledIcon);
+        iconLabel->setAlignment(Qt::AlignCenter);
+        mainLayout->addWidget(iconLabel, 3, Qt::AlignCenter | Qt::AlignTop);
 
-    //* ==== Button to Mount/Umount Hard Drives ==== *//
+        //* ==== Button to Mount/Umount Hard Drives ==== *//
         // Create a container widget for the label and the button
-    QWidget *mountDriveWidget = new QWidget(this);
-    QVBoxLayout *mountDriveLayout = new QVBoxLayout(mountDriveWidget);
-    mountDriveLayout->setContentsMargins(0, 0, 0, 0);
-    mountDriveLayout->setSpacing(5); // Adjust as needed for vertical spacing
+        QWidget *mountDriveWidget = new QWidget(this);
+        QVBoxLayout *mountDriveLayout = new QVBoxLayout(mountDriveWidget);
+        mountDriveLayout->setContentsMargins(0, 0, 0, 0);
+        mountDriveLayout->setSpacing(5); // Adjust as needed for vertical spacing
 
-    QLabel *mountDriveLabel = new QLabel("Mount/Unmount Drives", this);
-    mountDriveLabel->setAlignment(Qt::AlignLeft);
+        QLabel *mountDriveLabel = new QLabel("Mount/Unmount Drives", this);
+        mountDriveLabel->setAlignment(Qt::AlignLeft);
 
-    QToolButton *mountDriveButton = new QToolButton(this);
-    mountDriveButton->setIcon(QIcon(":/icons/resources/icons/hdd.png"));
-    mountDriveButton->setIconSize(QSize(48, 48));
-    mountDriveButton->setAutoRaise(true);
-    mountDriveButton->setToolTip("Mount/Umount Drives");
+        QToolButton *mountDriveButton = new QToolButton(this);
+        mountDriveButton->setIcon(QIcon(":/icons/resources/icons/hdd.png"));
+        mountDriveButton->setIconSize(QSize(48, 48));
+        mountDriveButton->setAutoRaise(true);
+        mountDriveButton->setToolTip("Mount/Umount Drives");
 
         // Add the label and button to the container layout
-    mountDriveLayout->addWidget(mountDriveLabel);
-    mountDriveLayout->addWidget(mountDriveButton, 0, Qt::AlignCenter);
+        mountDriveLayout->addWidget(mountDriveLabel);
+        mountDriveLayout->addWidget(mountDriveButton, 0, Qt::AlignCenter);
         // Adjust the container's width to match the label's sizeHint,
         // so the button's horizontal center is determine by the label's width.
-    mountDriveWidget->setFixedWidth(mountDriveLabel->sizeHint().width());
-    //mainLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
+        mountDriveWidget->setFixedWidth(mountDriveLabel->sizeHint().width());
+        // mainLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
 
-    /* === Navigation Buttons === */
-    QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific Layout for Buttons
-    QPushButton *tweaksButton = new QPushButton("Configuration", this);
-    QPushButton *addonsButton = new QPushButton("Addons", this);
-    QPushButton *terminalButton = new QPushButton("Terminal", this);
+        /* === Navigation Buttons === */
+        QVBoxLayout *buttonsLayout = new QVBoxLayout(); // Specific layout for buttons
+        QPushButton *tweaksButton = new QPushButton("Configuration", this);
+        QPushButton *addonsButton = new QPushButton("Addons", this);
+        QPushButton *terminalButton = new QPushButton("Terminal", this);
 
-    buttonsLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
-    buttonsLayout->addWidget(tweaksButton);
-    buttonsLayout->addWidget(addonsButton);
-    buttonsLayout->addWidget(terminalButton);
-    mainLayout->addLayout(buttonsLayout);
-    mainPage->setLayout(mainLayout);
+        buttonsLayout->addWidget(mountDriveWidget, 0, Qt::AlignLeft);
+        buttonsLayout->addWidget(tweaksButton);
+        buttonsLayout->addWidget(addonsButton);
+        buttonsLayout->addWidget(terminalButton);
+        mainLayout->addLayout(buttonsLayout);
+        mainPage->setLayout(mainLayout);
 
-    // Horizontal layout for social media buttons
-    QHBoxLayout *socialMediaLayout = new QHBoxLayout();
+        // Horizontal layout for social media buttons
+        QHBoxLayout *socialMediaLayout = new QHBoxLayout();
 
-    //* === Social Media Icon Buttons === */
-    // * == Discord
-    QToolButton *discordButton = new QToolButton(this);
-    discordButton->setIcon(QIcon(":/icons/resources/icons/discord.png"));
-    discordButton->setIconSize(QSize(38, 38));
-    discordButton->setAutoRaise(true);
-    discordButton->setToolTip("Join my Discord!");
+        //* === Social Media Icon Buttons === */
+        // * == Discord
+        QToolButton *discordButton = new QToolButton(this);
+        discordButton->setIcon(QIcon(":/icons/resources/icons/discord.png"));
+        discordButton->setIconSize(QSize(38, 38));
+        discordButton->setAutoRaise(true);
+        discordButton->setToolTip("Join my Discord!");
 
-    // * == Twitter
-    QToolButton *twitterButton = new QToolButton(this);
-    twitterButton->setIcon(QIcon(":/icons/resources/icons/twitter.png"));
-    twitterButton->setIconSize(QSize(48, 48));
-    twitterButton->setAutoRaise(true);
-    twitterButton->setToolTip("Follow me on Twitter!");
+        // * == Twitter
+        QToolButton *twitterButton = new QToolButton(this);
+        twitterButton->setIcon(QIcon(":/icons/resources/icons/twitter.png"));
+        twitterButton->setIconSize(QSize(48, 48));
+        twitterButton->setAutoRaise(true);
+        twitterButton->setToolTip("Follow me on Twitter!");
 
-    // * == YouTube
-    QToolButton *youtubeButton = new QToolButton(this);
-    youtubeButton->setIcon(QIcon(":/icons/resources/icons/youtube.png"));
-    youtubeButton->setIconSize(QSize(48, 48));
-    youtubeButton->setAutoRaise(true);
-    youtubeButton->setToolTip("Subscribe to my Channel!");
+        // * == YouTube
+        QToolButton *youtubeButton = new QToolButton(this);
+        youtubeButton->setIcon(QIcon(":/icons/resources/icons/youtube.png"));
+        youtubeButton->setIconSize(QSize(48, 48));
+        youtubeButton->setAutoRaise(true);
+        youtubeButton->setToolTip("Subscribe to my Channel!");
 
-    // * == Patreon
-    QToolButton *patreonButton = new QToolButton(this);
-    patreonButton->setIcon(QIcon(":/icons/resources/icons/patreon.png"));
-    patreonButton->setIconSize(QSize(48, 48));
-    patreonButton->setAutoRaise(true);
-    patreonButton->setToolTip("Become my patreon!");
+        // * == Patreon
+        QToolButton *patreonButton = new QToolButton(this);
+        patreonButton->setIcon(QIcon(":/icons/resources/icons/patreon.png"));
+        patreonButton->setIconSize(QSize(48, 48));
+        patreonButton->setAutoRaise(true);
+        patreonButton->setToolTip("Become my patreon!");
 
-    // * == Instagram
-    // QToolButton *instagramButton = new QToolButton(this);
-    // instagramButton->setIcon(QIcon(":/icons/resources/icons/instagram.png"));
-    // instagramButton->setIconSize(QSize(48, 48));
-    // instagramButton->setAutoRaise(true);
-    // instagramButton->setToolTip("Follow me on Instagram!");
+        // * == Instagram
+        // QToolButton *instagramButton = new QToolButton(this);
+        // instagramButton->setIcon(QIcon(":/icons/resources/icons/instagram.png"));
+        // instagramButton->setIconSize(QSize(48, 48));
+        // instagramButton->setAutoRaise(true);
+        // instagramButton->setToolTip("Follow me on Instagram!");
 
-    // Insert social media buttons into the horizontal layout
-    socialMediaLayout->addWidget(discordButton);
-    socialMediaLayout->addWidget(twitterButton);
-    socialMediaLayout->addWidget(youtubeButton);
-    socialMediaLayout->addWidget(patreonButton);
-    // socialMediaLayout->addWidget(instagramButton);
-    socialMediaLayout->setSpacing(2);
-    socialMediaLayout->setAlignment(Qt::AlignLeft);
+        // Insert social media buttons into the horizontal layout
+        socialMediaLayout->addWidget(discordButton);
+        socialMediaLayout->addWidget(twitterButton);
+        socialMediaLayout->addWidget(youtubeButton);
+        socialMediaLayout->addWidget(patreonButton);
+        // socialMediaLayout->addWidget(instagramButton);
+        socialMediaLayout->setSpacing(2);
+        socialMediaLayout->setAlignment(Qt::AlignLeft);
 
-    // Adding the horizontal layout to the main one
-    mainLayout->addLayout(socialMediaLayout);
+        // Adding the horizontal layout to the main one
+        mainLayout->addLayout(socialMediaLayout);
 
-        // === Connect signals to the socialMedia function === //
-    connect(discordButton, &QToolButton::clicked, this, [=](){
-        coreFunctions->socialMedia("discord");
-    });
-    connect(twitterButton, &QToolButton::clicked, this, [=](){
-        coreFunctions->socialMedia("twitter");
-    });
-    connect(youtubeButton, &QToolButton::clicked, this, [=](){
-        coreFunctions->socialMedia("youtube");
-    });
-    connect(patreonButton, &QToolButton::clicked, this, [=](){
-        coreFunctions->socialMedia("patreon");
-    });
+        // === Connect signals for social media buttons === //
+        connect(discordButton, &QToolButton::clicked, this, [=](){
+            coreFunctions->socialMedia("discord");
+        });
+        connect(twitterButton, &QToolButton::clicked, this, [=](){
+            coreFunctions->socialMedia("twitter");
+        });
+        connect(youtubeButton, &QToolButton::clicked, this, [=](){
+            coreFunctions->socialMedia("youtube");
+        });
+        connect(patreonButton, &QToolButton::clicked, this, [=](){
+            coreFunctions->socialMedia("patreon");
+        });
 
-    // Disable/Enable at Startup
-    QCheckBox *disabledStartup = new QCheckBox(this);
-    mainLayout->addWidget(disabledStartup, 3, Qt::AlignRight);
-    // Determine the current autostart state by checking if the .desktop file exists.
-    QString desktopFilePath = QDir::homePath() + "/.config/autostart/tolitica.desktop";
-    QFile desktopFile(desktopFilePath);
-    bool currentAutoState = desktopFile.exists();
+        // Disable/Enable at Startup
+        QCheckBox *disabledStartup = new QCheckBox(this);
+        mainLayout->addWidget(disabledStartup, 3, Qt::AlignRight);
+        // Determine the current autostart state by checking if the .desktop file exists.
+        QString desktopFilePath = QDir::homePath() + "/.config/autostart/tolitica.desktop";
+        QFile desktopFile(desktopFilePath);
+        bool currentAutoState = desktopFile.exists();
 
-    disabledStartup->setText(currentAutoState ? "Disable the app at startup" :
-                                                "Fire the app at startup");
-    disabledStartup->setChecked(currentAutoState);
+        disabledStartup->setText(currentAutoState ? "Disable the app at startup" :
+                                     "Fire the app at startup");
+        disabledStartup->setChecked(currentAutoState);
 
-    // === Connect the toggled signal from the QCheckBox === //
-    connect(disabledStartup, &QCheckBox::toggled, this, [this, disabledStartup](bool /*checked*/) {
-        bool newState = autostart();
-        disabledStartup->setText(newState ? "Disable the app at startup" : "Fire the app at startup");
-        disabledStartup->setChecked(newState);
-    });
+        // === Connect the toggled signal from the QCheckBox === //
+        connect(disabledStartup, &QCheckBox::toggled, this, [this, disabledStartup](bool /*checked*/){
+            bool newState = autostart();
+            disabledStartup->setText(newState ? "Disable the app at startup" : "Fire the app at startup");
+            disabledStartup->setChecked(newState);
+        });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // ==== Tweaks Page =====
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    QGridLayout *tweaksLayout = new QGridLayout(tweaksPage);
-    QPushButton *backButton = new QPushButton("Back", this);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // ==== Tweaks Page =====
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        QGridLayout *tweaksLayout = new QGridLayout(tweaksPage);
+        QPushButton *backButton = new QPushButton("Back", this);
 
-    // Functional Buttons Tweaks Layout
-    QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
-    QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
-    QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
-    QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
-    QPushButton *rankMirrorsButton = new QPushButton("Rank Mirrors", this);
+        // Functional Buttons Tweaks Layout
+        QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
+        QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
+        QPushButton *updateSystemButton = new QPushButton("Update Ada", this);
+        QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
+        QPushButton *rankMirrorsButton = new QPushButton("Rank Mirrors", this);
 
-    // ** Bluetooth Toggle CheckBox ** //
-    QCheckBox *bluetoothToggle = new QCheckBox("Enable Bluetooth", this);
-    tweaksLayout->addWidget(bluetoothToggle, 3, 0, Qt::AlignLeft);
+        // ** Bluetooth Toggle CheckBox ** //
+        QCheckBox *bluetoothToggle = new QCheckBox("Enable Bluetooth", this);
+        tweaksLayout->addWidget(bluetoothToggle, 3, 0, Qt::AlignLeft);
         // ** Bluetooth: set initial state based on Bluetooth status ** //
-    bool bluetoothEnabled = (CoreFunctions::bluetoothStatus() == 0);
-    bluetoothToggle->setChecked(bluetoothEnabled);
-    bluetoothToggle->setText(bluetoothEnabled ? "Disable Bluetooth" : "Enable Bluetooth");
-    // ** AppArmor Toggle CheckBox
-    QCheckBox *apparmorToggle = new QCheckBox(this);
-    tweaksLayout->addWidget(apparmorToggle, 3, 0, Qt::AlignRight);
+        bool bluetoothEnabled = (CoreFunctions::bluetoothStatus() == 0);
+        bluetoothToggle->setChecked(bluetoothEnabled);
+        bluetoothToggle->setText(bluetoothEnabled ? "Disable Bluetooth" : "Enable Bluetooth");
+
+
+        // ** AppArmor Toggle CheckBox
+        QCheckBox *apparmorToggle = new QCheckBox(this);
+        tweaksLayout->addWidget(apparmorToggle, 3, 0, Qt::AlignRight);
         // ** AppArmor: set initial state base on AppArmor statud ** //
-    int apparmorStatus = CoreFunctions::apparmorStatus();
+        int aaStatus = CoreFunctions::apparmorStatus();
+        qDebug() << "Initial AppArmor status:" << aaStatus;
 
-    if(apparmorStatus == 0) {
-        apparmorToggle->setText("Enable AppArmor");
-    } else {
-        bool appArmorEnabled = (CoreFunctions::apparmorStatus() == 0);
-        apparmorToggle->setChecked(appArmorEnabled);
-        apparmorToggle->setText(appArmorEnabled ? "Disable AppArmor" : "Enable AppArmor");
-    }
+        if (aaStatus == 0) {
+            // Not supported – leave unchecked and prompt text "Enable AppArmor"
+            apparmorToggle->setChecked(false);
+            apparmorToggle->setText("Enable AppArmor");
+        } else if (aaStatus == 1) {
+            // AppArmor is enabled
+            apparmorToggle->setChecked(true);
+            apparmorToggle->setText("Disable AppArmor");
+        } else if (aaStatus == 2) {
+            // AppArmor is disabled
+            apparmorToggle->setChecked(false);
+            apparmorToggle->setText("Enable AppArmor");
+        } else {
+            // For any other status (e.g., 3 means partially enabled or custom) – decide on a default:
+            apparmorToggle->setChecked(false);
+            apparmorToggle->setText("Enable AppArmor");
+        }
 
-    /* === Positioning Buttons === */
-    tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
-    tweaksLayout->addWidget(cleanPkgCacheButton, 1, 0, Qt::AlignRight);
-    tweaksLayout->addWidget(rankMirrorsButton, 2, 0, Qt::AlignRight);
-    tweaksLayout->addWidget(updateSystemButton, 2, 0, Qt::AlignCenter);
-    tweaksLayout->addWidget(removeDBLockButton, 2, 0, Qt::AlignLeft);
+        /* === Positioning Buttons === */
+        tweaksLayout->addWidget(cleanOrphansButton, 1, 0, Qt::AlignLeft);
+        tweaksLayout->addWidget(cleanPkgCacheButton, 1, 0, Qt::AlignRight);
+        tweaksLayout->addWidget(rankMirrorsButton, 2, 0, Qt::AlignRight);
+        tweaksLayout->addWidget(updateSystemButton, 2, 0, Qt::AlignCenter);
+        tweaksLayout->addWidget(removeDBLockButton, 2, 0, Qt::AlignLeft);
 
-    // Push Back-button to bottom dynamically
-    tweaksLayout->setRowStretch(4, 1);
-    tweaksLayout->addWidget(backButton, 5, 0, Qt::AlignLeft);
-    tweaksPage->setLayout(tweaksLayout);
+        // Push Back-button to bottom dynamically
+        tweaksLayout->setRowStretch(4, 1);
+        tweaksLayout->addWidget(backButton, 5, 0, Qt::AlignLeft);
+        tweaksPage->setLayout(tweaksLayout);
 
-    tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
-                           cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle,
-                           apparmorToggle, rankMirrorsButton);
+        tweaksSetupConnections(stackedWidget, tweaksButton, backButton, cleanOrphansButton,
+                               cleanPkgCacheButton, updateSystemButton, removeDBLockButton, bluetoothToggle,
+                               apparmorToggle, rankMirrorsButton);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // ==== Terminal Page =====
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    QGridLayout *terminalLayout = new QGridLayout(terminalPage);
-    QPushButton *terminalBackButton = new QPushButton("Back", this);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // ==== Terminal Page =====
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        QGridLayout *terminalLayout = new QGridLayout(terminalPage);
+        QPushButton *terminalBackButton = new QPushButton("Back", this);
 
-    // ** Functional Buttons Terminal Layout ** //
-    // *Enable/Disable Terminal Theming
-    QPushButton *terminalThemeButton = new QPushButton("Disable Terminal Theming", this);
-    int checkTermStatus = checkTermThemingStatus();
+        // ** Functional Buttons Terminal Layout ** //
+        // *Enable/Disable Terminal Theming
 
-    if (checkTermStatus == 0) {
-        terminalThemeButton->setText("No config.fish found");
-    } else {
-        terminalThemeButton->setText(checkTermStatus == 1 ? "Disable Terminal Theming" :
-                                                            "Enable Terminal Theming");
-    }
-    // *Change the shell
-    QPushButton *changeShellButton = new QPushButton("Change Shell", this);
-    QComboBox *shellComboBox = new QComboBox(this); // Added for shell selection
-    QStringList shells = CoreFunctions::getInstalledShells(); // Call to get installed shells
-    QLabel *shellLabel = new QLabel("Current Shell: Unknown", this); // Add sehll label
-    QGroupBox *shellGroupBox = new QGroupBox("Shell Options", this);
-    QVBoxLayout *shellBoxGroupLayout = new QVBoxLayout(shellGroupBox);
+        QString shell = CoreFunctions::getCurrentShell();
+        bool isFsh = (shell == "/bin/fish");
 
-    // Fetch and isplay the current shell
-    QString currentShell = CoreFunctions::getCurrentShell();
-    shellLabel->setText("Current Shell: " + currentShell);
+        QPushButton *terminalThemeButton = new QPushButton("Disable Terminal Theming (Fish ONLY)", this);
+        terminalThemeButton->setEnabled(isFsh);
 
-    if (shells.isEmpty()) {
-        shellComboBox->addItem("No shells detected");
-        changeShellButton->setEnabled(false); // Disable button if no shells detected
-    } else {
-        shellComboBox->addItems(shells);
-    }
+        if (isFsh) {
+            int checkTermStatus = checkTermThemingStatus();
 
-    /* === Positioning Buttons === */
-    terminalLayout->addWidget(terminalThemeButton);
-    terminalLayout->addWidget(changeShellButton);
-    /* === Boxes === */
-    terminalLayout->addWidget(shellComboBox); // Dropdown for shell selection
+            if (checkTermStatus == 0) {
+                terminalThemeButton->setText("No config.fish found");
+            } else {
+                terminalThemeButton->setText(checkTermStatus == 1 ? "Disable Terminal Theming (Fish ONLY)" :
+                                             "Enable Terminal Theming");
+            }
+        }
+
+        // *Change the shell
+        QPushButton *changeShellButton = new QPushButton("Change Shell", this);
+        QComboBox *shellComboBox = new QComboBox(this); // Added for shell selection
+        QStringList shells = CoreFunctions::getInstalledShells(); // Call to get installed shells
+        QLabel *shellLabel = new QLabel("Current Shell: Unknown", this); // Add sehll label
+        QGroupBox *shellGroupBox = new QGroupBox("Shell Options", this);
+        QVBoxLayout *shellBoxGroupLayout = new QVBoxLayout(shellGroupBox);
+
+        // Fetch and isplay the current shell
+        QString currentShell = CoreFunctions::getCurrentShell();
+        shellLabel->setText("Current Shell: " + currentShell);
+
+        if (shells.isEmpty()) {
+            shellComboBox->addItem("No shells detected");
+            changeShellButton->setEnabled(false); // Disable button if no shells detected
+        } else {
+            shellComboBox->addItems(shells);
+        }
+
+        /* === Positioning Buttons === */
+        terminalLayout->addWidget(terminalThemeButton);
+        terminalLayout->addWidget(changeShellButton);
+        /* === Boxes === */
+        terminalLayout->addWidget(shellComboBox); // Dropdown for shell selection
         // Widgets for current shell-box
-    shellBoxGroupLayout->addWidget(shellLabel);
-    shellBoxGroupLayout->addWidget(shellComboBox);
-    shellBoxGroupLayout->addWidget(changeShellButton);
-    shellGroupBox->setLayout(shellBoxGroupLayout);
-    shellGroupBox->setAlignment(Qt::AlignCenter);
+        shellBoxGroupLayout->addWidget(shellLabel);
+        shellBoxGroupLayout->addWidget(shellComboBox);
+        shellBoxGroupLayout->addWidget(changeShellButton);
+        shellGroupBox->setLayout(shellBoxGroupLayout);
+        shellGroupBox->setAlignment(Qt::AlignCenter);
 
-    /* === Others === */
-    terminalLayout->addWidget(shellGroupBox, 5, 0, Qt::AlignRight);
+        /* === Others === */
+        terminalLayout->addWidget(shellGroupBox, 5, 0, Qt::AlignRight);
 
-    // Push back button to bottom dynamically
-    terminalLayout->setRowStretch(4, 1);
-    terminalLayout->addWidget(terminalBackButton, 5, 0, Qt::AlignLeft);
-    terminalPage->setLayout(terminalLayout);
+        // Push back button to bottom dynamically
+        terminalLayout->setRowStretch(4, 1);
+        terminalLayout->addWidget(terminalBackButton, 5, 0, Qt::AlignLeft);
+        terminalPage->setLayout(terminalLayout);
 
-    terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox, shellLabel);
+        terminalSetupConnections(stackedWidget, terminalButton, terminalBackButton, terminalThemeButton, changeShellButton, shellComboBox, shellLabel);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // ==== Addons Page =====
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    QGridLayout *addonsLayout = new QGridLayout(addonsPage);
-    QPushButton *addonsBackButton = new QPushButton("Back", this);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // ==== Addons Page =====
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        QGridLayout *addonsLayout = new QGridLayout(addonsPage);
+        QPushButton *addonsBackButton = new QPushButton("Back", this);
 
-    // ** Functional Buttons Addons Layout ** //
-    // *Ada Gaming Meta
-    QPushButton *adaGamingMetaButton = new QPushButton(this);
-    QProcess checkAGMinstalled;
-    checkAGMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
-    checkAGMinstalled.waitForFinished();
+        // ** Functional Buttons Addons Layout ** //
+        // *Ada Gaming Meta
+        QPushButton *adaGamingMetaButton = new QPushButton(this);
+        QProcess checkAGMinstalled;
+        checkAGMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
+        checkAGMinstalled.waitForFinished();
 
-    if (checkAGMinstalled.exitCode() == 0) {
-        adaGamingMetaButton->setText("Remove Ada Gaming Meta");
-    } else {
-        adaGamingMetaButton->setText("Install Ada Gaming Meta");
-    }
-    // *Ada Development Meta
-    QPushButton *adaDevelopmentMetaButton = new QPushButton(this);
-    QProcess checkADMinstalled;
-    checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
-    checkADMinstalled.waitForFinished();
+        if (checkAGMinstalled.exitCode() == 0) {
+            adaGamingMetaButton->setText("Remove Ada Gaming Meta");
+        } else {
+            adaGamingMetaButton->setText("Install Ada Gaming Meta");
+        }
+        // *Ada Development Meta
+        QPushButton *adaDevelopmentMetaButton = new QPushButton(this);
+        QProcess checkADMinstalled;
+        checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
+        checkADMinstalled.waitForFinished();
 
-    if (checkADMinstalled.exitCode() == 0) {
-        adaDevelopmentMetaButton->setText("Remove Ada Development Meta");
-    } else {
-        adaDevelopmentMetaButton->setText("Install Ada Development Meta");
-    }
-    // *ChaoticAUR Button
-    QPushButton *chaoticAURButton = new QPushButton(this);
+        if (checkADMinstalled.exitCode() == 0) {
+            adaDevelopmentMetaButton->setText("Remove Ada Development Meta");
+        } else {
+            adaDevelopmentMetaButton->setText("Install Ada Development Meta");
+        }
+        // *ChaoticAUR Button
+        QPushButton *chaoticAURbutton = new QPushButton(this);
+        int chaoticStatus = checkChaoticAURStatus();
+        chaoticAURbutton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
+                                      chaoticStatus == 2 ? "Add Chaotic AUR" :
+                                      "Repair Chaotic AUR");
+        // **Add VMware Support**//
+        QPushButton *vmwButton = new QPushButton(this);
 
-    int chaoticStatus = checkChaoticAURStatus();
-    chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
-                              chaoticStatus == 2 ? "Add Chaotic AUR" :
-                              "Repair Chaotic AUR");
-    // **Add VMware Support**//
-    QPushButton *vmwButton = new QPushButton(this);
+        int vmStatus = vmwareStatus();
+        if(vmStatus == 0) {
+            vmwButton->setText("Remove VMware Workstation");
+        } else {
+            vmwButton->setText("Install/Enable VMware Workstation");
+        }
 
-    int vmStatus = vmwareStatus();
-    if(vmStatus == 0) {
-        vmwButton->setText("Remove VMware Workstation");
-    } else {
-        vmwButton->setText("Install/Enable VMware Workstation");
-    }
-
-    // ** Flatpak Toggle CheckBox ** //
-    QCheckBox *flatpakToggle = new QCheckBox(this);
-    addonsLayout->addWidget(flatpakToggle, 5, 0, Qt::AlignCenter);
+        // ** Flatpak Toggle CheckBox ** //
+        QCheckBox *flatpakToggle = new QCheckBox(this);
+        addonsLayout->addWidget(flatpakToggle, 5, 0, Qt::AlignCenter);
         /* Flatpak set initial state based on Flatpak-Status */
-    bool flatpakEnabled = (CoreFunctions::flatpakStatus() == 0);
-    flatpakToggle->setChecked(flatpakEnabled);
-    flatpakToggle->setText(flatpakEnabled ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
+        bool flatpakEnabled = (CoreFunctions::flatpakStatus() == 0);
+        flatpakToggle->setChecked(flatpakEnabled);
+        flatpakToggle->setText(flatpakEnabled ? "Disable/Remove Flatpak" : "Enable/Install Flatpak");
 
-    // ** Snapd Toggle CheckBox ** //
-    QCheckBox *snapdToggle = new QCheckBox(this);
-    addonsLayout->addWidget(snapdToggle, 5, 0, Qt::AlignRight);
+        // ** Snapd Toggle CheckBox ** //
+        QCheckBox *snapdToggle = new QCheckBox(this);
+        addonsLayout->addWidget(snapdToggle, 5, 0, Qt::AlignRight);
         /*Snapd set initial state based on Flatpak-status*/
-    bool snapdEnabled = (coreFunctions->snapdStatus() == 0);
-    snapdToggle->setChecked(snapdEnabled);
-    snapdToggle->setText(snapdEnabled ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
+        bool snapdEnabled = (coreFunctions->snapdStatus() == 0);
+        snapdToggle->setChecked(snapdEnabled);
+        snapdToggle->setText(snapdEnabled ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
 
-    /* === Positioning Buttons === */
-    addonsLayout->addWidget(adaGamingMetaButton, 1, 0, Qt::AlignLeft);
-    addonsLayout->addWidget(adaDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
-    addonsLayout->addWidget(chaoticAURButton, 1, 0, Qt::AlignRight);
-    addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
+        /* === Positioning Buttons === */
+        addonsLayout->addWidget(adaGamingMetaButton, 1, 0, Qt::AlignLeft);
+        addonsLayout->addWidget(adaDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
+        addonsLayout->addWidget(chaoticAURbutton, 1, 0, Qt::AlignRight);
+        addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
 
-    // Push Back-button to bottom dynamically
-    addonsLayout->setRowStretch(4, 1);
-    addonsLayout->addWidget(addonsBackButton, 5, 0, Qt::AlignLeft);
-    addonsPage->setLayout(addonsLayout);
+        // Push Back-button to bottom dynamically
+        addonsLayout->setRowStretch(4, 1);
+        addonsLayout->addWidget(addonsBackButton, 5, 0, Qt::AlignLeft);
+        addonsPage->setLayout(addonsLayout);
 
-    /* === Connections === */
-    addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
-                           adaDevelopmentMetaButton, chaoticAURButton, vmwButton, flatpakToggle, snapdToggle);
+        /* === Connections === */
+        addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, adaGamingMetaButton,
+                               adaDevelopmentMetaButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // ==== Mount Drives Page =====
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // ==== Mount Drives Page =====
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    mountDrivesSetupConnections(stackedWidget, mountDriveButton);
+        mountDrivesSetupConnections(stackedWidget, mountDriveButton);
+    }
 
 }
 // == I LOVE CPP ==================================
@@ -1379,7 +1501,6 @@ Widget::Widget(QWidget *parent)
 /// END MAIN FUNCTION
 //////////////////////////////////////////////////
 // == I LOVE C++ ==================================
-
 
 ///////////////////////////////////////////////////
 /// TWEAK SETUP CONNECTIONS FUNCTION
@@ -1409,12 +1530,13 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         bluetoothToggle->setText(bluetoothToggle->isChecked() ? "Disable Bluetooth" : "Enable Bluetooth");
     });
         // ** AppArmor Toggle Connection ** //
-        connect(appArmorToggle, &QCheckBox::toggled, this, [this, appArmorToggle]() {
+    connect(appArmorToggle, &QCheckBox::toggled, this, [this, appArmorToggle]() {
+        // Block signals so that changes made during the process don’t trigger unwanted updates
+        appArmorToggle->blockSignals(true);
         CoreFunctions::enableAppArmor(this, appArmorToggle);
-
-        // ** Update CheckBox label based on new state ** //
-        appArmorToggle->setText(appArmorToggle->isChecked() ? "Disable AppArmor" : "Enable AppArmor");
+        appArmorToggle->blockSignals(false);
     });
+
         // ** Rank Mirrors ** //
         connect(rankMirrorsButton, &QPushButton::clicked, this, [this]() {
             int mirrorCount = coreFunctions->getMirrorCount(this);
@@ -1430,7 +1552,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 /// ADDONS SETUP CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
+                                    QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURbutton,
                                     QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle) {
         // Navigation connections
         connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
@@ -1461,24 +1583,25 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
             removeAdaDevelopmentMeta();
         }
     });
+
         //** Chaotic AUR **//
-        connect(chaoticAURButton, &QPushButton::clicked, this, [=]() mutable {
-        int chaoticStatus = checkChaoticAURStatus();
+        connect(chaoticAURbutton, &QPushButton::clicked, this, [=]() mutable {
+            int chaoticStatus = checkChaoticAURStatus();
 
-        if (chaoticStatus == 1) { // Fully installed
-            chaoticAUR();
-        } else if (chaoticStatus == 2) { // Not installed
-            chaoticAUR();
-        } else if (chaoticStatus == 3) { // Run repair
-            chaoticAUR();
+            if (chaoticStatus == 1) { // Fully installed
+                chaoticAUR();
+            } else if (chaoticStatus == 2) { // Not installed
+                chaoticAUR();
+            } else if (chaoticStatus == 3) { // Run repair
+                chaoticAUR();
 
-        }
-        // **Recheck status after repair**
-        chaoticStatus = checkChaoticAURStatus();
-        chaoticAURButton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
-                                      chaoticStatus == 2 ? "Add Chaotic AUR" :
-                                      "Repair Chaotic AUR");
-    });
+            }
+            // **Recheck status after repair**
+            chaoticStatus = checkChaoticAURStatus();
+            chaoticAURbutton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
+                                          chaoticStatus == 2 ? "Add Chaotic AUR" :
+                                          "Repair Chaotic AUR");
+        });
         //** Add VMware Support **//
         connect(vmwButton, &QPushButton::clicked, this, [=]() mutable {
         int vmStatus = vmwareStatus();
