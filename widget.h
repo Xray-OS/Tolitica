@@ -55,9 +55,8 @@ private slots:
     int checkChaoticAURStatus();
     void backupPacmanConfig();
     void addVMware(QPushButton *vmwButton);
-    int vmwareStatus();
+    bool vmwareStatus();
     bool vmwareServiceStatus();
-    void removeVMware(QPushButton *vmwButton);
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
                                 QPushButton *adaGamingMetaButton, QPushButton *adaDevelopmentButton, QPushButton *chaoticAURButton,
                                 QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle);

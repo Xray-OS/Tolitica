@@ -741,17 +741,32 @@ void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
     QString enableCommand = "pacman -S --noconfirm snapd && systemctl enable --now snapd.socket && "
                             "ln -s /var/lib/snapd/snap /snap";
     QString disableCommand = "pacman -Rcns --noconfirm snapd && sudo rm -rf /snap && rm -rf /var/lib/snapd";
-    QString command = (status == 0) ? disableCommand : enableCommand;
 
     if (status == 0) {
-        command = disableCommand;
+        process->start("pkexec", QStringList() << "bash" << "-c" << disableCommand);
+        process->waitForFinished();
     } else {
-        command = enableCommand;
+        // First attempt to install Snapd
+        process->start("pkexec", QStringList() << "bash" << "-c" << enableCommand);
+        process->waitForFinished();
+
+        if (process->exitCode() != 0) {
+            qDebug() << "Snapd installation failed. Running pacman -Scc to fix potential cache issues.";
+
+            QProcess fix;
+            fix.start("pkexec", QStringList() << "pacman -Scc --noconfirm");
+            fix.waitForFinished();
+
+            // Retry Snapd installation after cache cleanup
+            process->start("pkexec", QStringList() << "bash" << "-c" << enableCommand);
+            process->waitForFinished();
+        }
     }
 
-    process->start("pkexec", QStringList() << "bash" << "-c" << command);
-    process->waitForFinished();
-    qDebug() << "ERROR: -> "<< process->readAllStandardOutput();
+    // process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    // process->waitForFinished();
+    qDebug() << "OUTPUT: -> "<< process->readAllStandardOutput();
+    qDebug() << "ERROR: -> "<< process->readAllStandardError();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

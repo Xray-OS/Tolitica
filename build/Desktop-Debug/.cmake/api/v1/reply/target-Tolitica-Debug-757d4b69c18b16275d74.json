@@ -31,19 +31,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 46,
+				"line" : 48,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 72,
+				"line" : 74,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 55,
+				"line" : 57,
 				"parent" : 0
 			},
 			{
@@ -105,6 +105,10 @@
 				},
 				{
 					"backtrace" : 3,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 3,
 					"define" : "QT_WIDGETS_LIB"
 				}
 			],
@@ -138,6 +142,11 @@
 					"backtrace" : 3,
 					"isSystem" : true,
 					"path" : "/usr/lib/qt/mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 3,
+					"isSystem" : true,
+					"path" : "/usr/include/qt/QtNetwork"
 				}
 			],
 			"language" : "CXX",
@@ -195,17 +204,22 @@
 			},
 			{
 				"backtrace" : 3,
-				"fragment" : "/usr/lib/libQt5Widgets.so.5.15.16",
+				"fragment" : "/usr/lib/libQt5Widgets.so.5.15.17",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "/usr/lib/libQt5Network.so.5.15.17",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 9,
-				"fragment" : "/usr/lib/libQt5Gui.so.5.15.16",
+				"fragment" : "/usr/lib/libQt5Gui.so.5.15.17",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 9,
-				"fragment" : "/usr/lib/libQt5Core.so.5.15.16",
+				"fragment" : "/usr/lib/libQt5Core.so.5.15.17",
 				"role" : "libraries"
 			}
 		],

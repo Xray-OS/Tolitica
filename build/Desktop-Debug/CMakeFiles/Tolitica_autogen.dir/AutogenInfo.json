@@ -84,6 +84,11 @@
 		"/usr/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
 		"/usr/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
 		"/usr/share/cmake/Modules/CMakeParseArguments.cmake",
+		"/usr/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake",
+		"/usr/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake",
+		"/usr/lib/cmake/Qt5Network/Qt5Network_QConnmanEnginePlugin.cmake",
+		"/usr/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake",
+		"/usr/lib/cmake/Qt5Network/Qt5Network_QNetworkManagerEnginePlugin.cmake",
 		"/usr/share/cmake/Modules/GNUInstallDirs.cmake",
 		"/home/angel/Documents/Development/_APPS/Tolitica/visualElements.qrc"
 	],
@@ -115,7 +120,7 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/Tolitica_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NETWORK_LIB", "QT_WIDGETS_LIB" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -130,6 +135,7 @@
 		"/usr/include/qt/QtGui",
 		"/usr/include/qt/QtCore",
 		"/usr/lib/qt/mkspecs/linux-g++",
+		"/usr/include/qt/QtNetwork",
 		"/usr/include/c++/15.1.1",
 		"/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
 		"/usr/include/c++/15.1.1/backward",

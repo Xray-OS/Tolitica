@@ -197,9 +197,10 @@ Tolitica: CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/Tolitica_autogen/EWIEGA46WW/qrc_visualElements.cpp.o
 Tolitica: CMakeFiles/Tolitica.dir/build.make
 Tolitica: CMakeFiles/Tolitica.dir/compiler_depend.ts
-Tolitica: /usr/lib/libQt5Widgets.so.5.15.16
-Tolitica: /usr/lib/libQt5Gui.so.5.15.16
-Tolitica: /usr/lib/libQt5Core.so.5.15.16
+Tolitica: /usr/lib/libQt5Widgets.so.5.15.17
+Tolitica: /usr/lib/libQt5Network.so.5.15.17
+Tolitica: /usr/lib/libQt5Gui.so.5.15.17
+Tolitica: /usr/lib/libQt5Core.so.5.15.17
 Tolitica: CMakeFiles/Tolitica.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/angel/Documents/Development/_APPS/Tolitica/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable Tolitica"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tolitica.dir/link.txt --verbose=$(VERBOSE)

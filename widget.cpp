@@ -246,35 +246,39 @@ void Widget::adaGamingMeta() {
 
     int progressValue = 0;
 
-    // **Fix: Real-time progress update using process output**
+    // Fix: Real-time progress update using process output
     connect(installAGM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
-
         // Adjust progress dynamically based on output
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
-
         QCoreApplication::processEvents(); // Ensure UI refresh
     });
 
-    // **Fix: Reliable package detection using `exitCode()`**
-    connect(installAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]
-            (int exitCode, QProcess::ExitStatus status){
+    // Combined finished signal handling
+    connect(installAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [=](int exitCode, QProcess::ExitStatus status) mutable {
+                // If installation failed, try to clean the cache and reinstall
+                if (exitCode != 0) {
+                    QProcess fix(this);
+                    fix.start("pkexec", QStringList() << "pacman -Scc --noconfirm");
+                    fix.waitForFinished();  // Ensure cache cleanup before retry
+                    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-gaming-meta --noconfirm");
+                    installAGM->waitForFinished();
+                }
 
-                // Check if the package is already installed
+                // After installation (or retry), check if the package is installed
                 QProcess checkInstalled;
                 checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-gaming-meta");
-                checkInstalled.waitForFinished();  // Ensure process completes before reading output
+                checkInstalled.waitForFinished();
+
+                progress->setValue(100); // Mark progress as complete
 
                 if (checkInstalled.exitCode() == 0) {
-                    // Package is already installed
-                    progress->setValue(100);
-                    QMessageBox::information(nullptr, "Ada Gaming Meta Already Installed",
-                                             "Ada Gaming Meta packages are already installed on your system.");
+                    QMessageBox::information(nullptr, "Ada Gaming Meta",
+                                             "Ada Gaming Meta packages are installed successfully!");
                 } else {
-                    // Package was just installed
-                    progress->setValue(100);
-                    QMessageBox::information(nullptr, "Ada Gaming Meta Has Been Installed",
-                                             "Ada Gaming Meta packages were installed successfully!");
+                    QMessageBox::warning(nullptr, "Ada Gaming Meta",
+                                         "There was a problem installing Ada Gaming Meta packages.");
                 }
 
                 // Cleanup Memory
@@ -283,12 +287,15 @@ void Widget::adaGamingMeta() {
                 monitorTimer->deleteLater(); // Stop aggressive monitoring
             });
 
-    // Start installing process
-    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-gaming-meta --noconfirm");
-
     // Start aggressive monitoring
     monitorTimer->start(250); // Updates every 250ms
+
+    // Start installing process
+    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-gaming-meta --noconfirm");
+    installAGM->waitForFinished();
 }
+
+
 ///////////////////////////////////////////////////
 /// ADDONS::REMOVE ADA-GAMING-META FUNCTION
 //////////////////////////////////////////////////
@@ -359,8 +366,8 @@ void Widget::removeAdaGamingMeta() {
 }
 
 ///////////////////////////////////////////////////
-/// ADDONS:: ADA-DEVELOPMENT-META FUNCTION
-//////////////////////////////////////////////////
+/// ADDONS::INSTALL ADA-DEVELOPMENT-META FUNCTION
+///////////////////////////////////////////////////
 void Widget::adaDevelopmentMeta() {
     QProcess *installADM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
@@ -373,48 +380,58 @@ void Widget::adaDevelopmentMeta() {
 
     int progressValue = 0;
 
-    // ** Fix: Real-time progress update using process output **
+    // Real-time progress update based on process output
     connect(installADM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
-
-    // Adjust progress dynamically based on output
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
-
         QCoreApplication::processEvents(); // Ensure UI refresh
     });
 
-    // **Fix: Reliable package detection using 'exitCode()'**
-    connect(installADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]
-            (int exitCode, QProcess::ExitStatus status) {
-                // Check if the package is already installed
-        QProcess checkInstalled;
-        checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
-        checkInstalled.waitForFinished(); // Ensure process completes before reading output
+    // Combined finished signal handling with cache cleanup on failure
+    connect(installADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [=](int exitCode, QProcess::ExitStatus status) mutable {
+                // If the installation fails, clean up the pacman cache and retry installation
+                // if (exitCode != 0) {
+                //     QProcess fix(this);
+                //     fix.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Scc --noconfirm");
+                //     fix.waitForFinished();  // Wait for cache cleanup to complete
 
-        if (checkInstalled.exitCode() == 0) {
-            // Package is already installed
-            progress->setValue(100);
-            QMessageBox::information(nullptr, "Ada Development Meta Already Installed",
-                                              "Ada Development Meta packages are already installed on your system");
-        } else {
-            // Package was just installed
-            progress->setValue(100);
-            QMessageBox::information(nullptr, "Ada Development Meta has been installed",
-                                     "Ada Development Meta packages were installed successfully!");
-        }
+                //     // Retry installation after cache cleanup
+                //     installADM->start("pkexec", QStringList() << "bash" << "-c"
+                //                                               << "pacman -S ada-development-meta --noconfirm");
+                //     installADM->waitForFinished();
+                // }
 
-        // Cleanup Memory
-        progress->deleteLater();
-        installADM->deleteLater();
-        monitorTimer->deleteLater();
-    });
+                // After installation (or after the retry), check if the package is installed
+                QProcess checkInstalled;
+                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
+                checkInstalled.waitForFinished();
 
-    // Start installing process
-    installADM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S ada-development-meta "
-                                                 "--noconfirm");
-    // Start aggressive monitoring
+                progress->setValue(100); // Mark progress as complete
+
+                if (checkInstalled.exitCode() == 0) {
+                    QMessageBox::information(nullptr, "Ada Development Meta",
+                                             "Ada Development Meta packages are installed successfully!");
+                } else {
+                    QMessageBox::warning(nullptr, "Ada Development Meta",
+                                         "There was a problem installing Ada Development Meta packages.");
+                }
+
+                // Cleanup dynamic objects
+                progress->deleteLater();
+                installADM->deleteLater();
+                monitorTimer->deleteLater(); // Stop aggressive monitoring
+            });
+
+    // Start aggressive monitoring of progress updates
     monitorTimer->start(250); // Updates every 250ms
-};
+
+    // Begin the installation process
+    installADM->start("pkexec", QStringList() << "bash" << "-c"
+                                              << "pacman -S ada-development-meta --noconfirm");
+    installADM->waitForFinished();
+}
+
 
 ///////////////////////////////////////////////////
 /// ADDONS:: REMOVE ADA-DEVELOPMENT-META FUNCTION
@@ -584,22 +601,50 @@ void Widget::chaoticAUR() {
             "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm";
         addProc.start("bash", QStringList() << "-c" << addCmd);
         addProc.waitForFinished();
-        qDebug() << "addProcFunction: " << addProc.readAllStandardOutput();
+        qDebug() << "addProcFunction output:" << addProc.readAllStandardOutput();
+        qDebug() << "addProcFunction errors:" << addProc.readAllStandardError();
 
         QString workingDir = QDir::homePath() + "/tolitica-home-settings/backups/current-use";
-        QDir().mkpath(workingDir);
+        if (!QDir().mkpath(workingDir)) {
+            qDebug() << "Failed to create backup directory:" << workingDir;
+        }
         QString configPath = workingDir + "/pacman.conf";
         QString originalConfig = "/etc/pacman.conf";
+
+        qDebug() << "workingDir:" << workingDir;
+        qDebug() << "configPath:" << configPath;
+        qDebug() << "originalConfig:" << originalConfig;
 
         // Copy the original config into our working directory
         QProcess copyProc;
         copyProc.start("pkexec", QStringList() << "cp" << originalConfig << configPath);
         copyProc.waitForFinished();
+        qDebug() << "Copy exit code:" << copyProc.exitCode();
+        qDebug() << "Copy process output:" << copyProc.readAllStandardOutput();
+        qDebug() << "Copy process errors:" << copyProc.readAllStandardError();
+
         if (copyProc.exitCode() != 0) {
             QMessageBox::warning(this, "Error", "Failed to copy pacman.conf to working directory:\n" +
                                                     copyProc.readAllStandardError());
             return;
         }
+
+        // Immediately fix ownership so the file is writeable by the current user.
+        QProcess fixPermissions;
+        // Use the current user from the environment (e.g., "angel")
+        QString user = qgetenv("USER");
+        qDebug() << "Fixing permissions for user:" << user;
+        fixPermissions.start("pkexec", QStringList() << "chown" << user + ":" + user << configPath);
+        fixPermissions.waitForFinished();
+        qDebug() << "chown exit code:" << fixPermissions.exitCode();
+        qDebug() << "chown output:" << fixPermissions.readAllStandardOutput();
+        qDebug() << "chown errors:" << fixPermissions.readAllStandardError();
+
+        fixPermissions.start("pkexec", QStringList() << "chmod" << "644" << configPath);
+        fixPermissions.waitForFinished();
+        qDebug() << "chmod exit code:" << fixPermissions.exitCode();
+        qDebug() << "chmod output:" << fixPermissions.readAllStandardOutput();
+        qDebug() << "chmod errors:" << fixPermissions.readAllStandardError();
 
         // Open the working copy in C++ for precise modification.
         QFile configFile(configPath);
@@ -628,6 +673,10 @@ void Widget::chaoticAUR() {
         QProcess installConfig;
         installConfig.start("pkexec", QStringList() << "cp" << configPath << originalConfig);
         installConfig.waitForFinished();
+        qDebug() << "InstallConfig exit code:" << installConfig.exitCode();
+        qDebug() << "InstallConfig output:" << installConfig.readAllStandardOutput();
+        qDebug() << "InstallConfig errors:" << installConfig.readAllStandardError();
+
         if (installConfig.exitCode() != 0) {
             QMessageBox::warning(this, "Error", "Failed to update /etc/pacman.conf:\n" +
                                                     installConfig.readAllStandardError());
@@ -649,8 +698,10 @@ void Widget::chaoticAUR() {
         // If the local chaotic-mirrorlist does not exist, clean any broken entries.
         if (!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
             QProcess removeRepo;
-            removeRepo.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf");
-            removeRepo.waitForFinished();
+            removeRepo.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf");removeRepo.waitForFinished();
+
+    qDebug() << "removeRepo output:" << removeRepo.readAllStandardOutput();
+            qDebug() << "removeRepo errors:" << removeRepo.readAllStandardError();
         }
         // Reinstall packages and re-import the key.
         QProcess repairProc;
@@ -661,13 +712,20 @@ void Widget::chaoticAUR() {
             "pkexec pacman-key --lsign-key 3056513887B78AEB";
         repairProc.start("bash", QStringList() << "-c" << repairCmd);
         repairProc.waitForFinished();
+        qDebug() << "repairProc output:" << repairProc.readAllStandardOutput();
+        qDebug() << "repairProc errors:" << repairProc.readAllStandardError();
 
         // Restore the pacman.conf from your backup store.
         QProcess restoreProc;
         QString homePath = QDir::homePath();
-        restoreProc.start("pkexec", QStringList() << "bash" << "-c" << "cp -r /" << homePath << "/tolitica-home-settings/backups/current-use/pacman.conf /etc/pacman.conf");
+        // Build the restore command as a single string to avoid splitting issues.
+        QString restoreCmd = QString("cp -r %1/tolitica-home-settings/backups/current-use/pacman.conf /etc/pacman.conf").arg(homePath);
+        qDebug() << "Restore command:" << restoreCmd;
+        restoreProc.start("pkexec", QStringList() << "bash" << "-c" << restoreCmd);
         restoreProc.waitForFinished();
-        qDebug() << "result: " << restoreProc.readAllStandardOutput();
+        qDebug() << "restoreProc exit code:" << restoreProc.exitCode();
+        qDebug() << "restoreProc output:" << restoreProc.readAllStandardOutput();
+        qDebug() << "restoreProc errors:" << restoreProc.readAllStandardError();
 
         if (restoreProc.exitCode() == 0) {
             QMessageBox::information(this, "Restore Complete", "Chaotic AUR has been repaired!");
@@ -678,33 +736,27 @@ void Widget::chaoticAUR() {
     }
 }
 
+
+
 ///////////////////////////////////////////////////
 /// ADDONS:: CHECK VMWARE SERVICES STATUS
 //////////////////////////////////////////////////
 bool Widget::vmwareServiceStatus() {
-    QStringList services = {
-        "vmware-networks.service",
-        "vmware-usbarbitrator.service"
-    };
 
     bool allServicesActive = true;
 
-    for (const QString &service : services) {
-        QProcess checkEnabled;
-        checkEnabled.start("bash", QStringList() << "-c" << "systemctl is-enabled " + service);
-        checkEnabled.waitForFinished();
-        bool isEnabled = (checkEnabled.readAllStandardOutput().trimmed() == "enabled");
+    QProcess checkEnabled;
+    checkEnabled.start("bash", QStringList() << "-c" << "systemctl is-enabled vmware-usbarbitrator.service");
+    checkEnabled.waitForFinished();
+    bool isEnabled = (checkEnabled.readAllStandardOutput().trimmed() == "enabled");
 
-        QProcess checkActive;
-        checkActive.start("bash", QStringList() << "-c" << "systemctl is-active " + service);
-        checkActive.waitForFinished();
-        bool isActive = (checkActive.readAllStandardOutput().trimmed() == "active");
+    QProcess checkActive;
+    checkActive.start("bash", QStringList() << "-c" << "systemctl is-active vmware-usbarbitrator.service");
+    checkActive.waitForFinished();
+    bool isActive = (checkActive.readAllStandardOutput().trimmed() == "active");
 
-        if (!isActive || !isEnabled) {
-            allServicesActive = false;
-            break;
-        }
-
+    if (!isActive || !isEnabled) {
+        allServicesActive = false;
     }
 
     return allServicesActive;
@@ -713,24 +765,16 @@ bool Widget::vmwareServiceStatus() {
 ///////////////////////////////////////////////////
 /// ADDONS:: CHECK VMWARE STATUS
 //////////////////////////////////////////////////
-int Widget::vmwareStatus() {
+bool Widget::vmwareStatus() {
     QProcess checkVMware;
-
-    // Check if the pkg is installed
     checkVMware.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
     checkVMware.waitForFinished();
 
-    bool pkgInstalled = (checkVMware.exitCode() == 0);
-
-    if (pkgInstalled && vmwareServiceStatus()) {
-        return 0;
-    }
-    if (!pkgInstalled  && !vmwareServiceStatus())
-    {
-        return 1;
+    if (checkVMware.exitCode() == 0) {
+        return true;
     }
     else {
-        return 2;
+        return false;
     }
 }
 
@@ -738,159 +782,156 @@ int Widget::vmwareStatus() {
 /// ADDONS:: ADD VMWARE SUPPORT
 //////////////////////////////////////////////////
 void Widget::addVMware(QPushButton *vmwButton) {
+    bool status = vmwareStatus();
+    bool servicesStatus = vmwareServiceStatus();
 
-    QProcess vmInstalled;
-    vmInstalled.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
-    vmInstalled.waitForFinished();
+    QMessageBox::StandardButton reply;
 
-    bool pkgInstalled = (vmInstalled.exitCode() == 0);
-
-    if (!pkgInstalled) {
-        QMessageBox::StandardButton reply = QMessageBox::question(
-            this, "VMware Workstation is not installed", "Do you want to install it?");
-        if (reply == QMessageBox::No) {
-            return;
-        }
-
-        QProcess *installVMware = new QProcess(this);
-        QTimer *monitorTimer = new QTimer(this);
-
-        // Create the progress bar dynamically
-        QProgressDialog *progress = new QProgressDialog("Installing VMware Workstation...", nullptr, 0, 100, this);
-        progress->setWindowModality(Qt::ApplicationModal);
-        progress->setCancelButton(nullptr);
-        progress->setValue(0);
-        progress->show();
-
-        QCoreApplication::processEvents(); // Forcing immediate rendering before the process starts
-
-        int progressValue = 0;
-
-        // **Real-Time progress update using process output**
-        connect(installVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
-            progressValue += 5;
-            progress->setValue(qMin(progressValue, 95));
-            QCoreApplication::processEvents();
-        });
-
-        // using monitorTimer to simulate progress updates if process output is insufficient
-        connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
-            if (progressValue < 0) {
-                progressValue += 2;
-                progress->setValue(qMin(progressValue, 95));
-            }
-        });
-        monitorTimer->start(250);
-
-        // **Update the button immediately hen installation is completed**
-        connect(installVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
-                mutable {
-                    QProcess checkInstalled;
-                    checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
-                    checkInstalled.waitForFinished();
-
-                    if (checkInstalled.exitCode() == 0) {
-                        progress->setValue(100);
-                        QMessageBox::information(nullptr, "VMware Workstation Installed", "VMware Workstation was installed successfully!");
-
-                        // ** Refresh the button text dynamically**
-                        int updatedStatus = vmwareStatus();
-                        vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
-
-                    } else {
-                        progress->setValue(100);
-                        QMessageBox::warning(nullptr, "Error", "Something went wrong installing VMware Workstation");
-
-                    }
-
-                    // Cleanup
-                    progress->deleteLater();
-                    installVMware->deleteLater();
-                    monitorTimer->deleteLater();
-                });
-
-        // Slight delay to ensure UI stability before starting the process
-        QTimer::singleShot(150, this, [=]() {
-            if (!vmwareServiceStatus()) {
-                QProcess enableServices;
-                enableServices.start("pkexec", QStringList() << "bash" << "-c" << "systemctl enable vmware-networks-configuration.service && pkexec systemctl start vmware-networks-configuration.service &&"
-                                                                                  "pkexec systemctl enable vmware-networks.service && pkexec systemctl start vmware-networks.service &&"
-                                                                                  "pkexec systemctl enable vmware-usbarbitrator.service && pkexec systemctl start vmware-usbarbitrator.service");
-                enableServices.waitForFinished();
-
-                int updatedStatus = vmwareStatus();
-                vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
-            }
-
-            // Start installation
-            installVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S vmware-workstation --noconfirm");
-            monitorTimer->start(250);
-        });
+    if (status && servicesStatus) {
+        reply = QMessageBox::question(this, "Remove VMware Workstation",
+                                      "Are you sure you want to remove VMware Workstation",
+                                    QMessageBox::Yes | QMessageBox::No);
     }
-}
+    else if (!status && !servicesStatus) {
+        reply = QMessageBox::question(this, "Install VMware Workstation", "VMware Workstation is not installed, do you want to install it?",
+                                      QMessageBox::Yes | QMessageBox::No);
+    }
+    else if (!status || !servicesStatus) {
+        if (!status) {
+            reply = QMessageBox::question(this, "Install VMware Workstation", "VMware Workstation is not installed, do you want to install it?",
+            QMessageBox::Yes | QMessageBox::No);
+        } else {
+            reply = QMessageBox::question(this, "VMware services", "VMware Workstation services are not enabled, do you want to enable them?",
+                                          QMessageBox::Yes | QMessageBox::No);
+        }
+    }
 
-///////////////////////////////////////////////////
-/// ADDONS:: REMOVE VMWARE
-//////////////////////////////////////////////////
-void Widget::removeVMware(QPushButton *vmwButton) {
-    QProcess *removeVMware = new QProcess(this);
+
+    if (reply == QMessageBox::No)
+        return;
+
+    // Create process objects and a timer to monitor installation progress
+    QProcess *installVMware = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this);
+    QProgressDialog *progress = nullptr;
 
-    QProgressDialog *progress = new QProgressDialog("Removing VMware Workstation...", nullptr, 0, 100, this);
+    // Display progress dialog with the message
+    if (status && servicesStatus) {
+        progress = new QProgressDialog("Removing VMware Workstation...", nullptr, 0, 100, this);
+    }
+    else if (!status && !servicesStatus) {
+        progress = new QProgressDialog("Installing VMware Workstation...", nullptr, 0, 100, this);
+    }
+
+    // one or the other... then adjust according
+    else if (!status || !servicesStatus) {
+        if (!status) {
+            progress = new QProgressDialog("Installing VMware Workstation...", nullptr, 0, 100, this);
+        } else {
+            progress = new QProgressDialog("Enabling VMware Workstation services...", nullptr, 0, 100, this);
+        }
+    }
+
     progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
-    progress->setValue(0); // Ensure it starts at 0
+    progress->setValue(0);
     progress->show();
-
-    QCoreApplication::processEvents();
+    QCoreApplication::processEvents(); // Force immediate rendering
 
     int progressValue = 0;
 
-    // Updating the progress value when new standard is available.
-    connect(removeVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+    // Increase the progress bar as process output comes in.
+    connect(installVMware, &QProcess::readyReadStandardOutput, this, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents();
     });
 
-    // Using monitorTimer to simulate progress updates if process output is insufficient
+    // Use a timer to simulate progress in case output is sparse.
     connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
         if (progressValue < 95) {
             progressValue += 2;
             progress->setValue(qMin(progressValue, 95));
         }
     });
-    monitorTimer->start(250);
 
-    // Handling success/failure and cleaning up resources
-    connect(removeVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]() mutable {
-        QProcess checkRemoved;
-        checkRemoved.start("bash", QStringList() << "-c" << "pacman -Q vmware-workstation");
-        checkRemoved.waitForFinished();
+    // When the installation process finishes;
+    connect(installVMware, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    this, [=](int exitCode, QProcess::ExitStatus status) mutable {
+        progress->setValue(100);
+        QCoreApplication::processEvents(); // Force UI to process the update before displayin the message
+        progress->close();
 
-        if (checkRemoved.exitCode() != 0) {
-            progress->setValue(100);
-            QMessageBox::information(nullptr, "VMware Workstation Removed",
-                                     "VMware Workstation has been removed successfully");
-            // **Update button dynamically**
-            int updatedStatus = vmwareStatus();
-            vmwButton->setText(updatedStatus == 0 ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
-        } else {
-            progress->setValue(100);
-            QMessageBox::warning(nullptr, "Error", "Something went wrong removing VMware Workstation!");
-        }
-
+        // Cleanup dynamic objects.
         progress->deleteLater();
-        removeVMware->deleteLater();
+        installVMware->deleteLater();
         monitorTimer->deleteLater();
+
+
+        if (installVMware->exitCode() == 0) {
+            QMessageBox::information(nullptr, "Operation successful!",
+                                     "VMware Workstation operations completed successfully");
+
+            // Update the button text
+            bool updatedStatus = (status && servicesStatus);
+
+            vmwButton->setText(updatedStatus ? "Remove VMware Workstation"
+                                             : "Install/Enable VMware Workstation");
+        } else {
+            QMessageBox::warning(nullptr, "Error", "Something went wrong installing VMware Workstation");
+        }
     });
 
-    // Slight delay to ensure UI stability before starting the process.
-    QTimer::singleShot(150, this, [=]() {
-        removeVMware->start("pkexec", QStringList() << "bash" << "-c" << "pacman -Rns vmware-workstation --noconfirm");
-        monitorTimer->start(250);
-    });
+    if (!status && !servicesStatus) {
 
+        installVMware->start("pkexec", QStringList() << "bash" << "-c" <<
+                                           "pacman -S vmware-workstation --noconfirm &&"
+                                           "pkexec systemctl enable vmware-networks-configuration.service && "
+                                           "pkexec systemctl start vmware-networks-configuration.service && "
+                                           //"pkexec systemctl enable vmware-networks.service && "
+                                           //"pkexec systemctl start vmware-networks.service && "
+                                           "pkexec systemctl enable vmware-usbarbitrator.service && "
+                                           "pkexec systemctl start vmware-usbarbitrator.service");
+        installVMware->waitForFinished();
+        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
+
+    }
+    else if (status && !servicesStatus) {
+
+        installVMware->start("pkexec", QStringList() << "bash" << "-c" <<
+                                           "pkexec systemctl enable vmware-networks-configuration.service && "
+                                           "pkexec systemctl start vmware-networks-configuration.service && "
+                                           //"pkexec systemctl enable vmware-networks.service && "
+                                           //"pkexec systemctl start vmware-networks.service && "
+                                           "pkexec systemctl enable vmware-usbarbitrator.service && "
+                                           "pkexec systemctl start vmware-usbarbitrator.service");
+        installVMware->waitForFinished();
+        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
+
+    } else {
+        // Removing the package also disable the services.. (no need for manual adjustment)
+        installVMware->start("pkexec", QStringList() << "bash" << "-c" <<
+                                           "pacman -Rns vmware-workstation --noconfirm && "
+                                           //"systemctl stop vmware-networks.service && "
+                                           "systemctl stop vmware-usbarbitrator.service && "
+                                           "rm -rf /etc/systemd/system/vmware-networks.service && "
+                                           "rm -rf /etc/systemd/system/vmware-usbarbitrator.service && "
+                                           "rm -rf /etc/vmware && "
+                                           "rm -rf /usr/lib/vmware && "
+                                           // "sudo mkinitcpio -P"
+                                           "systemctl daemon-reload && "
+                                           "systemctl reset-failed");
+        installVMware->waitForFinished();
+        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
+    }
+
+    bool newStatus = (vmwareStatus() && vmwareServiceStatus());
+    vmwButton->setText(newStatus ? "Remove VMware Workstation"
+                                 : "Install/Enable VMware Workstation");
+    monitorTimer->start(250);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1449,13 +1490,10 @@ Widget::Widget(QWidget *parent)
                                       "Repair Chaotic AUR");
         // **Add VMware Support**//
         QPushButton *vmwButton = new QPushButton(this);
+        bool vmStatus = vmwareStatus();
+        bool vmServices = vmwareServiceStatus();
 
-        int vmStatus = vmwareStatus();
-        if(vmStatus == 0) {
-            vmwButton->setText("Remove VMware Workstation");
-        } else {
-            vmwButton->setText("Install/Enable VMware Workstation");
-        }
+        vmwButton->setText((vmStatus && vmServices) ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
 
         // ** Flatpak Toggle CheckBox ** //
         QCheckBox *flatpakToggle = new QCheckBox(this);
@@ -1606,11 +1644,12 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         connect(vmwButton, &QPushButton::clicked, this, [=]() mutable {
         int vmStatus = vmwareStatus();
 
-        if(vmStatus == 0) { // Fully installed
-            removeVMware(vmwButton);
-        } else { // Not installed or partially installed
-            addVMware(vmwButton);
-        }
+            if (vmStatus == 0) {
+                addVMware(vmwButton);
+            } else {
+                addVMware(vmwButton);
+            }
+
     });
 
         // ** Flatpak Toggle Connection ** //
