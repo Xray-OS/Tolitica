@@ -652,6 +652,10 @@ int CoreFunctions::snapdStatus() {
 /// ADDONS: ENABLE/DISABLE SNAPD
 //////////////////////////////////////////////////
 void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
+    QProcess updateDB;
+    updateDB.start("bash", QStringList() << "-c" << "pacman -Sy");
+    updateDB.waitForFinished();
+
     int status = snapdStatus();
 
     if (status == 0) {

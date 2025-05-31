@@ -235,6 +235,52 @@ void Widget::removeDBLock() {
 /// ADDONS::INSTALL ADA-GAMING-META FUNCTION
 //////////////////////////////////////////////////
 void Widget::adaGamingMeta() {
+    QProcess checkIssues;
+
+    // Check DB sync
+    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
+    checkIssues.waitForFinished();
+    QString dbSyncErrors = checkIssues.readAllStandardError();
+
+    bool dbNotSynced = !dbSyncErrors.isEmpty();
+
+    QDir pkgCacheDir("/var/cache/pacman/pkg");
+    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+
+    if (cacheExists) {
+        // Check for PKG corruption
+        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
+        checkIssues.waitForFinished();
+        QString corruptionErrors = checkIssues.readAllStandardError();
+        bool corruptedPackages = !corruptionErrors.isEmpty();
+
+        // cleanup
+
+        if (dbNotSynced || (cacheExists && corruptedPackages)) {
+            qDebug() << "Issues detected! Cleaning package cache.";
+            QProcess cleanup;
+
+            if (dbNotSynced) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
+                cleanup.waitForFinished();
+
+                if (cleanup.exitCode() != 0) {
+                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
+                }
+            }
+            if (corruptedPackages) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
+                cleanup.waitForFinished();
+            }
+
+            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
+            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
+
+        } else {
+            qDebug() << "System database and package cache are fine!";
+        }
+    }
+
     QProcess *installAGM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
 
@@ -369,6 +415,53 @@ void Widget::removeAdaGamingMeta() {
 /// ADDONS::INSTALL ADA-DEVELOPMENT-META FUNCTION
 ///////////////////////////////////////////////////
 void Widget::adaDevelopmentMeta() {
+    QProcess checkIssues;
+
+    // Check DB sync
+    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
+    checkIssues.waitForFinished();
+    QString dbSyncErrors = checkIssues.readAllStandardError();
+
+    bool dbNotSynced = !dbSyncErrors.isEmpty();
+
+    QDir pkgCacheDir("/var/cache/pacman/pkg");
+    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+
+    if (cacheExists) {
+        // Check for PKG corruption
+        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
+        checkIssues.waitForFinished();
+        QString corruptionErrors = checkIssues.readAllStandardError();
+        bool corruptedPackages = !corruptionErrors.isEmpty();
+
+        // cleanup
+
+        if (dbNotSynced || (cacheExists && corruptedPackages)) {
+            qDebug() << "Issues detected! Cleaning package cache.";
+            QProcess cleanup;
+
+            if (dbNotSynced) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
+                cleanup.waitForFinished();
+
+                if (cleanup.exitCode() != 0) {
+                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
+                }
+            }
+            if (corruptedPackages) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
+                cleanup.waitForFinished();
+            }
+
+            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
+            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
+
+        } else {
+            qDebug() << "System database and package cache are fine!";
+        }
+    }
+
+
     QProcess *installADM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
 
@@ -579,6 +672,55 @@ void Widget::removeChaoticAUR() {
 /// ADDONS:: CHAOTIC-AUR
 //////////////////////////////////////////////////
 void Widget::chaoticAUR() {
+    QProcess checkIssues;
+
+    // Check DB sync
+    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
+    checkIssues.waitForFinished();
+    QString dbSyncErrors = checkIssues.readAllStandardError();
+
+    bool dbNotSynced = !dbSyncErrors.isEmpty();
+
+    QDir pkgCacheDir("/var/cache/pacman/pkg");
+    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+
+    if (cacheExists) {
+        // Check for PKG corruption
+        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
+        checkIssues.waitForFinished();
+        QString corruptionErrors = checkIssues.readAllStandardError();
+        bool corruptedPackages = !corruptionErrors.isEmpty();
+
+        // cleanup
+
+        if (dbNotSynced || (cacheExists && corruptedPackages)) {
+            qDebug() << "Issues detected! Cleaning package cache.";
+            QProcess cleanup;
+
+            if (dbNotSynced) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
+                cleanup.waitForFinished();
+
+                if (cleanup.exitCode() != 0) {
+                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
+                }
+            }
+            if (corruptedPackages) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
+                cleanup.waitForFinished();
+            }
+
+            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
+            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
+
+        } else {
+            qDebug() << "System database and package cache are fine!";
+        }
+    }
+
+    QString Stringstatus = QString::number(checkChaoticAURStatus());
+    qDebug() << "status: " << Stringstatus;
+
     int status = checkChaoticAURStatus();
     // Always back up before making any modifications
     backupPacmanConfig();
@@ -590,15 +732,15 @@ void Widget::chaoticAUR() {
     }
 
     // For initial installation, modify pacman.conf via C++.
-    if (status == 2) {
+    else if (status == 2) {
 
         // Proceed with package and key setup.
         QProcess addProc;
         QString addCmd =
             "pkexec pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
             "pkexec pacman-key --lsign-key 3056513887B78AEB && "
-            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm && "
-            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm";
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm &&"
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm";
         addProc.start("bash", QStringList() << "-c" << addCmd);
         addProc.waitForFinished();
         qDebug() << "addProcFunction output:" << addProc.readAllStandardOutput();
@@ -694,26 +836,35 @@ void Widget::chaoticAUR() {
     }
 
     // For a partial/failed setup, attempt to repair.
-    if (status == 3) {
+    else if (status == 3) {
         // If the local chaotic-mirrorlist does not exist, clean any broken entries.
         if (!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
             QProcess removeRepo;
-            removeRepo.start("pkexec", QStringList() << "bash" << "-c" << "sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf");removeRepo.waitForFinished();
+            qDebug() << "Executing: pkexec sed -i '/[chaotic-aur]/,+1d' /etc/pacman.conf'";
 
-    qDebug() << "removeRepo output:" << removeRepo.readAllStandardOutput();
+            removeRepo.start("pkexec", QStringList() << "bash" << "-c" << QString("sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf"));
+            removeRepo.waitForFinished();
+
+            qDebug() << "removeRepo output:" << removeRepo.readAllStandardOutput();
             qDebug() << "removeRepo errors:" << removeRepo.readAllStandardError();
         }
+
         // Reinstall packages and re-import the key.
         QProcess repairProc;
         QString repairCmd =
-            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm && "
-            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm && "
             "pkexec pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
-            "pkexec pacman-key --lsign-key 3056513887B78AEB";
+            "pkexec pacman-key --lsign-key 3056513887B78AEB &&"
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm && "
+            "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm";
         repairProc.start("bash", QStringList() << "-c" << repairCmd);
         repairProc.waitForFinished();
         qDebug() << "repairProc output:" << repairProc.readAllStandardOutput();
         qDebug() << "repairProc errors:" << repairProc.readAllStandardError();
+
+        QProcess checkConf;
+        checkConf.start("bash", QStringList() << "-c" << "grep '[chaotic-aur]' /etc/pacman.conf");
+        checkConf.waitForFinished();
+        qDebug() << "Pacman.conf after removeRepo:" << checkConf.readAllStandardOutput();
 
         // Restore the pacman.conf from your backup store.
         QProcess restoreProc;
@@ -782,6 +933,52 @@ bool Widget::vmwareStatus() {
 /// ADDONS:: ADD VMWARE SUPPORT
 //////////////////////////////////////////////////
 void Widget::addVMware(QPushButton *vmwButton) {
+    QProcess checkIssues;
+
+    // Check DB sync
+    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
+    checkIssues.waitForFinished();
+    QString dbSyncErrors = checkIssues.readAllStandardError();
+
+    bool dbNotSynced = !dbSyncErrors.isEmpty();
+
+    QDir pkgCacheDir("/var/cache/pacman/pkg");
+    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+
+    if (cacheExists) {
+        // Check for PKG corruption
+        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
+        checkIssues.waitForFinished();
+        QString corruptionErrors = checkIssues.readAllStandardError();
+        bool corruptedPackages = !corruptionErrors.isEmpty();
+
+        // cleanup
+
+        if (dbNotSynced || (cacheExists && corruptedPackages)) {
+            qDebug() << "Issues detected! Cleaning package cache.";
+            QProcess cleanup;
+
+            if (dbNotSynced) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
+                cleanup.waitForFinished();
+
+                if (cleanup.exitCode() != 0) {
+                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
+                }
+            }
+            if (corruptedPackages) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
+                cleanup.waitForFinished();
+            }
+
+            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
+            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
+
+        } else {
+            qDebug() << "System database and package cache are fine!";
+        }
+    }
+
     bool status = vmwareStatus();
     bool servicesStatus = vmwareServiceStatus();
 
@@ -867,16 +1064,13 @@ void Widget::addVMware(QPushButton *vmwButton) {
         installVMware->deleteLater();
         monitorTimer->deleteLater();
 
+        bool updatedStatus = vmwareStatus() && vmwareServiceStatus();
+        vmwButton->setText(updatedStatus ? "Remove VMware Workstation"
+                                         : "Install/Enable VMware Workstation");
 
         if (installVMware->exitCode() == 0) {
             QMessageBox::information(nullptr, "Operation successful!",
                                      "VMware Workstation operations completed successfully");
-
-            // Update the button text
-            bool updatedStatus = (status && servicesStatus);
-
-            vmwButton->setText(updatedStatus ? "Remove VMware Workstation"
-                                             : "Install/Enable VMware Workstation");
         } else {
             QMessageBox::warning(nullptr, "Error", "Something went wrong installing VMware Workstation");
         }
@@ -893,9 +1087,8 @@ void Widget::addVMware(QPushButton *vmwButton) {
                                            "pkexec systemctl enable vmware-usbarbitrator.service && "
                                            "pkexec systemctl start vmware-usbarbitrator.service");
         installVMware->waitForFinished();
-        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
-        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
-
+        qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        qDebug() << "ERROR: " << installVMware->readAllStandardError();
     }
     else if (status && !servicesStatus) {
 
@@ -907,8 +1100,8 @@ void Widget::addVMware(QPushButton *vmwButton) {
                                            "pkexec systemctl enable vmware-usbarbitrator.service && "
                                            "pkexec systemctl start vmware-usbarbitrator.service");
         installVMware->waitForFinished();
-        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
-        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
+        qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        qDebug() << "ERROR: " << installVMware->readAllStandardError();
 
     } else {
         // Removing the package also disable the services.. (no need for manual adjustment)
@@ -924,13 +1117,15 @@ void Widget::addVMware(QPushButton *vmwButton) {
                                            "systemctl daemon-reload && "
                                            "systemctl reset-failed");
         installVMware->waitForFinished();
-        // qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
-        // qDebug() << "ERROR: " << installVMware->readAllStandardError();
+        qDebug() << "OUTPUT: " << installVMware->readAllStandardOutput();
+        qDebug() << "ERROR: " << installVMware->readAllStandardError();
+
     }
 
-    bool newStatus = (vmwareStatus() && vmwareServiceStatus());
-    vmwButton->setText(newStatus ? "Remove VMware Workstation"
-                                 : "Install/Enable VMware Workstation");
+    // bool newStatus = (vmwareStatus() && vmwareServiceStatus());
+    // vmwButton->setText(newStatus ? "Remove VMware Workstation"
+    //                              : "Install/Enable VMware Workstation");
+
     monitorTimer->start(250);
 }
 
@@ -1473,6 +1668,7 @@ Widget::Widget(QWidget *parent)
         }
         // *Ada Development Meta
         QPushButton *adaDevelopmentMetaButton = new QPushButton(this);
+
         QProcess checkADMinstalled;
         checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q ada-development-meta");
         checkADMinstalled.waitForFinished();
@@ -1490,10 +1686,9 @@ Widget::Widget(QWidget *parent)
                                       "Repair Chaotic AUR");
         // **Add VMware Support**//
         QPushButton *vmwButton = new QPushButton(this);
-        bool vmStatus = vmwareStatus();
-        bool vmServices = vmwareServiceStatus();
+        bool vmStatus = vmwareStatus() && vmwareServiceStatus();
 
-        vmwButton->setText((vmStatus && vmServices) ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
+        vmwButton->setText((vmStatus) ? "Remove VMware Workstation" : "Install/Enable VMware Workstation");
 
         // ** Flatpak Toggle CheckBox ** //
         QCheckBox *flatpakToggle = new QCheckBox(this);
