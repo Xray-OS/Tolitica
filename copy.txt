@@ -1,0 +1,1 @@
+sudo rm -rf /opt/tolitica && sudo mkdir -p /opt/tolitica && sudo cp -r ~/Documents/Development/_APPS/Tolitica/build/Desktop-Release/* /opt/tolitica && sudo mv /opt/tolitica/Tolitica /opt/tolitica/tolitica
