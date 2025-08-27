@@ -44,6 +44,7 @@ sudo ./Tolitica
 
 ## 📋 License
 Tolitica is open-source and available under the Xray License.
+---
 
 🌐 Contact
 For any questions or contributions, feel free to open an issue or pull request on the GitHub repository.
