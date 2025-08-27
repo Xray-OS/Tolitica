@@ -19,27 +19,27 @@ Contributing to Tolitica is straightforward! Here’s how you can get started:
 
 ## 📥 Build and Run
 
-# Clone the repository
+## Clone the repository
 git clone https://github.com/Xray-OS/Tolitica.git
 cd Tolitica
 
-# Create a build directory
+## Create a build directory
 mkdir build
 cd build
 
-# Set CMAKE properly
+## Set CMAKE properly
 cmake .. -DCMAKE_PREFIX_PATH=$(qmake -query QT_INSTALL_PREFIX)/lib/
 cmake
 
-# If you’re using Qt6, you might need:
-# cmake .. -DCMAKE_PREFIX_PATH=$(qtpaths --qt-version 6 --install-prefix)/lib/cmake
+## If you’re using Qt6, you might need:
+cmake .. -DCMAKE_PREFIX_PATH=$(qtpaths --qt-version 6 --install-prefix)/lib/cmake
 
-# Build the project
+## Build the project
 cmake --build .
 
-# Run Tolitica
+## Run Tolitica
 ./Tolitica
-# or with sudo for elevated permissions
+## or with sudo for elevated permissions
 sudo ./Tolitica
 
 ## 📋 License
