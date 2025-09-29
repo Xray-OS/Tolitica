@@ -16,10 +16,54 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QToolButton>
+#include <cstddef>
 
 // CUSTOM CLASSES
 #include "core_functions.h"
 #include "calamares_page.h"
+#include "connectivityChecker.h"
+
+void Widget::cleanCache() {
+    QProcess checkIssues;
+    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
+    checkIssues.waitForFinished();
+    QString dbSyncErrors = checkIssues.readAllStandardError();
+
+    bool dbNotSynced = !dbSyncErrors.isEmpty();
+
+    QDir pkgCacheDir("/var/cache/pacman/pkg");
+    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+
+    if (cacheExists) {
+        // Check for PKG corruption
+        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
+        checkIssues.waitForFinished();
+
+        if (dbNotSynced || cacheExists ) {
+            qDebug() << "Issues detected! Cleaning package cache.";
+            QProcess cleanup;
+
+            if (dbNotSynced) {
+                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
+                cleanup.waitForFinished();
+
+                if (cleanup.exitCode() != 0) {
+                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
+                }
+            }
+        if (dbNotSynced) {
+            cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
+            cleanup.waitForFinished();
+        }
+
+            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
+            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
+
+        } else {
+            qDebug() << "System database and package cache are fine!";
+        }
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /// FUNCTIONS FOR THE TWEAKS PAGE /////////////////////// /////////////////////// ////////////////
@@ -414,7 +458,7 @@ void Widget::removeArchZGamingMeta() {
 ///////////////////////////////////////////////////
 /// ADDONS::INSTALL ARCH7Z-DEVELOPMENT-META FUNCTION
 ///////////////////////////////////////////////////
-void Widget::archZDevelopmentMeta() {
+void Widget::arch7zDevelopmentMeta() {
     QProcess checkIssues;
 
     // Check DB sync
@@ -529,7 +573,7 @@ void Widget::archZDevelopmentMeta() {
 ///////////////////////////////////////////////////
 /// ADDONS:: REMOVE ARCH7Z-DEVELOPMENT-META FUNCTION
 //////////////////////////////////////////////////
-void Widget::removeArchZDevelopmentMeta() {
+void Widget::removeArch7zDevelopmentMeta() {
     QProcess *removeADM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this);
 
@@ -613,11 +657,11 @@ int Widget::checkChaoticAURStatus() {
     bool includeLineExists = runCommand("grep -q 'Include = /etc/pacman.d/chaotic-mirrorlist' /etc/pacman.conf");
 
     if (keyExist && packagesInstalled && repoHeaderExists && includeLineExists)
-        return 1; // Fully configured
+        return 0; // Fully configured
     else if (!keyExist && !packagesInstalled && !repoHeaderExists && !includeLineExists)
-        return 2; // Not set up
+        return 1; // Not set up
     else
-        return 3; // Partial setup (repair needed)
+        return 2; // Partial setup (repair needed)
 }
 
 ///////////////////////////////////////////////////
@@ -672,67 +716,36 @@ void Widget::removeChaoticAUR() {
 /// ADDONS:: CHAOTIC-AUR
 //////////////////////////////////////////////////
 void Widget::chaoticAUR() {
-    QProcess checkIssues;
-
-    // Check DB sync
-    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
-    checkIssues.waitForFinished();
-    QString dbSyncErrors = checkIssues.readAllStandardError();
-
-    bool dbNotSynced = !dbSyncErrors.isEmpty();
-
-    QDir pkgCacheDir("/var/cache/pacman/pkg");
-    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
-
-    if (cacheExists) {
-        // Check for PKG corruption
-        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
-        checkIssues.waitForFinished();
-        QString corruptionErrors = checkIssues.readAllStandardError();
-        bool corruptedPackages = !corruptionErrors.isEmpty();
-
-        // cleanup
-
-        if (dbNotSynced || (cacheExists && corruptedPackages)) {
-            qDebug() << "Issues detected! Cleaning package cache.";
-            QProcess cleanup;
-
-            if (dbNotSynced) {
-                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
-                cleanup.waitForFinished();
-
-                if (cleanup.exitCode() != 0) {
-                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
-                }
-            }
-            if (corruptedPackages) {
-                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
-                cleanup.waitForFinished();
-            }
-
-            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
-            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
-
-        } else {
-            qDebug() << "System database and package cache are fine!";
-        }
-    }
-
-    QString Stringstatus = QString::number(checkChaoticAURStatus());
-    qDebug() << "status: " << Stringstatus;
+    // Create progress dialog
+    QProgressDialog *progress = new QProgressDialog("Processing Chaotic AUR...", nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::ApplicationModal);
+    progress->setCancelButton(nullptr);
+    progress->setValue(0);
+    progress->show();
+    QCoreApplication::processEvents();
 
     int status = checkChaoticAURStatus();
+    progress->setValue(10);
+    QCoreApplication::processEvents();
+
     // Always back up before making any modifications
     backupPacmanConfig();
+    progress->setValue(20);
+    QCoreApplication::processEvents();
 
     // When fully configured, that is, repository is active, removal is the desired action.
-    if (status == 1) {
+    if (status == 0) {
+        progress->setLabelText("Removing Chaotic AUR...");
+        progress->setValue(50);
+        QCoreApplication::processEvents();
         removeChaoticAUR();
+        progress->setValue(100);
+        progress->deleteLater();
         return;
     }
 
     // For initial installation, modify pacman.conf via C++.
-    else if (status == 2) {
+    else if (status == 1) {
 
         // Proceed with package and key setup.
         QProcess addProc;
@@ -741,10 +754,21 @@ void Widget::chaoticAUR() {
             "pkexec pacman-key --lsign-key 3056513887B78AEB && "
             "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst --noconfirm &&"
             "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm";
+        progress->setLabelText("Installing packages and keys...");
+        progress->setValue(40);
+        QCoreApplication::processEvents();
+
         addProc.start("bash", QStringList() << "-c" << addCmd);
+
+        if (addProc.exitCode() != 0) {
+            cleanCache();
+        }
         addProc.waitForFinished();
-        qDebug() << "addProcFunction output:" << addProc.readAllStandardOutput();
-        qDebug() << "addProcFunction errors:" << addProc.readAllStandardError();
+
+        progress->setValue(70);
+        QCoreApplication::processEvents();
+        qDebug() << "addProcFunction OUTPUT:" << addProc.readAllStandardOutput();
+        qDebug() << "addProcFunction ERRORS:" << addProc.readAllStandardError();
 
         QString workingDir = QDir::homePath() + "/tolitica-home-settings/backups/current-use";
         if (!QDir().mkpath(workingDir)) {
@@ -761,9 +785,9 @@ void Widget::chaoticAUR() {
         QProcess copyProc;
         copyProc.start("pkexec", QStringList() << "cp" << originalConfig << configPath);
         copyProc.waitForFinished();
-        qDebug() << "Copy exit code:" << copyProc.exitCode();
-        qDebug() << "Copy process output:" << copyProc.readAllStandardOutput();
-        qDebug() << "Copy process errors:" << copyProc.readAllStandardError();
+        qDebug() << "Copy EXIT-CODE:" << copyProc.exitCode();
+        qDebug() << "Copy process OUTPUT:" << copyProc.readAllStandardOutput();
+        qDebug() << "Copy process ERRORS:" << copyProc.readAllStandardError();
 
         if (copyProc.exitCode() != 0) {
             QMessageBox::warning(this, "Error", "Failed to copy pacman.conf to working directory:\n" +
@@ -778,15 +802,15 @@ void Widget::chaoticAUR() {
         qDebug() << "Fixing permissions for user:" << user;
         fixPermissions.start("pkexec", QStringList() << "chown" << user + ":" + user << configPath);
         fixPermissions.waitForFinished();
-        qDebug() << "chown exit code:" << fixPermissions.exitCode();
-        qDebug() << "chown output:" << fixPermissions.readAllStandardOutput();
-        qDebug() << "chown errors:" << fixPermissions.readAllStandardError();
+        qDebug() << "chown EXIT-CODE:" << fixPermissions.exitCode();
+        qDebug() << "chown OUTPUT:" << fixPermissions.readAllStandardOutput();
+        qDebug() << "chown ERRORS:" << fixPermissions.readAllStandardError();
 
         fixPermissions.start("pkexec", QStringList() << "chmod" << "644" << configPath);
         fixPermissions.waitForFinished();
-        qDebug() << "chmod exit code:" << fixPermissions.exitCode();
-        qDebug() << "chmod output:" << fixPermissions.readAllStandardOutput();
-        qDebug() << "chmod errors:" << fixPermissions.readAllStandardError();
+        qDebug() << "chmod EXIT-CODE:" << fixPermissions.exitCode();
+        qDebug() << "chmod OUTPUT:" << fixPermissions.readAllStandardOutput();
+        qDebug() << "chmod ERRORS:" << fixPermissions.readAllStandardError();
 
         // Open the working copy in C++ for precise modification.
         QFile configFile(configPath);
@@ -812,18 +836,27 @@ void Widget::chaoticAUR() {
         configFile.close();
 
         // Copy the modified configuration back to /etc/pacman.conf using pkexec.
+        progress->setLabelText("Updating configuration...");
+        progress->setValue(90);
+        QCoreApplication::processEvents();
+
         QProcess installConfig;
         installConfig.start("pkexec", QStringList() << "cp" << configPath << originalConfig);
         installConfig.waitForFinished();
-        qDebug() << "InstallConfig exit code:" << installConfig.exitCode();
-        qDebug() << "InstallConfig output:" << installConfig.readAllStandardOutput();
-        qDebug() << "InstallConfig errors:" << installConfig.readAllStandardError();
+
+        progress->setValue(100);
+        QCoreApplication::processEvents();
+        qDebug() << "InstallConfig EXIT-CODE:" << installConfig.exitCode();
+        qDebug() << "InstallConfig OUTPUT:" << installConfig.readAllStandardOutput();
+        qDebug() << "InstallConfig ERRORS:" << installConfig.readAllStandardError();
 
         if (installConfig.exitCode() != 0) {
             QMessageBox::warning(this, "Error", "Failed to update /etc/pacman.conf:\n" +
                                                     installConfig.readAllStandardError());
             return;
         }
+
+        progress->deleteLater();
 
         if (installConfig.exitCode() == 0) {
             QMessageBox::information(this, "Chaotic AUR Added",
@@ -836,7 +869,7 @@ void Widget::chaoticAUR() {
     }
 
     // For a partial/failed setup, attempt to repair.
-    else if (status == 3) {
+    else if (status == 2) {
         // If the local chaotic-mirrorlist does not exist, clean any broken entries.
         if (!QFile::exists("/etc/pacman.d/chaotic-mirrorlist")) {
             QProcess removeRepo;
@@ -845,11 +878,15 @@ void Widget::chaoticAUR() {
             removeRepo.start("pkexec", QStringList() << "bash" << "-c" << QString("sed -i '/\\[chaotic-aur\\]/,+1d' /etc/pacman.conf"));
             removeRepo.waitForFinished();
 
-            qDebug() << "removeRepo output:" << removeRepo.readAllStandardOutput();
-            qDebug() << "removeRepo errors:" << removeRepo.readAllStandardError();
+            qDebug() << "removeRepo OUTPUT:" << removeRepo.readAllStandardOutput();
+            qDebug() << "removeRepo ERRORS:" << removeRepo.readAllStandardError();
         }
 
         // Reinstall packages and re-import the key.
+        progress->setLabelText("Repairing Chaotic AUR...");
+        progress->setValue(50);
+        QCoreApplication::processEvents();
+
         QProcess repairProc;
         QString repairCmd =
             "pkexec pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && "
@@ -858,8 +895,11 @@ void Widget::chaoticAUR() {
             "pkexec pacman -U https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst --noconfirm";
         repairProc.start("bash", QStringList() << "-c" << repairCmd);
         repairProc.waitForFinished();
-        qDebug() << "repairProc output:" << repairProc.readAllStandardOutput();
-        qDebug() << "repairProc errors:" << repairProc.readAllStandardError();
+
+        progress->setValue(80);
+        QCoreApplication::processEvents();
+        qDebug() << "repairProc OUTPUT:" << repairProc.readAllStandardOutput();
+        qDebug() << "repairProc ERRORS:" << repairProc.readAllStandardError();
 
         QProcess checkConf;
         checkConf.start("bash", QStringList() << "-c" << "grep '[chaotic-aur]' /etc/pacman.conf");
@@ -867,6 +907,10 @@ void Widget::chaoticAUR() {
         qDebug() << "Pacman.conf after removeRepo:" << checkConf.readAllStandardOutput();
 
         // Restore the pacman.conf from your backup store.
+        progress->setLabelText("Restoring configuration...");
+        progress->setValue(90);
+        QCoreApplication::processEvents();
+
         QProcess restoreProc;
         QString homePath = QDir::homePath();
         // Build the restore command as a single string to avoid splitting issues.
@@ -874,9 +918,14 @@ void Widget::chaoticAUR() {
         qDebug() << "Restore command:" << restoreCmd;
         restoreProc.start("pkexec", QStringList() << "bash" << "-c" << restoreCmd);
         restoreProc.waitForFinished();
-        qDebug() << "restoreProc exit code:" << restoreProc.exitCode();
-        qDebug() << "restoreProc output:" << restoreProc.readAllStandardOutput();
-        qDebug() << "restoreProc errors:" << restoreProc.readAllStandardError();
+
+        progress->setValue(100);
+        QCoreApplication::processEvents();
+        qDebug() << "restoreProc EXIT-CODE:" << restoreProc.exitCode();
+        qDebug() << "restoreProc OUTPUT:" << restoreProc.readAllStandardOutput();
+        qDebug() << "restoreProc ERRORS:" << restoreProc.readAllStandardError();
+
+        progress->deleteLater();
 
         if (restoreProc.exitCode() == 0) {
             QMessageBox::information(this, "Restore Complete", "Chaotic AUR has been repaired!");
@@ -886,8 +935,6 @@ void Widget::chaoticAUR() {
         }
     }
 }
-
-
 
 ///////////////////////////////////////////////////
 /// ADDONS:: CHECK VMWARE SERVICES STATUS
@@ -1243,6 +1290,61 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
 }
 
 ////////////////////////////////////////////////////////
+/// GENERAL: ASCII LOGO STATUS
+//////////////////////////////////////////////////////
+int Widget::asciiLogoStatus() {
+    QFile configFile("/usr/lib/os-release");
+
+    if(!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return -1;
+    }
+
+    QTextStream in(&configFile);
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.startsWith("ID=")) {
+            QString value = line.mid(3).trimmed(); // get everything after "ID="
+            value.remove('"'); // Remove quotes if present
+            if (value == "xray_os") {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+////////////////////////////////////////////////////////
+/// GENERAL: ASCII-LOGO ENABLE/DISABLE
+//////////////////////////////////////////////////////
+void Widget::enableAsciiLogo() {
+    int status = asciiLogoStatus();
+    if (status == -1) {
+        QMessageBox::warning(this, "Error", "os-release file not found");
+        return;
+    }
+
+    QString newValue = (status == 0) ? "arch" : "xray_os";
+    QString command = QString("pkexec sed -i 's/^ID=.*/ID=%1/' /usr/lib/os-release").arg(newValue);
+
+    QProcess process;
+    process.start("sh", QStringList() << "-c" << command);
+    process.waitForFinished();
+
+    // Debug output
+    qDebug() << "Command:" << command;
+    qDebug() << "Exit code:" << process.exitCode();
+    qDebug() << "Standard output:" << process.readAllStandardOutput();
+    qDebug() << "Standard error:" << process.readAllStandardError();
+
+    if (process.exitCode() != 0) {
+        QMessageBox::critical(this, "Error",
+            QString("Failed to modify os-release. Exit code: %1\nError: %2")
+            .arg(process.exitCode())
+            .arg(QString(process.readAllStandardError())));
+    }
+}
+
+////////////////////////////////////////////////////////
 /// GENERAL: DISABLE/ENABLE AUTOSTART
 //////////////////////////////////////////////////////
 bool Widget::autostart() {
@@ -1343,7 +1445,6 @@ Widget::Widget(QWidget *parent)
         // Create all pages
         // Use fixed width for mainPage to force 800px width.
         QWidget *mainPage = new QWidget();
-        mainPage->setFixedWidth(800);
         QWidget *tweaksPage = new QWidget();
         QWidget *addonsPage = new QWidget();
         QWidget *terminalPage = new QWidget();
@@ -1354,20 +1455,12 @@ Widget::Widget(QWidget *parent)
         stackedWidget->addWidget(addonsPage);
         stackedWidget->addWidget(terminalPage);
 
-        // Wrap the stacked widget in a centering container
-        QWidget *centerContainer = new QWidget(this);
-        QHBoxLayout *centerLayout = new QHBoxLayout(centerContainer);
-        centerLayout->setContentsMargins(0, 0, 0, 0);
-        centerLayout->addStretch(); // Left spacer
-        centerLayout->addWidget(stackedWidget);
-        centerLayout->addStretch(); // Right spacer
-
-        // Add the centering container to the main layout
-        mainWidgetLayout->addWidget(centerContainer, 0, Qt::AlignCenter);
-        setLayout(mainWidgetLayout);
+        // Add stackedWidget to main layout
+        mainWidgetLayout->addWidget(stackedWidget);
 
         // ==== Main Page Content ====
         QVBoxLayout *mainLayout = new QVBoxLayout(mainPage);
+        mainLayout->setContentsMargins(20, 40, 20, 20); // Add padding around content
 
         // ==== Header and Description ==== //
         QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Xray_OS Assistant!</h1>", this);
@@ -1376,16 +1469,14 @@ Widget::Widget(QWidget *parent)
         QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
                                               "configurations from your system, please enjoy using "
                                               "Xray_OS, break it, repair it or donate to me... Anyway have fun using my ArchLinux distro.", this);
-        headerLabel->setContentsMargins(0, 0, 0, 0);
-        greetingsLabel->setContentsMargins(0, 5, 0, 0);
         greetingsLabel->setAlignment(Qt::AlignCenter);
-        descriptionLabel->setContentsMargins(0,10,0,0);
         descriptionLabel->setWordWrap(true);
         descriptionLabel->setAlignment(Qt::AlignCenter);
 
         mainLayout->addWidget(headerLabel, 0, Qt::AlignTop | Qt::AlignCenter);
         mainLayout->addWidget(greetingsLabel);
         mainLayout->addWidget(descriptionLabel, 1, Qt::AlignTop);
+
         // ==== End Header and Description ==== //
 
         // ==== Add Tolitica Icon ==== //
@@ -1656,22 +1747,22 @@ Widget::Widget(QWidget *parent)
             archZGamingMetaButton->setText("Install Arch7z Gaming Meta");
         }
         // *Arch7z Development Meta
-        QPushButton *archZDevelopmentMetaButton = new QPushButton(this);
+        QPushButton *arch7zDevelopmentMetaButton = new QPushButton(this);
 
         QProcess checkADMinstalled;
         checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q arch7z-development-meta");
         checkADMinstalled.waitForFinished();
 
         if (checkADMinstalled.exitCode() == 0) {
-            archZDevelopmentMetaButton->setText("Remove Arch7z Development Meta");
+            arch7zDevelopmentMetaButton->setText("Remove Arch7z Development Meta");
         } else {
-            archZDevelopmentMetaButton->setText("Install Arhc7z Development Meta");
+            arch7zDevelopmentMetaButton->setText("Install Arch7z Development Meta");
         }
         // *ChaoticAUR Button
         QPushButton *chaoticAURbutton = new QPushButton(this);
         int chaoticStatus = checkChaoticAURStatus();
-        chaoticAURbutton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
-                                      chaoticStatus == 2 ? "Add Chaotic AUR" :
+        chaoticAURbutton->setText(chaoticStatus == 0 ? "Remove Chaotic AUR" :
+                                      chaoticStatus == 1 ? "Add Chaotic AUR" :
                                       "Repair Chaotic AUR");
         // **Add VMware Support**//
         QPushButton *vmwButton = new QPushButton(this);
@@ -1697,7 +1788,7 @@ Widget::Widget(QWidget *parent)
 
         /* === Positioning Buttons === */
         addonsLayout->addWidget(archZGamingMetaButton, 1, 0, Qt::AlignLeft);
-        addonsLayout->addWidget(archZDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
+        addonsLayout->addWidget(arch7zDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
         addonsLayout->addWidget(chaoticAURbutton, 1, 0, Qt::AlignRight);
         addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
 
@@ -1708,7 +1799,7 @@ Widget::Widget(QWidget *parent)
 
         /* === Connections === */
         addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, archZGamingMetaButton,
-                               archZDevelopmentMetaButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
+                               arch7zDevelopmentMetaButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // ==== Mount Drives Page =====
@@ -1774,7 +1865,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 /// ADDONS SETUP CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *archZGamingMetaButton, QPushButton *archZDevelopmentButton, QPushButton *chaoticAURbutton,
+                                    QPushButton *archZGamingMetaButton, QPushButton *arch7zDevelopmentButton, QPushButton *chaoticAURbutton,
                                     QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle) {
         // Navigation connections
         connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
@@ -1796,13 +1887,13 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         }
     });
         //** Arch7z Development Meta **//
-        connect(archZDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
-        if(archZDevelopmentButton->text() == "Install Arch7z Development Meta") {
-            archZDevelopmentButton->setText("Remove Arch7z Development Meta");
-            archZDevelopmentMeta();
+        connect(arch7zDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
+        if(arch7zDevelopmentButton->text() == "Install Arch7z Development Meta") {
+            arch7zDevelopmentButton->setText("Remove Arch7z Development Meta");
+            arch7zDevelopmentMeta();
         } else {
-            archZDevelopmentButton->setText("Install Arch7z Development Meta");
-            removeArchZDevelopmentMeta();
+            arch7zDevelopmentButton->setText("Install Arch7z Development Meta");
+            removeArch7zDevelopmentMeta();
         }
     });
 
@@ -1810,18 +1901,12 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
         connect(chaoticAURbutton, &QPushButton::clicked, this, [=]() mutable {
             int chaoticStatus = checkChaoticAURStatus();
 
-            if (chaoticStatus == 1) { // Fully installed
-                chaoticAUR();
-            } else if (chaoticStatus == 2) { // Not installed
-                chaoticAUR();
-            } else if (chaoticStatus == 3) { // Run repair
-                chaoticAUR();
+            chaoticAUR();
 
-            }
-            // **Recheck status after repair**
+            // **Recheck status after operation**
             chaoticStatus = checkChaoticAURStatus();
-            chaoticAURbutton->setText(chaoticStatus == 1 ? "Remove Chaotic AUR" :
-                                          chaoticStatus == 2 ? "Add Chaotic AUR" :
+            chaoticAURbutton->setText(chaoticStatus == 0 ? "Remove Chaotic AUR" :
+                                          chaoticStatus == 1 ? "Add Chaotic AUR" :
                                           "Repair Chaotic AUR");
         });
         //** Add VMware Support **//

@@ -22,10 +22,12 @@ QT_END_NAMESPACE
 class Widget : public QWidget
 {
     Q_OBJECT
+    friend class Widget_Initial;
 
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+    void cleanCache();
 
 private slots:
     // TERMINAL
@@ -47,8 +49,8 @@ private slots:
     // ADDONS
     void archZGamingMeta();
     void removeArchZGamingMeta();
-    void archZDevelopmentMeta();
-    void removeArchZDevelopmentMeta();
+    void arch7zDevelopmentMeta();
+    void removeArch7zDevelopmentMeta();
     void chaoticAUR();
     void removeChaoticAUR();
     bool runCommand(const QString &cmd);
@@ -65,6 +67,8 @@ private slots:
                                   QPushButton *terminalThemeButton, QPushButton *changeShellButton, QComboBox *shellComboBox, QLabel *shellLabel);
     void disableTermTheme(QPushButton *terminalThemeButton);
     int checkTermThemingStatus();
+    int asciiLogoStatus();
+    void enableAsciiLogo();
     // MOUNT/UNMOUNT DRIVES
     void mountDrivesSetupConnections(QStackedWidget *stackedWidget, QToolButton *mountDriveButton);
 

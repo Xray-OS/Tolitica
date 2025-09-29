@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   role="img"
+   viewBox="0 0 86.911453 96.36251"
+   id="Flatpak--Streamline-Simple-Icons"
+   height="96.362511"
+   width="86.911453"
+   version="1.1"
+   sodipodi:docname="flatpak.svg"
+   xml:space="preserve"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+     id="defs1" /><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.9146535"
+     inkscape:cx="-4.1422545"
+     inkscape:cy="53.088486"
+     inkscape:window-width="1920"
+     inkscape:window-height="1012"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Flatpak--Streamline-Simple-Icons" /><desc
+     id="desc1">
+    Flatpak Streamline Icon: https://streamlinehq.com
+  </desc><title
+     id="title1">Flatpak</title><path
+     d="m 43.455728,0 c -2.23241,0 -4.460806,0.578179 -6.464357,1.734536 L 6.4643568,19.360946 A 12.916666,12.916666 0 0 0 7.9738792e-7,30.555121 V 65.807942 C 7.9738792e-7,70.429354 2.4572588,74.689405 6.4643568,77.002118 l 30.5270142,17.62641 a 12.916666,12.916666 0 0 0 12.928712,0 L 80.447099,77.002118 A 12.916666,12.916666 0 0 0 86.911454,65.807942 V 30.555121 A 12.916666,12.916666 0 0 0 80.447099,19.360946 L 49.920083,1.734536 A 12.920681,12.920681 0 0 0 43.455728,0 Z m 0,9.467672 c 0.602269,0 1.200523,0.15659 1.730521,0.461739 l 30.531031,17.62641 c 0.529997,0.309165 0.963628,0.750829 1.264765,1.268782 L 43.455728,48.181534 v 38.71386 A 3.4650552,3.4650552 0 0 1 41.725207,86.429638 L 11.194177,68.803228 A 3.4771006,3.4771006 0 0 1 9.4636568,65.807942 V 30.555121 c 0,-0.614314 0.16462,-1.212568 0.465755,-1.726504 L 43.455728,48.181534 Z"
+     fill="#000000"
+     stroke-width="4.01514"
+     id="path1"
+     style="fill:#4a90d9;fill-opacity:1" /><metadata
+     id="metadata1"><rdf:RDF><cc:Work
+         rdf:about=""><dc:title>Flatpak</dc:title></cc:Work></rdf:RDF></metadata></svg>

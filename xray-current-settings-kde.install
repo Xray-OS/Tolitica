@@ -1,0 +1,59 @@
+sync_skel_to_home() {
+  for user_home in /home/*; do
+    [ -d "$user_home" ] || continue
+    username=$(basename "$user_home")
+    
+    echo "🔧 Syncing /etc/skel to $user_home"
+    timestamp=$(date +%Y-%m-%d)
+    backup_root="$user_home/.local_backup-$timestamp"
+
+    [ ! -d "/etc/skel" ] && { echo "❌ /etc/skel not found."; continue; }
+
+    for rel_path in \
+      ".local/share/konsole/Arch.colorscheme" \
+      ".local/share/konsole/Arch.profile" \
+      ".local/share/konsole/CJ.profile" \
+      ".local/share/konsole/Xray_OS.colorscheme" \
+      ".local/share/konsole/Xray_OS.profile"; do
+      
+      skel_file="/etc/skel/$rel_path"
+      home_file="$user_home/$rel_path"
+      backup_file="$backup_root/$rel_path"
+
+      [ -f "$skel_file" ] || continue
+      
+      echo "📋 Processing: $rel_path"
+      
+      # Backup existing file that will be replaced
+      if [ -f "$home_file" ]; then
+        echo "📦 Backing up existing: $home_file"
+        mkdir -p "$(dirname "$backup_file")"
+        cp -a "$home_file" "$backup_file"
+      fi
+      
+      # Deploy new file
+      echo "📥 Deploying: $skel_file -> $home_file"
+      mkdir -p "$(dirname "$home_file")"
+      cp -a "$skel_file" "$home_file"
+      chown "$username:$username" "$home_file"
+    done
+
+    # Fix backup ownership
+    [ -d "$backup_root" ] && chown -R "$username:$username" "$backup_root"
+  done
+}
+
+post_install() {
+  echo "📦 Post-install: xray-current-settings-kde"
+  sync_skel_to_home
+}
+
+post_upgrade() {
+  echo "🔄 Post-upgrade: xray-current-settings-kde"
+  sync_skel_to_home
+}
+
+post_remove() {
+  echo "🗑️ Post-remove: xray-current-settings-kde"
+  echo "ℹ️ No files removed from your home directory."
+}
