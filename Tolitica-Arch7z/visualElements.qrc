@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>resources/icons/tolitica-icon.png</file>
+        <file>resources/icons/xray.svg</file>
+        <file>resources/icons/discord.png</file>
+        <file>resources/icons/instagram.png</file>
+        <file>resources/icons/patreon.png</file>
+        <file>resources/icons/twitter.png</file>
+        <file>resources/icons/youtube.png</file>
+        <file>resources/icons/hdd.png</file>
+        <file>resources/icons/flatpak.svg</file>
+        <file>resources/icons/snapcraft.svg</file>
+        <file>resources/icons/chaotic.svg</file>
+        <file>resources/icons/xray-theming.svg</file>
+        <file>resources/icons/terminal-theming.svg</file>
+        <file>resources/icons/steam.svg</file>
+        <file>resources/icons/steamDracula.svg</file>
+        <file>resources/icons/steamSurfn.svg</file>
+        <file>resources/icons/grub-theming.png</file>
+        <file>resources/icons/yay.png</file>
+        <file>resources/icons/paru.png</file>
+        <file>resources/icons/tolito.svg</file>
+        <file>resources/icons/discover.svg</file>
+        <file>resources/icons/pamac.svg</file>
+        <file>resources/icons/octopi.svg</file>
+        <file>resources/icons/bazaar.svg</file>
+        <file>resources/icons/arch7z-gaming-meta.svg</file>
+        <file>resources/icons/discord.png</file>
+        <file>resources/icons/facebook.png</file>
+        <file>resources/icons/instagram.png</file>
+        <file>resources/icons/twitter.png</file>
+        <file>resources/icons/youtube.png</file>
+        <file>resources/icons/linkedin.png</file>
+        <file>resources/icons/kofi.svg</file>
+    </qresource>
+</RCC>

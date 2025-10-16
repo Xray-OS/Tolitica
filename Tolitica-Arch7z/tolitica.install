@@ -1,0 +1,68 @@
+post_install() {
+    echo "Setting up Tolitica directories..."
+    install -dm755 /etc/xray/tolitica/tolitica-settings
+    install -dm755 /etc/xray/tolitica/tolitica-settings/backups
+
+    echo "Installing Tolitica autostart file for existing users..."
+    for user_home in /home/*; do
+        [ -d "$user_home" ] || continue  # Ensure valid home directories exist
+        username=$(basename "$user_home")
+        if [ -d "$user_home/.config/autostart" ]; then
+            if [ ! -f "$user_home/.config/autostart/tolitica.desktop" ]; then
+                echo "  Installing autostart for user: $username"
+                install -Dm644 /etc/skel/.config/autostart/tolitica.desktop "$user_home/.config/autostart/tolitica.desktop"
+                chown "$username:$username" "$user_home/.config/autostart/tolitica.desktop"
+            else
+                echo "  Autostart already exists for user: $username (skipping)"
+            fi
+        fi
+    done
+
+    # pacman handles config backup automatically via backup=() array
+
+    echo "Installing tolitica-home-settings for users..."
+    if [ -d "/etc/skel/.config/tolitica-home-settings" ]; then
+        for user_home in /home/*; do
+            [ -d "$user_home" ] || continue
+            username=$(basename "$user_home")
+            [ "$username" = "tolitica-home-settings" ] && continue
+            echo "  Installing tolitica-home-settings for user: $username"
+            mkdir -p "$user_home/tolitica-home-settings"
+            cp -r /etc/skel/.config/tolitica-home-settings/* "$user_home/tolitica-home-settings/"
+            chown -R "$username:$username" "$user_home/tolitica-home-settings"
+        done
+    else
+        echo "  Source directory not found: /etc/skel/.config/tolitica-home-settings"
+    fi
+
+    echo "Creating symlink for Tolitica..."
+    ln -sf /opt/tolitica/tolitica /usr/bin/tolitica
+
+    echo "Reloading systemd daemon and enabling xray_mounter_helper service..."
+    systemctl daemon-reload
+    systemctl enable --now xray_mounter_helper.service
+}
+
+post_upgrade() {
+    post_install
+}
+
+post_remove() {
+    echo "Removing Tolitica autostart files..."
+    for user_home in /home/*; do
+        [ -d "$user_home" ] || continue  # Ensure valid home directories exist
+        rm -f "$user_home/.config/autostart/tolitica.desktop"
+    done
+
+    echo "Cleaning up Tolitica configuration directories..."
+    # Remove package files but preserve user configs
+    rm -f /etc/xray/tolitica/automount/manually_enabled.conf.default
+    # Only remove directories if they're empty (no user configs)
+    rmdir /etc/xray/tolitica/automount /etc/xray/tolitica 2>/dev/null || true
+
+    echo "Removing Tolitica symlink..."
+    rm -f /usr/bin/tolitica
+
+    echo "Disabling xray_mounter_helper service..."
+    systemctl disable --now xray_mounter_helper.service || true
+}

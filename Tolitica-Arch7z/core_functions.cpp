@@ -1,4 +1,6 @@
 #include "core_functions.h"
+#include "connectivityChecker.h"
+
 #include <QMessageBox>
 #include <QStackedWidget>
 #include <QGroupBox>
@@ -26,6 +28,7 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QUrl>
+#include "widget.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -536,22 +539,21 @@ int CoreFunctions::flatpakStatus() {
 ///////////////////////////////////////////////////
 /// ADDONS: ENABLE/DISABLE FLATPAK
 //////////////////////////////////////////////////
-void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
+void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle, std::function<void(bool)> onComplete) {
     int status = flatpakStatus();
 
-    QProcess dependencyCheck;
-    dependencyCheck.start("bash", QStringList() << "-c" << "pacman -Qi flatpak | grep 'Required by' | cut -d':' -f2 | tr '\n' ' '");
-    dependencyCheck.waitForFinished();
-    QString dependencies = dependencyCheck.readAllStandardOutput().trimmed();
+    QProcess updateDB;
+    updateDB.start("bash", QStringList() << "-c" << "pacman -Sy");
+    updateDB.waitForFinished();
 
     // ** Warn user before removing Flatpak and its dependent packages ** //
     if (status == 0) {
-        QString warningMessage = "Removing Flatpak will also uninstall:\n\n";
-        warningMessage += dependencies.isEmpty() ? "All Flatpak Apps" : "All Flatpak Apps\n" + dependencies;
-        warningMessage += "\n\nDo you want to continue?";
+        QString warningMessage = "Removing Flatpak will also uninstall\n"
+        "all Flatpak Apps";
 
         QMessageBox::StandardButton reply = QMessageBox::question(
-            parent, "Warning: Flatpak Removal", warningMessage, QMessageBox::Yes | QMessageBox::No);
+            parent, "Warning: Flatpak Removal", warningMessage,
+            QMessageBox::Yes | QMessageBox::No);
 
         if (reply == QMessageBox::No) {
             return;
@@ -591,12 +593,10 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
     // **Update the button immediately when installation is completed**
     connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
     parent, [=]() mutable {
+        monitorTimer->stop();
+
         if (process->exitCode() == 0){
             progress->setValue(100);
-
-            QMessageBox::information(parent, "Flatpak",
-                                     status == 0 ? "Flatpak Disabled Successfully!" :
-                                     "Flatpak Enabled Successfully!");
             flatpakToggle->setChecked(status != 0);
             flatpakToggle->setText(flatpakToggle->isChecked() ? "Disable/Remove Flatpak"
                                                               : "Enable/Install Flatpak");
@@ -616,9 +616,65 @@ void CoreFunctions::enableFlatpak(QWidget *parent, QCheckBox *flatpakToggle) {
     QString disableCommand = "flatpak uninstall --all --assumeyes && flatpak remotes | grep -q flathub && flatpak remote-delete flathub && sudo pacman -Rcns --noconfirm flatpak";
     QString command = (status == 0) ? disableCommand : enableCommand;
 
-    process->start("pkexec", QStringList() << "bash" << "-c" << command);
-    process->waitForFinished();
-    qDebug() << "ERROR: -> " << process->readAllStandardOutput();
+    // Steps to verify offline installation integrity
+    QString offlinePath = QDir::homePath()
+    + "/tolitica-home-settings/offline-packages/flatpak";
+    QDir dir(offlinePath);
+
+    QStringList zstFiles = dir.entryList(
+        { "*.zst" }, QDir::Files, QDir::Name
+    );
+
+    if (!dir.exists()) {
+        qWarning() << "Offline directory missing:" << offlinePath;
+        return;
+    } else if (zstFiles.isEmpty()) {
+        qDebug() << "No .zst package found in" << offlinePath;
+        return;
+    }
+
+    // if (status != 0) {
+
+    // } else {
+    //     process->start("pkexec", QStringList() << "bash" << "-c" << command);
+    //     process->waitForFinished();
+    //     qDebug() << "ERROR: -> " << process->readAllStandardOutput();
+    // }
+
+    // * Check for Internet
+    ConnectivityChecker *internetChecker = new ConnectivityChecker(parent);
+    connect(internetChecker, &ConnectivityChecker::connectivityChecked,
+        parent, [internetChecker, command, offlinePath, process, flatpakToggle,
+        status, onComplete](bool isConnected) {
+            qDebug() << "OUTPUT: isConnected =" << isConnected;
+            QString cmdToRun;
+            if (!isConnected && status != 0) {
+                cmdToRun = QString("sudo pacman -U --noconfirm %1/*.zst && "
+                "flatpak remote-add --if-not-exists flathub %1/flathub.flatpakrepo"
+                ).arg(offlinePath);
+            } else {
+                cmdToRun = command;
+            }
+            qDebug() << "CMD_TO_RUN: " << cmdToRun;
+
+        // now actually run it
+        process->start("pkexec", QStringList() << "bash" << "-c" << cmdToRun);
+        qDebug() << "PROCESS-OUTPUT: " << process;
+        process->waitForFinished();
+
+        bool success = (process->exitCode() == 0);
+        if (success && flatpakToggle) {
+            flatpakToggle->setChecked(status != 0);
+            flatpakToggle->setText(flatpakToggle->isChecked() ?
+                "Disable/Remove Flatpak" : "Enable/Install Flatpak");
+        }
+
+        if (onComplete) onComplete(success);
+        internetChecker->deleteLater();
+    });
+    // Kick off the check
+    internetChecker->checkConnectivity();
+
     monitorTimer->start(250);
 }
 
@@ -651,43 +707,25 @@ int CoreFunctions::snapdStatus() {
 ///////////////////////////////////////////////////
 /// ADDONS: ENABLE/DISABLE SNAPD
 //////////////////////////////////////////////////
-void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
-    QProcess updateDB;
-    updateDB.start("bash", QStringList() << "-c" << "pacman -Sy");
-    updateDB.waitForFinished();
-
+void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle,
+    std::function<void(bool)> onComplete) {
     int status = snapdStatus();
 
+    // QProcess updateDB;
+    // updateDB.start("bash", QStringList() << "-c" << "pacman -Sy");
+    // updateDB.waitForFinished();
+
     if (status == 0) {
-        // Getting all dependencies it will take after removal
-        QProcess dependencyCheck;
-        dependencyCheck.start("bash", QStringList() << "-c" << "pacman -Qi snapd | grep 'Required by' | cut -d':' -f2 | tr '\n' ' '");
-        dependencyCheck.waitForFinished();
-        QString dependencies = dependencyCheck.readAllStandardOutput().trimmed();
-
         // Creating the warning message listing the dependencies
+        QString warningMessage = "Removing Snapd will also uninstall\n"
+        "all Snapd Apps, do you want to continue?";
 
-        QString confirmationMsg;
-        QMessageBox::StandardButton reply;
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            parent, "Warning: Snapd Removal", warningMessage,
+            QMessageBox::Yes | QMessageBox::No);
 
-        // If dependencies are found
-        if (!dependencies.isEmpty())
-        {
-            confirmationMsg = "Removing SNAPD will also unistall:\n\n" + dependencies;
-            confirmationMsg += "\n\nDo you want to continue?";
-
-            reply = QMessageBox::question(
-                parent, "Warning: SNAPD Removal", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
-        }
-        else
-        {
-            confirmationMsg = "Are you sure you want to disable/remove snapd support?";
-            reply = QMessageBox::question(
-                parent, "Warning: SNAPD Removal", confirmationMsg, QMessageBox::Yes | QMessageBox::No);
-        }
-
-        if (reply == QMessageBox::No) {
-            return;
+            if (reply == QMessageBox::No) {
+                return;
         }
     }
 
@@ -696,45 +734,41 @@ void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
 
     QProgressDialog *progress = new QProgressDialog(
         status == 0 ? "Removing Snapd..." : "Installing Snapd...", nullptr, 0, 100, parent);
-    progress->setWindowModality(Qt::WindowModal);
+    progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
+    progress->setValue(0);
     progress->show();
 
+    QCoreApplication::processEvents(); // forcing rendering before the process starts
     int progressValue = 0;
 
-    // This connection updates the progress value when new standard output is available.
     connect(process, &QProcess::readyReadStandardOutput, parent, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents();
     });
 
-    // Using monitorTimer to simulate progress updates if process output is insufficient
     connect(monitorTimer, &QTimer::timeout, parent, [=]() mutable {
-        if (progressValue < 95) {
+        if (progressValue < 0) {
             progressValue += 2;
             progress->setValue(qMin(progressValue, 95));
         }
     });
     monitorTimer->start(250);
 
-    // Handling success/failure and clean up resources
-    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), parent, [=]()
-        mutable {
-        // Stop timer, no further updates needed
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+        parent, [=]() mutable {
         monitorTimer->stop();
 
         if (process->exitCode() == 0){
             progress->setValue(100);
-
-            QMessageBox::information(parent, "Snapd",
-                                     status == 0 ? "Snapd Disabled Successfully!" :
-                                         "Snapd Enabled Successfully!");
             snapdToggle->setChecked(status != 0);
             snapdToggle->setText(snapdToggle->isChecked() ?
                 "Disable/Remove SNAPD" : "Enable/Install SNAPD");
         } else {
-            QMessageBox::warning(parent, "Snapd", "An error occurred while processing");
+            progress->setValue(100);
+            QMessageBox::warning(parent, "Error", "Failed performing operations with Snapd:\n"
+                + process->readAllStandardError());
         }
 
         progress->deleteLater();
@@ -745,32 +779,66 @@ void CoreFunctions::enableSnapd(QWidget *parent, QCheckBox *snapdToggle) {
     QString enableCommand = "pacman -S --noconfirm snapd && systemctl enable --now snapd.socket && "
                             "ln -s /var/lib/snapd/snap /snap";
     QString disableCommand = "pacman -Rcns --noconfirm snapd && sudo rm -rf /snap && rm -rf /var/lib/snapd";
+    QString command = (status == 0) ? disableCommand : enableCommand;
 
-    if (status == 0) {
-        process->start("pkexec", QStringList() << "bash" << "-c" << disableCommand);
-        process->waitForFinished();
-    } else {
-        // First attempt to install Snapd
-        process->start("pkexec", QStringList() << "bash" << "-c" << enableCommand);
-        process->waitForFinished();
+    // Verify if theres online connection
+    QString offlinePath = QDir::homePath() + "/tolitica-home-settings/offline-packages/snapd";
+    QDir dir(offlinePath);
 
-        if (process->exitCode() != 0) {
-            qDebug() << "Snapd installation failed. Running pacman -Scc to fix potential cache issues.";
+    QStringList zstFiles = dir.entryList({ "*.zst" }, QDir::Files, QDir::Name);
 
-            QProcess fix;
-            fix.start("pkexec", QStringList() << "pacman -Scc --noconfirm");
-            fix.waitForFinished();
-
-            // Retry Snapd installation after cache cleanup
-            process->start("pkexec", QStringList() << "bash" << "-c" << enableCommand);
-            process->waitForFinished();
-        }
+    if (!dir.exists()) {
+        qWarning() << "Offline directory missing:" << offlinePath;
+        return;
+    } else if (zstFiles.isEmpty()) {
+        qWarning() << "No .zst package found in" << offlinePath;
+        return;
     }
 
-    // process->start("pkexec", QStringList() << "bash" << "-c" << command);
-    // process->waitForFinished();
-    qDebug() << "OUTPUT: -> "<< process->readAllStandardOutput();
-    qDebug() << "ERROR: -> "<< process->readAllStandardError();
+    ConnectivityChecker *internetChecker = new ConnectivityChecker(parent);
+    connect(internetChecker, &ConnectivityChecker::connectivityChecked,
+        parent, [internetChecker, command, offlinePath, process, snapdToggle,
+        status, onComplete](bool isConnected) {
+            qDebug() << "OUTPUT: isConnected =" << isConnected;
+            QString cmdToRun;
+            if (!isConnected && status != 0) {
+                cmdToRun = QString("sudo pacman -U --noconfirm %1/*.zst && "
+                    "ln -s /var/lib/snapd/snap /snap").arg(offlinePath);
+            } else {
+                cmdToRun = command;
+            }
+            qDebug() << "CMD_TO_RUN: " << cmdToRun;
+
+        int attempts = 0;
+        do {
+            process->start("pkexec", QStringList() << "bash" << "-c" << cmdToRun);
+            process->waitForFinished();
+
+            if (process->exitCode() != 0 && attempts < 2) {
+                Widget tempWidget;
+                tempWidget.cleanCache();
+                attempts++;
+            }
+        } while (process->exitCode() != 0 && attempts < 3);
+
+
+        qDebug() << "PROCESS-OUTPUT: " << process;
+        process->waitForFinished();
+
+        bool success = (process->exitCode() == 0);
+        if (success && snapdToggle) {
+            snapdToggle->setChecked(status != 0);
+            snapdToggle->setText(snapdToggle->isChecked() ?
+                "Disable/Remove Snapd" : "Enable/Install Snapd");
+        }
+
+        if (onComplete) onComplete(success);
+        internetChecker->deleteLater();
+    });
+    // Kick off the check
+    internetChecker->checkConnectivity();
+
+    monitorTimer->start(250);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -788,36 +856,10 @@ void CoreFunctions::socialMedia(const QString &platform) {
     } else if (platform == "twitter") {
         url ="https://x.com/xray_os";
     } else if (platform == "youtube") {
-        url = "https://www.youtube.com/@xray_os";
+        url = "https://www.youtube.com/@xray-technologies";
     }
 
     if (!url.isEmpty()) {
         QDesktopServices::openUrl(QUrl(url));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
