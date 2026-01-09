@@ -4,6 +4,7 @@
 #include "core_functions.h"
 #include "core_initial.h"
 #include "widget.h"
+#include "connectivityChecker.h"
 #include <QWidget>
 #include <QIcon>
 #include <QPushButton>
@@ -13,6 +14,7 @@
 #include <QCheckBox>
 #include <QBoxLayout>
 #include <QCloseEvent>
+#include <functional>
 
 class Widget_Initial : public QWidget
 {
@@ -26,15 +28,12 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-// private slots:
-//     void basicSetupConnections(QStackedWidget *stackedWidget,
-//         QPushButton *flatpakToggleButton);
-
 private:
+    void checkConnectivityAndExecute(std::function<void()> callback, const QString &errorMessage = "Internet connection required");
 
-CoreFunctions* coreFunctions;
-Widget* widget;
-CoreInitial* coreInitial;
-
+    CoreFunctions* coreFunctions;
+    Widget* widget;
+    CoreInitial* coreInitial;
+    ConnectivityChecker* connectivityChecker;
 };
 #endif

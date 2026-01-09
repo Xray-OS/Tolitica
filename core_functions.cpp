@@ -854,9 +854,9 @@ void CoreFunctions::socialMedia(const QString &platform) {
     if (platform == "discord") {
         url = "https://discord.gg/dBR7wR3ABk";
     } else if (platform == "twitter") {
-        url ="https://x.com/xray_os";
+        url ="https://x.com/viper_96_tech";
     } else if (platform == "youtube") {
-        url = "https://www.youtube.com/@xray-technologies";
+        url = "https://www.youtube.com/@viper-arch";
     }
 
     if (!url.isEmpty()) {

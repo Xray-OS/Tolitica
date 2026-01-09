@@ -15,6 +15,7 @@
 // for progress bar
 #include <QProgressDialog>
 #include <QTimer>
+#include <charconv>
 #include <cstddef>
 
 CoreInitial::CoreInitial(QObject *parent)
@@ -88,16 +89,17 @@ void CoreInitial::reloadPlasmaByDBus()
 }
 
 bool CoreInitial::osreleaseStatus() {
-    QFile configFile("/usr/lib/os-release");
+    QFile osReleaseFile("/usr/lib/os-release");
 
-    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!osReleaseFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "os-release failed to open" << osReleaseFile.errorString();
         return false;
     }
 
     QMap<QString, QString> expected = {
-        {"NAME", "\"Xray_OS\""},
-        {"PRETTY_NAME", "\"Xray_OS\""},
-        {"ID", "xray_os"},
+        {"NAME", "\"Viper\""},
+        {"PRETTY_NAME", "\"Viper\""},
+        {"ID", "viper"},
         {"BUILD_ID", "rolling"},
         {"ANSI_COLOR", "\"38;2;23;147;209\""},
         {"HOME_URL", "\"https://xray-os.github.io/xray_os-website/index.html\""},
@@ -105,32 +107,36 @@ bool CoreInitial::osreleaseStatus() {
         {"SUPPORT_URL", "\"https://discord.com/invite/dBR7wR3ABk/\""},
         {"BUG_REPORT_URL", "\"https://github.com/Xray-OS/Xray_OS/issues\""},
         {"PRIVACY_POLICY_URL", "\"https://xray-os.github.io/xray_os-website/index.html#about-xray-os\""},
-        {"LOGO", "xray-logo"},
-        {"IMAGE_ID", "xray_os"}
+        {"LOGO", "viper-logo"},
+        {"IMAGE_ID", "viper"}
     };
 
     // Get IMAGE_VERSION from tolitica.conf
     QString homeDir = QDir::homePath();
-    QFile confFile(homeDir+"/tolitica-home-settings/tolitica.conf");
+    QFile toliticaConf(homeDir+"/tolitica-home-settings/tolitica.conf");
     QString imageVersion;
-    if (confFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream confIn(&confFile);
+    if (toliticaConf.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream confIn(&toliticaConf);
         while (!confIn.atEnd()) {
-            QString line = confIn.readLine();
-            if (line.startsWith("xrayos_img_ver = ")) {
-                imageVersion = line.split(" = ")[1];
+            QString line = confIn.readLine().trimmed();
+            if (line.startsWith("viper_img_ver=")) {
+                imageVersion = line.split("=")[1];
                 break;
             }
         }
+        toliticaConf.close();
+    }
+
+    if (imageVersion.isEmpty()) {
+        imageVersion = "unknown"; // fallback
     }
     expected["IMAGE_VERSION"] = imageVersion;
 
-    QTextStream in(&configFile);
+    QTextStream in(&osReleaseFile);
     int matches = 0;
 
     while (!in.atEnd()) {
-        QString line = in.readLine();
-        qDebug() << "Line:" << line;
+        QString line = in.readLine().trimmed();
         QStringList parts = line.split('=', Qt::KeepEmptyParts);
         if (parts.size() == 2) {
             QString key = parts[0];
@@ -140,8 +146,6 @@ bool CoreInitial::osreleaseStatus() {
             }
         }
     }
-
-    qDebug() << "Matches:" << matches << "Expected size:" << expected.size();
     return matches == expected.size();
 }
 
@@ -165,15 +169,15 @@ void CoreInitial::setOSrelease() {
 
         // Convert to ArchLinux
         QStringList commands = {
-            "sudo sed -i 's/\"Xray_OS\"/\"Arch Linux\"/g' /usr/lib/os-release",
-            "sudo sed -i 's/ID=xray_os/ID=arch/g' /usr/lib/os-release",
+            "sudo sed -i 's/\"Viper\"/\"Arch Linux\"/g' /usr/lib/os-release",
+            "sudo sed -i 's/ID=viper/ID=arch/g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/index.html|https://archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/get-started.html|https://wiki.archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://discord.com/invite/dBR7wR3ABk/|https://bbs.archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://github.com/Xray-OS/Xray_OS/issues|https://gitlab.archlinux.org/groups/archlinux/-/issues|g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/index.html#about-xray-os|https://terms.archlinux.org/docs/privacy-policy/|g' /usr/lib/os-release",
-            "sudo sed -i 's/xray-logo/archlinux-logo/g' /usr/lib/os-release",
-            "sudo sed -i 's/IMAGE_ID=xray_os/IMAGE_ID=archlinux/g' /usr/lib/os-release",
+            "sudo sed -i 's/viper-logo/archlinux-logo/g' /usr/lib/os-release",
+            "sudo sed -i 's/IMAGE_ID=viper/IMAGE_ID=archlinux/g' /usr/lib/os-release",
             QString("sudo sed -i 's/^IMAGE_VERSION=.*/IMAGE_VERSION=%1/' /usr/lib/os-release").arg(imageVersion)
         };
 
@@ -183,24 +187,24 @@ void CoreInitial::setOSrelease() {
     } else {
         QString homeDir = QDir::homePath();
         QFile confFile(homeDir + "/tolitica-home-settings/tolitica.conf");
-        QString imageVersion = "v17"; // default xray fallback
+        QString imageVersion = "v18"; // default viper fallback
 
         if (confFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream confIn(&confFile);
             while (!confIn.atEnd()) {
                 QString line = confIn.readLine();
-                if (line.startsWith("xrayos_img_ver = ")) {
+                if (line.startsWith("viper_img_ver = ")) {
                     imageVersion = line.split(" = ")[1];
                     break;
                 }
             }
         }
 
-        // Force set to Xray_OS values regardless of current content
+        // Force set to Xray values regardless of current content
         QStringList commands = {
-            "sudo sed -i 's/^NAME=.*/NAME=\"Xray_OS\"/' /usr/lib/os-release",
-            "sudo sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME=\"Xray_OS\"/' /usr/lib/os-release",
-            "sudo sed -i 's/^ID=.*/ID=xray_os/' /usr/lib/os-release",
+            "sudo sed -i 's/^NAME=.*/NAME=\"Viper\"/' /usr/lib/os-release",
+            "sudo sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME=\"Viper\"/' /usr/lib/os-release",
+            "sudo sed -i 's/^ID=.*/ID=viper/' /usr/lib/os-release",
             "sudo sed -i 's/^BUILD_ID=.*/BUILD_ID=rolling/' /usr/lib/os-release",
             "sudo sed -i 's/^ANSI_COLOR=.*/ANSI_COLOR=\"38;2;23;147;209\"/' /usr/lib/os-release",
             "sudo sed -i 's|^HOME_URL=.*|HOME_URL=\"https://xray-os.github.io/xray_os-website/index.html\"|' /usr/lib/os-release",
@@ -208,8 +212,8 @@ void CoreInitial::setOSrelease() {
             "sudo sed -i 's|^SUPPORT_URL=.*|SUPPORT_URL=\"https://discord.com/invite/dBR7wR3ABk/\"|' /usr/lib/os-release",
             "sudo sed -i 's|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"https://github.com/Xray-OS/Xray_OS/issues\"|' /usr/lib/os-release",
             "sudo sed -i 's|^PRIVACY_POLICY_URL=.*|PRIVACY_POLICY_URL=\"https://xray-os.github.io/xray_os-website/index.html#about-xray-os\"|' /usr/lib/os-release",
-            "sudo sed -i 's/^LOGO=.*/LOGO=xray-logo/' /usr/lib/os-release",
-            "sudo sed -i 's/^IMAGE_ID=.*/IMAGE_ID=xray_os/' /usr/lib/os-release",
+            "sudo sed -i 's/^LOGO=.*/LOGO=viper-logo/' /usr/lib/os-release",
+            "sudo sed -i 's/^IMAGE_ID=.*/IMAGE_ID=viper/' /usr/lib/os-release",
             QString("sudo sed -i 's/^IMAGE_VERSION=.*/IMAGE_VERSION=%1/' /usr/lib/os-release").arg(imageVersion)
         };
 
@@ -233,117 +237,209 @@ bool CoreInitial::konsoleProfStatus() {
         if (line.startsWith("DefaultProfile=")) {
             QString value = line.mid(15).trimmed();
             value.remove('"');
-            if (value == "Xray_OS.profile") {
+            if (value == "Xray.profile") {
                 return true;
             }
         }
     }
     return false;
 }
+// ################################################################
+// Manual konsolerc profile toggle snippet
+// Works fine, but QSettings is cleaner if you want less parsing
+// ################################################################
+// void CoreInitial::setKonsoleProfile() {
+//     QString homeDir = QDir::homePath();
+//     QFile konsolerecFile(homeDir + "/.config/konsolerc");
+
+//     if (!konsolerecFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//         if (!konsolerecFile.exists()) {
+//             qWarning() << "The file is not present in: \"" << homeDir << "\",";
+//             return;
+//         }
+//         qWarning() << "konsolerc can't be opened for edit" <<
+//         konsolerecFile.errorString();
+//         return;
+//     }
+
+//     // Get current profile value first
+//     QString currentProfile;
+//     QTextStream in(&konsolerecFile);
+//     while (!in.atEnd()) {
+//         QString line = in.readLine();
+//         if (line.startsWith("DefaultProfile=")) {
+//             currentProfile = line.mid(15).trimmed();
+//             currentProfile.remove('"');
+//             break;
+//         }
+//     }
+//     konsolerecFile.close();
+
+//     // Save current profile to tolitica.conf if it's not Xray_OS.profile
+//     if (currentProfile != "Xray.profile") {
+//         QFile toliticaConf(homeDir + "/tolitica-home-settings/tolitica.conf");
+//         QStringList lines;
+
+//         if (!toliticaConf.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//             if (!toliticaConf.exists()) {
+//                 qWarning() << "tolitica.conf is missing in: \"" <<
+//                 homeDir << "\" ";
+//                 return;
+//             }
+//             qWarning() << "tolitica.conf can't be opened" <<
+//             toliticaConf.errorString();
+//             return;
+//         }
+
+//         QTextStream tIn(&toliticaConf);
+//         bool found = false;
+//         while (!tIn.atEnd()) {
+//             QString line = tIn.readLine();
+//             if (line.startsWith("lastKonsoleProfile=")) {
+//                 lines << "lastKonsoleProfile=" + currentProfile;
+//                 found = true;
+//             } else {
+//                 lines << line;
+//             }
+//         }
+//         if (!found) {
+//             lines << "lastKonsoleProfile=" + currentProfile;
+//         }
+//         toliticaConf.close();
+
+//         if (toliticaConf.open(QIODevice::WriteOnly | QIODevice::Text |
+//             QIODevice::Truncate)) {
+//             QTextStream tOut(&toliticaConf);
+//             for (const QString &line : lines) {
+//                 tOut << line << "\n";
+//             }
+//         }
+//     }
+
+//     // Now modify konsolerc
+//     QStringList lines;
+//     if (!konsolerecFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//         qWarning() << "Failed to reopen konsolerc";
+//         return;
+//     }
+
+//     in.setDevice(&konsolerecFile);
+//     bool foundDEsection = false;
+//     bool foundDefaultProfile = false;
+
+//     while (!in.atEnd()) {
+//         QString line = in.readLine();
+
+//         if (line.startsWith('[') && line.endsWith(']')) {
+//             foundDEsection = (line.trimmed() == "[Desktop Entry]");
+//             lines << line;
+//         } else if (foundDEsection && line.trimmed().startsWith("DefaultProfile=")) {
+//             if (currentProfile == "Xray.profile") {
+//                 // Get saved profile from tolitica.conf
+//                 QString savedProfile = "Arch.profile"; // default fallback
+//                 QFile toliticaConf(homeDir + "/tolitica-home-settings/tolitica.conf");
+
+//                 if (toliticaConf.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//                     QTextStream tIn(&toliticaConf);
+//                     while (!tIn.atEnd()) {
+//                         QString tLine = tIn.readLine();
+//                         if (tLine.startsWith("lastKonsoleProfile=")) {
+//                             savedProfile = tLine.mid(19).trimmed();
+//                             break;
+//                         }
+//                     }
+//                     toliticaConf.close();
+//                 }
+//                 lines << "DefaultProfile=" + savedProfile;
+//             } else {
+//                 lines << "DefaultProfile=Xray.profile";
+//             }
+//             foundDefaultProfile = true;
+//         } else {
+//             lines << line;
+//         }
+//     }
+
+//     if (!foundDefaultProfile) {
+//         lines << "DefaultProfile=Xray.profile";
+//     }
+
+//     konsolerecFile.close();
+
+//     if (konsolerecFile.open(QIODevice::WriteOnly | QIODevice::Text |
+//         QIODevice::Truncate)) {
+//         QTextStream out(&konsolerecFile);
+//         for (const QString &line : lines) {
+//             out << line << "\n";
+//         }
+//         if (out.status() != QTextStream::Ok) {
+//             qWarning() << "Failed to write konsolerc properly";
+//         }
+//     }
+// }
+// ################################################################
+// END OF THE OLD FUNCTION (some code snippets for some fellow travelers)
+// ################################################################
 
 void CoreInitial::setKonsoleProfile() {
     QString homeDir = QDir::homePath();
-    QFile configFile(homeDir + "/.config/konsolerc");
 
-    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
-    }
+    QSettings konsolerc(homeDir + "/.config/konsolerc", QSettings::IniFormat);
 
     // Get current profile value first
-    QString currentProfile;
-    QTextStream in(&configFile);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        if (line.startsWith("DefaultProfile=")) {
-            currentProfile = line.mid(15).trimmed();
-            currentProfile.remove('"');
-            break;
-        }
-    }
-    configFile.close();
+    QString currentProfile = konsolerc.value("Desktop Entry/DefaultProfile").toString();
 
     // Save current profile to tolitica.conf if it's not Xray_OS.profile
-    if (currentProfile != "Xray_OS.profile") {
-        QFile toliticaConf(homeDir + "/tolitica-home-settings/tolitica.conf");
-        QStringList lines;
-
-        if (toliticaConf.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            QTextStream tIn(&toliticaConf);
-            bool found = false;
-            while (!tIn.atEnd()) {
-                QString line = tIn.readLine();
-                if (line.startsWith("lastKonsoleProfile=")) {
-                    lines << "lastKonsoleProfile=" + currentProfile;
-                    found = true;
-                } else {
-                    lines << line;
-                }
-            }
-            if (!found) {
-                lines << "lastKonsoleProfile=" + currentProfile;
-            }
-            toliticaConf.close();
-        } else {
-            lines << "lastKonsoleProfile=" + currentProfile;
-        }
-
-        if (toliticaConf.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            QTextStream tOut(&toliticaConf);
-            for (const QString &line : lines) {
-                tOut << line << "\n";
-            }
-        }
+    if (currentProfile != "Xray.profile") {
+       QSettings toliticaConf(homeDir +
+            "/tolitica-home-settings/tolitica.conf", QSettings::IniFormat);
+        toliticaConf.setValue("lastKonsoleProfile", currentProfile);
+        toliticaConf.sync();
     }
 
-    // Now modify konsolerc
-    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
+    if (currentProfile == "Xray.profile") {
+        QSettings toliticaConf(homeDir + "/tolitica-home-settings/tolitica.conf",
+        QSettings::IniFormat);
+        QString savedProfile = toliticaConf.value("lastKonsoleProfile", "Arch.profile").toString();
+        konsolerc.setValue("Desktop Entry/DefaultProfile", savedProfile);
+    } else {
+        konsolerc.setValue("Desktop Entry/DefaultProfile", "Xray.profile");
     }
 
-    QStringList lines;
-    in.setDevice(&configFile);
-    bool foundDefaultProfile = false;
+    konsolerc.sync();
 
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        if (line.startsWith("DefaultProfile=")) {
-            if (currentProfile == "Xray_OS.profile") {
-                // Get saved profile from tolitica.conf
-                QString savedProfile = "Arch.profile"; // default fallback
-                QFile toliticaConf(homeDir + "/tolitica-home-settings/tolitica.conf");
-                if (toliticaConf.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                    QTextStream tIn(&toliticaConf);
-                    while (!tIn.atEnd()) {
-                        QString tLine = tIn.readLine();
-                        if (tLine.startsWith("lastKonsoleProfile=")) {
-                            savedProfile = tLine.mid(19).trimmed();
-                            break;
-                        }
-                    }
-                }
-                lines << "DefaultProfile=" + savedProfile;
-            } else {
-                lines << "DefaultProfile=Xray_OS.profile";
-            }
-            foundDefaultProfile = true;
-        } else {
-            lines << line;
-        }
-    }
+    QFile file(homeDir + "/.config/konsolerc");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString content = file.readAll();
+        file.close();
 
-    if (!foundDefaultProfile) {
-        lines << "DefaultProfile=Xray_OS.profile";
-    }
+        // Replace any "%20" with a space (thanks QSettings)
+        content.replace("%20", " ");
 
-    configFile.close();
-
-    if (configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&configFile);
-        for (const QString &line : lines) {
-            out << line << "\n";
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+            QTextStream out(&file);
+            out << content;
         }
     }
 }
+
+// QStringList CoreInitial::listGrubThemes() {
+
+//     QStringList availableGrubThemes;
+//     QDir grubThemesDir("/usr/share/grub/themes");
+
+//     QFileInfoList dirList = grubThemesDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+
+//     for (int i = 0; i < dirList.size(); ++i) {
+//         QFileInfo dirInfo = dirList.at(i);
+
+//         if (themeDir.exists("theme.txt")) {
+//             availableGrubThemes.append(QString(dirInfo.fileName()));
+//         }
+//     }
+
+//     return availableGrubThemes;
+// }
 
 bool CoreInitial::grubThemeStatus() {
     QFile configFile("/etc/default/grub");
@@ -356,41 +452,158 @@ bool CoreInitial::grubThemeStatus() {
 
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
+
+        // Skip empty of commented lines
+        if (line.isEmpty() || line.startsWith('#')) {
+            continue;
+        }
+
         if (line.startsWith("GRUB_THEME=")) {
-            QString value = line.mid(11).trimmed();
-            value.remove('"');
-            if (value == "/boot/grub/themes/xray_os/theme.txt") {
-                return true;
-            }
+            return true;
         }
     }
     return false;
 }
 
-void CoreInitial::setGrubTheme() {
-    bool status = grubThemeStatus();
-    int readable = grubThemeStatus();
+QStringList CoreInitial::listGrubThemes() {
+    QDir grubThemesDir("/usr/share/grub/themes");
+    QStringList dirs = grubThemesDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    QStringList availableGrubThemes;
 
-    QString newValue = (status) ? "/boot/grub/themes/Arch-Linux/theme.txt" :
-    "/boot/grub/themes/xray_os/theme.txt";
-    QString command = QString("sed -i 's|^GRUB_THEME=.*|GRUB_THEME=%1|' /etc/default/grub && grub-mkconfig -o /boot/grub/grub.cfg").arg(newValue);
-
-    QProcess process;
-    process.start("pkexec", QStringList() << "bash" << "-c" << command);
-    process.waitForFinished();
-
-    // Debug output
-    qDebug() << "Command:" << command;
-    qDebug() << "Exit code:" << process.exitCode();
-    qDebug() << "Standard output:" << process.readAllStandardOutput();
-    qDebug() << "Standard error:" << process.readAllStandardError();
-
-    if (process.exitCode() != 0) {
-        QMessageBox::critical(nullptr, "Error",
-            QString("Failed to modify grub. Exit code: %1\nError: %2")
-                .arg(process.exitCode())
-                .arg(QString(process.readAllStandardError())));
+    for (const QString &dirName : dirs) {
+        QDir themeDir(grubThemesDir.absoluteFilePath(dirName));
+        if (themeDir.exists("theme.txt")) {
+            availableGrubThemes.append(dirName);
+        }
     }
+    return availableGrubThemes;
+}
+
+QString CoreInitial::currentGrubTheme() {
+    QFile configFile("/etc/default/grub");
+
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Error while trying to retrieve the current grub theme:"
+                   << configFile.errorString();
+        return "Error";
+    }
+
+    QTextStream in(&configFile);
+    QString value = "No theme present";
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+
+        if (line.isEmpty()) {
+            continue;
+        }
+
+        // Active theme
+        if (line.startsWith("GRUB_THEME=")) {
+            value = line.mid(QString("GRUB_THEME=").length()).trimmed();
+
+            if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.mid(1, value.length() - 2);
+            }
+            if (value.endsWith("/theme.txt")) {
+                value.chop(QString("/theme.txt").length());
+            }
+
+            QFileInfo fi(value);
+            value = fi.fileName();
+            break;
+        }
+
+        // Disabled theme
+        if (line.startsWith("#GRUB_THEME=")) {
+            value = line.mid(QString("#GRUB_THEME=").length()).trimmed();
+
+            if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.mid(1, value.length() - 2);
+            }
+            if (value.endsWith("/theme.txt")) {
+                value.chop(QString("/theme.txt").length());
+            }
+
+            QFileInfo fi(value);
+            value = fi.fileName() + " (Disabled)";
+            break;
+        }
+    }
+
+    return value;
+}
+
+void CoreInitial::setGrubTheme(const QString &grubTheme) {
+    qDebug() << "\n=== setGrubTheme CALLED ===";
+    qDebug() << "Theme parameter:" << grubTheme;
+    
+    bool status = grubThemeStatus();
+    qDebug() << "Current grub theme status (enabled):" << status;
+
+    QFile configFile("/etc/default/grub");
+    if (!configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Error while trying to retrieve the current grub theme:"
+        << configFile.errorString();
+        return;
+    }
+
+    QTextStream in(&configFile);
+    bool foundGrubTheme = false;
+
+    while(!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.startsWith("GRUB_THEME=") || line.startsWith("#GRUB_THEME=")) {
+            foundGrubTheme = true;
+            qDebug() << "Found existing GRUB_THEME line:" << line;
+            break;
+        }
+    }
+    configFile.close();
+    qDebug() << "Found existing grub theme line:" << foundGrubTheme;
+
+    // For change button: always enable the new theme
+    // For disable button: toggle current theme on/off
+    QString command;
+    if (foundGrubTheme) {
+        // Check if this is being called from disable button (same theme) or change button (different theme)
+        QString currentThemeName = currentGrubTheme();
+        if (currentThemeName.contains(" (Disabled)")) {
+            currentThemeName = currentThemeName.replace(" (Disabled)", "");
+        }
+        
+        if (grubTheme == currentThemeName) {
+            // This is disable/enable toggle - use old logic
+            command = status
+                ? QString("sed -i 's|^GRUB_THEME=.*|#GRUB_THEME=\"/boot/grub/themes/%1/theme.txt\"|' /etc/default/grub")
+                    .arg(grubTheme)
+                : QString("sed -i 's|^#GRUB_THEME=.*|GRUB_THEME=\"/boot/grub/themes/%1/theme.txt\"|' /etc/default/grub")
+                    .arg(grubTheme);
+        } else {
+            // This is theme change - always enable
+            command = QString("sed -i 's|^#*GRUB_THEME=.*|GRUB_THEME=\"/boot/grub/themes/%1/theme.txt\"|' /etc/default/grub")
+                .arg(grubTheme);
+        }
+    } else {
+        command = QString("echo 'GRUB_THEME=\"/boot/grub/themes/%1/theme.txt\"' >> /etc/default/grub")
+            .arg(grubTheme);
+        qDebug() << "No existing theme line found, will add new one";
+    }
+    
+    qDebug() << "Command to execute:" << command;
+    qDebug() << "Starting process...";
+
+    QString fullCommand = command + " && grub-mkconfig -o /boot/grub/grub.cfg";
+    qDebug() << "Full command with grub-mkconfig:" << fullCommand;
+    
+    QProcess process;
+    process.start("pkexec", QStringList() << "bash" << "-c" << fullCommand);
+    process.waitForFinished();
+    
+    qDebug() << "Process finished with exit code:" << process.exitCode();
+    qDebug() << "Process stdout:" << process.readAllStandardOutput();
+    qDebug() << "Process stderr:" << process.readAllStandardError();
+    qDebug() << "=== setGrubTheme FINISHED ===\n";
 }
 
 QString CoreInitial::currentIcons() {
@@ -678,7 +891,7 @@ void::CoreInitial::getRemoveStore(QWidget *parent, const QString &store, std::fu
 
 bool CoreInitial::gamingMetaStatus() {
     QProcess process;
-    process.start("bash", QStringList() << "-c" << "pacman -Q arch7z-gaming-meta");
+    process.start("bash", QStringList() << "-c" << "pacman -Q viper-gaming-meta");
     process.waitForFinished();
 
     bool gamingEnabled = (process.exitCode() == 0);
@@ -686,16 +899,16 @@ bool CoreInitial::gamingMetaStatus() {
     return gamingEnabled ? true : false;
 }
 
-void CoreInitial::getArch7zGamingMeta(QWidget *parent,
+void CoreInitial::getViperGamingMeta(QWidget *parent,
     std::function<void(bool)>callback) {
         bool status = gamingMetaStatus();
 
-        QString command = (status) ? "pacman -Rns --noconfirm arch7z-gaming-meta"
-            : "pacman -S --noconfirm arch7z-gaming-meta";
+        QString command = (status) ? "pacman -Rns --noconfirm viper-gaming-meta"
+            : "pacman -S --noconfirm viper-gaming-meta";
 
         QProgressDialog *progress = new QProgressDialog(
-            (status) ? "Removing Arch7z Gaming Meta..."
-            : "Installing Arch7z Gaming Meta", nullptr, 0, 100, parent);
+            (status) ? "Removing Viper Gaming Meta..."
+            : "Installing Viper Gaming Meta", nullptr, 0, 100, parent);
         progress->setWindowModality(Qt::ApplicationModal);
         progress->setCancelButton(nullptr);
         progress->setValue(0);

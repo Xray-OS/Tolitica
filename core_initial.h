@@ -23,7 +23,9 @@ public slots:
     bool themeStatus();
     bool xrayThemeStatus();
     bool grubThemeStatus();
-    void setGrubTheme();
+    QString currentGrubTheme();
+    QStringList listGrubThemes();
+    void setGrubTheme(const QString &grubTheme);
     QString currentIcons();
     void setIcons(const QString &icons);
     bool aurStatus(const QString &aurHelper);
@@ -33,7 +35,7 @@ public slots:
     void getRemoveStore(QWidget *parent, const QString &store,
         std::function<void(bool)> callback = nullptr);
     bool gamingMetaStatus();
-    void getArch7zGamingMeta(QWidget *parent,
+    void getViperGamingMeta(QWidget *parent,
         std::function<void(bool)> callback = nullptr);
 
 signals:

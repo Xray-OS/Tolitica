@@ -26,67 +26,67 @@
 // //////////////////////////////////////
 // // ==== ONLINE INSTALL BUTTON =====
 // /////////////////////////////////////
-// void calamares_page::onlineInstallation() {
-//     // Create a ConnectivityChecker instance.
-//     ConnectivityChecker *checker = new ConnectivityChecker(this);
+void calamares_page::onlineInstallation() {
+    // Create a ConnectivityChecker instance.
+    ConnectivityChecker *checker = new ConnectivityChecker(this);
 
-//     connect(checker, &ConnectivityChecker::connectivityChecked,
-//             this, [this, checker](bool isConnected) {
-//                 checker->deleteLater();
+    connect(checker, &ConnectivityChecker::connectivityChecked,
+            this, [this, checker](bool isConnected) {
+                checker->deleteLater();
 
-//                 if(!isConnected) {
-//                     QMessageBox::information(this, tr("Internet Connection"),
-//                                              tr("It appears you are not connected to the internet. "
-//                                                 "Please connect to the internet before proceeding with the online installation"));
-//                     return;
-//                 } else {
-//                     QString onlinePath = "/etc/calamares/settings-advanced.conf";
-//                     QString sysUpdFileOnline = "/etc/calamares/modules/packages-system-update.conf";
+                if(!isConnected) {
+                    QMessageBox::information(this, tr("Internet Connection"),
+                                             tr("It appears you are not connected to the internet. "
+                                                "Please connect to the internet before proceeding with the online installation"));
+                    return;
+                } else {
+                    QString onlinePath = "/etc/calamares/settings-advanced.conf";
+                    QString sysUpdFileOnline = "/etc/calamares/modules/packages-system-update.conf";
 
-//                     QFile settings_adv_file(onlinePath);
-//                     QFile settings_sys_file(sysUpdFileOnline);
+                    QFile settings_adv_file(onlinePath);
+                    QFile settings_sys_file(sysUpdFileOnline);
 
-//                     QProcess proc;
-//                     QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_adv_file.fileName(), settings_sys_file.fileName());
-//                     proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
-//                     proc.waitForFinished();
+                    QProcess proc;
+                    QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_adv_file.fileName(), settings_sys_file.fileName());
+                    proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
+                    proc.waitForFinished();
 
-//                     QProcess *fireup = new QProcess(this);
-//                     fireup->setProcessChannelMode(QProcess::ForwardedChannels);
-//                     fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S calamares");
+                    QProcess *fireup = new QProcess(this);
+                    fireup->setProcessChannelMode(QProcess::ForwardedChannels);
+                    fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S calamares");
 
-//                     connect(fireup, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [fireup](int exitCode, QProcess::ExitStatus) {
-//                         qDebug() << "Calamares finished with exit code:" << exitCode;
-//                         fireup->deleteLater();
-//                     });
-//                 }
-//             });
+                    connect(fireup, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [fireup](int exitCode, QProcess::ExitStatus) {
+                        qDebug() << "Calamares finished with exit code:" << exitCode;
+                        fireup->deleteLater();
+                    });
+                }
+            });
 
-//     checker->checkConnectivity();
+    checker->checkConnectivity();
 
-// }
+}
 
 //////////////////////////////////////
 // ==== OFFLINE INSTALL BUTTON =====
 /////////////////////////////////////
 void calamares_page::offlineInstallation() {
-    // QString offlinePath = "/etc/calamares/settings-beginner.conf";
-    // QString sysFileOffline = "/etc/calamres/modules/packages-no-system-update.conf";
+    QString offlinePath = "/etc/calamares/settings-beginner.conf";
+    QString sysFileOffline = "/etc/calamres/modules/packages-no-system-update.conf";
 
-    // QFile settings_beg_file(offlinePath);
-    // QFile settings_sys_file(sysFileOffline);
+    QFile settings_beg_file(offlinePath);
+    QFile settings_sys_file(sysFileOffline);
 
-    // QProcess proc;
-    // QString copyCommand = QString("cp -r %1  /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_beg_file.fileName(), settings_sys_file.fileName());
-    // proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
-    // proc.waitForFinished();
+    QProcess proc;
+    QString copyCommand = QString("cp -r %1  /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_beg_file.fileName(), settings_sys_file.fileName());
+    proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
+    proc.waitForFinished();
 
     QProcess *fireup = new QProcess(this);
     fireup->setProcessChannelMode(QProcess::ForwardedChannels);
-    fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S arch7z-installer");
+    fireup->startDetached("bash", QStringList() << "-c" << "nice -n 10 sudo -S calamares");
 
     connect(fireup, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [fireup](int exitCode, QProcess::ExitStatus) {
-        qDebug() << "Arch7z Installer finished with exit code:" << exitCode;
+        qDebug() << "Calamares finished with exit code:" << exitCode;
         fireup->deleteLater();
     });
 }
@@ -118,9 +118,9 @@ void calamares_page::socialMedia(const QString &platform) {
     if (platform == "discord") {
         url = "https://discord.gg/dBR7wR3ABk";
     } else if (platform == "twitter") {
-        url = "https://x.com/xray_os";
+        url = "https://x.com/viper_96_tech";
     } else if (platform == "youtube") {
-        url = "https://www.youtube.com/@Xray_OS";
+        url = "https://www.youtube.com/@viper-arch";
     }
 
     if (!url.isEmpty()) {
@@ -149,23 +149,10 @@ calamares_page::calamares_page(QWidget *parent)
     contentLayout->setContentsMargins(0, 0, 0, 0);
 
     // ---------- Header Section ----------
-    QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Xray_OS Assistant!</h1>", contentContainer);
+    QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Viper Assistant!</h2>", contentContainer);
     headerLabel->setAlignment(Qt::AlignCenter);
     headerLabel->setContentsMargins(0, 20, 0, 0);
     contentLayout->addWidget(headerLabel);
-
-    // ---------- Greetings Section ----------
-    QLabel *greetingsLabel = new QLabel(
-        "<html><head><style>"
-        " .greeting { font-size: 11pt; font-weight: bold; }"
-        " .role { font-size: 10pt; font-weight: normal; }"
-        "</style></head><body>"
-        "<span class='greeting'>Greetings from Angel!</span> - "
-        "<span class='role'>Owner & Maintainer of Xray_OS.</span>"
-        "</body></html>", contentContainer);
-    greetingsLabel->setAlignment(Qt::AlignCenter);
-    greetingsLabel->setContentsMargins(0, 10, 0, 0);
-    contentLayout->addWidget(greetingsLabel);
 
     // ---------- Description Section ----------
     QWidget *descContainer = new QWidget(contentContainer);
@@ -176,8 +163,8 @@ calamares_page::calamares_page(QWidget *parent)
         "<html><head><style>"
         "p { font-size: 10pt; text-align: justify }"
         "</style></head><body>"
-        "<p>With this helper application you can install Xray_OS on your system. "
-        "Click on the button below to start the installation.</p>"
+        "<p>With this helper application you can install Viper on your system. "
+        "Click on the buttons below to choose an offline or an online installation.</p>"
         "</body></html>", descContainer);
     descriptionLabel->setWordWrap(true);
     descLayout->addWidget(descriptionLabel);
@@ -201,20 +188,18 @@ calamares_page::calamares_page(QWidget *parent)
     gridLayout->setSpacing(10);
 
     // --- Row 0: Installation Buttons Section ---
-    // QPushButton *onlineInstallationButton = new QPushButton("Online Installation", contentContainer);
-    QPushButton *offlineInstallationButton = new QPushButton("Start Installation", contentContainer);
+    QPushButton *onlineInstallationButton = new QPushButton("Online Installation", contentContainer);
+    QPushButton *offlineInstallationButton = new QPushButton("Offline Installation", contentContainer);
 
     // Set expanding horizontal size policies so they fill available width.
-    // onlineInstallationButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    //onlineInstallationButton->setFixedSize(200, 40);
+    onlineInstallationButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     offlineInstallationButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    //offlineInstallationButton->setFixedSize(200, 40);
 
     QWidget *installButtonsWidget = new QWidget(buttonsContainer);
     QHBoxLayout *installLayout = new QHBoxLayout(installButtonsWidget);
     installLayout->setContentsMargins(0, 0, 0, 0);
     installLayout->setSpacing(10);
-    // installLayout->addWidget(onlineInstallationButton);
+    installLayout->addWidget(onlineInstallationButton);
     installLayout->addWidget(offlineInstallationButton);
     installButtonsWidget->setLayout(installLayout);
     gridLayout->addWidget(installButtonsWidget, 0, 0);
@@ -287,8 +272,8 @@ calamares_page::calamares_page(QWidget *parent)
     setLayout(mainLayout);
 
     // ---------- Signal-Slot Connections ----------
-    installOptionsSetupConnections(nullptr, offlineInstallationButton,
-                                   gpartedButton, partitionManagerButton);
+    installOptionsSetupConnections(onlineInstallationButton, offlineInstallationButton,
+                                       gpartedButton, partitionManagerButton);
 }
 
 // == I LOVE CPP ==================================
@@ -301,15 +286,18 @@ calamares_page::calamares_page(QWidget *parent)
 /// INSTALL OPTIONS CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 
-void calamares_page::installOptionsSetupConnections(QPushButton *onlineInstallationButton, QPushButton *offlineInstallationButton, QPushButton *gpartedButton,
-                                                    QPushButton *partitionManagerButton) {
-    // Only connect if the button exists
-    if (onlineInstallationButton) {
-        // connect(onlineInstallationButton, &QPushButton::clicked, this, &::calamares_page::onlineInstallation);
-    }
-    connect(offlineInstallationButton, &QPushButton::clicked, this, &::calamares_page::offlineInstallation);
+void calamares_page::installOptionsSetupConnections(QPushButton *onlineInstallationButton,
+    QPushButton *offlineInstallationButton, QPushButton *gpartedButton,
+    QPushButton *partitionManagerButton) {
+
+
+    connect(onlineInstallationButton, &QPushButton::clicked, this,
+        &::calamares_page::onlineInstallation);
+    connect(offlineInstallationButton, &QPushButton::clicked, this,
+        &::calamares_page::offlineInstallation);
 
     // * == GPARTED/PARTITIONMANAGER == * //
     connect(gpartedButton, &QPushButton::clicked, this, &::calamares_page::gparted);
-    connect(partitionManagerButton, &QPushButton::clicked, this, &::calamares_page::partitionManager);
+    connect(partitionManagerButton, &QPushButton::clicked, this,
+        &::calamares_page::partitionManager);
 }

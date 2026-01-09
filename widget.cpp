@@ -214,7 +214,7 @@ void Widget::systemUpdate() {
             QMessageBox::information(nullptr, "System Already Upto Date", "No updates were found");
         } else {
             progress->setValue(100);
-            QMessageBox::information(nullptr, "Xray_OS Has Been Updated", "Your Operating System has been updated successfully");
+            QMessageBox::information(nullptr, "Viper Has Been Updated", "Your Operating System has been updated successfully");
             progress->setValue(100);
         }
 
@@ -276,189 +276,103 @@ void Widget::removeDBLock() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////
-/// ADDONS::INSTALL ARCH7Z-GAMING-META FUNCTION
+/// ADDONS::VIER-GAMING-META-STATUS
 //////////////////////////////////////////////////
-void Widget::archZGamingMeta() {
-    QProcess checkIssues;
 
-    // Check DB sync
-    checkIssues.start("bash", QStringList() << "-c" << "pacman -Sy --dbonly");
-    checkIssues.waitForFinished();
-    QString dbSyncErrors = checkIssues.readAllStandardError();
+bool Widget::gamingMetaStatus() {
+    QProcess process;
+    QString command = QString("pacman -Q viper-gaming-meta");
+    qDebug() << "command: " << command;
 
-    bool dbNotSynced = !dbSyncErrors.isEmpty();
+    process.start("bash", QStringList() << "-c" << command);
+    qDebug() << "process: " << process.exitCode();
+    process.waitForFinished();
 
-    QDir pkgCacheDir("/var/cache/pacman/pkg");
-    bool cacheExists = pkgCacheDir.exists() && !pkgCacheDir.isEmpty();
+    bool gamingMetaEnabled = (process.exitCode() == 0);
 
-    if (cacheExists) {
-        // Check for PKG corruption
-        checkIssues.start("bash", QStringList() << "-c" << "pacman -Qk");
-        checkIssues.waitForFinished();
-        QString corruptionErrors = checkIssues.readAllStandardError();
-        bool corruptedPackages = !corruptionErrors.isEmpty();
-
-        // cleanup
-
-        if (dbNotSynced || (cacheExists && corruptedPackages)) {
-            qDebug() << "Issues detected! Cleaning package cache.";
-            QProcess cleanup;
-
-            if (dbNotSynced) {
-                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Sy");
-                cleanup.waitForFinished();
-
-                if (cleanup.exitCode() != 0) {
-                    qDebug() << "Cleanup errors(pacman -Sy): " << cleanup.readAllStandardError();
-                }
-            }
-            if (corruptedPackages) {
-                cleanup.start("pkexec", QStringList() << "bash" << "-c" << "sudo rm -rf /var/cache/pacman/pkg/* && sudo pacman -Scc --noconfirm");
-                cleanup.waitForFinished();
-            }
-
-            qDebug() << "Cleanup output:" << cleanup.readAllStandardOutput();
-            qDebug() << "Cleanup erros:" << cleanup.readAllStandardError();
-
-        } else {
-            qDebug() << "System database and package cache are fine!";
-        }
-    }
-
-    QProcess *installAGM = new QProcess(this);
-    QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
-
-    // Create the progress bar dynamically
-    QProgressDialog *progress = new QProgressDialog("Installing Arch7z Gaming Meta...", nullptr, 0, 100, this);
-    progress->setWindowModality(Qt::WindowModal);
-    progress->setCancelButton(nullptr);
-    progress->show();
-
-    int progressValue = 0;
-
-    // Fix: Real-time progress update using process output
-    connect(installAGM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
-        // Adjust progress dynamically based on output
-        progressValue += 5;
-        progress->setValue(qMin(progressValue, 95));
-        QCoreApplication::processEvents(); // Ensure UI refresh
-    });
-
-    // Combined finished signal handling
-    connect(installAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-            this, [=](int exitCode, QProcess::ExitStatus status) mutable {
-                // If installation failed, try to clean the cache and reinstall
-                if (exitCode != 0) {
-                    QProcess fix(this);
-                    fix.start("pkexec", QStringList() << "pacman -Scc --noconfirm");
-                    fix.waitForFinished();  // Ensure cache cleanup before retry
-                    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S arch7z-gaming-meta --noconfirm");
-                    installAGM->waitForFinished();
-                }
-
-                // After installation (or retry), check if the package is installed
-                QProcess checkInstalled;
-                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q arch7z-gaming-meta");
-                checkInstalled.waitForFinished();
-
-                progress->setValue(100); // Mark progress as complete
-
-                if (checkInstalled.exitCode() == 0) {
-                    QMessageBox::information(nullptr, "Arch7z Gaming Meta",
-                                             "Arch7z Gaming Meta packages are installed successfully!");
-                } else {
-                    QMessageBox::warning(nullptr, "Arch7z Gaming Meta",
-                                         "There was a problem installing Arch7z Gaming Meta packages.");
-                }
-
-                // Cleanup Memory
-                progress->deleteLater();
-                installAGM->deleteLater();
-                monitorTimer->deleteLater(); // Stop aggressive monitoring
-            });
-
-    // Start aggressive monitoring
-    monitorTimer->start(250); // Updates every 250ms
-
-    // Start installing process
-    installAGM->start("pkexec", QStringList() << "bash" << "-c" << "pacman -S arch7z-gaming-meta --noconfirm");
-    installAGM->waitForFinished();
+    return gamingMetaEnabled ? true : false;
 }
 
-
 ///////////////////////////////////////////////////
-/// ADDONS::REMOVE ARCH7Z-GAMING-META FUNCTION
+/// ADDONS::INSTALL/UNINSTALL VIPER-GAMING-META FUNCTION
 //////////////////////////////////////////////////
-void Widget::removeArchZGamingMeta() {
-    QProcess *removeAGM = new QProcess(this);
-    QTimer *monitorTimer = new QTimer(this);
 
-    QProgressDialog *progress = new QProgressDialog("Removing Arch7z Gaming Meta...", nullptr, 0, 100, this);
-    progress->setWindowModality(Qt::WindowModal);
+void Widget::getViperGamingMeta(std::function<void(bool)> callback) {
+    bool status = gamingMetaStatus();
+    qDebug() << "gamingMetaStatus: " << status;
+
+    QString command = QString((status)
+        ? "pacman -Rns --noconfirm viper-gaming-meta"
+        : "pacman -S --noconfirm viper-gaming-meta"
+        );
+    qDebug() << "getGamingMeta-command: " << command;
+
+    QProgressDialog *progress = new QProgressDialog(
+        QString(status ? "Removing viper-gaming-meta" : "Installing viper-gaming-meta"),
+        nullptr, 0, 100, this);
+    progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
+    progress->setValue(0);
     progress->show();
 
+    QTimer *monitorTimer = new QTimer(this);
     int progressValue = 0;
 
-    // Ensure yay detection
-    QProcess checkYay;
-    checkYay.start("bash", QStringList() << "-c" << "pacman -Q yay");
-    checkYay.waitForFinished();
-    bool yayInstalled = (checkYay.exitCode() == 0);
+    ConnectivityChecker *checker = new ConnectivityChecker(this);
+    connect(checker, &ConnectivityChecker::connectivityChecked,
+        this, [this, checker, command, status, callback,
+        progress, monitorTimer, progressValue]
+        (bool isConnected) mutable {
 
-    QStringList removeCommands = {
-        "pacman -R arch7z-gaming-meta --noconfirm",
-        "pacman -R steam-native-runtime --noconfirm",
-        "pacman -R steam lutris bottles dosbox goverlay heroic-games-launcher-bin portproton protonplus protonup-qt vkbasalt gamemode lib32-gamemode q4wine-git wine-gecko wine-mono wine-nine protontricks --noconfirm",
-        "pacman -R winetricks wine-staging --noconfirm",
-        "pacman -R gamescope mangohud vkd3d proton-ge-custom-bin --noconfirm",
-        "pacman -R lib32-vkd3d vkbasalt-cli reshade-shaders-git --noconfirm"
-    };
-
-    if (yayInstalled) {
-        removeCommands.append("yay -Yc --noconfirm");
-    } else {
-        removeCommands.append("pacman -Rns $(pacman -Qtdq) --noconfirm");
-    }
-
-    qDebug() << "Package removal list:";
-    for (const auto &cmd : removeCommands) {
-        qDebug() << cmd;
-    }
-
-    int currentStep = 0;
-
-    // **Loop Execution: Process Commands Sequentially**
-    connect(removeAGM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]() mutable {
-        if (currentStep < removeCommands.size()) {
-            qDebug() << "Executing command:" << removeCommands[currentStep];
-
-            removeAGM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[currentStep]);
-
-            progressValue += (100 / removeCommands.size()); // Update progress dynamically
-            progress->setValue(qMin(progressValue, 95));
-            QCoreApplication::processEvents();
-
-            currentStep++; // Move to next command in sequence
-        } else {
-            qDebug() << "All packages removed successfully!";
-            progress->setValue(100);
-            QMessageBox::information(nullptr, "Arch7z Gaming Meta Removed",
-                                     "Arch7z Gaming Meta packages have been successfully removed.");
-            progress->deleteLater();
-            removeAGM->deleteLater();
-            monitorTimer->deleteLater();
+        if(!isConnected) {
+            QMessageBox::information(this, tr("Internet Connection"),
+                tr("It appears you are not connected to the internet. "
+                    "Please connect to the internet before proceeding with the online installation"));
+            return;
         }
+
+        connect(monitorTimer, &QTimer::timeout, this, [=]() mutable {
+            if (progressValue < 95) {
+                progressValue += 2;
+                progress->setValue(progressValue);
+            }
+        });
+        monitorTimer->start(250);
+
+        QProcess *process = new QProcess();
+        int attempts = 0;
+        do {
+            process->start("pkexec", QStringList() << "bash" << "-c" << command);
+            process->waitForFinished();
+
+            if (process->exitCode() != 0 && attempts < 2) {
+                attempts++;
+            }
+        } while (process->exitCode() !=0 && attempts < 3);
+
+        qDebug() << "PROCESS-OUTPUT: " << process->exitCode();
+
+        monitorTimer->stop();
+        progress->setValue(100);
+
+        bool success = (process->exitCode() == 0);
+        process->deleteLater();
+        progress->deleteLater();
+        monitorTimer->deleteLater();
+
+        if (callback) callback(success);
+        if (success)
+            checker->deleteLater();
     });
 
-    removeAGM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[currentStep]); // Start first command
-    monitorTimer->start(250);
+    // kick off the check
+    checker->checkConnectivity();
 }
 
 ///////////////////////////////////////////////////
 /// ADDONS::INSTALL ARCH7Z-DEVELOPMENT-META FUNCTION
 ///////////////////////////////////////////////////
-void Widget::arch7zDevelopmentMeta() {
+void Widget::viperDevelopmentMeta() {
     QProcess checkIssues;
 
     // Check DB sync
@@ -506,11 +420,11 @@ void Widget::arch7zDevelopmentMeta() {
     }
 
 
-    QProcess *installADM = new QProcess(this);
+    QProcess *installVDM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
 
     // Create the progress bar dynamically
-    QProgressDialog *progress = new QProgressDialog("Installing Arch7z Development Meta...", nullptr, 0, 100, this);
+    QProgressDialog *progress = new QProgressDialog("Installing Viper Development Meta...", nullptr, 0, 100, this);
     progress->setWindowModality(Qt::WindowModal);
     progress->setCancelButton(nullptr);
     progress->show();
@@ -518,45 +432,34 @@ void Widget::arch7zDevelopmentMeta() {
     int progressValue = 0;
 
     // Real-time progress update based on process output
-    connect(installADM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
+    connect(installVDM, &QProcess::readyReadStandardOutput, this, [=]() mutable {
         progressValue += 5;
         progress->setValue(qMin(progressValue, 95));
         QCoreApplication::processEvents(); // Ensure UI refresh
     });
 
     // Combined finished signal handling with cache cleanup on failure
-    connect(installADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    connect(installVDM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             this, [=](int exitCode, QProcess::ExitStatus status) mutable {
-                // If the installation fails, clean up the pacman cache and retry installation
-                // if (exitCode != 0) {
-                //     QProcess fix(this);
-                //     fix.start("pkexec", QStringList() << "bash" << "-c" << "pacman -Scc --noconfirm");
-                //     fix.waitForFinished();  // Wait for cache cleanup to complete
-
-                //     // Retry installation after cache cleanup
-                //     installADM->start("pkexec", QStringList() << "bash" << "-c"
-                //                                               << "pacman -S arch7z-development-meta --noconfirm");
-                //     installADM->waitForFinished();
-                // }
 
                 // After installation (or after the retry), check if the package is installed
                 QProcess checkInstalled;
-                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q arch7z-development-meta");
+                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q viper-development-meta");
                 checkInstalled.waitForFinished();
 
                 progress->setValue(100); // Mark progress as complete
 
                 if (checkInstalled.exitCode() == 0) {
-                    QMessageBox::information(nullptr, "Arch7z Development Meta",
-                                             "Arch7z Development Meta packages are installed successfully!");
+                    QMessageBox::information(nullptr, "Viper Development Meta",
+                                             "Viper Development Meta packages are installed successfully!");
                 } else {
-                    QMessageBox::warning(nullptr, "Arch7z Development Meta",
-                                         "There was a problem installing Arch7z Development Meta packages.");
+                    QMessageBox::warning(nullptr, "Viper Development Meta",
+                                         "There was a problem installing Viper Development Meta packages.");
                 }
 
                 // Cleanup dynamic objects
                 progress->deleteLater();
-                installADM->deleteLater();
+                installVDM->deleteLater();
                 monitorTimer->deleteLater(); // Stop aggressive monitoring
             });
 
@@ -564,21 +467,23 @@ void Widget::arch7zDevelopmentMeta() {
     monitorTimer->start(250); // Updates every 250ms
 
     // Begin the installation process
-    installADM->start("pkexec", QStringList() << "bash" << "-c"
-                                              << "pacman -S arch7z-development-meta --noconfirm");
-    installADM->waitForFinished();
+    installVDM->start("pkexec", QStringList() << "bash" << "-c"
+                                              << "pacman -S viper-development-meta --noconfirm");
+    installVDM->waitForFinished();
 }
 
 
 ///////////////////////////////////////////////////
 /// ADDONS:: REMOVE ARCH7Z-DEVELOPMENT-META FUNCTION
 //////////////////////////////////////////////////
-void Widget::removeArch7zDevelopmentMeta() {
-    QProcess *removeADM = new QProcess(this);
+void Widget::removeViperDevelopmentMeta() {
+    QProcess *removeVDM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this);
 
-    QProgressDialog *progress = new QProgressDialog("Removing Arch7z Development Meta...", nullptr, 0, 100,
-                                                    this);
+    QProgressDialog *progress = new QProgressDialog
+    (
+        "Removing Viper Development Meta...", nullptr, 0, 100, this
+    );
     progress->setWindowModality(Qt::WindowModal);
     progress->setCancelButton(nullptr);
     progress->show();
@@ -593,7 +498,7 @@ void Widget::removeArch7zDevelopmentMeta() {
     bool yayInstalled = (checkYay.exitCode() == 0);
 
     QStringList removeCommands = {
-        "pacman -R arch7z-development-meta --noconfirm",
+        "pacman -R viper-development-meta --noconfirm",
         "pacman -R geany-themes --noconfirm",
         "pacman -R geany visual-studio-code-bin zed jetbrains-toolbox github-desktop sublime-text-4 --noconfirm"
     };
@@ -607,10 +512,10 @@ void Widget::removeArch7zDevelopmentMeta() {
     int CurrentStep = 0;
 
     // **Loop Execution: Process Commands Sequentially**
-    connect(removeADM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
+    connect(removeVDM, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [=]()
             mutable {
         if (CurrentStep <removeCommands.size()) {
-            removeADM->start("pkexec", QStringList() << "bash" << "-c" <<
+            removeVDM->start("pkexec", QStringList() << "bash" << "-c" <<
                                            removeCommands[CurrentStep]);
 
             progressValue += (100 / removeCommands.size()); // Update progress dynamically
@@ -620,15 +525,15 @@ void Widget::removeArch7zDevelopmentMeta() {
             CurrentStep++; // Move to next command in sequence
         } else {
             progress->setValue(100);
-            QMessageBox::information(nullptr, "Arhc7z Development Meta Removed",
-                                     "Arhc7z Development Meta packages have been successfully removed");
+            QMessageBox::information(nullptr, "Viper Development Meta Removed",
+                                     "Viper Development Meta packages have been successfully removed");
             progress->deleteLater();
-            removeADM->deleteLater();
+            removeVDM->deleteLater();
             monitorTimer->deleteLater();
         }
     });
 
-    removeADM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[CurrentStep]); // Start first commands
+    removeVDM->start("pkexec", QStringList() << "bash" << "-c" << removeCommands[CurrentStep]); // Start first commands
     monitorTimer->start(250);
 }
 
@@ -1194,7 +1099,7 @@ int Widget::checkTermThemingStatus(){
         return 0; // Treat as not found due to error
     }
 
-    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/arch-atomic.omp.json";
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/viper-atomic.omp.json";
     QTextStream in(&configFile);
 
     while (!in.atEnd()) {
@@ -1226,10 +1131,10 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
         return;
     }
 
-    // If there is no actual arch-atomic.omp.json file
-    if (!QFile::exists(QDir::homePath() + "/.config/oh-my-posh-themes/arch-atomic.omp.json")) {
-        QMessageBox::warning(this, "arch-atomic.omp.json is Missing!",
-                                   "arch-atomic.omp.json is missing from /.config/oh-my-posh-themes");
+    // If there is no actual viper-atomic.omp.json file
+    if (!QFile::exists(QDir::homePath() + "/.config/oh-my-posh-themes/viper-atomic.omp.json")) {
+        QMessageBox::warning(this, "viper-atomic.omp.json is Missing!",
+                                   "viper-atomic.omp.json is missing from /.config/oh-my-posh-themes");
         return;
     }
 
@@ -1258,7 +1163,7 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
     }
 
     QStringList lines;
-    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/arch-atomic.omp.json";
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/viper-atomic.omp.json";
 
     QTextStream in(&configFile);
     while (!in.atEnd()) {
@@ -1401,7 +1306,7 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
     coreFunctions = new CoreFunctions(this);
 
-    setWindowTitle("Tolitica Xray_OS Assistant");
+    setWindowTitle("Tolitica Viper Assistant");
     resize(800,600);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
 
@@ -1463,18 +1368,14 @@ Widget::Widget(QWidget *parent)
         mainLayout->setContentsMargins(20, 40, 20, 20); // Add padding around content
 
         // ==== Header and Description ==== //
-        QLabel *headerLabel = new QLabel("<h1>Welcome to Tolitica Xray_OS Assistant!</h1>", this);
+        QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Viper Assistant!</h2>", this);
         // == Description == //
-        QLabel *greetingsLabel = new QLabel("<span style=\"font-size:11pt; font-weight:bold;\">Greetings from Angel!</span> - Owner & Maintainer of Xray_OS", this);
         QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
-                                              "configurations from your system, please enjoy using "
-                                              "Xray_OS, break it, repair it or donate to me... Anyway have fun using my ArchLinux distro.", this);
-        greetingsLabel->setAlignment(Qt::AlignCenter);
+                                              "configurations from your system, please enjoy.", this);
         descriptionLabel->setWordWrap(true);
         descriptionLabel->setAlignment(Qt::AlignCenter);
 
         mainLayout->addWidget(headerLabel, 0, Qt::AlignTop | Qt::AlignCenter);
-        mainLayout->addWidget(greetingsLabel);
         mainLayout->addWidget(descriptionLabel, 1, Qt::AlignTop);
 
         // ==== End Header and Description ==== //
@@ -1607,7 +1508,7 @@ Widget::Widget(QWidget *parent)
         // Functional Buttons Tweaks Layout
         QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
         QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
-        QPushButton *updateSystemButton = new QPushButton("Update Xray_OS", this);
+        QPushButton *updateSystemButton = new QPushButton("Update Viper", this);
         QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
         QPushButton *rankMirrorsButton = new QPushButton("Rank Mirrors", this);
 
@@ -1731,32 +1632,34 @@ Widget::Widget(QWidget *parent)
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // ==== Addons Page =====
         ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
         QGridLayout *addonsLayout = new QGridLayout(addonsPage);
         QPushButton *addonsBackButton = new QPushButton("Back", this);
 
         // ** Functional Buttons Addons Layout ** //
-        // *Arch7 Gaming Meta
-        QPushButton *archZGamingMetaButton = new QPushButton(this);
+            // -- *Viper Gaming Meta
+
+        QPushButton *viperGamingMetaButton = new QPushButton(this);
         QProcess checkAGMinstalled;
-        checkAGMinstalled.start("bash", QStringList() << "-c" << "pacman -Q arch7z-gaming-meta");
-        checkAGMinstalled.waitForFinished();
+        bool vgmStatus = gamingMetaStatus();
 
-        if (checkAGMinstalled.exitCode() == 0) {
-            archZGamingMetaButton->setText("Remove Arch7z Gaming Meta");
-        } else {
-            archZGamingMetaButton->setText("Install Arch7z Gaming Meta");
-        }
-        // *Arch7z Development Meta
-        QPushButton *arch7zDevelopmentMetaButton = new QPushButton(this);
+        viperGamingMetaButton->setText(vgmStatus
+            ? "Remove Viper Gaming Meta"
+            : "Install Viper Gaming Meta"
+        );
 
+
+        // *Viper Development Meta
+        QPushButton *viperDevelopmentButton = new QPushButton(this);
         QProcess checkADMinstalled;
-        checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q arch7z-development-meta");
+        checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q viper-development-meta");
         checkADMinstalled.waitForFinished();
 
         if (checkADMinstalled.exitCode() == 0) {
-            arch7zDevelopmentMetaButton->setText("Remove Arch7z Development Meta");
+            viperDevelopmentButton->setText("Remove Viper Development Meta");
         } else {
-            arch7zDevelopmentMetaButton->setText("Install Arch7z Development Meta");
+            viperDevelopmentButton->setText("Install Viper Development Meta");
         }
         // *ChaoticAUR Button
         QPushButton *chaoticAURbutton = new QPushButton(this);
@@ -1787,8 +1690,8 @@ Widget::Widget(QWidget *parent)
         snapdToggle->setText(snapdEnabled ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
 
         /* === Positioning Buttons === */
-        addonsLayout->addWidget(archZGamingMetaButton, 1, 0, Qt::AlignLeft);
-        addonsLayout->addWidget(arch7zDevelopmentMetaButton, 1, 0, Qt::AlignCenter);
+        addonsLayout->addWidget(viperGamingMetaButton, 1, 0, Qt::AlignLeft);
+        addonsLayout->addWidget(viperDevelopmentButton, 1, 0, Qt::AlignCenter);
         addonsLayout->addWidget(chaoticAURbutton, 1, 0, Qt::AlignRight);
         addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
 
@@ -1798,8 +1701,8 @@ Widget::Widget(QWidget *parent)
         addonsPage->setLayout(addonsLayout);
 
         /* === Connections === */
-        addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, archZGamingMetaButton,
-                               arch7zDevelopmentMetaButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
+        addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, viperGamingMetaButton,
+                               viperDevelopmentButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // ==== Mount Drives Page =====
@@ -1865,7 +1768,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 /// ADDONS SETUP CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *archZGamingMetaButton, QPushButton *arch7zDevelopmentButton, QPushButton *chaoticAURbutton,
+                                    QPushButton *viperGamingMetaButton, QPushButton *viperDevelopmentButton, QPushButton *chaoticAURbutton,
                                     QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle) {
         // Navigation connections
         connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
@@ -1876,24 +1779,23 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     });
 
         // Connecting Buttons to their respective Functions
-        //** Arch7z Gaming Meta **//
-        connect(archZGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
-        if(archZGamingMetaButton->text() == "Install Arch7z Gaming Meta") {
-            archZGamingMetaButton->setText("Remove Arch7z Gaming Meta");
-            archZGamingMeta();
+        //** Viper Gaming Meta **//
+        connect(viperGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
+            getViperGamingMeta([=](bool success) {
+                if (success) {
+                    bool newStatus = gamingMetaStatus();
+                    viperGamingMetaButton->setText(newStatus ? "Remove Viper Gaming Meta" : "Install Viper Gaming Meta");
+                }
+            });
+        });
+        //** Viper Development Meta **//
+        connect(viperDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
+        if(viperDevelopmentButton->text() == "Install Viper Development Meta") {
+            viperDevelopmentButton->setText("Remove Viper Development Meta");
+            viperDevelopmentMeta();
         } else {
-            archZGamingMetaButton->setText("Install Arch7z Gaming Meta");
-            removeArchZGamingMeta();
-        }
-    });
-        //** Arch7z Development Meta **//
-        connect(arch7zDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
-        if(arch7zDevelopmentButton->text() == "Install Arch7z Development Meta") {
-            arch7zDevelopmentButton->setText("Remove Arch7z Development Meta");
-            arch7zDevelopmentMeta();
-        } else {
-            arch7zDevelopmentButton->setText("Install Arch7z Development Meta");
-            removeArch7zDevelopmentMeta();
+            viperDevelopmentButton->setText("Install Viper Development Meta");
+            removeViperDevelopmentMeta();
         }
     });
 

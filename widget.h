@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QCheckBox>
+#include <functional>
 #include "core_functions.h"
 #include "drive_list_widget.h"
 #include <QToolButton>
@@ -47,10 +48,10 @@ private slots:
                                 QPushButton *updateSystemButton, QPushButton *removeDBLockButton, QCheckBox *bluetoothToggle,
                                 QCheckBox *appArmorToggle, QPushButton *rankMirrorsButton);
     // ADDONS
-    void archZGamingMeta();
-    void removeArchZGamingMeta();
-    void arch7zDevelopmentMeta();
-    void removeArch7zDevelopmentMeta();
+    bool gamingMetaStatus();
+    void getViperGamingMeta(std::function<void(bool)> callback);
+    void viperDevelopmentMeta();
+    void removeViperDevelopmentMeta();
     void chaoticAUR();
     void removeChaoticAUR();
     bool runCommand(const QString &cmd);
@@ -60,7 +61,7 @@ private slots:
     bool vmwareStatus();
     bool vmwareServiceStatus();
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                QPushButton *archZGamingMetaButton, QPushButton *archZDevelopmentButton, QPushButton *chaoticAURButton,
+                                QPushButton *viperGamingMetaButton, QPushButton *viperDevelopmentButton, QPushButton *chaoticAURButton,
                                 QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle);
     // TERMINAL
     void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,

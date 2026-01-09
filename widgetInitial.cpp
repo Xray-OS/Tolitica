@@ -2,6 +2,8 @@
 #include "core_functions.h"
 #include "core_initial.h"
 #include "widget.h"
+#include "connectivityChecker.h"
+
 #include <QDir>
 #include <QDebug>
 #include <QProgressDialog>
@@ -18,6 +20,8 @@
 #include <QSettings>
 #include <QProcess>
 #include <QImageReader>
+#include <QComboBox>
+#include <QGroupBox>
 
 // for links to work
 #include <QDesktopServices>
@@ -33,8 +37,9 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     widget = new Widget(this);
     widget->hide();
     coreInitial = new CoreInitial();
+    connectivityChecker = new ConnectivityChecker(this);
 
-    setWindowTitle("Tolitica Xray_OS Assistant");
+    setWindowTitle("Tolitica Viper Assistant");
     resize(800,600);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
 
@@ -73,7 +78,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     xrayIconLabel->setPixmap(xrayScaledIcon);
     introLayout->addWidget(xrayIconLabel, 0, Qt::AlignCenter);
 
-    QLabel *introHeader = new QLabel("<h1>Welcome to Xray_OS</h1>", this);
+    QLabel *introHeader = new QLabel("<h1>Welcome to Viper</h1>", this);
     introHeader->setAlignment(Qt::AlignCenter);
     introLayout->addWidget(introHeader, 0, Qt::AlignCenter);
 
@@ -109,6 +114,12 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     connect(continueButton, &QPushButton::clicked, this, [stackedWidget]() {
         stackedWidget->setCurrentIndex(1);
     });
+
+    // Check connectivity on app start
+    checkConnectivityAndExecute([]() {
+        // No action needed if connected, just informational
+    }, tr("It appears you are not connected to the internet. "
+          "Please connect to the internet before proceeding with the installation of some packages"));
 
     // === BASIC PAGE === //
     QGridLayout *basicLayout = new QGridLayout(basicPage);
@@ -371,22 +382,43 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     // Toggle effect on click and logic
     connect(chaoticToggleButton, &QPushButton::clicked, this, [=]() mutable {
-    widget->chaoticAUR();
+        bool currentlyInstalled = (widget->checkChaoticAURStatus() == 0);
 
-    // Update UI after operation
-    isChaoticEnabled = (widget->checkChaoticAURStatus() == 0);
-    if (isChaoticEnabled) {
-        chaoticToggleAnim->setEndValue(QPoint(32, 2));
-        chaoticToggleSwitch->setStyleSheet(
-            "QWidget { background-color: #4a9eff; border-radius: 15px; }");
-    } else {
-        chaoticToggleAnim->setEndValue(QPoint(2, 2));
-        chaoticToggleSwitch->setStyleSheet(
-            "QWidget { background-color: #666666; border-radius: 15px; }");
-    }
-    chaoticLabel->setText(isChaoticEnabled ? "Disable/Remove Chaotic-AUR" :
-        "Enable/Install Chaotic-AUR");
-    chaoticToggleAnim->start();
+        if (!currentlyInstalled) {
+            checkConnectivityAndExecute([=]() mutable {
+                widget->chaoticAUR();
+
+                isChaoticEnabled = (widget->checkChaoticAURStatus() == 0);
+                if (isChaoticEnabled) {
+                    chaoticToggleAnim->setEndValue(QPoint(32, 2));
+                    chaoticToggleSwitch->setStyleSheet(
+                        "QWidget { background-color: #4a9eff; border-radius: 15px; }");
+                } else {
+                    chaoticToggleAnim->setEndValue(QPoint(2, 2));
+                    chaoticToggleSwitch->setStyleSheet(
+                        "QWidget { background-color: #666666; border-radius: 15px; }");
+                }
+                chaoticLabel->setText(isChaoticEnabled ? "Disable/Remove Chaotic-AUR" :
+                    "Enable/Install Chaotic-AUR");
+                chaoticToggleAnim->start();
+            }, tr("Internet connection required for Chaotic AUR setup"));
+        } else {
+            widget->chaoticAUR();
+
+            isChaoticEnabled = (widget->checkChaoticAURStatus() == 0);
+            if (isChaoticEnabled) {
+                chaoticToggleAnim->setEndValue(QPoint(32, 2));
+                chaoticToggleSwitch->setStyleSheet(
+                    "QWidget { background-color: #4a9eff; border-radius: 15px; }");
+            } else {
+                chaoticToggleAnim->setEndValue(QPoint(2, 2));
+                chaoticToggleSwitch->setStyleSheet(
+                    "QWidget { background-color: #666666; border-radius: 15px; }");
+            }
+            chaoticLabel->setText(isChaoticEnabled ? "Disable/Remove Chaotic-AUR" :
+                "Enable/Install Chaotic-AUR");
+            chaoticToggleAnim->start();
+        }
     });
 
     chaoticLabel->setText(isChaoticEnabled ? "Disable/Remove Chaotic-AUR" :
@@ -546,7 +578,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
             xrayThemingToggleSwitch->setStyleSheet("QWidget { background-color: #666666; border-radius: 15px; }");
         }
         xrayThemingLabel->setText(isXrayThemingEnabled ? "Go back default Breeze Dark" :
-            "Switch to Xray_OS theming");
+            "Switch to Xray theming");
         xrayThemingToggleAnim->start();
     });
     xrayThemingContainer->setFixedWidth(500);
@@ -603,8 +635,8 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     terminalThemingToggleButton->setStyleSheet(
         "QPushButton { background-color: white; border-radius: 13px; border: none; }"
     );
-    terminalThemingLabel->setText(isTerminalThemingEnabled ? "Disable terminal theming" :
-        "Enable terminal theming");
+    terminalThemingLabel->setText(isTerminalThemingEnabled ? "Disable Xray terminal theming" :
+        "Enable Xray terminal theming");
 
     QPropertyAnimation *terminalThemingToggleAnimation = new
     QPropertyAnimation(terminalThemingToggleButton, "pos");
@@ -670,8 +702,8 @@ Widget_Initial::Widget_Initial(QWidget *parent)
                 "QWidget { background-color: #666666; border-radius: 15px; }"
             );
         }
-        terminalThemingLabel->setText(isTerminalThemingEnabled ? "Disable terminal theming" :
-            "Enable terminal theming");
+        terminalThemingLabel->setText(isTerminalThemingEnabled ? "Disable Xray terminal theming" :
+            "Enable Xray terminal theming");
         terminalThemingToggleAnimation->start();
     });
     terminalThemingContainer->setFixedWidth(500);
@@ -694,80 +726,178 @@ Widget_Initial::Widget_Initial(QWidget *parent)
         Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     grubThemingIconLabel->setPixmap(grubThemingIconScaled);
-    QLabel *grubThemingLabel = new QLabel("Enable/Disable Grub Theming", this);
-    bool isGrubThemeEnabled = coreInitial->grubThemeStatus();
-    qDebug() << "grubThemeStatus: " << isGrubThemeEnabled;
+    QLabel *grubThemingLabel = new QLabel("Choose a Grub Theme", this);
 
-    QWidget *grubThemingToggleSwitch = new QWidget(this);
-    grubThemingToggleSwitch->setFixedSize(60, 30);
+    // Elements inside the box
 
-    if (isGrubThemeEnabled) {
-        grubThemingToggleSwitch->setStyleSheet(
-            "QWidget { background-color: #4a9eff; border-radius: 15px; }");
-    } else {
-        grubThemingToggleSwitch->setStyleSheet(
-            "QWidget { background-color: #666666; border-radius: 15px; }"
-        );
+    QLabel *currentGrubThemeLabel = new QLabel("Current: Unknown", this);
+    QComboBox *grubThemeCombo = new QComboBox(this);
+    QPushButton *changeGrubThemeBtn = new QPushButton("Change Grub theme", this);
+    QPushButton *disableGrubThemeBtn = new QPushButton("Disable Grub theme", this);
+    QGroupBox *grubGroupBox = new QGroupBox("Grub themes", this);
+    QVBoxLayout *grubGroupBoxLayout = new QVBoxLayout(grubGroupBox);
+
+    // Fetch and display the current grub theme
+    QString currentGrubTheme = coreInitial-> currentGrubTheme();
+    currentGrubThemeLabel->setText("Current: " + currentGrubTheme);
+    currentGrubThemeLabel->setAlignment(Qt::AlignCenter);
+
+    QStringList grubThemes = coreInitial-> listGrubThemes();
+
+    bool status = coreInitial-> grubThemeStatus();
+
+    // Extract theme name without status suffix
+    QString themeNameOnly = currentGrubTheme;
+    if (themeNameOnly.contains(" (Disabled)")) {
+        themeNameOnly = themeNameOnly.replace(" (Disabled)", "");
     }
 
-    QPushButton *grubThemingToggleButton = new
-    QPushButton(grubThemingToggleSwitch);
-    grubThemingToggleButton->setFixedSize(26, 26);
-    if (isGrubThemeEnabled) {
-        grubThemingToggleButton->move(32, 2);
+    qDebug() << "=== GRUB THEME DEBUG ===";
+    qDebug() << "Current theme:" << currentGrubTheme;
+    qDebug() << "Theme name only:" << themeNameOnly;
+    qDebug() << "Theme status (enabled):" << status;
+    qDebug() << "Available themes:" << grubThemes;
+    if (grubThemes.isEmpty()) {
+        grubThemeCombo->addItem("No themes detected");
+        changeGrubThemeBtn->setEnabled(false);
+        disableGrubThemeBtn->setEnabled(false);
     } else {
-        grubThemingToggleButton->move(2, 2);
-    }
-
-    grubThemingToggleButton->setStyleSheet(
-        "QPushButton { background-color: white; border-radius: 13px; border: none; }"
-    );
-    grubThemingLabel->setText(isGrubThemeEnabled ? "Disable Grub theming" :
-        "Enable Grub theming");
-
-    QPropertyAnimation *grubThemingToggleAnimation = new
-    QPropertyAnimation(grubThemingToggleButton, "pos");
-    grubThemingToggleAnimation->setDuration(500);
-    grubThemingToggleAnimation->setEasingCurve(QEasingCurve::InOutQuad);
-    QPropertyAnimation *grubThemingIconAnim = new
-    QPropertyAnimation(grubThemingToggleButton, "iconSize");
-    grubThemingIconAnim->setDuration(200);
-    grubThemingIconAnim->setEasingCurve(QEasingCurve::OutBack);
-
-    // Bounce effect on press
-    connect(grubThemingToggleButton, &QPushButton::pressed, [=]() {
-        grubThemingIconAnim->setStartValue(QSize(60, 60));
-        grubThemingIconAnim->setEndValue(QSize(70, 70));
-        grubThemingIconAnim->start();
-    });
-    connect(grubThemingToggleButton, &QPushButton::released, [=]() {
-       grubThemingIconAnim->setStartValue(QSize(70, 70));
-       grubThemingIconAnim->setEndValue(QSize(60, 60));
-       grubThemingIconAnim->start();
-    });
-
-    connect(grubThemingToggleButton, &QPushButton::clicked, [=]() mutable {
-        isGrubThemeEnabled = !isGrubThemeEnabled;
-
-        coreInitial->setGrubTheme();
-
-        if (isGrubThemeEnabled) {
-            grubThemingToggleAnimation->setEndValue(QPoint(32, 2));
-            grubThemingToggleSwitch->setStyleSheet("QWidget { background-color: #4a9eff; border-radius: 15px; }");
+        grubThemeCombo->addItems(grubThemes);
+        // Set current theme as selected using theme name only
+        int currentIndex = grubThemes.indexOf(themeNameOnly);
+        qDebug() << "Current theme index in list:" << currentIndex;
+        if (currentIndex != -1) {
+            grubThemeCombo->setCurrentIndex(currentIndex);
+            qDebug() << "Set combo to index:" << currentIndex << "(" << grubThemes[currentIndex] << ")";
         } else {
-            grubThemingToggleAnimation->setEndValue(QPoint(2, 2));
-            grubThemingToggleSwitch->setStyleSheet("QWidget { background-color: #666666; border-radius: 15px; }");
+            qDebug() << "Current theme not found in available themes list!";
         }
-        grubThemingLabel->setText(isGrubThemeEnabled ? "Disabled Grub theming" :
-            "Enable Grub theming");
-        grubThemingToggleAnimation->start();
+    }
+
+    connect(grubThemeCombo, &QComboBox::currentTextChanged, this,
+        [=](const QString &selectedTheme) {
+            // Get fresh current values
+            QString freshCurrentTheme = coreInitial->currentGrubTheme();
+            QString freshThemeNameOnly = freshCurrentTheme;
+            if (freshThemeNameOnly.contains(" (Disabled)")) {
+                freshThemeNameOnly = freshThemeNameOnly.replace(" (Disabled)", "");
+            }
+            bool freshStatus = coreInitial->grubThemeStatus();
+
+            // Update current label
+            currentGrubThemeLabel->setText("Current: " + freshCurrentTheme);
+
+            qDebug() << "\n--- Combo selection changed ---";
+            qDebug() << "Selected theme:" << selectedTheme;
+            qDebug() << "Current theme:" << freshCurrentTheme;
+            qDebug() << "Theme name only:" << freshThemeNameOnly;
+            qDebug() << "Status (enabled):" << freshStatus;
+            qDebug() << "Match current?" << (selectedTheme == freshThemeNameOnly);
+
+            if (selectedTheme == freshThemeNameOnly && freshStatus) {
+                qDebug() << "Case: Current theme + enabled";
+                changeGrubThemeBtn->setEnabled(false);
+                disableGrubThemeBtn->setEnabled(true);
+                disableGrubThemeBtn->setText("Disable Grub theme");
+
+            } else if (selectedTheme == freshThemeNameOnly && !freshStatus) {
+                qDebug() << "Case: Current theme + disabled";
+                changeGrubThemeBtn->setEnabled(false);
+                disableGrubThemeBtn->setEnabled(true);
+                disableGrubThemeBtn->setText("Enable Grub theme");
+
+            } else {
+                qDebug() << "Case: Different theme selected";
+                changeGrubThemeBtn->setEnabled(true);
+                disableGrubThemeBtn->setEnabled(false);
+                disableGrubThemeBtn->setText("Disable Grub theme");
+
+            }
+            qDebug() << "Button states - Change:" << changeGrubThemeBtn->isEnabled()
+                     << "Disable:" << disableGrubThemeBtn->isEnabled()
+                     << "Disable text:" << disableGrubThemeBtn->text();
+        });
+
+    connect(disableGrubThemeBtn, &QPushButton::clicked, this, [=]() {
+        qDebug() << "Disable button clicked!";
+        QString selectedTheme = grubThemeCombo->currentText();
+        qDebug() << "Selected theme for disable:" << selectedTheme;
+        qDebug() << "Calling setGrubTheme...";
+        coreInitial->setGrubTheme(selectedTheme);
+
+        bool newStatus = coreInitial->grubThemeStatus();
+        QString newCurrentTheme = coreInitial->currentGrubTheme();
+        disableGrubThemeBtn->setText(newStatus ? "Disable Grub theme" : "Enable Grub theme");
+        currentGrubThemeLabel->setText("Current: " + newCurrentTheme);
+
+        qDebug() << "setGrubTheme completed";
     });
-    grubThemingContainer->setFixedWidth(500);
+
+    connect(changeGrubThemeBtn, &QPushButton::clicked, this, [=]() {
+        qDebug() << "Change button clicked!";
+        QString selectedTheme = grubThemeCombo->currentText();
+        qDebug() << "Selected theme for change:" << selectedTheme;
+        qDebug() << "Calling setGrubTheme...";
+        coreInitial->setGrubTheme(selectedTheme);
+        bool newStatus = coreInitial->grubThemeStatus();
+
+        // Get updated current theme name
+        QString newCurrentTheme = coreInitial->currentGrubTheme();
+        QString newThemeNameOnly = newCurrentTheme;
+        if (newThemeNameOnly.contains(" (Disabled)")) {
+            newThemeNameOnly = newThemeNameOnly.replace(" (Disabled)", "");
+        }
+
+        if (selectedTheme != newThemeNameOnly) {
+            changeGrubThemeBtn->setEnabled(true);
+        } else {
+            changeGrubThemeBtn->setEnabled(false);
+            disableGrubThemeBtn->setEnabled(true);
+            disableGrubThemeBtn->setText(newStatus
+                ? "Disable Grub theme"
+                : "Enable Grub theme");
+        }
+
+        currentGrubThemeLabel->setText("Current: " + newCurrentTheme);
+
+        qDebug() << "setGrubTheme completed";
+    });
+
+    // Test signal - this should always work
+    connect(grubThemeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        qDebug() << "COMBO INDEX CHANGED:" << index;
+    });
+
+    grubGroupBoxLayout->addWidget(currentGrubThemeLabel);
+    grubGroupBoxLayout->addWidget(grubThemeCombo);
+    grubGroupBoxLayout->addWidget(changeGrubThemeBtn);
+    grubGroupBoxLayout->addWidget(disableGrubThemeBtn);
+
+    // Initialize button states
+    qDebug() << "\n--- Initial button setup ---";
+    if (status) {
+        qDebug() << "Initial: Theme enabled, disabling change button";
+        changeGrubThemeBtn->setEnabled(false);
+        disableGrubThemeBtn->setEnabled(true);
+    } else {
+        qDebug() << "Initial: Theme disabled, setting enable button";
+        changeGrubThemeBtn->setEnabled(false);
+        disableGrubThemeBtn->setEnabled(true);
+        disableGrubThemeBtn->setText("Enable Grub theme");
+    }
+    qDebug() << "Initial button states - Change:" << changeGrubThemeBtn->isEnabled()
+             << "Disable:" << disableGrubThemeBtn->isEnabled()
+             << "Disable text:" << disableGrubThemeBtn->text();
+    qDebug() << "=== END GRUB DEBUG ===\n";
+    grubGroupBox->setLayout(grubGroupBoxLayout);
+    grubGroupBox->setAlignment(Qt::AlignCenter);
+
+    grubThemingContainer->setFixedWidth(550);
 
     grubThemingLayout->addWidget(grubThemingIconLabel);
     grubThemingLayout->addWidget(grubThemingLabel);
     grubThemingLayout->addStretch();
-    grubThemingLayout->addWidget(grubThemingToggleSwitch);
+    grubThemingLayout->addWidget(grubGroupBox, /*stretch=*/2);
 
     appearanceLayout->addWidget(grubThemingContainer, 4, 0, Qt::AlignCenter);
 
@@ -859,7 +989,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     vanillaLayout->addWidget(vanillaLabel);
     vanillaLayout->addWidget(vanillaCheck, 0, Qt::AlignCenter);
 
-    QLabel *notifyReset = new QLabel("Some of this changes require a Reboot", this);
+    QLabel *notifyReset = new QLabel("Some of this changes might require a reboot", this);
 
     iconsLayout->addStretch();
     iconsLayout->addWidget(draculaWidget);
@@ -1694,15 +1824,15 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     gamingLayout->addStretch(1);
 
-    QLabel *arch7zIconLabel = new QLabel(this);
-    QPixmap arch7zIcon(":/icons/resources/icons/arch7z-gaming-meta.svg");
-    QPixmap arch7zIconScaled = arch7zIcon.scaled(100, 100, Qt::KeepAspectRatio,
+    QLabel *viperIconLabel = new QLabel(this);
+    QPixmap viperIcon(":/icons/resources/icons/viper-gaming-meta.svg");
+    QPixmap viperIconScaled = viperIcon.scaled(100, 100, Qt::KeepAspectRatio,
         Qt::SmoothTransformation);
 
-    arch7zIconLabel->setPixmap(arch7zIconScaled);
-    gamingLayout->addWidget(arch7zIconLabel, 0, Qt::AlignCenter);
+    viperIconLabel->setPixmap(viperIconScaled);
+    gamingLayout->addWidget(viperIconLabel, 0, Qt::AlignCenter);
 
-    QLabel *gamingHeader = new QLabel("<h1>Get Arch7z-Gaming-Meta</h1>", this);
+    QLabel *gamingHeader = new QLabel("<h1>Get Viper Gaming Meta</h1>", this);
     gamingHeader->setAlignment(Qt::AlignCenter);
     gamingLayout->addWidget(gamingHeader, 0, Qt::AlignCenter);
 
@@ -1715,14 +1845,14 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     gamingLayout->addWidget(gamingMetaDesc, 0, Qt::AlignCenter);
 
-    bool gamingMetaStatus = coreInitial->gamingMetaStatus();
+    bool gamingMetaStatus = widget->gamingMetaStatus();
     qDebug() << "gamingMetaStatus-before-logic: " << gamingMetaStatus;
 
-    QPushButton *arch7zGamingButton = new QPushButton((gamingMetaStatus) ?
-        "Remove Arch7z Gaming Meta" : "Get Arch7z Gaming Meta", this);
+    QPushButton *viperGamingButton = new QPushButton((gamingMetaStatus) ?
+        "Remove Viper Gaming Meta" : "Get Viper Gaming Meta", this);
 
-    arch7zGamingButton->setCursor(Qt::PointingHandCursor);
-    arch7zGamingButton->setStyleSheet(
+    viperGamingButton->setCursor(Qt::PointingHandCursor);
+    viperGamingButton->setStyleSheet(
         "QPushButton {"
         "   background-color: #18e8ec;"
         "   color: black;"
@@ -1737,18 +1867,33 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     );
 
     // Button logic lambda
-    connect(arch7zGamingButton, &QPushButton::clicked, [=]() mutable {
-        coreInitial->getArch7zGamingMeta(this, [=](bool success) mutable {
-            if (success) {
-                gamingMetaStatus = coreInitial->gamingMetaStatus();
+    connect(viperGamingButton, &QPushButton::clicked, [=]() mutable {
+        bool currentlyInstalled = widget->gamingMetaStatus();
 
-                arch7zGamingButton->setText((gamingMetaStatus) ? "Remove Arch7z Gaming Meta" :
-                    "Get Arch7z Gaming Meta");
-            }
-        });
+        if (!currentlyInstalled) {
+            checkConnectivityAndExecute([=]() mutable {
+                widget->getViperGamingMeta([=](bool success) mutable {
+                    if (success) {
+                        gamingMetaStatus = widget->gamingMetaStatus();
+
+                        viperGamingButton->setText((gamingMetaStatus) ? "Remove Viper Gaming Meta" :
+                            "Get Viper Gaming Meta");
+                    }
+                });
+            }, tr("Internet connection required for Viper Gaming Meta"));
+        } else {
+            widget->getViperGamingMeta([=](bool success) mutable {
+                if (success) {
+                    gamingMetaStatus = widget->gamingMetaStatus();
+
+                    viperGamingButton->setText((gamingMetaStatus) ? "Remove Viper Gaming Meta" :
+                        "Get Viper Gaming Meta");
+                }
+            });
+        }
     });
 
-    gamingLayout->addWidget(arch7zGamingButton, 0, Qt::AlignCenter);
+    gamingLayout->addWidget(viperGamingButton, 0, Qt::AlignCenter);
     gamingLayout->addStretch(1);
 
     // * == Navigation Buttons
@@ -1824,8 +1969,8 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     supportHeader->setAlignment(Qt::AlignCenter);
     supportLayout->addWidget(supportHeader, 0, Qt::AlignCenter);
 
-    QLabel *supportDescription = new QLabel("Join Us on any of the social media sites below "
-        "\njust click on any of the buttons, you'll have a \ngood time, Thank You", this);
+    QLabel *supportDescription = new QLabel("Join us on any of the social media sites below "
+        "\njust click on any of the buttons", this);
     supportDescription->setStyleSheet("font-size: 12px; color: #888; margin-bottom: 30px;");
     supportDescription->setWordWrap(true);
     supportDescription->setAlignment(Qt::AlignCenter);
@@ -1883,112 +2028,112 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     discordButtonLayout->addWidget(discordLabel);
 
     // Facebook
-    QWidget *facebookButtonWidget = new QWidget(this);
-    QVBoxLayout *facebookButtonLayout = new QVBoxLayout(facebookButtonWidget);
-    QPushButton *facebookButton = new QPushButton();
-    facebookButton->setCursor(Qt::PointingHandCursor);
-    facebookButton->setIcon(supportFacebookIcon);
-    facebookButton->setIconSize(QSize(60, 60));
-    facebookButton->setFixedSize(100, 100);
-    facebookButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
-    QLabel *facebookLabel = new QLabel("Facebook", this);
-    facebookLabel->setAlignment(Qt::AlignCenter);
-    facebookLabel->setStyleSheet("font-size: 10px");
+    // QWidget *facebookButtonWidget = new QWidget(this);
+    // QVBoxLayout *facebookButtonLayout = new QVBoxLayout(facebookButtonWidget);
+    // QPushButton *facebookButton = new QPushButton();
+    // facebookButton->setCursor(Qt::PointingHandCursor);
+    // facebookButton->setIcon(supportFacebookIcon);
+    // facebookButton->setIconSize(QSize(60, 60));
+    // facebookButton->setFixedSize(100, 100);
+    // facebookButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
+    // QLabel *facebookLabel = new QLabel("Facebook", this);
+    // facebookLabel->setAlignment(Qt::AlignCenter);
+    // facebookLabel->setStyleSheet("font-size: 10px");
 
-    QPropertyAnimation *facebookAnimation = new QPropertyAnimation(facebookButton, "iconSize");
-    facebookAnimation->setDuration(100);
-    facebookAnimation->setEasingCurve(QEasingCurve::OutBack);
+    // QPropertyAnimation *facebookAnimation = new QPropertyAnimation(facebookButton, "iconSize");
+    // facebookAnimation->setDuration(100);
+    // facebookAnimation->setEasingCurve(QEasingCurve::OutBack);
 
-    connect(facebookButton, &QPushButton::pressed, [=]() {
-        facebookAnimation->setStartValue(QSize(60, 60));
-        facebookAnimation->setEndValue(QSize(70, 70));
-        facebookAnimation->start();
-    });
+    // connect(facebookButton, &QPushButton::pressed, [=]() {
+    //     facebookAnimation->setStartValue(QSize(60, 60));
+    //     facebookAnimation->setEndValue(QSize(70, 70));
+    //     facebookAnimation->start();
+    // });
 
-    connect(facebookButton, &QPushButton::released, [=]() {
-        facebookAnimation->setStartValue(QSize(70, 70));
-        facebookAnimation->setEndValue(QSize(60, 60));
-        facebookAnimation->start();
-    });
+    // connect(facebookButton, &QPushButton::released, [=]() {
+    //     facebookAnimation->setStartValue(QSize(70, 70));
+    //     facebookAnimation->setEndValue(QSize(60, 60));
+    //     facebookAnimation->start();
+    // });
 
-    connect(facebookButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://www.facebook.com/profile.php?id=61572808981258"));
-    });
+    // connect(facebookButton, &QPushButton::clicked, [=]() {
+    //     QDesktopServices::openUrl(QUrl("https://www.facebook.com/profile.php?id=61572808981258"));
+    // });
 
-    facebookButtonLayout->addWidget(facebookButton);
-    facebookButtonLayout->addWidget(facebookLabel);
+    // facebookButtonLayout->addWidget(facebookButton);
+    // facebookButtonLayout->addWidget(facebookLabel);
 
     // Instagram
-    QWidget *instagramButtonWidget = new QWidget(this);
-    QVBoxLayout *instagramButtonLayout = new QVBoxLayout(instagramButtonWidget);
-    QPushButton *instagramButton = new QPushButton();
-    instagramButton->setCursor(Qt::PointingHandCursor);
-    instagramButton->setIcon(supportInstaIcon);
-    instagramButton->setIconSize(QSize(60, 60));
-    instagramButton->setFixedSize(100, 100);
-    instagramButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
-    QLabel *instagramLabel = new QLabel("Instagram", this);
-    instagramLabel->setAlignment(Qt::AlignCenter);
-    instagramLabel->setStyleSheet("font-size: 10px");
+    // QWidget *instagramButtonWidget = new QWidget(this);
+    // QVBoxLayout *instagramButtonLayout = new QVBoxLayout(instagramButtonWidget);
+    // QPushButton *instagramButton = new QPushButton();
+    // instagramButton->setCursor(Qt::PointingHandCursor);
+    // instagramButton->setIcon(supportInstaIcon);
+    // instagramButton->setIconSize(QSize(60, 60));
+    // instagramButton->setFixedSize(100, 100);
+    // instagramButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
+    // QLabel *instagramLabel = new QLabel("Instagram", this);
+    // instagramLabel->setAlignment(Qt::AlignCenter);
+    // instagramLabel->setStyleSheet("font-size: 10px");
 
-    QPropertyAnimation *instagramAnimation = new QPropertyAnimation(instagramButton, "iconSize");
-    instagramAnimation->setDuration(100);
-    instagramAnimation->setEasingCurve(QEasingCurve::OutBack);
+    // QPropertyAnimation *instagramAnimation = new QPropertyAnimation(instagramButton, "iconSize");
+    // instagramAnimation->setDuration(100);
+    // instagramAnimation->setEasingCurve(QEasingCurve::OutBack);
 
-    connect(instagramButton, &QPushButton::pressed, [=]() {
-        instagramAnimation->setStartValue(QSize(60, 60));
-        instagramAnimation->setEndValue(QSize(70, 70));
-        instagramAnimation->start();
-    });
+    // connect(instagramButton, &QPushButton::pressed, [=]() {
+    //     instagramAnimation->setStartValue(QSize(60, 60));
+    //     instagramAnimation->setEndValue(QSize(70, 70));
+    //     instagramAnimation->start();
+    // });
 
-    connect(instagramButton, &QPushButton::released, [=]() {
-        instagramAnimation->setStartValue(QSize(70, 70));
-        instagramAnimation->setEndValue(QSize(60, 60));
-        instagramAnimation->start();
-    });
+    // connect(instagramButton, &QPushButton::released, [=]() {
+    //     instagramAnimation->setStartValue(QSize(70, 70));
+    //     instagramAnimation->setEndValue(QSize(60, 60));
+    //     instagramAnimation->start();
+    // });
 
-    connect(instagramButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://www.instagram.com/xray_os/"));
-    });
+    // connect(instagramButton, &QPushButton::clicked, [=]() {
+    //     QDesktopServices::openUrl(QUrl("https://www.instagram.com/xray_os/"));
+    // });
 
-    instagramButtonLayout->addWidget(instagramButton);
-    instagramButtonLayout->addWidget(instagramLabel);
+    // instagramButtonLayout->addWidget(instagramButton);
+    // instagramButtonLayout->addWidget(instagramLabel);
 
     // Kofi
-    QWidget *kofiButtonWidget = new QWidget(this);
-    QVBoxLayout *kofiButtonLayout = new QVBoxLayout(kofiButtonWidget);
-    QPushButton *kofiButton = new QPushButton();
-    kofiButton->setCursor(Qt::PointingHandCursor);
-    kofiButton->setIcon(supportKofiIcon);
-    kofiButton->setIconSize(QSize(60, 60));
-    kofiButton->setFixedSize(100, 100);
-    kofiButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
-    QLabel *kofiLabel = new QLabel("Kofi", this);
-    kofiLabel->setAlignment(Qt::AlignCenter);
-    kofiLabel->setStyleSheet("font-size: 10px");
+    // QWidget *kofiButtonWidget = new QWidget(this);
+    // QVBoxLayout *kofiButtonLayout = new QVBoxLayout(kofiButtonWidget);
+    // QPushButton *kofiButton = new QPushButton();
+    // kofiButton->setCursor(Qt::PointingHandCursor);
+    // kofiButton->setIcon(supportKofiIcon);
+    // kofiButton->setIconSize(QSize(60, 60));
+    // kofiButton->setFixedSize(100, 100);
+    // kofiButton->setStyleSheet("QPushButton { background: transparent; border: none; }");
+    // QLabel *kofiLabel = new QLabel("Kofi", this);
+    // kofiLabel->setAlignment(Qt::AlignCenter);
+    // kofiLabel->setStyleSheet("font-size: 10px");
 
-    QPropertyAnimation *kofiAnimation = new QPropertyAnimation(kofiButton, "iconSize");
-    kofiAnimation->setDuration(100);
-    kofiAnimation->setEasingCurve(QEasingCurve::OutBack);
+    // QPropertyAnimation *kofiAnimation = new QPropertyAnimation(kofiButton, "iconSize");
+    // kofiAnimation->setDuration(100);
+    // kofiAnimation->setEasingCurve(QEasingCurve::OutBack);
 
-    connect(kofiButton, &QPushButton::pressed, [=]() {
-        kofiAnimation->setStartValue(QSize(60, 60));
-        kofiAnimation->setEndValue(QSize(70, 70));
-        kofiAnimation->start();
-    });
+    // connect(kofiButton, &QPushButton::pressed, [=]() {
+    //     kofiAnimation->setStartValue(QSize(60, 60));
+    //     kofiAnimation->setEndValue(QSize(70, 70));
+    //     kofiAnimation->start();
+    // });
 
-    connect(kofiButton, &QPushButton::pressed, [=]() {
-        kofiAnimation->setStartValue(QSize(70, 70));
-        kofiAnimation->setEndValue(QSize(60, 60));
-        kofiAnimation->start();
-    });
+    // connect(kofiButton, &QPushButton::pressed, [=]() {
+    //     kofiAnimation->setStartValue(QSize(70, 70));
+    //     kofiAnimation->setEndValue(QSize(60, 60));
+    //     kofiAnimation->start();
+    // });
 
-    connect(kofiButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://ko-fi.com/xray_os"));
-    });
+    // connect(kofiButton, &QPushButton::clicked, [=]() {
+    //     QDesktopServices::openUrl(QUrl("https://ko-fi.com/xray_os"));
+    // });
 
-    kofiButtonLayout->addWidget(kofiButton);
-    kofiButtonLayout->addWidget(kofiLabel);
+    // kofiButtonLayout->addWidget(kofiButton);
+    // kofiButtonLayout->addWidget(kofiLabel);
 
     // Linkedin
     QWidget *linkedinButtonWidget = new QWidget(this);
@@ -2056,7 +2201,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     });
 
     connect(twitterButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://x.com/xray_os"));
+        QDesktopServices::openUrl(QUrl("https://x.com/viper_96_tech"));
     });
 
     twitterButtonLayout->addWidget(twitterButton);
@@ -2092,7 +2237,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     });
 
     connect(youtubeButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://www.youtube.com/@xray-technologies"));
+        QDesktopServices::openUrl(QUrl("https://www.youtube.com/@viper-arch"));
     });
 
     youtubeButtonLayout->addWidget(youtubeButton);
@@ -2100,9 +2245,9 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     supportButtonsLayout->addStretch();
     supportButtonsLayout->addWidget(discordButtonWidget);
-    supportButtonsLayout->addWidget(facebookButtonWidget);
-    supportButtonsLayout->addWidget(instagramButtonWidget);
-    supportButtonsLayout->addWidget(kofiButtonWidget);
+    // supportButtonsLayout->addWidget(facebookButtonWidget);
+    // supportButtonsLayout->addWidget(instagramButtonWidget);
+    // supportButtonsLayout->addWidget(kofiButtonWidget);
     supportButtonsLayout->addWidget(linkedinButtonWidget);
     supportButtonsLayout->addWidget(twitterButtonWidget);
     supportButtonsLayout->addWidget(youtubeButtonWidget);
@@ -2139,27 +2284,16 @@ Widget_Initial::Widget_Initial(QWidget *parent)
         QString homeDir = QDir::homePath();
         QFile configFile(homeDir + "/tolitica-home-settings/tolitica.conf");
 
-        QTextStream in(&configFile);
-        QStringList lines;
-
         if (configFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            while (!in.atEnd()) {
-                QString line = in.readLine();
-
-                if (line.startsWith("initialSetup = 0")) {
-                    lines << "initialSetup = 1";
-                } else {
-                    lines << line;
-                }
-            }
-
+            QString content = configFile.readAll();
             configFile.close();
 
+            content.replace("initialSetup=0", "initialSetup=1");
+            content.replace("initialSetup = 0", "initialSetup = 1");
+
             if (configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                QTextStream out(&configFile);
-                for (const QString &line : lines) {
-                    out << line << "\n";
-                }
+                configFile.write(content.toUtf8());
+                configFile.close();
             }
         }
     });
@@ -2202,12 +2336,18 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 }
 /// END OF MAIN FUNCTION
 
-// * === BASIC SETUP CONNECTIONS
-// void Widget_Initial::basicSetupConnections(QStackedWidget *stackedWidget, QPushButton *flatpakToggleButton) {
-//     connect(flatpakToggleButton, &QPushButton::clicked, this, [this]() {
-//         //
-//     });
-// }
+void Widget_Initial::checkConnectivityAndExecute(std::function<void()> callback, const QString &errorMessage) {
+    connect(connectivityChecker, &ConnectivityChecker::connectivityChecked,
+        this, [this, callback, errorMessage](bool isConnected) {
+            disconnect(connectivityChecker, &ConnectivityChecker::connectivityChecked, this, nullptr);
+            if (!isConnected) {
+                QMessageBox::information(this, tr("Internet Connection"), errorMessage);
+                return; // Don't execute callback if no connection
+            }
+            callback(); // Only execute if connected
+        });
+    connectivityChecker->checkConnectivity();
+}
 
 Widget_Initial::~Widget_Initial()
 {
@@ -2222,22 +2362,25 @@ void Widget_Initial::closeEvent(QCloseEvent *event) {
       QMessageBox::Yes | QMessageBox::No);
 
     if (reply == QMessageBox::Yes) {
-        // Update config file to set initialSetup=1
         QString homeDir = QDir::homePath();
         QString configPath = homeDir + "/tolitica-home-settings/tolitica.conf";
         qDebug() << "Config path: " << configPath;
 
         QFile file(configPath);
-        if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QString content = file.readAll();
+            file.close();
             qDebug() << "Original content:" << content;
+
+            content.replace("initialSetup=0", "initialSetup=1");
             content.replace("initialSetup = 0", "initialSetup = 1");
             qDebug() << "Modified content:" << content;
-            file.seek(0);
-            file.resize(0);
-            file.write(content.toUtf8());
-            file.close();
-            qDebug() << "File written successfully";
+
+            if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                file.write(content.toUtf8());
+                file.close();
+                qDebug() << "File written successfully";
+            }
         } else {
             qDebug() << "Failed to open file:";
         }
@@ -2252,12 +2395,16 @@ void Widget_Initial::markSetupComplete() {
     QString configPath = homeDir + "/tolitica-home-settings/tolitica.conf";
 
     QFile file(configPath);
-    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QString content = file.readAll();
-        content.replace("initialSetup = 0", "initialSetup = 1");
-        file.seek(0);
-        file.resize(0);
-        file.write(content.toUtf8());
         file.close();
+
+        content.replace("initialSetup=0", "initialSetup=1");
+        content.replace("initialSetup = 0", "initialSetup = 1");
+
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            file.write(content.toUtf8());
+            file.close();
+        }
     }
 }

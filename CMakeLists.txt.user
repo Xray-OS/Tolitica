@@ -113,7 +113,7 @@
 -DCMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}
 -DCMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}
 -DCMAKE_GENERATOR:STRING=Unix Makefiles</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/run/media/angel/SSD-crucial/Development/_APPS/Tolitica/build/Desktop-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Desktop-Debug</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.BuildPreset"></value>
@@ -221,7 +221,7 @@
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-     <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/angel/SSD-crucial/Development/_APPS/Tolitica/build/Desktop-Debug</value>
+     <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Desktop-Debug</value>
     </valuemap>
     <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
    </valuemap>
@@ -239,7 +239,7 @@
 -DCMAKE_C_COMPILER:FILEPATH=%{Compiler:Executable:C}
 -DCMAKE_CXX_COMPILER:FILEPATH=%{Compiler:Executable:Cxx}
 -DCMAKE_GENERATOR:STRING=Unix Makefiles</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/run/media/angel/SSD-crucial/Development/_APPS/Tolitica/build/Desktop-Desktop-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Desktop-Desktop-Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.BuildPreset"></value>
@@ -347,7 +347,7 @@
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-     <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/angel/SSD-crucial/Development/_APPS/Tolitica/build/Desktop-Desktop-Release</value>
+     <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Desktop-Desktop-Release</value>
     </valuemap>
     <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
    </valuemap>
@@ -416,7 +416,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/angel/SSD-crucial/Development/_APPS/Tolitica/build/Desktop-Desktop-Release</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Desktop-Desktop-Release</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

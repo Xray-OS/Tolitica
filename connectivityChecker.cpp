@@ -10,7 +10,7 @@ ConnectivityChecker::ConnectivityChecker(QObject *parent)
 
 void ConnectivityChecker::checkConnectivity() {
     // Use a HEAD request to a reliable endpoint
-    QNetworkRequest request(QUrl("https://www.archlinux.org"));
+    QNetworkRequest request(QUrl("https://www.startpage.com"));
     QNetworkReply *reply = m_manager.head(request);
 
     // Connect the finished signal to our slot.
