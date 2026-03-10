@@ -40,14 +40,14 @@ void calamares_page::onlineInstallation() {
                                                 "Please connect to the internet before proceeding with the online installation"));
                     return;
                 } else {
-                    QString onlinePath = "/etc/calamares/settings-advanced.conf";
+                    QString onlinePath = "/etc/calamares/settings-online.conf";
                     QString sysUpdFileOnline = "/etc/calamares/modules/packages-system-update.conf";
 
-                    QFile settings_adv_file(onlinePath);
+                    QFile settings_online_file(onlinePath);
                     QFile settings_sys_file(sysUpdFileOnline);
 
                     QProcess proc;
-                    QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_adv_file.fileName(), settings_sys_file.fileName());
+                    QString copyCommand = QString("cp -r %1 /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_online_file.fileName(), settings_sys_file.fileName());
                     proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
                     proc.waitForFinished();
 
@@ -70,14 +70,14 @@ void calamares_page::onlineInstallation() {
 // ==== OFFLINE INSTALL BUTTON =====
 /////////////////////////////////////
 void calamares_page::offlineInstallation() {
-    QString offlinePath = "/etc/calamares/settings-beginner.conf";
+    QString offlinePath = "/etc/calamares/settings-offline.conf";
     QString sysFileOffline = "/etc/calamres/modules/packages-no-system-update.conf";
 
-    QFile settings_beg_file(offlinePath);
+    QFile settings_offline_file(offlinePath);
     QFile settings_sys_file(sysFileOffline);
 
     QProcess proc;
-    QString copyCommand = QString("cp -r %1  /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_beg_file.fileName(), settings_sys_file.fileName());
+    QString copyCommand = QString("cp -r %1  /etc/calamares/settings.conf && cp -r %2 /etc/calamares/packages.conf").arg(settings_offline_file.fileName(), settings_sys_file.fileName());
     proc.start("pkexec", QStringList() << "bash" << "-c" << copyCommand);
     proc.waitForFinished();
 
@@ -116,11 +116,11 @@ void calamares_page::socialMedia(const QString &platform) {
     QString url;
 
     if (platform == "discord") {
-        url = "https://discord.gg/dBR7wR3ABk";
+        url = "https://discord.gg/CAw8wfqGpu";
     } else if (platform == "twitter") {
-        url = "https://x.com/viper_96_tech";
+        url = "https://x.com/Xray_OS";
     } else if (platform == "youtube") {
-        url = "https://www.youtube.com/@viper-arch";
+        url = "https://www.youtube.com/@AllocCraft";
     }
 
     if (!url.isEmpty()) {
@@ -149,7 +149,7 @@ calamares_page::calamares_page(QWidget *parent)
     contentLayout->setContentsMargins(0, 0, 0, 0);
 
     // ---------- Header Section ----------
-    QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Viper Assistant!</h2>", contentContainer);
+    QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Xray Assistant!</h2>", contentContainer);
     headerLabel->setAlignment(Qt::AlignCenter);
     headerLabel->setContentsMargins(0, 20, 0, 0);
     contentLayout->addWidget(headerLabel);
@@ -163,7 +163,7 @@ calamares_page::calamares_page(QWidget *parent)
         "<html><head><style>"
         "p { font-size: 10pt; text-align: justify }"
         "</style></head><body>"
-        "<p>With this helper application you can install Viper on your system. "
+        "<p>With this helper application you can install Xray OS on your system. "
         "Click on the buttons below to choose an offline or an online installation.</p>"
         "</body></html>", descContainer);
     descriptionLabel->setWordWrap(true);

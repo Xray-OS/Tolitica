@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/viper_mounter_helper.dir/link.d CMakeFiles/viper_mounter_helper.dir/viper_mounter_helper_autogen/mocs_compilation.cpp.o CMakeFiles/viper_mounter_helper.dir/main.cpp.o CMakeFiles/viper_mounter_helper.dir/viper_mounter_helper.cpp.o -o viper_mounter_helper  /usr/lib/libQt6Core.so.6.10.1

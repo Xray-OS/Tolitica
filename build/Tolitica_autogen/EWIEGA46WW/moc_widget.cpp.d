@@ -1,7 +1,7 @@
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp: /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widget.h \
-  /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/moc_predefs.h \
-  /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_functions.h \
-  /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.h \
+/home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp: /home/alloc/Documents/Development/tolitica-source-code/widget.h \
+  /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/moc_predefs.h \
+  /home/alloc/Documents/Development/tolitica-source-code/core_functions.h \
+  /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \

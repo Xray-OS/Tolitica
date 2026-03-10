@@ -23,6 +23,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -38,6 +39,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -49,7 +51,7 @@ events:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:3 (project)"
     message: |
-      The system is: Linux - 6.18.2-arch2-1 - x86_64
+      The system is: Linux - 6.18.13-arch1-1 - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -74,6 +76,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -83,6 +86,7 @@ events:
       - "/usr/local/sbin/gmake"
       - "/usr/local/bin/gmake"
       - "/usr/bin/gmake"
+      - "/var/lib/flatpak/exports/bin/gmake"
       - "/usr/bin/site_perl/gmake"
       - "/usr/bin/vendor_perl/gmake"
       - "/usr/bin/core_perl/gmake"
@@ -96,6 +100,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -133,6 +138,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -147,6 +153,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -182,6 +189,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -207,7 +215,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/4.2.1/CompilerIdCXX/a.out
+        /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/4.2.3/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -232,6 +240,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -243,6 +252,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -271,6 +281,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -282,6 +293,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -310,6 +322,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -321,6 +334,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -349,6 +363,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -360,6 +375,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -388,6 +404,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -399,6 +416,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -427,6 +445,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -438,6 +457,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -466,6 +486,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -477,6 +498,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -505,6 +527,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -516,6 +539,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -544,6 +568,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -553,6 +578,7 @@ events:
       - "/usr/bin/dlltool"
       - "/usr/local/sbin/dlltool"
       - "/usr/local/bin/dlltool"
+      - "/var/lib/flatpak/exports/bin/dlltool"
       - "/usr/bin/site_perl/dlltool"
       - "/usr/bin/vendor_perl/dlltool"
       - "/usr/bin/core_perl/dlltool"
@@ -564,6 +590,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -592,6 +619,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -603,6 +631,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -631,6 +660,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -640,6 +670,7 @@ events:
       - "/usr/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
+      - "/var/lib/flatpak/exports/bin/tapi"
       - "/usr/bin/site_perl/tapi"
       - "/usr/bin/vendor_perl/tapi"
       - "/usr/bin/core_perl/tapi"
@@ -651,6 +682,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -682,6 +714,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -691,6 +724,7 @@ events:
       - "/usr/bin/gcc-ar-15.2"
       - "/usr/local/sbin/gcc-ar-15.2"
       - "/usr/local/bin/gcc-ar-15.2"
+      - "/var/lib/flatpak/exports/bin/gcc-ar-15.2"
       - "/usr/bin/site_perl/gcc-ar-15.2"
       - "/usr/bin/vendor_perl/gcc-ar-15.2"
       - "/usr/bin/core_perl/gcc-ar-15.2"
@@ -699,6 +733,7 @@ events:
       - "/usr/bin/gcc-ar-15"
       - "/usr/local/sbin/gcc-ar-15"
       - "/usr/local/bin/gcc-ar-15"
+      - "/var/lib/flatpak/exports/bin/gcc-ar-15"
       - "/usr/bin/site_perl/gcc-ar-15"
       - "/usr/bin/vendor_perl/gcc-ar-15"
       - "/usr/bin/core_perl/gcc-ar-15"
@@ -707,6 +742,7 @@ events:
       - "/usr/bin/gcc-ar15"
       - "/usr/local/sbin/gcc-ar15"
       - "/usr/local/bin/gcc-ar15"
+      - "/var/lib/flatpak/exports/bin/gcc-ar15"
       - "/usr/bin/site_perl/gcc-ar15"
       - "/usr/bin/vendor_perl/gcc-ar15"
       - "/usr/bin/core_perl/gcc-ar15"
@@ -718,6 +754,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -749,6 +786,7 @@ events:
       - "/usr/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -758,6 +796,7 @@ events:
       - "/usr/bin/gcc-ranlib-15.2"
       - "/usr/local/sbin/gcc-ranlib-15.2"
       - "/usr/local/bin/gcc-ranlib-15.2"
+      - "/var/lib/flatpak/exports/bin/gcc-ranlib-15.2"
       - "/usr/bin/site_perl/gcc-ranlib-15.2"
       - "/usr/bin/vendor_perl/gcc-ranlib-15.2"
       - "/usr/bin/core_perl/gcc-ranlib-15.2"
@@ -766,6 +805,7 @@ events:
       - "/usr/bin/gcc-ranlib-15"
       - "/usr/local/sbin/gcc-ranlib-15"
       - "/usr/local/bin/gcc-ranlib-15"
+      - "/var/lib/flatpak/exports/bin/gcc-ranlib-15"
       - "/usr/bin/site_perl/gcc-ranlib-15"
       - "/usr/bin/vendor_perl/gcc-ranlib-15"
       - "/usr/bin/core_perl/gcc-ranlib-15"
@@ -774,6 +814,7 @@ events:
       - "/usr/bin/gcc-ranlib15"
       - "/usr/local/sbin/gcc-ranlib15"
       - "/usr/local/bin/gcc-ranlib15"
+      - "/var/lib/flatpak/exports/bin/gcc-ranlib15"
       - "/usr/bin/site_perl/gcc-ranlib15"
       - "/usr/bin/vendor_perl/gcc-ranlib15"
       - "/usr/bin/core_perl/gcc-ranlib15"
@@ -785,6 +826,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -799,8 +841,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s"
-      binary: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s"
+      source: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb"
+      binary: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -810,24 +852,24 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s'
+        Change Dir: '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_959bd/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_959bd.dir/build.make CMakeFiles/cmTC_959bd.dir/build
-        make[1]: Entering directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s'
-        Building CXX object CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e610f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_e610f.dir/build.make CMakeFiles/cmTC_e610f.dir/build
+        make[1]: Entering directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb'
+        Building CXX object CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         Target: x86_64-pc-linux-gnu
         Configured with: /build/gcc/src/gcc/configure --enable-languages=ada,c,c++,d,fortran,go,lto,m2,objc,obj-c++,rust,cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
-        gcc version 15.2.1 20251112 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_959bd.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc389XRr.s
-        GNU C++17 (GCC) version 15.2.1 20251112 (x86_64-pc-linux-gnu)
-        	compiled by GNU C version 15.2.1 20251112, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
+        gcc version 15.2.1 20260209 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_e610f.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccHewxWw.s
+        GNU C++17 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)
+        	compiled by GNU C version 15.2.1 20260209, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
         ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"
@@ -841,15 +883,15 @@ events:
          /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include-fixed
          /usr/include
         End of search list.
-        Compiler executable checksum: 4f062beaae229dc32234f13ba259a70e
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/'
-         as -v --64 -o CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc389XRr.s
-        GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.1
+        Compiler executable checksum: 5e3969de92aa3c12a625237f01b15b2f
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/'
+         as -v --64 -o CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccHewxWw.s
+        GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_959bd
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_959bd.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_e610f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e610f.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
@@ -857,17 +899,17 @@ events:
         Configured with: /build/gcc/src/gcc/configure --enable-languages=ada,c,c++,d,fortran,go,lto,m2,objc,obj-c++,rust,cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
-        gcc version 15.2.1 20251112 (GCC) 
+        gcc version 15.2.1 20260209 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_959bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_959bd.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cciHmslq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_959bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
-        collect2 version 15.2.1 20251112
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cciHmslq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_959bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
-        GNU ld (GNU Binutils) 2.45.1
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_959bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_959bd.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_959bd
-        make[1]: Leaving directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e610f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e610f.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccL4K5bp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_e610f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        collect2 version 15.2.1 20260209
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccL4K5bp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_e610f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        GNU ld (GNU Binutils) 2.46
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e610f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e610f.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_e610f
+        make[1]: Leaving directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb'
         
       exitCode: 0
   -
@@ -908,24 +950,24 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s']
+        ignore line: [Change Dir: '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_959bd/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_959bd.dir/build.make CMakeFiles/cmTC_959bd.dir/build]
-        ignore line: [make[1]: Entering directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-fW9U0s']
-        ignore line: [Building CXX object CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_e610f/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_e610f.dir/build.make CMakeFiles/cmTC_e610f.dir/build]
+        ignore line: [make[1]: Entering directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-nwzirb']
+        ignore line: [Building CXX object CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Configured with: /build/gcc/src/gcc/configure --enable-languages=ada c c++ d fortran go lto m2 objc obj-c++ rust cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
-        ignore line: [gcc version 15.2.1 20251112 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_959bd.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc389XRr.s]
-        ignore line: [GNU C++17 (GCC) version 15.2.1 20251112 (x86_64-pc-linux-gnu)]
-        ignore line: [	compiled by GNU C version 15.2.1 20251112  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: [gcc version 15.2.1 20260209 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_e610f.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccHewxWw.s]
+        ignore line: [GNU C++17 (GCC) version 15.2.1 20260209 (x86_64-pc-linux-gnu)]
+        ignore line: [	compiled by GNU C version 15.2.1 20260209  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
         ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"]
@@ -939,15 +981,15 @@ events:
         ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include-fixed]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Compiler executable checksum: 4f062beaae229dc32234f13ba259a70e]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc389XRr.s]
-        ignore line: [GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.1]
+        ignore line: [Compiler executable checksum: 5e3969de92aa3c12a625237f01b15b2f]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccHewxWw.s]
+        ignore line: [GNU assembler version 2.46 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.46]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_959bd]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_959bd.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_e610f]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e610f.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
@@ -955,16 +997,16 @@ events:
         ignore line: [Configured with: /build/gcc/src/gcc/configure --enable-languages=ada c c++ d fortran go lto m2 objc obj-c++ rust cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
-        ignore line: [gcc version 15.2.1 20251112 (GCC) ]
+        ignore line: [gcc version 15.2.1 20260209 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_959bd' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_959bd.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cciHmslq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_959bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e610f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e610f.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccL4K5bp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_e610f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cciHmslq.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccL4K5bp.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -979,7 +1021,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_959bd] ==> ignore
+          arg [cmTC_e610f] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -991,7 +1033,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1001,8 +1043,8 @@ events:
           arg [-lgcc] ==> lib [gcc]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
-        ignore line: [collect2 version 15.2.1 20251112]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cciHmslq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_959bd /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_959bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [collect2 version 15.2.1 20260209]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccL4K5bp.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_e610f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_e610f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -1029,7 +1071,7 @@ events:
       - "CMakeLists.txt:3 (project)"
     message: |
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
-      GNU ld (GNU Binutils) 2.45.1
+      GNU ld (GNU Binutils) 2.46
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1041,13 +1083,13 @@ events:
       - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:125 (__find_dependency_common)"
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:36 (find_dependency)"
       - "/usr/lib/cmake/Qt6/Qt6Dependencies.cmake:38 (_qt_internal_find_third_party_dependencies)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:186 (include)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:190 (include)"
       - "CMakeLists.txt:12 (find_package)"
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9"
-      binary: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9"
+      source: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n"
+      binary: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1057,17 +1099,17 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9'
+        Change Dir: '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1f4e7/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_1f4e7.dir/build.make CMakeFiles/cmTC_1f4e7.dir/build
-        make[1]: Entering directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9'
-        Building CXX object CMakeFiles/cmTC_1f4e7.dir/src.cxx.o
-        /usr/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++17 -o CMakeFiles/cmTC_1f4e7.dir/src.cxx.o -c /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9/src.cxx
-        Linking CXX executable cmTC_1f4e7
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1f4e7.dir/link.txt --verbose=1
-        /usr/bin/c++ CMakeFiles/cmTC_1f4e7.dir/src.cxx.o -o cmTC_1f4e7
-        make[1]: Leaving directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-f3asw9'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_00b37/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_00b37.dir/build.make CMakeFiles/cmTC_00b37.dir/build
+        make[1]: Entering directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n'
+        Building CXX object CMakeFiles/cmTC_00b37.dir/src.cxx.o
+        /usr/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++17 -o CMakeFiles/cmTC_00b37.dir/src.cxx.o -c /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n/src.cxx
+        Linking CXX executable cmTC_00b37
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_00b37.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_00b37.dir/src.cxx.o -o cmTC_00b37
+        make[1]: Leaving directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-e9zJ9n'
         
       exitCode: 0
   -
@@ -1126,19 +1168,19 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6Config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt5Config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt5Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt5-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt5-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -4454,6 +4496,38 @@ events:
         mode: "config"
         reason: "no_exist"
       -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/Qt6Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/qt6-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/Qt5Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/qt5-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/Qt6Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/qt6-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/Qt5Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/qt5-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
         path: "/usr/lib/cmake/Qt6Network/Qt6Config.cmake"
         mode: "config"
         reason: "no_exist"
@@ -5480,12 +5554,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6/Qt6Config.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -5510,7 +5585,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:100 (find_package)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:42 (_qt_internal_find_tool_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6CoreTools"
     configs:
@@ -5521,8 +5596,8 @@ events:
         filename: "qt6coretools-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -5549,11 +5624,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6CoreToolsConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6CoreToolsConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6coretools-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6coretools-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -5575,12 +5650,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6CoreTools/Qt6CoreToolsConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -5605,7 +5681,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:100 (find_package)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:42 (_qt_internal_find_tool_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6GuiTools"
     configs:
@@ -5616,8 +5692,8 @@ events:
         filename: "qt6guitools-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -5644,11 +5720,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6GuiToolsConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6GuiToolsConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6guitools-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6guitools-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -5670,12 +5746,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6GuiTools/Qt6GuiToolsConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -5697,7 +5774,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:100 (find_package)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:42 (_qt_internal_find_tool_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6WidgetsTools"
     configs:
@@ -5708,8 +5785,8 @@ events:
         filename: "qt6widgetstools-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -5736,11 +5813,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6WidgetsToolsConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6WidgetsToolsConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6widgetstools-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6widgetstools-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -5762,12 +5839,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -5799,13 +5877,13 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     checks:
       - "Performing Test HAVE_STDATOMIC"
     directories:
-      source: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt"
-      binary: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt"
+      source: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9"
+      binary: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -5815,17 +5893,17 @@ events:
       variable: "HAVE_STDATOMIC"
       cached: true
       stdout: |
-        Change Dir: '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt'
+        Change Dir: '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_da6bc/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_da6bc.dir/build.make CMakeFiles/cmTC_da6bc.dir/build
-        make[1]: Entering directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt'
-        Building CXX object CMakeFiles/cmTC_da6bc.dir/src.cxx.o
-        /usr/bin/c++ -DHAVE_STDATOMIC  -std=gnu++17 -o CMakeFiles/cmTC_da6bc.dir/src.cxx.o -c /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt/src.cxx
-        Linking CXX executable cmTC_da6bc
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_da6bc.dir/link.txt --verbose=1
-        /usr/bin/c++ CMakeFiles/cmTC_da6bc.dir/src.cxx.o -o cmTC_da6bc
-        make[1]: Leaving directory '/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/CMakeScratch/TryCompile-uvJQKt'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_65ac2/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_65ac2.dir/build.make CMakeFiles/cmTC_65ac2.dir/build
+        make[1]: Entering directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9'
+        Building CXX object CMakeFiles/cmTC_65ac2.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_STDATOMIC  -std=gnu++17 -o CMakeFiles/cmTC_65ac2.dir/src.cxx.o -c /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9/src.cxx
+        Linking CXX executable cmTC_65ac2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_65ac2.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_65ac2.dir/src.cxx.o -o cmTC_65ac2
+        make[1]: Leaving directory '/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/CMakeScratch/TryCompile-tTlPP9'
         
       exitCode: 0
   -
@@ -5836,7 +5914,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6Core"
     configs:
@@ -5847,8 +5925,8 @@ events:
         filename: "qt6core-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -5875,11 +5953,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6CoreConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6CoreConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6core-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6core-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -5925,12 +6003,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6Core/Qt6CoreConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -5961,7 +6040,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_INCLUDE_DIR"
@@ -5980,6 +6059,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6004,6 +6084,7 @@ events:
       - "/usr/local/sbin/GL/gl.h"
       - "/usr/local/bin/GL/gl.h"
       - "/usr/bin/GL/gl.h"
+      - "/var/lib/flatpak/exports/bin/GL/gl.h"
       - "/usr/bin/site_perl/GL/gl.h"
       - "/usr/bin/vendor_perl/GL/gl.h"
       - "/usr/bin/core_perl/GL/gl.h"
@@ -6017,6 +6098,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6049,7 +6131,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_GLX_INCLUDE_DIR"
@@ -6068,6 +6150,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6089,6 +6172,7 @@ events:
       - "/usr/local/sbin/GL/glx.h"
       - "/usr/local/bin/GL/glx.h"
       - "/usr/bin/GL/glx.h"
+      - "/var/lib/flatpak/exports/bin/GL/glx.h"
       - "/usr/bin/site_perl/GL/glx.h"
       - "/usr/bin/vendor_perl/GL/glx.h"
       - "/usr/bin/core_perl/GL/glx.h"
@@ -6102,6 +6186,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6134,7 +6219,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_EGL_INCLUDE_DIR"
@@ -6153,6 +6238,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6174,6 +6260,7 @@ events:
       - "/usr/local/sbin/EGL/egl.h"
       - "/usr/local/bin/EGL/egl.h"
       - "/usr/bin/EGL/egl.h"
+      - "/var/lib/flatpak/exports/bin/EGL/egl.h"
       - "/usr/bin/site_perl/EGL/egl.h"
       - "/usr/bin/vendor_perl/EGL/egl.h"
       - "/usr/bin/core_perl/EGL/egl.h"
@@ -6187,6 +6274,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6219,7 +6307,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES2_INCLUDE_DIR"
@@ -6238,6 +6326,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6259,6 +6348,7 @@ events:
       - "/usr/local/sbin/GLES2/gl2.h"
       - "/usr/local/bin/GLES2/gl2.h"
       - "/usr/bin/GLES2/gl2.h"
+      - "/var/lib/flatpak/exports/bin/GLES2/gl2.h"
       - "/usr/bin/site_perl/GLES2/gl2.h"
       - "/usr/bin/vendor_perl/GLES2/gl2.h"
       - "/usr/bin/core_perl/GLES2/gl2.h"
@@ -6272,6 +6362,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6304,7 +6395,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES3_INCLUDE_DIR"
@@ -6323,6 +6414,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6344,6 +6436,7 @@ events:
       - "/usr/local/sbin/GLES3/gl3.h"
       - "/usr/local/bin/GLES3/gl3.h"
       - "/usr/bin/GLES3/gl3.h"
+      - "/var/lib/flatpak/exports/bin/GLES3/gl3.h"
       - "/usr/bin/site_perl/GLES3/gl3.h"
       - "/usr/bin/vendor_perl/GLES3/gl3.h"
       - "/usr/bin/core_perl/GLES3/gl3.h"
@@ -6357,6 +6450,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6389,7 +6483,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_xmesa_INCLUDE_DIR"
@@ -6408,6 +6502,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6432,6 +6527,7 @@ events:
       - "/usr/local/sbin/GL/xmesa.h"
       - "/usr/local/bin/GL/xmesa.h"
       - "/usr/bin/GL/xmesa.h"
+      - "/var/lib/flatpak/exports/bin/GL/xmesa.h"
       - "/usr/bin/site_perl/GL/xmesa.h"
       - "/usr/bin/vendor_perl/GL/xmesa.h"
       - "/usr/bin/core_perl/GL/xmesa.h"
@@ -6458,6 +6554,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6490,7 +6587,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "OPENGL_GLU_INCLUDE_DIR"
@@ -6509,6 +6606,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6530,6 +6628,7 @@ events:
       - "/usr/local/sbin/GL/glu.h"
       - "/usr/local/bin/GL/glu.h"
       - "/usr/bin/GL/glu.h"
+      - "/var/lib/flatpak/exports/bin/GL/glu.h"
       - "/usr/bin/site_perl/GL/glu.h"
       - "/usr/bin/vendor_perl/GL/glu.h"
       - "/usr/bin/core_perl/GL/glu.h"
@@ -6543,6 +6642,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6575,7 +6675,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_opengl_LIBRARY"
@@ -6594,6 +6694,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6615,6 +6716,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6628,6 +6730,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6660,7 +6763,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_glx_LIBRARY"
@@ -6682,6 +6785,8 @@ events:
       - "/usr/local/bin/"
       - "/usr/bin/libglvnd/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/libglvnd/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/libglvnd/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/libglvnd/"
@@ -6723,6 +6828,8 @@ events:
       - "/usr/local/bin/"
       - "/usr/bin/libglvnd/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/libglvnd/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/libglvnd/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/libglvnd/"
@@ -6744,6 +6851,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6776,7 +6884,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_egl_LIBRARY"
@@ -6798,6 +6906,8 @@ events:
       - "/usr/local/bin/"
       - "/usr/bin/libglvnd/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/libglvnd/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/libglvnd/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/libglvnd/"
@@ -6839,6 +6949,8 @@ events:
       - "/usr/local/bin/"
       - "/usr/bin/libglvnd/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/libglvnd/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/libglvnd/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/libglvnd/"
@@ -6860,6 +6972,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6892,7 +7005,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_gles2_LIBRARY"
@@ -6911,6 +7024,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6932,6 +7046,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -6945,6 +7060,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -6977,7 +7093,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_gles3_LIBRARY"
@@ -6997,6 +7113,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7018,6 +7135,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7038,6 +7156,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7051,6 +7170,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7083,7 +7203,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "OPENGL_glu_LIBRARY"
@@ -7103,6 +7223,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7127,6 +7248,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7140,6 +7262,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7170,7 +7293,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "path"
     variable: "Vulkan_INCLUDE_DIR"
@@ -7190,6 +7313,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7212,6 +7336,7 @@ events:
       - "/usr/local/sbin/vulkan/vulkan.h"
       - "/usr/local/bin/vulkan/vulkan.h"
       - "/usr/bin/vulkan/vulkan.h"
+      - "/var/lib/flatpak/exports/bin/vulkan/vulkan.h"
       - "/usr/bin/site_perl/vulkan/vulkan.h"
       - "/usr/bin/vendor_perl/vulkan/vulkan.h"
       - "/usr/bin/core_perl/vulkan/vulkan.h"
@@ -7225,6 +7350,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7255,7 +7381,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "library"
     variable: "Vulkan_LIBRARY"
@@ -7275,6 +7401,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7298,6 +7425,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7328,7 +7456,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "program"
     variable: "Vulkan_GLSLC_EXECUTABLE"
@@ -7348,6 +7476,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7376,6 +7505,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7404,7 +7534,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     mode: "program"
     variable: "Vulkan_GLSLANG_VALIDATOR_EXECUTABLE"
@@ -7424,6 +7554,7 @@ events:
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
+      - "/var/lib/flatpak/exports/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -7452,6 +7583,7 @@ events:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7483,7 +7615,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6DBusTools"
     configs:
@@ -7494,8 +7626,8 @@ events:
         filename: "qt6dbustools-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -7522,11 +7654,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6DBusToolsConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6DBusToolsConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6dbustools-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6dbustools-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -7548,12 +7680,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6DBusTools/Qt6DBusToolsConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7582,7 +7715,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6DBus"
     configs:
@@ -7593,8 +7726,8 @@ events:
         filename: "qt6dbus-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -7621,11 +7754,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6DBusConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6DBusConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6dbus-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6dbus-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -7655,12 +7788,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6DBus/Qt6DBusConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7684,7 +7818,7 @@ events:
       - "/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake:142 (find_dependency)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake:50 (_qt_internal_find_qt_dependencies)"
       - "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake:50 (include)"
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6Gui"
     configs:
@@ -7695,8 +7829,8 @@ events:
         filename: "qt6gui-config.cmake"
         kind: "cmake"
     version_request:
-      version: "6.10.1"
-      version_complete: "6.10.1"
+      version: "6.10.2"
+      version_complete: "6.10.2"
       exact: false
     settings:
       required: "optional"
@@ -7723,11 +7857,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6GuiConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6GuiConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6gui-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6gui-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -7757,12 +7891,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7781,7 +7916,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6Widgets"
     configs:
@@ -7817,11 +7952,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6WidgetsConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6WidgetsConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6widgets-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6widgets-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -7851,12 +7986,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -7875,7 +8011,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:247 (find_package)"
+      - "/usr/lib/cmake/Qt6/Qt6Config.cmake:251 (find_package)"
       - "CMakeLists.txt:13 (find_package)"
     name: "Qt6Network"
     configs:
@@ -7911,11 +8047,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6NetworkConfig.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6NetworkConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6network-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6network-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -7934,15 +8070,32 @@ events:
         path: "/usr/lib/cmake/Qt6NetworkPrivate/qt6network-config.cmake"
         mode: "config"
         reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/Qt6NetworkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/qt6network-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/Qt6NetworkConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/qt6network-config.cmake"
+        mode: "config"
+        reason: "no_exist"
     found:
       path: "/usr/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -8007,11 +8160,11 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/Qt6Config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/Qt6Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/pkgRedirects/qt6-config.cmake"
+        path: "/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/pkgRedirects/qt6-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -9671,6 +9824,22 @@ events:
         mode: "config"
         reason: "no_exist"
       -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/Qt6Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuthPrivate/qt6-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/Qt6Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/Qt6NetworkAuth/qt6-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
         path: "/usr/lib/cmake/Qt6Network/Qt6Config.cmake"
         mode: "config"
         reason: "no_exist"
@@ -10185,12 +10354,13 @@ events:
     found:
       path: "/usr/lib/cmake/Qt6/Qt6Config.cmake"
       mode: "config"
-      version: "6.10.1"
+      version: "6.10.2"
     search_context:
       ENV{PATH}:
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"

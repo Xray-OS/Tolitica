@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_viper_mounter_helper_FILE /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/viper_mounter_helper)
-set(__QT_DEPLOY_TARGET_viper_mounter_helper_TYPE EXECUTABLE)

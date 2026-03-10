@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'core_initial.h'
 **
-** Created by: The Qt Meta Object Compiler version 69 (Qt 6.10.1)
+** Created by: The Qt Meta Object Compiler version 69 (Qt 6.10.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -18,7 +18,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'core_initial.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 69
-#error "This file was generated using the moc from 6.10.1. It"
+#error "This file was generated using the moc from 6.10.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -71,7 +71,7 @@ template <> constexpr inline auto CoreInitial::qt_create_metaobjectdata<qt_meta_
         "store",
         "getRemoveStore",
         "gamingMetaStatus",
-        "getViperGamingMeta"
+        "getXrayGamingMeta"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -143,11 +143,11 @@ template <> constexpr inline auto CoreInitial::qt_create_metaobjectdata<qt_meta_
         }}),
         // Slot 'gamingMetaStatus'
         QtMocHelpers::SlotData<bool()>(32, 2, QMC::AccessPublic, QMetaType::Bool),
-        // Slot 'getViperGamingMeta'
+        // Slot 'getXrayGamingMeta'
         QtMocHelpers::SlotData<void(QWidget *, std::function<void(bool)>)>(33, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 25, 26 }, { 0x80000000 | 27, 28 },
         }}),
-        // Slot 'getViperGamingMeta'
+        // Slot 'getXrayGamingMeta'
         QtMocHelpers::SlotData<void(QWidget *)>(33, 2, QMC::AccessPublic | QMC::MethodCloned, QMetaType::Void, {{
             { 0x80000000 | 25, 26 },
         }}),
@@ -209,8 +209,8 @@ void CoreInitial::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 22: _t->getRemoveStore((*reinterpret_cast<std::add_pointer_t<QWidget*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
         case 23: { bool _r = _t->gamingMetaStatus();
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 24: _t->getViperGamingMeta((*reinterpret_cast<std::add_pointer_t<QWidget*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::function<void(bool)>>>(_a[2]))); break;
-        case 25: _t->getViperGamingMeta((*reinterpret_cast<std::add_pointer_t<QWidget*>>(_a[1]))); break;
+        case 24: _t->getXrayGamingMeta((*reinterpret_cast<std::add_pointer_t<QWidget*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::function<void(bool)>>>(_a[2]))); break;
+        case 25: _t->getXrayGamingMeta((*reinterpret_cast<std::add_pointer_t<QWidget*>>(_a[1]))); break;
         default: ;
         }
     }

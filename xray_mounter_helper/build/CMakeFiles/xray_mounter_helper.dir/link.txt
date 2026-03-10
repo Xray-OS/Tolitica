@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/xray_mounter_helper.dir/link.d CMakeFiles/xray_mounter_helper.dir/xray_mounter_helper_autogen/mocs_compilation.cpp.o CMakeFiles/xray_mounter_helper.dir/main.cpp.o CMakeFiles/xray_mounter_helper.dir/xray_mounter_helper.cpp.o -o xray_mounter_helper  /usr/lib/libQt6Core.so.6.10.2

@@ -1,8 +1,8 @@
 CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/mocs_compilation.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_calamares_page.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../calamares_page.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_calamares_page.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../calamares_page.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -361,8 +361,8 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtCore/qtmochelpers.h \
  /usr/include/qt6/QtCore/qtmocconstants.h \
  /usr/include/qt6/QtCore/q20algorithm.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_connectivityChecker.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \
@@ -400,14 +400,14 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtNetwork/qnetworkrequest.h \
  /usr/include/qt6/QtNetwork/QSslError \
  /usr/include/qt6/QtNetwork/qsslerror.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_core_initial.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../core_initial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_core_initial.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../core_initial.h \
  /usr/include/qt6/QtCore/QString /usr/include/qt6/QtWidgets/QMessageBox \
  /usr/include/qt6/QtWidgets/qmessagebox.h \
  /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/qdialogbuttonbox.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_drive_list_widget.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_drive_list_widget.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QTreeWidget \
  /usr/include/qt6/QtWidgets/qtreewidget.h \
  /usr/include/qt6/QtWidgets/qtreeview.h \
@@ -426,17 +426,17 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtWidgets/qrubberband.h \
  /usr/include/qt6/QtWidgets/qtreewidgetitemiterator.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_widget.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../widget.h \
  /usr/include/qt6/QtGui/QIcon /usr/include/qt6/QtGui/qicon.h \
  /usr/include/qt6/QtWidgets/QComboBox \
  /usr/include/qt6/QtWidgets/qcombobox.h \
  /usr/include/qt6/QtWidgets/QCheckBox \
  /usr/include/qt6/QtWidgets/qcheckbox.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../core_functions.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../core_functions.h \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QToolButton \
  /usr/include/qt6/QtWidgets/qtoolbutton.h \
  /usr/include/qt6/QtWidgets/QBoxLayout \
@@ -445,11 +445,11 @@ CMakeFiles/Tolitica.dir/Tolitica_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtWidgets/qlayoutitem.h \
  /usr/include/qt6/QtWidgets/qboxlayout.h \
  /usr/include/qt6/QtWidgets/qgridlayout.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_widgetInitial.cpp \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../widgetInitial.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../core_initial.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../widget.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/../../../connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_widgetInitial.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../widgetInitial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../core_initial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/../../../connectivityChecker.h \
  /usr/include/qt6/QtGui/QCloseEvent /usr/include/qt6/QtGui/qevent.h \
  /usr/include/qt6/QtCore/qcoreevent.h \
  /usr/include/qt6/QtCore/qbasictimer.h \

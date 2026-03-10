@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'widget.h'
 **
-** Created by: The Qt Meta Object Compiler version 69 (Qt 6.10.1)
+** Created by: The Qt Meta Object Compiler version 69 (Qt 6.10.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -19,7 +19,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'widget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 69
-#error "This file was generated using the moc from 6.10.1. It"
+#error "This file was generated using the moc from 6.10.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -61,11 +61,11 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
         "appArmorToggle",
         "rankMirrorsButton",
         "gamingMetaStatus",
-        "getViperGamingMeta",
+        "getXrayGamingMeta",
         "std::function<void(bool)>",
         "callback",
-        "viperDevelopmentMeta",
-        "removeViperDevelopmentMeta",
+        "xrayDevelopmentMeta",
+        "removeXrayDevelopmentMeta",
         "chaoticAUR",
         "removeChaoticAUR",
         "runCommand",
@@ -79,8 +79,8 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
         "addonsSetupConnections",
         "addonsButton",
         "addonsBackButton",
-        "viperGamingMetaButton",
-        "viperDevelopmentButton",
+        "xrayGamingMetaButton",
+        "xrayDevelopmentButton",
         "chaoticAURButton",
         "flatpakToggle",
         "snapdToggle",
@@ -121,13 +121,13 @@ template <> constexpr inline auto Widget::qt_create_metaobjectdata<qt_meta_tag_Z
         }}),
         // Slot 'gamingMetaStatus'
         QtMocHelpers::SlotData<bool()>(21, 2, QMC::AccessPrivate, QMetaType::Bool),
-        // Slot 'getViperGamingMeta'
+        // Slot 'getXrayGamingMeta'
         QtMocHelpers::SlotData<void(std::function<void(bool)>)>(22, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { 0x80000000 | 23, 24 },
         }}),
-        // Slot 'viperDevelopmentMeta'
+        // Slot 'xrayDevelopmentMeta'
         QtMocHelpers::SlotData<void()>(25, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'removeViperDevelopmentMeta'
+        // Slot 'removeXrayDevelopmentMeta'
         QtMocHelpers::SlotData<void()>(26, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'chaoticAUR'
         QtMocHelpers::SlotData<void()>(27, 2, QMC::AccessPrivate, QMetaType::Void),
@@ -206,9 +206,9 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 5: _t->tweaksSetupConnections((*reinterpret_cast<std::add_pointer_t<QStackedWidget*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[5])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[6])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[7])),(*reinterpret_cast<std::add_pointer_t<QCheckBox*>>(_a[8])),(*reinterpret_cast<std::add_pointer_t<QCheckBox*>>(_a[9])),(*reinterpret_cast<std::add_pointer_t<QPushButton*>>(_a[10]))); break;
         case 6: { bool _r = _t->gamingMetaStatus();
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 7: _t->getViperGamingMeta((*reinterpret_cast<std::add_pointer_t<std::function<void(bool)>>>(_a[1]))); break;
-        case 8: _t->viperDevelopmentMeta(); break;
-        case 9: _t->removeViperDevelopmentMeta(); break;
+        case 7: _t->getXrayGamingMeta((*reinterpret_cast<std::add_pointer_t<std::function<void(bool)>>>(_a[1]))); break;
+        case 8: _t->xrayDevelopmentMeta(); break;
+        case 9: _t->removeXrayDevelopmentMeta(); break;
         case 10: _t->chaoticAUR(); break;
         case 11: _t->removeChaoticAUR(); break;
         case 12: { bool _r = _t->runCommand((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])));

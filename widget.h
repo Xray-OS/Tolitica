@@ -49,9 +49,9 @@ private slots:
                                 QCheckBox *appArmorToggle, QPushButton *rankMirrorsButton);
     // ADDONS
     bool gamingMetaStatus();
-    void getViperGamingMeta(std::function<void(bool)> callback);
-    void viperDevelopmentMeta();
-    void removeViperDevelopmentMeta();
+    void getXrayGamingMeta(std::function<void(bool)> callback);
+    void xrayDevelopmentMeta();
+    void removeXrayDevelopmentMeta();
     void chaoticAUR();
     void removeChaoticAUR();
     bool runCommand(const QString &cmd);
@@ -61,7 +61,7 @@ private slots:
     bool vmwareStatus();
     bool vmwareServiceStatus();
     void addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                QPushButton *viperGamingMetaButton, QPushButton *viperDevelopmentButton, QPushButton *chaoticAURButton,
+                                QPushButton *xrayGamingMetaButton, QPushButton *xrayDevelopmentButton, QPushButton *chaoticAURButton,
                                 QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle);
     // TERMINAL
     void terminalSetupConnections(QStackedWidget *stackedWidget, QPushButton *terminalButton, QPushButton *terminalBackButton,

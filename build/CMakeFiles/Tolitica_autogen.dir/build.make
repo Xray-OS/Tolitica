@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /run/media/viper/SSD-crucial/development/viper-tolitica-calamares
+CMAKE_SOURCE_DIR = /home/alloc/Documents/Development/tolitica-source-code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build
+CMAKE_BINARY_DIR = /home/alloc/Documents/Development/tolitica-source-code/build
 
 # Utility rule file for Tolitica_autogen.
 
@@ -71,9 +71,9 @@ CMakeFiles/Tolitica_autogen: Tolitica_autogen/timestamp
 Tolitica_autogen/timestamp: /usr/lib/qt6/moc
 Tolitica_autogen/timestamp: /usr/lib/qt6/uic
 Tolitica_autogen/timestamp: CMakeFiles/Tolitica_autogen.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Tolitica"
-	/usr/bin/cmake -E cmake_autogen /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/Tolitica_autogen.dir/AutogenInfo.json ""
-	/usr/bin/cmake -E touch /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/timestamp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Tolitica"
+	/usr/bin/cmake -E cmake_autogen /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/Tolitica_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E touch /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/timestamp
 
 CMakeFiles/Tolitica_autogen.dir/codegen:
 .PHONY : CMakeFiles/Tolitica_autogen.dir/codegen
@@ -92,6 +92,6 @@ CMakeFiles/Tolitica_autogen.dir/clean:
 .PHONY : CMakeFiles/Tolitica_autogen.dir/clean
 
 CMakeFiles/Tolitica_autogen.dir/depend:
-	cd /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /run/media/viper/SSD-crucial/development/viper-tolitica-calamares /run/media/viper/SSD-crucial/development/viper-tolitica-calamares /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/Tolitica_autogen.dir/DependInfo.cmake "--color=$(COLOR)" Tolitica_autogen
+	cd /home/alloc/Documents/Development/tolitica-source-code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alloc/Documents/Development/tolitica-source-code /home/alloc/Documents/Development/tolitica-source-code /home/alloc/Documents/Development/tolitica-source-code/build /home/alloc/Documents/Development/tolitica-source-code/build /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/Tolitica_autogen.dir/DependInfo.cmake "--color=$(COLOR)" Tolitica_autogen
 .PHONY : CMakeFiles/Tolitica_autogen.dir/depend
 

@@ -35,7 +35,7 @@ public slots:
     void getRemoveStore(QWidget *parent, const QString &store,
         std::function<void(bool)> callback = nullptr);
     bool gamingMetaStatus();
-    void getViperGamingMeta(QWidget *parent,
+    void getXrayGamingMeta(QWidget *parent,
         std::function<void(bool)> callback = nullptr);
 
 signals:

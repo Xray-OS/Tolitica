@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/connectivityChecker.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/qobject.h \
  /usr/include/qt6/QtCore/qobjectdefs.h \
  /usr/include/qt6/QtCore/qnamespace.h /usr/include/qt6/QtCore/qglobal.h \

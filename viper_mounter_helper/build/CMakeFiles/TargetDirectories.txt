@@ -1,9 +1,0 @@
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/viper_mounter_helper.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/edit_cache.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/rebuild_cache.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/list_install_components.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/install.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/install/local.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/install/strip.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/viper_mounter_helper_autogen_timestamp_deps.dir
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/viper_mounter_helper/build/CMakeFiles/viper_mounter_helper_autogen.dir

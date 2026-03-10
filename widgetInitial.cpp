@@ -39,7 +39,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     coreInitial = new CoreInitial();
     connectivityChecker = new ConnectivityChecker(this);
 
-    setWindowTitle("Tolitica Viper Assistant");
+    setWindowTitle("Tolitica Xray OS Assistant");
     resize(800,600);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
 
@@ -71,14 +71,14 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     introLayout->addStretch(1);
 
-    QLabel *xrayIconLabel = new QLabel(this);
+    QLabel *xrayBearIconLabel = new QLabel(this);
     QPixmap xrayIconPixmap(":/icons/resources/icons/xray.svg"); // Using existing icon
     QPixmap xrayScaledIcon = xrayIconPixmap.scaled(100, 100, Qt::KeepAspectRatio,
                                                     Qt::SmoothTransformation);
-    xrayIconLabel->setPixmap(xrayScaledIcon);
-    introLayout->addWidget(xrayIconLabel, 0, Qt::AlignCenter);
+    xrayBearIconLabel->setPixmap(xrayScaledIcon);
+    introLayout->addWidget(xrayBearIconLabel, 0, Qt::AlignCenter);
 
-    QLabel *introHeader = new QLabel("<h1>Welcome to Viper</h1>", this);
+    QLabel *introHeader = new QLabel("<h1>Welcome to Xray OS</h1>", this);
     introHeader->setAlignment(Qt::AlignCenter);
     introLayout->addWidget(introHeader, 0, Qt::AlignCenter);
 
@@ -1824,15 +1824,15 @@ Widget_Initial::Widget_Initial(QWidget *parent)
 
     gamingLayout->addStretch(1);
 
-    QLabel *viperIconLabel = new QLabel(this);
-    QPixmap viperIcon(":/icons/resources/icons/viper-gaming-meta.svg");
-    QPixmap viperIconScaled = viperIcon.scaled(100, 100, Qt::KeepAspectRatio,
+    QLabel *xrayIconLabel = new QLabel(this);
+    QPixmap xrayIcon(":/icons/resources/icons/xray-gaming-meta.svg");
+    QPixmap xrayIconScaled = xrayIcon.scaled(100, 100, Qt::KeepAspectRatio,
         Qt::SmoothTransformation);
 
-    viperIconLabel->setPixmap(viperIconScaled);
-    gamingLayout->addWidget(viperIconLabel, 0, Qt::AlignCenter);
+    xrayIconLabel->setPixmap(xrayIconScaled);
+    gamingLayout->addWidget(xrayIconLabel, 0, Qt::AlignCenter);
 
-    QLabel *gamingHeader = new QLabel("<h1>Get Viper Gaming Meta</h1>", this);
+    QLabel *gamingHeader = new QLabel("<h1>Get Xray Gaming Meta</h1>", this);
     gamingHeader->setAlignment(Qt::AlignCenter);
     gamingLayout->addWidget(gamingHeader, 0, Qt::AlignCenter);
 
@@ -1848,11 +1848,11 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     bool gamingMetaStatus = widget->gamingMetaStatus();
     qDebug() << "gamingMetaStatus-before-logic: " << gamingMetaStatus;
 
-    QPushButton *viperGamingButton = new QPushButton((gamingMetaStatus) ?
-        "Remove Viper Gaming Meta" : "Get Viper Gaming Meta", this);
+    QPushButton *xrayGamingButton = new QPushButton((gamingMetaStatus) ?
+        "Remove Xray Gaming Meta" : "Get Xray Gaming Meta", this);
 
-    viperGamingButton->setCursor(Qt::PointingHandCursor);
-    viperGamingButton->setStyleSheet(
+    xrayGamingButton->setCursor(Qt::PointingHandCursor);
+    xrayGamingButton->setStyleSheet(
         "QPushButton {"
         "   background-color: #18e8ec;"
         "   color: black;"
@@ -1867,33 +1867,33 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     );
 
     // Button logic lambda
-    connect(viperGamingButton, &QPushButton::clicked, [=]() mutable {
+    connect(xrayGamingButton, &QPushButton::clicked, [=]() mutable {
         bool currentlyInstalled = widget->gamingMetaStatus();
 
         if (!currentlyInstalled) {
             checkConnectivityAndExecute([=]() mutable {
-                widget->getViperGamingMeta([=](bool success) mutable {
+                widget->getXrayGamingMeta([=](bool success) mutable {
                     if (success) {
                         gamingMetaStatus = widget->gamingMetaStatus();
 
-                        viperGamingButton->setText((gamingMetaStatus) ? "Remove Viper Gaming Meta" :
-                            "Get Viper Gaming Meta");
+                        xrayGamingButton->setText((gamingMetaStatus) ? "Remove Xray Gaming Meta" :
+                            "Get Xray Gaming Meta");
                     }
                 });
-            }, tr("Internet connection required for Viper Gaming Meta"));
+            }, tr("Internet connection required for Xray Gaming Meta"));
         } else {
-            widget->getViperGamingMeta([=](bool success) mutable {
+            widget->getXrayGamingMeta([=](bool success) mutable {
                 if (success) {
                     gamingMetaStatus = widget->gamingMetaStatus();
 
-                    viperGamingButton->setText((gamingMetaStatus) ? "Remove Viper Gaming Meta" :
-                        "Get Viper Gaming Meta");
+                    xrayGamingButton->setText((gamingMetaStatus) ? "Remove Xray Gaming Meta" :
+                        "Get Xray Gaming Meta");
                 }
             });
         }
     });
 
-    gamingLayout->addWidget(viperGamingButton, 0, Qt::AlignCenter);
+    gamingLayout->addWidget(xrayGamingButton, 0, Qt::AlignCenter);
     gamingLayout->addStretch(1);
 
     // * == Navigation Buttons
@@ -2201,7 +2201,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     });
 
     connect(twitterButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://x.com/viper_96_tech"));
+        QDesktopServices::openUrl(QUrl("https://x.com/xray_os"));
     });
 
     twitterButtonLayout->addWidget(twitterButton);
@@ -2237,7 +2237,7 @@ Widget_Initial::Widget_Initial(QWidget *parent)
     });
 
     connect(youtubeButton, &QPushButton::clicked, [=]() {
-        QDesktopServices::openUrl(QUrl("https://www.youtube.com/@viper-arch"));
+        QDesktopServices::openUrl(QUrl("https://www.youtube.com/@AllocCraft"));
     });
 
     youtubeButtonLayout->addWidget(youtubeButton);

@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/calamares_page.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/calamares_page.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/calamares_page.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/calamares_page.h \
+ /home/alloc/Documents/Development/tolitica-source-code/calamares_page.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -406,7 +406,7 @@ CMakeFiles/Tolitica.dir/calamares_page.cpp.o: \
  /usr/include/qt6/QtWidgets/qtoolbutton.h \
  /usr/include/qt6/QtGui/QDesktopServices \
  /usr/include/qt6/QtGui/qdesktopservices.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \

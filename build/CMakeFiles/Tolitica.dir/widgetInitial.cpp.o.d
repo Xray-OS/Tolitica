@@ -1,8 +1,8 @@
 CMakeFiles/Tolitica.dir/widgetInitial.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widgetInitial.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/widgetInitial.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widgetInitial.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_functions.h \
+ /home/alloc/Documents/Development/tolitica-source-code/widgetInitial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/core_functions.h \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h /usr/include/qt6/QtCore/qlist.h \
  /usr/include/qt6/QtCore/qarraydatapointer.h \
@@ -351,13 +351,13 @@ CMakeFiles/Tolitica.dir/widgetInitial.cpp.o: \
  /usr/include/qt6/QtWidgets/qabstractbutton.h \
  /usr/include/qt6/QtWidgets/qwidget.h /usr/include/qt6/QtCore/QObject \
  /usr/include/qt6/QtCore/qobject.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_initial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/core_initial.h \
  /usr/include/qt6/QtCore/QString /usr/include/qt6/QtCore/qstring.h \
  /usr/include/qt6/QtWidgets/QMessageBox \
  /usr/include/qt6/QtWidgets/qmessagebox.h \
  /usr/include/qt6/QtWidgets/qdialog.h \
  /usr/include/qt6/QtWidgets/qdialogbuttonbox.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/widget.h \
  /usr/include/qt6/QtGui/QIcon /usr/include/qt6/QtGui/qicon.h \
  /usr/include/qt6/QtWidgets/QPushButton \
  /usr/include/qt6/QtWidgets/qpushbutton.h \
@@ -380,7 +380,7 @@ CMakeFiles/Tolitica.dir/widgetInitial.cpp.o: \
  /usr/include/qt6/QtWidgets/QLabel /usr/include/qt6/QtWidgets/qlabel.h \
  /usr/include/qt6/QtGui/qpicture.h /usr/include/qt6/QtCore/qiodevice.h \
  /usr/include/qt6/QtGui/qtextdocument.h /usr/include/qt6/QtCore/qurl.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QTreeWidget \
  /usr/include/qt6/QtWidgets/qtreewidget.h \
  /usr/include/qt6/QtWidgets/qtreeview.h \
@@ -396,7 +396,7 @@ CMakeFiles/Tolitica.dir/widgetInitial.cpp.o: \
  /usr/include/qt6/QtWidgets/qlayoutitem.h \
  /usr/include/qt6/QtWidgets/qboxlayout.h \
  /usr/include/qt6/QtWidgets/qgridlayout.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \

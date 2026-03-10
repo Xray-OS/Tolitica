@@ -97,9 +97,9 @@ bool CoreInitial::osreleaseStatus() {
     }
 
     QMap<QString, QString> expected = {
-        {"NAME", "\"Viper\""},
-        {"PRETTY_NAME", "\"Viper\""},
-        {"ID", "viper"},
+        {"NAME", "\"Xray_OS\""},
+        {"PRETTY_NAME", "\"Xray OS\""},
+        {"ID", "xray_os"},
         {"BUILD_ID", "rolling"},
         {"ANSI_COLOR", "\"38;2;23;147;209\""},
         {"HOME_URL", "\"https://xray-os.github.io/xray_os-website/index.html\""},
@@ -107,8 +107,8 @@ bool CoreInitial::osreleaseStatus() {
         {"SUPPORT_URL", "\"https://discord.com/invite/dBR7wR3ABk/\""},
         {"BUG_REPORT_URL", "\"https://github.com/Xray-OS/Xray_OS/issues\""},
         {"PRIVACY_POLICY_URL", "\"https://xray-os.github.io/xray_os-website/index.html#about-xray-os\""},
-        {"LOGO", "viper-logo"},
-        {"IMAGE_ID", "viper"}
+        {"LOGO", "xray-logo"},
+        {"IMAGE_ID", "xray"}
     };
 
     // Get IMAGE_VERSION from tolitica.conf
@@ -119,7 +119,7 @@ bool CoreInitial::osreleaseStatus() {
         QTextStream confIn(&toliticaConf);
         while (!confIn.atEnd()) {
             QString line = confIn.readLine().trimmed();
-            if (line.startsWith("viper_img_ver=")) {
+            if (line.startsWith("xray_img_ver=")) {
                 imageVersion = line.split("=")[1];
                 break;
             }
@@ -169,15 +169,15 @@ void CoreInitial::setOSrelease() {
 
         // Convert to ArchLinux
         QStringList commands = {
-            "sudo sed -i 's/\"Viper\"/\"Arch Linux\"/g' /usr/lib/os-release",
-            "sudo sed -i 's/ID=viper/ID=arch/g' /usr/lib/os-release",
+            "sudo sed -i 's/\"Xray_OS\"/\"Arch Linux\"/g' /usr/lib/os-release",
+            "sudo sed -i 's/ID=xray_os/ID=arch/g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/index.html|https://archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/get-started.html|https://wiki.archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://discord.com/invite/dBR7wR3ABk/|https://bbs.archlinux.org/|g' /usr/lib/os-release",
             "sudo sed -i 's|https://github.com/Xray-OS/Xray_OS/issues|https://gitlab.archlinux.org/groups/archlinux/-/issues|g' /usr/lib/os-release",
             "sudo sed -i 's|https://xray-os.github.io/xray_os-website/index.html#about-xray-os|https://terms.archlinux.org/docs/privacy-policy/|g' /usr/lib/os-release",
-            "sudo sed -i 's/viper-logo/archlinux-logo/g' /usr/lib/os-release",
-            "sudo sed -i 's/IMAGE_ID=viper/IMAGE_ID=archlinux/g' /usr/lib/os-release",
+            "sudo sed -i 's/xray-logo/archlinux-logo/g' /usr/lib/os-release",
+            "sudo sed -i 's/IMAGE_ID=xray/IMAGE_ID=archlinux/g' /usr/lib/os-release",
             QString("sudo sed -i 's/^IMAGE_VERSION=.*/IMAGE_VERSION=%1/' /usr/lib/os-release").arg(imageVersion)
         };
 
@@ -187,13 +187,13 @@ void CoreInitial::setOSrelease() {
     } else {
         QString homeDir = QDir::homePath();
         QFile confFile(homeDir + "/tolitica-home-settings/tolitica.conf");
-        QString imageVersion = "v18"; // default viper fallback
+        QString imageVersion = "v18"; // default xray fallback
 
         if (confFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream confIn(&confFile);
             while (!confIn.atEnd()) {
                 QString line = confIn.readLine();
-                if (line.startsWith("viper_img_ver = ")) {
+                if (line.startsWith("xray_img_ver = ")) {
                     imageVersion = line.split(" = ")[1];
                     break;
                 }
@@ -202,9 +202,9 @@ void CoreInitial::setOSrelease() {
 
         // Force set to Xray values regardless of current content
         QStringList commands = {
-            "sudo sed -i 's/^NAME=.*/NAME=\"Viper\"/' /usr/lib/os-release",
-            "sudo sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME=\"Viper\"/' /usr/lib/os-release",
-            "sudo sed -i 's/^ID=.*/ID=viper/' /usr/lib/os-release",
+            "sudo sed -i 's/^NAME=.*/NAME=\"Xray_OS\"/' /usr/lib/os-release",
+            "sudo sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME=\"Xray OS\"/' /usr/lib/os-release",
+            "sudo sed -i 's/^ID=.*/ID=xray_os/' /usr/lib/os-release",
             "sudo sed -i 's/^BUILD_ID=.*/BUILD_ID=rolling/' /usr/lib/os-release",
             "sudo sed -i 's/^ANSI_COLOR=.*/ANSI_COLOR=\"38;2;23;147;209\"/' /usr/lib/os-release",
             "sudo sed -i 's|^HOME_URL=.*|HOME_URL=\"https://xray-os.github.io/xray_os-website/index.html\"|' /usr/lib/os-release",
@@ -212,8 +212,8 @@ void CoreInitial::setOSrelease() {
             "sudo sed -i 's|^SUPPORT_URL=.*|SUPPORT_URL=\"https://discord.com/invite/dBR7wR3ABk/\"|' /usr/lib/os-release",
             "sudo sed -i 's|^BUG_REPORT_URL=.*|BUG_REPORT_URL=\"https://github.com/Xray-OS/Xray_OS/issues\"|' /usr/lib/os-release",
             "sudo sed -i 's|^PRIVACY_POLICY_URL=.*|PRIVACY_POLICY_URL=\"https://xray-os.github.io/xray_os-website/index.html#about-xray-os\"|' /usr/lib/os-release",
-            "sudo sed -i 's/^LOGO=.*/LOGO=viper-logo/' /usr/lib/os-release",
-            "sudo sed -i 's/^IMAGE_ID=.*/IMAGE_ID=viper/' /usr/lib/os-release",
+            "sudo sed -i 's/^LOGO=.*/LOGO=xray-logo/' /usr/lib/os-release",
+            "sudo sed -i 's/^IMAGE_ID=.*/IMAGE_ID=xray/' /usr/lib/os-release",
             QString("sudo sed -i 's/^IMAGE_VERSION=.*/IMAGE_VERSION=%1/' /usr/lib/os-release").arg(imageVersion)
         };
 
@@ -537,7 +537,7 @@ QString CoreInitial::currentGrubTheme() {
 void CoreInitial::setGrubTheme(const QString &grubTheme) {
     qDebug() << "\n=== setGrubTheme CALLED ===";
     qDebug() << "Theme parameter:" << grubTheme;
-    
+
     bool status = grubThemeStatus();
     qDebug() << "Current grub theme status (enabled):" << status;
 
@@ -571,7 +571,7 @@ void CoreInitial::setGrubTheme(const QString &grubTheme) {
         if (currentThemeName.contains(" (Disabled)")) {
             currentThemeName = currentThemeName.replace(" (Disabled)", "");
         }
-        
+
         if (grubTheme == currentThemeName) {
             // This is disable/enable toggle - use old logic
             command = status
@@ -589,17 +589,17 @@ void CoreInitial::setGrubTheme(const QString &grubTheme) {
             .arg(grubTheme);
         qDebug() << "No existing theme line found, will add new one";
     }
-    
+
     qDebug() << "Command to execute:" << command;
     qDebug() << "Starting process...";
 
     QString fullCommand = command + " && grub-mkconfig -o /boot/grub/grub.cfg";
     qDebug() << "Full command with grub-mkconfig:" << fullCommand;
-    
+
     QProcess process;
     process.start("pkexec", QStringList() << "bash" << "-c" << fullCommand);
     process.waitForFinished();
-    
+
     qDebug() << "Process finished with exit code:" << process.exitCode();
     qDebug() << "Process stdout:" << process.readAllStandardOutput();
     qDebug() << "Process stderr:" << process.readAllStandardError();
@@ -891,7 +891,7 @@ void::CoreInitial::getRemoveStore(QWidget *parent, const QString &store, std::fu
 
 bool CoreInitial::gamingMetaStatus() {
     QProcess process;
-    process.start("bash", QStringList() << "-c" << "pacman -Q viper-gaming-meta");
+    process.start("bash", QStringList() << "-c" << "pacman -Q xray-gaming-meta");
     process.waitForFinished();
 
     bool gamingEnabled = (process.exitCode() == 0);
@@ -899,16 +899,16 @@ bool CoreInitial::gamingMetaStatus() {
     return gamingEnabled ? true : false;
 }
 
-void CoreInitial::getViperGamingMeta(QWidget *parent,
+void CoreInitial::getXrayGamingMeta(QWidget *parent,
     std::function<void(bool)>callback) {
         bool status = gamingMetaStatus();
 
-        QString command = (status) ? "pacman -Rns --noconfirm viper-gaming-meta"
-            : "pacman -S --noconfirm viper-gaming-meta";
+        QString command = (status) ? "pacman -Rns --noconfirm xray-gaming-meta"
+            : "pacman -S --noconfirm xray-gaming-meta";
 
         QProgressDialog *progress = new QProgressDialog(
-            (status) ? "Removing Viper Gaming Meta..."
-            : "Installing Viper Gaming Meta", nullptr, 0, 100, parent);
+            (status) ? "Removing Xray Gaming Meta..."
+            : "Installing Xray Gaming Meta", nullptr, 0, 100, parent);
         progress->setWindowModality(Qt::ApplicationModal);
         progress->setCancelButton(nullptr);
         progress->setValue(0);

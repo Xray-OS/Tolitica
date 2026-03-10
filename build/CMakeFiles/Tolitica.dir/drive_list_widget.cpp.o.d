@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/drive_list_widget.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \

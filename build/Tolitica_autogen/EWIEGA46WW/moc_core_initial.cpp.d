@@ -1,5 +1,5 @@
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_core_initial.cpp: /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_initial.h \
-  /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/moc_predefs.h \
+/home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_core_initial.cpp: /home/alloc/Documents/Development/tolitica-source-code/core_initial.h \
+  /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/moc_predefs.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \

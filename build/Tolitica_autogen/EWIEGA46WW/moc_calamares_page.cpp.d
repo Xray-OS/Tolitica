@@ -1,5 +1,5 @@
-/run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/EWIEGA46WW/moc_calamares_page.cpp: /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/calamares_page.h \
-  /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/moc_predefs.h \
+/home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/EWIEGA46WW/moc_calamares_page.cpp: /home/alloc/Documents/Development/tolitica-source-code/calamares_page.h \
+  /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/moc_predefs.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \

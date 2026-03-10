@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/widget.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widget.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/widget.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/widget.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
@@ -369,11 +369,11 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtGui/qtextdocument.h /usr/include/qt6/QtCore/qurl.h \
  /usr/include/qt6/QtWidgets/QCheckBox \
  /usr/include/qt6/QtWidgets/qcheckbox.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_functions.h \
+ /home/alloc/Documents/Development/tolitica-source-code/core_functions.h \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h /usr/include/qt6/QtCore/QObject \
  /usr/include/qt6/QtCore/qobject.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QTreeWidget \
  /usr/include/qt6/QtWidgets/qtreewidget.h \
  /usr/include/qt6/QtWidgets/qtreeview.h \
@@ -389,7 +389,7 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtWidgets/qlayoutitem.h \
  /usr/include/qt6/QtWidgets/qboxlayout.h \
  /usr/include/qt6/QtWidgets/qgridlayout.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/Tolitica_autogen/include/./ui_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/build/Tolitica_autogen/include/./ui_widget.h \
  /usr/include/qt6/QtCore/QVariant /usr/include/qt6/QtCore/qvariant.h \
  /usr/include/qt6/QtWidgets/QApplication \
  /usr/include/qt6/QtWidgets/qapplication.h \
@@ -450,8 +450,8 @@ CMakeFiles/Tolitica.dir/widget.cpp.o: \
  /usr/include/qt6/QtCore/QFile /usr/include/qt6/QtCore/qfile.h \
  /usr/include/qt6/QtCore/QTextStream \
  /usr/include/qt6/QtCore/qtextstream.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/calamares_page.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/calamares_page.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \

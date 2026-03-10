@@ -211,10 +211,10 @@ void Widget::systemUpdate() {
 
         QString output = QString::fromUtf8(sysUp->readAllStandardOutput());
         if (output.contains("Nothing to do") && output.contains("there is nothing to do")) {
-            QMessageBox::information(nullptr, "System Already Upto Date", "No updates were found");
+            QMessageBox::information(nullptr, "System Already Up to Date", "No updates were found");
         } else {
             progress->setValue(100);
-            QMessageBox::information(nullptr, "Viper Has Been Updated", "Your Operating System has been updated successfully");
+            QMessageBox::information(nullptr, "Xray OS Has Been Updated", "Your Operating System has been updated successfully");
             progress->setValue(100);
         }
 
@@ -276,12 +276,12 @@ void Widget::removeDBLock() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////
-/// ADDONS::VIER-GAMING-META-STATUS
+/// ADDONS::XRAY-GAMING-META-STATUS
 //////////////////////////////////////////////////
 
 bool Widget::gamingMetaStatus() {
     QProcess process;
-    QString command = QString("pacman -Q viper-gaming-meta");
+    QString command = QString("pacman -Q xray-gaming-meta");
     qDebug() << "command: " << command;
 
     process.start("bash", QStringList() << "-c" << command);
@@ -294,21 +294,21 @@ bool Widget::gamingMetaStatus() {
 }
 
 ///////////////////////////////////////////////////
-/// ADDONS::INSTALL/UNINSTALL VIPER-GAMING-META FUNCTION
+/// ADDONS::INSTALL/UNINSTALL XRAY-GAMING-META FUNCTION
 //////////////////////////////////////////////////
 
-void Widget::getViperGamingMeta(std::function<void(bool)> callback) {
+void Widget::getXrayGamingMeta(std::function<void(bool)> callback) {
     bool status = gamingMetaStatus();
     qDebug() << "gamingMetaStatus: " << status;
 
     QString command = QString((status)
-        ? "pacman -Rns --noconfirm viper-gaming-meta"
-        : "pacman -S --noconfirm viper-gaming-meta"
+        ? "pacman -Rns --noconfirm xray-gaming-meta"
+        : "pacman -S --noconfirm xray-gaming-meta"
         );
     qDebug() << "getGamingMeta-command: " << command;
 
     QProgressDialog *progress = new QProgressDialog(
-        QString(status ? "Removing viper-gaming-meta" : "Installing viper-gaming-meta"),
+        QString(status ? "Removing xray-gaming-meta" : "Installing xray-gaming-meta"),
         nullptr, 0, 100, this);
     progress->setWindowModality(Qt::ApplicationModal);
     progress->setCancelButton(nullptr);
@@ -370,9 +370,9 @@ void Widget::getViperGamingMeta(std::function<void(bool)> callback) {
 }
 
 ///////////////////////////////////////////////////
-/// ADDONS::INSTALL ARCH7Z-DEVELOPMENT-META FUNCTION
+/// ADDONS::INSTALL XRAY-DEVELOPMENT-META FUNCTION
 ///////////////////////////////////////////////////
-void Widget::viperDevelopmentMeta() {
+void Widget::xrayDevelopmentMeta() {
     QProcess checkIssues;
 
     // Check DB sync
@@ -424,7 +424,7 @@ void Widget::viperDevelopmentMeta() {
     QTimer *monitorTimer = new QTimer(this); // High-frequency monitoring
 
     // Create the progress bar dynamically
-    QProgressDialog *progress = new QProgressDialog("Installing Viper Development Meta...", nullptr, 0, 100, this);
+    QProgressDialog *progress = new QProgressDialog("Installing Xray Development Meta...", nullptr, 0, 100, this);
     progress->setWindowModality(Qt::WindowModal);
     progress->setCancelButton(nullptr);
     progress->show();
@@ -444,17 +444,17 @@ void Widget::viperDevelopmentMeta() {
 
                 // After installation (or after the retry), check if the package is installed
                 QProcess checkInstalled;
-                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q viper-development-meta");
+                checkInstalled.start("bash", QStringList() << "-c" << "pacman -Q xray-development-meta");
                 checkInstalled.waitForFinished();
 
                 progress->setValue(100); // Mark progress as complete
 
                 if (checkInstalled.exitCode() == 0) {
-                    QMessageBox::information(nullptr, "Viper Development Meta",
-                                             "Viper Development Meta packages are installed successfully!");
+                    QMessageBox::information(nullptr, "Xray Development Meta",
+                                             "Xray Development Meta packages are installed successfully!");
                 } else {
-                    QMessageBox::warning(nullptr, "Viper Development Meta",
-                                         "There was a problem installing Viper Development Meta packages.");
+                    QMessageBox::warning(nullptr, "Xray Development Meta",
+                                         "There was a problem installing Xray Development Meta packages.");
                 }
 
                 // Cleanup dynamic objects
@@ -468,21 +468,21 @@ void Widget::viperDevelopmentMeta() {
 
     // Begin the installation process
     installVDM->start("pkexec", QStringList() << "bash" << "-c"
-                                              << "pacman -S viper-development-meta --noconfirm");
+                                              << "pacman -S xray-development-meta --noconfirm");
     installVDM->waitForFinished();
 }
 
 
 ///////////////////////////////////////////////////
-/// ADDONS:: REMOVE ARCH7Z-DEVELOPMENT-META FUNCTION
+/// ADDONS:: REMOVE XRAY-DEVELOPMENT-META FUNCTION
 //////////////////////////////////////////////////
-void Widget::removeViperDevelopmentMeta() {
+void Widget::removeXrayDevelopmentMeta() {
     QProcess *removeVDM = new QProcess(this);
     QTimer *monitorTimer = new QTimer(this);
 
     QProgressDialog *progress = new QProgressDialog
     (
-        "Removing Viper Development Meta...", nullptr, 0, 100, this
+        "Removing Xray Development Meta...", nullptr, 0, 100, this
     );
     progress->setWindowModality(Qt::WindowModal);
     progress->setCancelButton(nullptr);
@@ -498,7 +498,7 @@ void Widget::removeViperDevelopmentMeta() {
     bool yayInstalled = (checkYay.exitCode() == 0);
 
     QStringList removeCommands = {
-        "pacman -R viper-development-meta --noconfirm",
+        "pacman -R xray-development-meta --noconfirm",
         "pacman -R geany-themes --noconfirm",
         "pacman -R geany visual-studio-code-bin zed jetbrains-toolbox github-desktop sublime-text-4 --noconfirm"
     };
@@ -525,8 +525,8 @@ void Widget::removeViperDevelopmentMeta() {
             CurrentStep++; // Move to next command in sequence
         } else {
             progress->setValue(100);
-            QMessageBox::information(nullptr, "Viper Development Meta Removed",
-                                     "Viper Development Meta packages have been successfully removed");
+            QMessageBox::information(nullptr, "Xray Development Meta Removed",
+                                     "Xray Development Meta packages have been successfully removed");
             progress->deleteLater();
             removeVDM->deleteLater();
             monitorTimer->deleteLater();
@@ -1099,7 +1099,7 @@ int Widget::checkTermThemingStatus(){
         return 0; // Treat as not found due to error
     }
 
-    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/viper-atomic.omp.json";
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/xray-atomic.omp.json";
     QTextStream in(&configFile);
 
     while (!in.atEnd()) {
@@ -1131,10 +1131,10 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
         return;
     }
 
-    // If there is no actual viper-atomic.omp.json file
-    if (!QFile::exists(QDir::homePath() + "/.config/oh-my-posh-themes/viper-atomic.omp.json")) {
-        QMessageBox::warning(this, "viper-atomic.omp.json is Missing!",
-                                   "viper-atomic.omp.json is missing from /.config/oh-my-posh-themes");
+    // If there is no actual xray-atomic.omp.json file
+    if (!QFile::exists(QDir::homePath() + "/.config/oh-my-posh-themes/xray-atomic.omp.json")) {
+        QMessageBox::warning(this, "xray-atomic.omp.json is Missing!",
+                                   "xray-atomic.omp.json is missing from /.config/oh-my-posh-themes");
         return;
     }
 
@@ -1163,7 +1163,7 @@ void Widget::disableTermTheme(QPushButton *terminalThemeButton) {
     }
 
     QStringList lines;
-    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/viper-atomic.omp.json";
+    QString targetLine = "oh-my-posh init fish --config $HOME/.config/oh-my-posh-themes/xray-atomic.omp.json";
 
     QTextStream in(&configFile);
     while (!in.atEnd()) {
@@ -1306,8 +1306,8 @@ Widget::Widget(QWidget *parent)
     ui->setupUi(this);
     coreFunctions = new CoreFunctions(this);
 
-    setWindowTitle("Tolitica Viper Assistant");
-    resize(800,600);
+    setWindowTitle("Tolitica Xray OS Assistant");
+    resize(1024,720);
     setWindowIcon(QIcon(":/icons/resources/icons/tolitica-icon.png"));
 
     QVBoxLayout *mainWidgetLayout = new QVBoxLayout(this);
@@ -1322,7 +1322,7 @@ Widget::Widget(QWidget *parent)
     bool isLiveEnv = (process.exitCode() == 0);
     QString word = "tolitica";
 
-    if (isLiveEnv && word == "tolitica") {
+     if (isLiveEnv && word == "tolitica") {
         QStackedWidget *calStackedWidget = new QStackedWidget();
         mainWidgetLayout->addWidget(calStackedWidget);
 
@@ -1368,7 +1368,7 @@ Widget::Widget(QWidget *parent)
         mainLayout->setContentsMargins(20, 40, 20, 20); // Add padding around content
 
         // ==== Header and Description ==== //
-        QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Viper Assistant!</h2>", this);
+        QLabel *headerLabel = new QLabel("<h2>Welcome to Tolitica Xray OS Assistant!</h2>", this);
         // == Description == //
         QLabel *descriptionLabel = new QLabel("With this helper application you can tweak several "
                                               "configurations from your system, please enjoy.", this);
@@ -1508,7 +1508,7 @@ Widget::Widget(QWidget *parent)
         // Functional Buttons Tweaks Layout
         QPushButton *cleanOrphansButton = new QPushButton("Clean Unused Packages", this);
         QPushButton *cleanPkgCacheButton = new QPushButton("Clean Package Cache", this);
-        QPushButton *updateSystemButton = new QPushButton("Update Viper", this);
+        QPushButton *updateSystemButton = new QPushButton("Update Xray OS", this);
         QPushButton *removeDBLockButton = new QPushButton("Remove DB Lock", this);
         QPushButton *rankMirrorsButton = new QPushButton("Rank Mirrors", this);
 
@@ -1638,28 +1638,28 @@ Widget::Widget(QWidget *parent)
         QPushButton *addonsBackButton = new QPushButton("Back", this);
 
         // ** Functional Buttons Addons Layout ** //
-            // -- *Viper Gaming Meta
+            // -- *Xray Gaming Meta
 
-        QPushButton *viperGamingMetaButton = new QPushButton(this);
+        QPushButton *xrayGamingMetaButton = new QPushButton(this);
         QProcess checkAGMinstalled;
-        bool vgmStatus = gamingMetaStatus();
+        bool xgmStatus = gamingMetaStatus();
 
-        viperGamingMetaButton->setText(vgmStatus
-            ? "Remove Viper Gaming Meta"
-            : "Install Viper Gaming Meta"
+        xrayGamingMetaButton->setText(xgmStatus
+            ? "Remove Xray Gaming Meta"
+            : "Install Xray Gaming Meta"
         );
 
 
-        // *Viper Development Meta
-        QPushButton *viperDevelopmentButton = new QPushButton(this);
+        // *Xray Development Meta
+        QPushButton *xrayDevelopmentButton = new QPushButton(this);
         QProcess checkADMinstalled;
-        checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q viper-development-meta");
+        checkADMinstalled.start("bash", QStringList() << "-c" << "pacman -Q xray-development-meta");
         checkADMinstalled.waitForFinished();
 
         if (checkADMinstalled.exitCode() == 0) {
-            viperDevelopmentButton->setText("Remove Viper Development Meta");
+            xrayDevelopmentButton->setText("Remove Xray Development Meta");
         } else {
-            viperDevelopmentButton->setText("Install Viper Development Meta");
+            xrayDevelopmentButton->setText("Install Xray Development Meta");
         }
         // *ChaoticAUR Button
         QPushButton *chaoticAURbutton = new QPushButton(this);
@@ -1690,8 +1690,8 @@ Widget::Widget(QWidget *parent)
         snapdToggle->setText(snapdEnabled ? "Disable/Remove SNAPD" : "Enable/Install SNAPD");
 
         /* === Positioning Buttons === */
-        addonsLayout->addWidget(viperGamingMetaButton, 1, 0, Qt::AlignLeft);
-        addonsLayout->addWidget(viperDevelopmentButton, 1, 0, Qt::AlignCenter);
+        addonsLayout->addWidget(xrayGamingMetaButton, 1, 0, Qt::AlignLeft);
+        addonsLayout->addWidget(xrayDevelopmentButton, 1, 0, Qt::AlignCenter);
         addonsLayout->addWidget(chaoticAURbutton, 1, 0, Qt::AlignRight);
         addonsLayout->addWidget(vmwButton, 2, 0, Qt::AlignCenter);
 
@@ -1701,8 +1701,8 @@ Widget::Widget(QWidget *parent)
         addonsPage->setLayout(addonsLayout);
 
         /* === Connections === */
-        addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, viperGamingMetaButton,
-                               viperDevelopmentButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
+        addonsSetupConnections(stackedWidget, addonsButton, addonsBackButton, xrayGamingMetaButton,
+                               xrayDevelopmentButton, chaoticAURbutton, vmwButton, flatpakToggle, snapdToggle);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         // ==== Mount Drives Page =====
@@ -1768,7 +1768,7 @@ void Widget::tweaksSetupConnections(QStackedWidget *stackedWidget, QPushButton *
 /// ADDONS SETUP CONNECTIONS FUNCTION
 //////////////////////////////////////////////////
 void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *addonsButton, QPushButton *addonsBackButton,
-                                    QPushButton *viperGamingMetaButton, QPushButton *viperDevelopmentButton, QPushButton *chaoticAURbutton,
+                                    QPushButton *xrayGamingMetaButton, QPushButton *xrayDevelopmentButton, QPushButton *chaoticAURbutton,
                                     QPushButton *vmwButton, QCheckBox *flatpakToggle, QCheckBox *snapdToggle) {
         // Navigation connections
         connect(addonsButton, &QPushButton::clicked, this, [stackedWidget]() {
@@ -1779,23 +1779,23 @@ void Widget::addonsSetupConnections(QStackedWidget *stackedWidget, QPushButton *
     });
 
         // Connecting Buttons to their respective Functions
-        //** Viper Gaming Meta **//
-        connect(viperGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
-            getViperGamingMeta([=](bool success) {
+        //** Xray Gaming Meta **//
+        connect(xrayGamingMetaButton, &QPushButton::clicked, this, [=]() mutable {
+            getXrayGamingMeta([=](bool success) {
                 if (success) {
                     bool newStatus = gamingMetaStatus();
-                    viperGamingMetaButton->setText(newStatus ? "Remove Viper Gaming Meta" : "Install Viper Gaming Meta");
+                    xrayGamingMetaButton->setText(newStatus ? "Remove Xray Gaming Meta" : "Install Xray Gaming Meta");
                 }
             });
         });
-        //** Viper Development Meta **//
-        connect(viperDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
-        if(viperDevelopmentButton->text() == "Install Viper Development Meta") {
-            viperDevelopmentButton->setText("Remove Viper Development Meta");
-            viperDevelopmentMeta();
+        //** Xray Development Meta **//
+        connect(xrayDevelopmentButton, &QPushButton::clicked, this, [=]() mutable {
+        if(xrayDevelopmentButton->text() == "Install Xray Development Meta") {
+            xrayDevelopmentButton->setText("Remove Xray Development Meta");
+            xrayDevelopmentMeta();
         } else {
-            viperDevelopmentButton->setText("Install Viper Development Meta");
-            removeViperDevelopmentMeta();
+            xrayDevelopmentButton->setText("Install Xray Development Meta");
+            removeXrayDevelopmentMeta();
         }
     });
 

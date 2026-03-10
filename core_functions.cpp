@@ -852,11 +852,11 @@ void CoreFunctions::socialMedia(const QString &platform) {
     QString url;
 
     if (platform == "discord") {
-        url = "https://discord.gg/dBR7wR3ABk";
+        url = "https://discord.gg/CAw8wfqGpu";
     } else if (platform == "twitter") {
-        url ="https://x.com/viper_96_tech";
+        url ="https://x.com/xray_os";
     } else if (platform == "youtube") {
-        url = "https://www.youtube.com/@viper-arch";
+        url = "https://www.youtube.com/@AllocCraft";
     }
 
     if (!url.isEmpty()) {

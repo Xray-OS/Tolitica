@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_xray_mounter_helper_FILE /home/alloc/Documents/Development/tolitica-source-code/xray_mounter_helper/build/xray_mounter_helper)
+set(__QT_DEPLOY_TARGET_xray_mounter_helper_TYPE EXECUTABLE)

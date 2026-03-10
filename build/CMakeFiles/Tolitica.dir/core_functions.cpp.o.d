@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_functions.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/core_functions.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_functions.h \
+ /home/alloc/Documents/Development/tolitica-source-code/core_functions.h \
  /usr/include/qt6/QtCore/QStringList \
  /usr/include/qt6/QtCore/qstringlist.h /usr/include/qt6/QtCore/qlist.h \
  /usr/include/qt6/QtCore/qarraydatapointer.h \
@@ -350,7 +350,7 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt6/QtWidgets/qabstractbutton.h \
  /usr/include/qt6/QtWidgets/qwidget.h /usr/include/qt6/QtCore/QObject \
  /usr/include/qt6/QtCore/qobject.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \
@@ -486,9 +486,9 @@ CMakeFiles/Tolitica.dir/core_functions.cpp.o: \
  /usr/include/qt6/QtWidgets/qdialogbuttonbox.h \
  /usr/include/qt6/QtGui/QDesktopServices \
  /usr/include/qt6/QtGui/qdesktopservices.h /usr/include/qt6/QtCore/QUrl \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/widget.h \
  /usr/include/qt6/QtGui/QIcon /usr/include/qt6/QtGui/qicon.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/drive_list_widget.h \
+ /home/alloc/Documents/Development/tolitica-source-code/drive_list_widget.h \
  /usr/include/qt6/QtWidgets/QTreeWidget \
  /usr/include/qt6/QtWidgets/qtreewidget.h \
  /usr/include/qt6/QtWidgets/qtreeview.h \

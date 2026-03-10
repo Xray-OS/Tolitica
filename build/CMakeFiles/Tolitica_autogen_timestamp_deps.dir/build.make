@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /run/media/viper/SSD-crucial/development/viper-tolitica-calamares
+CMAKE_SOURCE_DIR = /home/alloc/Documents/Development/tolitica-source-code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build
+CMAKE_BINARY_DIR = /home/alloc/Documents/Development/tolitica-source-code/build
 
 # Utility rule file for Tolitica_autogen_timestamp_deps.
 
@@ -81,6 +81,6 @@ CMakeFiles/Tolitica_autogen_timestamp_deps.dir/clean:
 .PHONY : CMakeFiles/Tolitica_autogen_timestamp_deps.dir/clean
 
 CMakeFiles/Tolitica_autogen_timestamp_deps.dir/depend:
-	cd /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /run/media/viper/SSD-crucial/development/viper-tolitica-calamares /run/media/viper/SSD-crucial/development/viper-tolitica-calamares /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/build/CMakeFiles/Tolitica_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" Tolitica_autogen_timestamp_deps
+	cd /home/alloc/Documents/Development/tolitica-source-code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/alloc/Documents/Development/tolitica-source-code /home/alloc/Documents/Development/tolitica-source-code /home/alloc/Documents/Development/tolitica-source-code/build /home/alloc/Documents/Development/tolitica-source-code/build /home/alloc/Documents/Development/tolitica-source-code/build/CMakeFiles/Tolitica_autogen_timestamp_deps.dir/DependInfo.cmake "--color=$(COLOR)" Tolitica_autogen_timestamp_deps
 .PHONY : CMakeFiles/Tolitica_autogen_timestamp_deps.dir/depend
 

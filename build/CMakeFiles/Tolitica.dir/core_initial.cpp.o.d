@@ -1,7 +1,7 @@
 CMakeFiles/Tolitica.dir/core_initial.cpp.o: \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_initial.cpp \
+ /home/alloc/Documents/Development/tolitica-source-code/core_initial.cpp \
  /usr/include/stdc-predef.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/core_initial.h \
+ /home/alloc/Documents/Development/tolitica-source-code/core_initial.h \
  /usr/include/qt6/QtCore/QObject /usr/include/qt6/QtCore/qobject.h \
  /usr/include/qt6/QtCore/qobjectdefs.h \
  /usr/include/qt6/QtCore/qnamespace.h /usr/include/qt6/QtCore/qglobal.h \
@@ -350,7 +350,7 @@ CMakeFiles/Tolitica.dir/core_initial.cpp.o: \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
  /usr/include/qt6/QtWidgets/qdialogbuttonbox.h \
- /run/media/viper/SSD-crucial/development/viper-tolitica-calamares/connectivityChecker.h \
+ /home/alloc/Documents/Development/tolitica-source-code/connectivityChecker.h \
  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
  /usr/include/qt6/QtNetwork/qtnetworkglobal.h \
